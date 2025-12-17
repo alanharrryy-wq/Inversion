@@ -1,0 +1,7 @@
+{
+  "name": "Copy of HITECH RTS A - Deck V32",
+  "description": "Interactive pitch deck for HITECH RTS featuring 3D background, zoomable evidence modal, and responsive slide scaling.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
