@@ -2,8 +2,11 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { SlideContainer, Header, NavArea } from '../SlideRenderer';
 
 // =====================================================
-// HOTFIX v1.2.1 — FUSION (v1.0.1 Glow + “more motion” CoreGauge) + (v1.1.x Enterprise Menu)
-// Goal: FUTURISTIC + INTUITIVE + LEGIBLE. Glow should be FELT, not SEEN.
+// FINAL v1.2.2 — Requested changes only (DecisionCard UI)
+// - Open Report: NO BOX + bigger + glow
+// - Auto-generated: swapped position + glow
+// - Thumbnails: controlled glow
+// - Background dim when menu open (almost disappear)
 // =====================================================
 
 // --- tiny helpers ---
@@ -95,22 +98,18 @@ const prng = (seed: number) => {
 };
 
 // =====================================================
-// Controlled Glow System (Tier A/B/C) — v1.0.1 style (user-approved)
+// Controlled Glow System (Tier A/B/C) — user-approved
 // =====================================================
 const GLOW = {
-  // Cyan (system)
   CYAN_A: 'drop-shadow-[0_0_10px_rgba(0,240,255,0.35)]',
   CYAN_B: 'drop-shadow-[0_0_6px_rgba(0,240,255,0.22)]',
   CYAN_C: 'drop-shadow-[0_0_3px_rgba(0,240,255,0.12)]',
 
-  // Gold (authority/action)
   GOLD_B: 'drop-shadow-[0_0_6px_rgba(171,123,38,0.22)]',
   GOLD_C: 'drop-shadow-[0_0_3px_rgba(171,123,38,0.12)]',
 
-  // White (legibility)
   WHITE_C: 'drop-shadow-[0_0_3px_rgba(255,255,255,0.10)]',
 
-  // Status
   RED_A: 'drop-shadow-[0_0_10px_rgba(239,68,68,0.30)]',
   RED_B: 'drop-shadow-[0_0_6px_rgba(239,68,68,0.20)]',
   AMBER_B: 'drop-shadow-[0_0_6px_rgba(250,204,21,0.18)]',
@@ -144,11 +143,6 @@ const Icons = {
         strokeWidth={1.5}
         d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
       />
-    </svg>
-  ),
-  Check: () => (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={1.5} d="M5 13l4 4L19 7" />
     </svg>
   ),
   Server: () => (
@@ -220,7 +214,7 @@ const STATUS_BADGE: Record<InputItem['status'], { label: string; cls: string }> 
 };
 
 // =====================================================
-// TelemetryRow (interactive + readable + deterministic spark)
+// TelemetryRow
 // =====================================================
 const TelemetryRow = ({
   item,
@@ -284,11 +278,20 @@ const TelemetryRow = ({
           {sparkHeights.map((h, i) => (
             <div
               key={i}
-              className={cx('w-2 rounded-t-sm origin-bottom transform-gpu', item.bar, isSelected && 'shadow-[0_0_6px_rgba(255,255,255,0.10)]')}
-              style={{ height: `${h}%` }}
+              className={cx(
+                'w-2 rounded-t-sm origin-bottom transform-gpu spark-bar',
+                item.bar,
+                isSelected && 'shadow-[0_0_6px_rgba(255,255,255,0.10)]'
+              )}
+              style={{
+                height: `${h}%`,
+                // micro-delay por fila (se siente telemetría real)
+                animationDelay: `${(item.id === 'DE' ? 0 : item.id === 'DT' ? 35 : item.id === 'DC' ? 70 : item.id === 'DM' ? 105 : 140) + i * 70}ms`,
+              }}
             />
           ))}
         </div>
+
 
         <div className={cx('font-code font-black text-2xl tabular-nums', item.color, isSelected && GLOW.WHITE_C)}>{item.val}</div>
       </div>
@@ -297,7 +300,7 @@ const TelemetryRow = ({
 };
 
 // =====================================================
-// CoreGauge (v1.0.1 movement feel + “confidence update” + no square glow)
+// CoreGauge (unchanged from your fusion)
 // =====================================================
 const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
   const reducedMotion = usePrefersReducedMotion();
@@ -321,7 +324,6 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
   const dashArray = C.toFixed(2);
   const dashOffset = (C - C * pct).toFixed(2);
 
-  // Confidence band (subtle, behind)
   const bandWidth = isCritical ? 10 : isWarn ? 8 : 6;
   const lo = clamp((score - bandWidth) / 100, 0.04, 0.96);
   const hi = clamp((score + bandWidth) / 100, 0.04, 0.96);
@@ -330,20 +332,17 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
   const bandDashOffsetA = (C - C * bandA).toFixed(2);
   const bandDashOffsetB = (C - C * bandB).toFixed(2);
 
-  // Endpoint dot
   const cx0 = 50, cy0 = 50;
   const theta = (pct * 2 * Math.PI) - (Math.PI / 2);
   const dotX = cx0 + r * Math.cos(theta);
   const dotY = cy0 + r * Math.sin(theta);
 
-  // Active tick highlight
   const tickCount = 12;
   const tickIndex = Math.round(((theta + Math.PI / 2) / (2 * Math.PI)) * tickCount) % tickCount;
 
   const scanDuration = isCritical ? '3.6s' : isWarn ? '5.2s' : '6s';
   const scanOpacity = reducedMotion ? 0 : (isFocused ? 0.20 : 0.42);
 
-  // stroke bump on state change (micro “instrument” feel)
   const [strokeBump, setStrokeBump] = useState(0);
   const prevStateRef = useRef<'N' | 'W' | 'C'>('N');
   const stateNow: 'N' | 'W' | 'C' = isCritical ? 'C' : isWarn ? 'W' : 'N';
@@ -367,6 +366,22 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
 
         @keyframes sampleStep { 0% { transform: rotate(0deg); opacity: 0.16; } 40% { opacity: 0.22; } 100% { transform: rotate(360deg); opacity: 0.16; } }
         .sample-step { transform-origin: 50px 50px; animation: sampleStep 1s steps(20, end) infinite; }
+        
+        @keyframes sparkWobble {
+        0% { transform: translateY(0px) scaleY(0.92); opacity: 0.55; }
+        50% { transform: translateY(-1px) scaleY(1.06); opacity: 0.95; }
+        100% { transform: translateY(0px) scaleY(0.98); opacity: 0.75; }
+       }
+       .spark-bar {
+       transform-origin: bottom;
+       animation: sparkWobble 900ms ease-in-out infinite;
+       animation-play-state: paused;
+       will-change: transform, opacity;
+       }
+       .group:hover .spark-bar,
+       .group:focus-within .spark-bar {
+       animation-play-state: running;
+       }
 
         @keyframes criticalPulse { 0%, 100% { opacity: 0.20; } 50% { opacity: 0.42; } }
         .critical-pulse { animation: criticalPulse 1.35s ease-in-out infinite; }
@@ -378,7 +393,6 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
         }
       `}</style>
 
-      {/* Outer rings (thicker + readable) */}
       <div
         className="absolute w-[390px] h-[390px] rounded-full border-2 border-white/14
                    [mask-image:repeating-linear-gradient(90deg,#000_0_8px,transparent_8px_14px)]
@@ -390,11 +404,9 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
         style={{ animationDirection: 'reverse', animationDuration: reducedMotion ? undefined : '40s' }}
       />
 
-      {/* Main Gauge */}
       <div className="relative w-[292px] h-[292px] gauge-breath">
         <svg viewBox="0 0 100 100" className="w-full h-full transform -rotate-90 svg-safe">
           <defs>
-            {/* GLOW FILTERS (no square artifacts) */}
             <filter id="glowCyan" x="-40%" y="-40%" width="180%" height="180%">
               <feGaussianBlur stdDeviation="2.2" result="blur" />
               <feColorMatrix
@@ -465,11 +477,9 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
             </filter>
           </defs>
 
-          {/* Track */}
           <circle cx="50" cy="50" r="45" fill="none" stroke="#05080C" strokeWidth="6" opacity="0.95" />
           <circle cx="50" cy="50" r="45" fill="none" stroke="#222" strokeWidth="6" opacity="0.45" />
 
-          {/* Confidence band (subtle) */}
           <circle
             cx="50" cy="50" r="45"
             fill="none"
@@ -491,7 +501,6 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
             opacity={0.85}
           />
 
-          {/* Tick marks (12) + Active tick */}
           {Array.from({ length: tickCount }).map((_, i) => {
             const ang = (i / tickCount) * 2 * Math.PI;
             const x1 = cx0 + 49 * Math.cos(ang);
@@ -519,10 +528,8 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
             );
           })}
 
-          {/* Inner quiet ring */}
           <circle cx="50" cy="50" r="36" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="2" />
 
-          {/* Sampling ring (oscilloscope stepping) */}
           {!reducedMotion && (
             <g className="sample-step" style={{ opacity: isFocused ? 0.12 : 0.18 }}>
               <circle
@@ -537,7 +544,6 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
             </g>
           )}
 
-          {/* Main Arc */}
           <circle
             cx="50" cy="50" r="45"
             fill="none"
@@ -555,11 +561,9 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
             }}
           />
 
-          {/* Endpoint dot */}
           <circle cx={dotX} cy={dotY} r={2.6} fill={ringStroke} filter="url(#dotBloom)" opacity={0.95} />
           <circle cx={dotX} cy={dotY} r={5.8} fill="none" stroke={ringStroke} strokeWidth={1} opacity={0.14} />
 
-          {/* Scan sheen */}
           {!reducedMotion && (
             <g className="gauge-scan" style={{ opacity: scanOpacity }}>
               <circle
@@ -574,7 +578,6 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
             </g>
           )}
 
-          {/* Critical pulse overlay */}
           {isCritical && !reducedMotion && (
             <g className="critical-pulse">
               <circle cx="50" cy="50" r="45" fill="none" stroke="#ef4444" strokeWidth="2" opacity="0.25" />
@@ -582,7 +585,6 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
           )}
         </svg>
 
-        {/* Center Data */}
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
           <div className="text-gray-400 font-code text-[11px] tracking-[4px] mb-2 font-bold opacity-80">
             HEALTH SCORE
@@ -598,7 +600,6 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
         </div>
       </div>
 
-      {/* Connectors */}
       <div className="absolute top-1/2 left-0 w-12 h-[1px] bg-gradient-to-r from-transparent to-cyan/40 opacity-45" />
       <div className="absolute top-1/2 right-0 w-12 h-[1px] bg-gradient-to-l from-transparent to-cyan/40 opacity-45" />
     </div>
@@ -606,8 +607,7 @@ const CoreGauge = ({ activeInput }: { activeInput: InputId | null }) => {
 };
 
 // =====================================================
-// DecisionCard — Premium split button + menu that DOES NOT CLIP
-// Includes: thumbnails + preview, auto-flip, ESC close, safe close, hover/focus preview
+// DecisionCard — UPDATED per your request
 // =====================================================
 type ReportAction = 'open' | 'pdf' | 'csv' | 'workOrder';
 
@@ -618,6 +618,10 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuDir, setMenuDir] = useState<'up' | 'down'>('up');
   const [preview, setPreview] = useState<Exclude<ReportAction, 'open'>>('pdf');
+  const DIM_UI =
+    menuOpen
+      ? 'opacity-[0.06] blur-[0.7px] saturate-0'
+      : 'opacity-100';
 
   useEffect(() => {
     const onDown = (e: MouseEvent) => {
@@ -651,10 +655,10 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
     sub: string;
     icon: React.ReactNode;
   }> = [
-    { id: 'pdf', label: 'EXPORT PDF', sub: 'Audit-ready', icon: <Icons.File /> },
-    { id: 'csv', label: 'EXPORT CSV', sub: 'Data pack', icon: <Icons.Table /> },
-    { id: 'workOrder', label: 'CREATE WORK ORDER', sub: 'L2 dispatch', icon: <Icons.Wrench /> },
-  ];
+      { id: 'pdf', label: 'EXPORT PDF', sub: 'Audit-ready', icon: <Icons.File /> },
+      { id: 'csv', label: 'EXPORT CSV', sub: 'Data pack', icon: <Icons.Table /> },
+      { id: 'workOrder', label: 'CREATE WORK ORDER', sub: 'L2 dispatch', icon: <Icons.Wrench /> },
+    ];
 
   const toggleMenu = () => {
     setMenuOpen((v) => {
@@ -674,6 +678,7 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
     });
   };
 
+  // --- Thumbnails (controlled glow) ---
   const Thumb = ({ id, label }: { id: Exclude<ReportAction, 'open'>; label: string }) => {
     const isActive = preview === id;
     const tint =
@@ -691,19 +696,45 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
         onClick={() => runAction(id)}
         className={cx(
           'group relative w-[86px] rounded-lg border px-2 py-2 text-left',
-          'bg-black/35 backdrop-blur-md transition-all',
-          isActive ? 'border-cyan/35 shadow-[0_0_18px_rgba(0,240,255,0.14)]' : 'border-white/10 hover:border-white/18'
+          'bg-black/30 backdrop-blur-md transition-all duration-200',
+          // glow base (más presente)
+          'shadow-[0_0_28px_rgba(0,240,255,0.14)] hover:shadow-[0_0_40px_rgba(0,240,255,0.20)]',
+          // glass highlight
+          'before:content-[""] before:absolute before:inset-0 before:rounded-lg before:pointer-events-none',
+          'before:bg-[radial-gradient(120px_90px_at_30%_20%,rgba(0,240,255,0.18),transparent_62%)]',
+          isActive
+            ? 'border-cyan/65 shadow-[0_0_54px_rgba(0,240,255,0.26)]'
+            : 'border-white/10 hover:border-cyan/30'
         )}
+
         aria-label={`Quick ${label}`}
       >
-        <div className={cx('h-10 rounded-md border border-white/10 bg-gradient-to-br', tint)}>
+        <div
+          className={cx('h-10 rounded-md border border-white/10 bg-gradient-to-br', tint)}
+          style={{
+            boxShadow: isActive
+              ? '0 0 28px rgba(0,240,255,0.22), inset 0 0 16px rgba(0,240,255,0.10)'
+              : '0 0 10px rgba(0,240,255,0.08), inset 0 0 10px rgba(255,255,255,0.04)',
+          }}
+        >
           <div className="p-2 space-y-1">
-            <div className="h-[3px] w-8 bg-white/20 rounded" />
+            <div
+              className={cx(
+                'h-[3px] w-8 bg-white/26 rounded',
+                isActive && 'shadow-[0_0_16px_rgba(0,240,255,0.18)]'
+              )}
+            />
             <div className="h-[3px] w-12 bg-white/12 rounded" />
             <div className="h-[3px] w-10 bg-white/10 rounded" />
           </div>
         </div>
-        <div className="mt-2 text-[10px] font-code tracking-[0.22em] text-gray-400 group-hover:text-gray-200 transition-colors">
+        <div
+          className={cx(
+            'mt-2 text-[11px] font-code tracking-[0.20em] text-gray-300 group-hover:text-white transition-colors',
+            isActive && 'text-cyan/95',
+            isActive && 'drop-shadow-[0_0_10px_rgba(0,240,255,0.30)]'
+          )}
+        >
           {label}
         </div>
       </button>
@@ -720,6 +751,11 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
           ? 'shadow-[0_0_18px_rgba(255,255,255,0.08)] border-white/12'
           : 'shadow-[0_0_18px_rgba(171,123,38,0.10)] border-amber-400/20';
 
+    const DIM_UI =
+      menuOpen
+        ? 'opacity-[0.06] blur-[0.7px] saturate-0'
+        : 'opacity-100';
+
     return (
       <div className={cx('rounded-lg border bg-black/35 p-3', tint)}>
         <div className="text-[10px] font-code tracking-[0.22em] text-gray-500 mb-2">PREVIEW</div>
@@ -731,7 +767,9 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
             <div className="h-[3px] w-9 bg-white/10 rounded" />
           </div>
         </div>
-        <div className="mt-2 text-[11px] font-display font-semibold text-white/90">{title}</div>
+        <div className="mt-2 text-[12px] font-display font-semibold text-white/95 drop-shadow-[0_0_10px_rgba(255,255,255,0.10)]">
+          {title}
+        </div>
         <div className="text-[10px] text-gray-500 font-code tracking-[0.18em] mt-1">Click thumbnail to run</div>
       </div>
     );
@@ -746,10 +784,53 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
         menuOpen ? 'z-[80]' : 'z-10'
       )}
     >
-      {/* Ambient inner glow (controlled, rounded => no square artifact) */}
+
+      {/* Ambient inner glow */}
       <div className="pointer-events-none absolute inset-0 rounded-2xl shadow-[inset_0_0_0_1px_rgba(0,240,255,0.10),inset_0_0_26px_rgba(0,240,255,0.06)]" />
 
-      <div className="p-5 border-b border-white/8 flex items-center justify-between">
+      {/* HARD DIM when menu is open (almost disappears) */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 z-[60] transition-opacity duration-200"
+          style={{
+            opacity: 1,
+            // MENOS "black paint", más "cinematic dim"
+            background:
+              'radial-gradient(1200px 820px at 50% 35%, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.62) 52%, rgba(0,0,0,0.82) 100%)',
+            backdropFilter: 'blur(3px) saturate(0.92)',
+            WebkitBackdropFilter: 'blur(3px) saturate(0.92)',
+          }}
+          onMouseDown={() => setMenuOpen(false)}
+        >
+          {/* ultra subtle noise to avoid “flat patch” */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.05]"
+            style={{
+              backgroundImage:
+                'repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 3px)',
+              mixBlendMode: 'overlay',
+            }}
+          />
+          {/* vignette edge softener (evita el “cuadro”) */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                'radial-gradient(900px 620px at 50% 42%, transparent 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.55) 100%)',
+              opacity: 0.9,
+            }}
+          />
+        </div>
+      )}
+
+      <div
+        className={cx(
+          'p-5 border-b border-white/8 flex items-center justify-between relative z-[81] transition-all duration-200',
+          DIM_UI
+        )}
+        style={menuOpen ? { filter: 'brightness(0.12) contrast(1.08)' } : undefined}
+      >
+
         <div>
           <div className={cx('text-[12px] font-code tracking-[0.26em] text-cyan/80', GLOW.CYAN_C)}>DECISION ENGINE</div>
           <div className="text-[10px] text-gray-500 font-code tracking-[0.18em] mt-1">Confidence-driven recommendation</div>
@@ -767,39 +848,55 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
         </div>
       </div>
 
-      <div className="p-7 space-y-7">
-        <div>
-          <div className="text-gray-500 text-[11px] font-code tracking-[0.22em]">RECOMMENDED ACTION:</div>
-          <div className={cx('mt-2 font-display font-bold text-[26px] leading-[1.12] text-white', GLOW.WHITE_C)}>
-            SCHEDULE MAINTENANCE (L2) — 48H
+      <div className="p-7 space-y-7 relative z-[81]">
+        {/* DIM SOLO AL CONTENIDO (no al menu layer) */}
+        <div
+          className={cx('space-y-7 transition-all duration-200', DIM_UI)}
+          style={menuOpen ? { filter: 'brightness(0.11) contrast(1.10)' } : undefined}
+        >
+          {/* --- TODO lo que está arriba del footer se queda aquí --- */}
+
+          <div>
+            <div className="text-gray-500 text-[11px] font-code tracking-[0.22em]">RECOMMENDED ACTION:</div>
+            <div className={cx('mt-2 font-display font-bold text-[26px] leading-[1.12] text-white', GLOW.WHITE_C)}>
+              SCHEDULE MAINTENANCE (L2) — 48H
+            </div>
+          </div>
+
+          <div className={cx('p-5 rounded-xl border transition-all duration-300', isCritical ? 'bg-red-950/22 border-red-500/25' : 'bg-black/35 border-white/10')}>
+            <div className="flex justify-between items-end mb-2">
+              <span className="text-gray-400 text-[12px] tracking-[0.08em] font-main">
+                FINANCIAL IMPACT (IF IGNORED)
+              </span>
+              <span className={cx('font-black font-code text-[28px] text-red-500', GLOW.RED_A)}>$15,400</span>
+            </div>
+
+            <div className="w-full bg-gray-800/90 h-2.5 mt-3 rounded-full overflow-hidden">
+              <div className="h-full w-[70%] rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.22)]" />
+            </div>
+
+            <div className="text-right text-[11px] text-gray-500 mt-2 font-code tracking-[0.18em]">PROBABILITY: 85%</div>
           </div>
         </div>
+        {/* END dimmed content */}
 
-        <div className={cx('p-5 rounded-xl border transition-all duration-300', isCritical ? 'bg-red-950/22 border-red-500/25' : 'bg-black/35 border-white/10')}>
-          <div className="flex justify-between items-end mb-2">
-            <span className="text-gray-400 text-[12px] tracking-[0.08em] font-main">
-              FINANCIAL IMPACT (IF IGNORED)
-            </span>
-            <span className={cx('font-black font-code text-[28px] text-red-500', GLOW.RED_A)}>$15,400</span>
+        {/* Footer: Auto-generated LEFT (glowy) + Open Report RIGHT (no box) */}
+        <div className="flex items-center justify-between gap-4">
+          {/* LEFT: Auto-generated (new position + glow) */}
+          <div className={cx('text-[11px] text-gray-600 font-code tracking-[0.18em]', GLOW.CYAN_C)}>
+            AUTO-GENERATED • v1.2.2
           </div>
 
-          <div className="w-full bg-gray-800/90 h-2.5 mt-3 rounded-full overflow-hidden">
-            <div className="h-full w-[70%] rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.22)]" />
-          </div>
-
-          <div className="text-right text-[11px] text-gray-500 mt-2 font-code tracking-[0.18em]">PROBABILITY: 85%</div>
-        </div>
-
-        {/* Split button + dropdown menu (NO CLIP + auto flip + thumbnails + preview) */}
-        <div className="flex items-center justify-between">
+          {/* RIGHT: Split action */}
           <div data-report-menu className="relative flex items-center">
+            {/* Main: OPEN REPORT — NO BOX, bigger + glow */}
             <button
               type="button"
               className={cx(
-                'group relative overflow-hidden rounded-l-lg border border-cyan/40 px-5 py-3',
-                'font-code text-[12px] font-black tracking-[0.22em] text-cyan transition-all',
-                'hover:bg-cyan hover:text-black hover:shadow-[0_0_18px_rgba(0,240,255,0.22)]',
-                menuOpen && 'shadow-[0_0_22px_rgba(0,240,255,0.18)]',
+                'group relative px-5 py-3 bg-transparent rounded-l-lg',
+                'font-display font-semibold uppercase text-[13px] tracking-[0.30em]',
+                'text-cyan/90 hover:text-cyan transition-all',
+                GLOW.CYAN_B,
                 AFFORDANCE_STRIP_SOFT
               )}
               onClick={() => runAction('open')}
@@ -809,16 +906,21 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
                 OPEN REPORT
                 <span className="opacity-60 group-hover:opacity-100 transition-opacity">→</span>
               </span>
-              <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity" />
+              {/* subtle sheen (not a box) */}
+              <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-cyan/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity" />
+              {/* baseline neon */}
+              <span className="pointer-events-none absolute left-4 right-4 bottom-[6px] h-px bg-gradient-to-r from-transparent via-cyan/50 to-transparent opacity-55" />
             </button>
 
+            {/* Chevron plate */}
             <button
               type="button"
               className={cx(
-                'relative overflow-hidden rounded-r-lg border-y border-r border-cyan/40 px-3 py-3',
-                'bg-black/35 text-cyan transition-all',
-                'hover:bg-cyan hover:text-black hover:shadow-[0_0_18px_rgba(0,240,255,0.20)]',
-                menuOpen && 'bg-cyan text-black',
+                'relative rounded-r-lg px-3 py-3',
+                'bg-black/20 text-cyan/90 transition-all',
+                'hover:bg-cyan/15 hover:text-cyan',
+                menuOpen && 'bg-cyan/20 text-cyan',
+                GLOW.CYAN_C,
                 AFFORDANCE_STRIP_SOFT
               )}
               onClick={toggleMenu}
@@ -831,13 +933,14 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
               </span>
             </button>
 
+            {/* Menu */}
             {menuOpen && (
               <div
                 role="menu"
                 className={cx(
-                  'absolute right-0 z-[999] w-[360px] rounded-xl border border-white/12',
+                  'absolute right-0 z-[9999] w-[360px] rounded-xl border border-white/12 opacity-100',
                   'bg-[#05080C]/96 backdrop-blur-md',
-                  'shadow-[0_0_34px_rgba(0,0,0,0.62)]',
+                  'shadow-[0_0_34px_rgba(0,0,0,0.62),0_0_64px_rgba(0,240,255,0.10)]',
                   'overflow-hidden'
                 )}
                 style={{
@@ -898,8 +1001,6 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
               </div>
             )}
           </div>
-
-          <div className="text-[11px] text-gray-600 font-code tracking-[0.18em]">AUTO-GENERATED • v1.2.1</div>
         </div>
       </div>
     </div>
@@ -941,16 +1042,13 @@ export const Slide7: React.FC<Slide7Props> = ({ nextSlide, prevSlide }) => {
       <Header title="SMARTSERVICE™" breadcrumb="SISTEMA" slideNum={8} />
 
       <div className="h-full w-full grid grid-cols-[30%_40%_30%] gap-8 items-center px-4 pt-4 relative">
-        {/* Subtle background texture */}
         <div className="pointer-events-none absolute inset-0 opacity-[0.22] bg-[radial-gradient(circle_at_30%_10%,rgba(0,240,255,0.12),transparent_55%)]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.16] bg-[radial-gradient(circle_at_70%_70%,rgba(171,123,38,0.10),transparent_55%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(transparent_0,rgba(255,255,255,0.02)_1px,transparent_2px)] bg-[length:100%_18px] opacity-[0.14]" />
 
-        {/* Flow Lines */}
         <div className={cx('absolute top-1/2 left-[28%] w-[12%] h-[2px]', ambientLineClass)} />
         <div className={cx('absolute top-1/2 right-[28%] w-[12%] h-[2px]', ambientLineClass)} />
 
-        {/* COLUMN 1: INPUT */}
         <div className="h-[86%] flex flex-col animate-fade-up">
           <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-3">
             <h3 className={cx('text-cyan font-code tracking-[0.25em] text-[15px] font-black', GLOW.CYAN_B)}>
@@ -980,7 +1078,6 @@ export const Slide7: React.FC<Slide7Props> = ({ nextSlide, prevSlide }) => {
           </div>
         </div>
 
-        {/* COLUMN 2: CORE */}
         <div className="h-full flex flex-col items-center justify-center relative z-10">
           <div className={cx('absolute top-[7.5%] font-code text-gold tracking-[0.42em] text-xs font-black opacity-90', GLOW.GOLD_C)}>
             ALGORITHM CORE
@@ -996,7 +1093,6 @@ export const Slide7: React.FC<Slide7Props> = ({ nextSlide, prevSlide }) => {
           </div>
         </div>
 
-        {/* COLUMN 3: OUTPUT */}
         <div className="h-[86%] flex flex-col animate-fade-up" style={{ animationDelay: '0.12s' }}>
           <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-3">
             <h3 className={cx('text-gold font-code tracking-[0.25em] text-[15px] font-black', GLOW.GOLD_C)}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SlideContainer, Header, NavArea } from '../SlideRenderer';
+import { SlideContainer, Header, NavArea } from '../Slide/SlideShell';
 import RotatingCore from '../RotatingCore'; // AJUSTA si está en otra ruta
 
 interface Slide12Props {
