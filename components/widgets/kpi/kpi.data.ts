@@ -7,7 +7,6 @@ export type KpiItem = {
   sub: string;
   tone: KpiTone;
 
-  // Enterprise credibility
   sourceTag?: string; // e.g. "SRC: ServiceLogix"
   calc?: string;      // e.g. "Uptime = 1 - (Downtime/TotalTime)"
   actions?: string[]; // e.g. ["PM cadence", "Spare policy", ...]

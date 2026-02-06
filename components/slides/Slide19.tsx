@@ -60,7 +60,7 @@ export const Slide19: React.FC<Slide19Props> = ({ goToSlide, prevSlide }) => {
             <p className="text-gray-500 font-code tracking-[4px] text-sm">HITECH RTS SYSTEM // 2025</p>
           </div>
        </div>
-       <NavArea prev={prevSlide} next={() => goToSlide(0)} isHome={true} />
+       <NavArea prev={prevSlide} next={() => goToSlide(0)} />
     </SlideContainer>
   );
 };

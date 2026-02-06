@@ -1,6 +1,6 @@
 import React from "react";
 import { SlideContainer, Header, NavArea } from "../SlideRenderer";
-import LiveKPIDashboard from "../widgets/LiveKPIDashboard";
+import { KpiDashboard } from "../widgets/kpi/KpiDashboard";
 
 export const Slide13: React.FC<{ nextSlide: () => void; prevSlide: () => void }> = ({
   nextSlide,
@@ -8,7 +8,7 @@ export const Slide13: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
 }) => (
   <SlideContainer>
     <Header title="KPIs DEL SISTEMA" breadcrumb="RESULTADOS" slideNum={13} />
-    <LiveKPIDashboard />
+    <KpiDashboard />
     <NavArea prev={prevSlide} next={nextSlide} />
   </SlideContainer>
 );

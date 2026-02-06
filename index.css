@@ -1,0 +1,222 @@
+:root {
+  --bg0: #020304;
+  --bg1: #05080b;
+
+  /* neon disciplined (no yellow) */
+  --c1: rgba(0, 200, 255, 0.22);
+  --c2: rgba(2, 167, 202, 0.18);
+  --c3: rgba(2, 111, 134, 0.16);
+  --c4: rgba(120, 245, 255, 0.10);
+  /* ice */
+
+  /* glass */
+  --glassFill: rgba(255, 255, 255, 0.08);
+  --glassFill2: rgba(255, 255, 255, 0.06);
+  --glassStroke: rgba(255, 255, 255, 0.14);
+  --glassStroke2: rgba(255, 255, 255, 0.09);
+
+  --shadowDeep: rgba(0, 0, 0, 0.55);
+
+  /* interactive vars (set by Background.tsx) */
+  --mx: 0.5;
+  --my: 0.5;
+  --mv: 0.0;
+  --bt: 0.0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg0);
+  overflow: hidden;
+}
+
+#root {
+  min-height: 100%;
+  position: relative;
+  isolation: isolate;
+}
+
+/* ===========================
+   Background layers
+=========================== */
+
+.app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.app-bg__base,
+.app-bg__chromatic,
+.app-bg__beam,
+.app-bg__grid,
+.app-bg__noise,
+.app-bg__vignette {
+  position: absolute;
+  inset: 0;
+}
+
+/* deep base */
+.app-bg__base {
+  background:
+    radial-gradient(1200px 900px at 22% 18%, rgba(6, 40, 56, 0.62) 0%, rgba(0, 0, 0, 0) 58%),
+    radial-gradient(1100px 760px at 78% 62%, rgba(8, 28, 40, 0.62) 0%, rgba(0, 0, 0, 0) 62%),
+    linear-gradient(180deg, var(--bg1) 0%, var(--bg0) 100%);
+}
+
+/* Chromatic islands (THIS makes the iOS glass effect pop) */
+.app-bg__chromatic {
+  inset: -20%;
+  filter: blur(120px);
+  opacity: 0.95;
+  transform: translate3d(0, 0, 0);
+  /* use mouse vars to move focal points */
+  background:
+    radial-gradient(760px 620px at calc((var(--mx) * 100%)) calc((var(--my) * 100%)),
+      rgba(0, 200, 255, calc(0.16 + (var(--mv) * 0.06))), rgba(0, 0, 0, 0) 70%),
+    radial-gradient(820px 680px at calc(18% + (var(--mx) * 8%)) calc(62% + (var(--my) * 6%)),
+      var(--c2), rgba(0, 0, 0, 0) 74%),
+    radial-gradient(900px 720px at calc(72% - (var(--mx) * 7%)) calc(30% + (var(--my) * 7%)),
+      var(--c3), rgba(0, 0, 0, 0) 76%),
+    radial-gradient(980px 760px at 52% 82%,
+      var(--c4), rgba(0, 0, 0, 0) 78%);
+  /* slow drift via time var */
+  animation: bg_drift 14s ease-in-out infinite alternate;
+}
+
+@keyframes bg_drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-5%, 4%, 0);
+  }
+}
+
+/* diagonal lab beam */
+.app-bg__beam {
+  inset: -10%;
+  background:
+    linear-gradient(120deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 42%,
+      rgba(2, 167, 202, 0.10) 52%,
+      rgba(0, 0, 0, 0) 62%,
+      rgba(0, 0, 0, 0) 100%);
+  filter: blur(18px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  animation: beam_sweep 8s ease-in-out infinite;
+}
+
+@keyframes beam_sweep {
+  0% {
+    transform: translate3d(-3%, -1%, 0);
+    opacity: 0.42;
+  }
+
+  50% {
+    transform: translate3d(2%, 1%, 0);
+    opacity: 0.62;
+  }
+
+  100% {
+    transform: translate3d(-3%, -1%, 0);
+    opacity: 0.42;
+  }
+}
+
+/* grid */
+.app-bg__grid {
+  opacity: 0.11;
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 260px 260px;
+  mix-blend-mode: overlay;
+  filter: blur(0.15px);
+}
+
+/* noise */
+.app-bg__noise {
+  opacity: 0.16;
+  background-image:
+    repeating-linear-gradient(0deg,
+      rgba(255, 255, 255, 0.012) 0px,
+      rgba(255, 255, 255, 0.012) 1px,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0) 6px),
+    repeating-linear-gradient(90deg,
+      rgba(255, 255, 255, 0.010) 0px,
+      rgba(255, 255, 255, 0.010) 1px,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0) 8px);
+  mix-blend-mode: overlay;
+}
+
+/* vignette */
+.app-bg__vignette {
+  background: radial-gradient(86% 86% at 50% 44%,
+      rgba(0, 0, 0, 0) 58%,
+      rgba(0, 0, 0, 0.70) 100%);
+  opacity: 0.90;
+}
+
+/* ===========================
+   iOS-like Liquid Glass
+=========================== */
+
+.glass-ios {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(180deg, var(--glassFill), var(--glassFill2));
+  border: 1px solid var(--glassStroke);
+  backdrop-filter: blur(26px) saturate(1.55);
+  -webkit-backdrop-filter: blur(26px) saturate(1.55);
+  box-shadow:
+    0 34px 120px var(--shadowDeep),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+/* highlight / refraction */
+.glass-ios::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(900px 520px at 20% 10%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 38%);
+  opacity: 0.65;
+  mix-blend-mode: screen;
+}
+
+/* hairline */
+.glass-ios::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  pointer-events: none;
+  border-radius: inherit;
+  border: 1px solid var(--glassStroke2);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  opacity: 0.95;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .app-bg__chromatic,
+  .app-bg__beam {
+    animation: none;
+  }
+}

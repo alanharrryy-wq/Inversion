@@ -243,11 +243,16 @@ function toneClasses(tone: BadgeDef["tone"]) {
   };
 }
 
-/** Tooltip auto placement using viewport + anchor rect */
-function computePlacement(anchor: DOMRect, tipW: number, tipH: number): Placement {
+/** Tooltip auto placement using bounds + anchor rect */
+function computePlacement(
+  anchor: DOMRect,
+  tipW: number,
+  tipH: number,
+  bounds?: { width: number; height: number }
+): Placement {
   const pad = 12;
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
+  const vw = bounds?.width ?? window.innerWidth;
+  const vh = bounds?.height ?? window.innerHeight;
 
   const topOk = anchor.top - tipH - pad > 0;
   const bottomOk = anchor.bottom + tipH + pad < vh;
@@ -262,10 +267,16 @@ function computePlacement(anchor: DOMRect, tipW: number, tipH: number): Placemen
   return "bottom";
 }
 
-function placeStyle(anchor: DOMRect, placement: Placement, tipW: number, tipH: number): React.CSSProperties {
+function placeStyle(
+  anchor: DOMRect,
+  placement: Placement,
+  tipW: number,
+  tipH: number,
+  bounds?: { width: number; height: number }
+): React.CSSProperties {
   const pad = 12;
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
+  const vw = bounds?.width ?? window.innerWidth;
+  const vh = bounds?.height ?? window.innerHeight;
 
   const centerX = anchor.left + anchor.width / 2;
   const centerY = anchor.top + anchor.height / 2;
@@ -323,7 +334,7 @@ function useToasts() {
 
 function ToastStack({ toasts }: { toasts: Toast[] }) {
   return (
-    <div className="fixed right-5 bottom-5 z-[99999] space-y-2">
+    <div className="absolute right-5 bottom-5 z-[99999] space-y-2">
       {toasts.map((t) => {
         const tone =
           t.tone === "ok"
@@ -424,7 +435,7 @@ function BadgeTooltip({
   return (
     <div
       className={cx(
-        "fixed z-[99990] w-[340px] rounded-2xl border px-4 py-3 backdrop-blur-xl",
+        "absolute z-[99990] w-[340px] rounded-2xl border px-4 py-3 backdrop-blur-xl",
         "bg-black/55 border-white/12 shadow-[0_0_80px_rgba(0,0,0,0.65)]"
       )}
       style={style}
@@ -667,8 +678,24 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
     if (!btn) return;
 
     const anchor = btn.getBoundingClientRect();
+    const container = containerRef.current;
     const tipW = 340;
     const tipH = 220;
+
+    if (container) {
+      const bounds = container.getBoundingClientRect();
+      const relAnchor = new DOMRect(
+        anchor.left - bounds.left,
+        anchor.top - bounds.top,
+        anchor.width,
+        anchor.height
+      );
+      const placement = computePlacement(relAnchor, tipW, tipH, { width: bounds.width, height: bounds.height });
+      const style = placeStyle(relAnchor, placement, tipW, tipH, { width: bounds.width, height: bounds.height });
+      setTipPlacement(placement);
+      setTipStyle(style);
+      return;
+    }
 
     const placement = computePlacement(anchor, tipW, tipH);
     const style = placeStyle(anchor, placement, tipW, tipH);
@@ -879,8 +906,8 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
         }
       `}</style>
 
-      {/* Background master */}
-      <div className="absolute inset-0" style={mainBgStyle} />
+      {/* Background master - ADDED pointer-events-none */}
+      <div className="absolute inset-0 pointer-events-none" style={mainBgStyle} />
 
       {/* Ambient vignette + subtle grain */}
       <div
@@ -1223,8 +1250,8 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
           )}
         </div>
 
-        {/* STATEMENT FINAL */}
-        <div className="mt-6 relative z-[10]">
+        {/* STATEMENT FINAL - ADDED pointer-events-none */}
+        <div className="mt-6 relative z-[10] pointer-events-none">
           <div className="mx-auto max-w-[1100px] text-center">
             <div className="text-[16px] font-main leading-relaxed text-white/65">
               Y sé que es así,
@@ -1236,8 +1263,8 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
             </div>
           </div>
 
-          {/* Micro controls row */}
-          <div className="mt-4 flex items-center justify-center gap-3">
+          {/* Micro controls row - ADDED pointer-events-auto */}
+          <div className="mt-4 flex items-center justify-center gap-3 pointer-events-auto">
             <button
               type="button"
               className={cx(
@@ -1279,8 +1306,6 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
             </button>
           </div>
         </div>
-      </div>
-
       {/* Badge tooltip (hover or locked) */}
       {badgeTooltipBadge && (
         <BadgeTooltip
@@ -1291,11 +1316,15 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
           onClose={() => setLockedBadge(null)}
         />
       )}
+      </div>
 
       {/* Toasts */}
       <ToastStack toasts={toasts} />
 
-      <NavArea prev={prevSlide} next={nextSlide} />
+      {/* NavArea - WRAPPED in z-100 */}
+      <div className="relative z-[100] pointer-events-auto">
+        <NavArea prev={prevSlide} next={nextSlide} />
+      </div>
     </SlideContainer>
   );
 };

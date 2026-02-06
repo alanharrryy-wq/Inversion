@@ -1,6 +1,6 @@
 import React from "react";
 
 export const KpiTelemetry: React.FC = () => {
-  // Placeholder: aquí luego metemos sparkline / trend dots / bands
+  // Placeholder: sparkline/trend/bands aquí después
   return null;
 };

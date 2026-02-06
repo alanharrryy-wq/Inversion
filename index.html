@@ -1,71 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <style>
-@keyframes scan {
-  0% { transform: translateY(0); opacity: 0; }
-  10% { opacity: 1; }
-  100% { transform: translateY(520px); opacity: 0; }
-}
-</style>
-
-  <style>
-  /* HITECH HUD: scanline global (add once) */
-  @keyframes hitech-scan {
-    0%   { transform: translateY(-40px); opacity: 0; }
-    10%  { opacity: 0.9; }
-    90%  { opacity: 0.9; }
-    100% { transform: translateY(520px); opacity: 0; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hitech-scanline { animation: none !important; }
-  }
-  
-</style>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HITECH RTS | DECK V33</title>
-  
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind -->
+  <title>HITECH RTS | DECK</title>
+
+  <style>
+    @keyframes scan {
+      0% { transform: translateY(0); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(520px); opacity: 0; }
+    }
+    @keyframes hitech-scan {
+      0%   { transform: translateY(-40px); opacity: 0; }
+      10%  { opacity: 0.9; }
+      90%  { opacity: 0.9; }
+      100% { transform: translateY(520px); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hitech-scanline { animation: none !important; }
+    }
+  </style>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet"
+  >
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            /* Paleta oficial HITECH */
-            gold: '#AB7B26',
-            cyan: '#02A7CA',
-            hitechBlue: '#026F86',
-            hitechBrown: '#553E13',
-            offwhite: '#E0E0E0',
-            panel: 'rgba(5, 8, 12, 0.95)',
+            gold: "#AB7B26",
+            cyan: "#02A7CA",
+            hitechBlue: "#026F86",
+            hitechBrown: "#553E13",
+            offwhite: "#E0E0E0",
+            panel: "rgba(5, 8, 12, 0.95)"
           },
           fontFamily: {
-            main: ['Rajdhani', 'sans-serif'],
-            display: ['Orbitron', 'sans-serif'],
-            elegant: ['Cinzel', 'serif'],
-            code: ['Share Tech Mono', 'monospace'],
-          },
-          animation: {
-            'fade-up': 'fadeInUp 0.6s ease forwards',
-            'spin-slow': 'spin 4s linear infinite',
-            'pulse-border-gold': 'pulseBorderGold 3s ease-in-out infinite',
-          },
-          keyframes: {
-            fadeInUp: {
-              '0%': { opacity: '0', transform: 'translateY(20px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
-            },
-            pulseBorderGold: {
-              '0%, 100%': { borderColor: 'rgba(171, 123, 38, 0.3)', boxShadow: '0 0 0 rgba(0,0,0,0)' },
-              '50%': { borderColor: 'rgba(171, 123, 38, 1)', boxShadow: '0 0 30px rgba(171, 123, 38, 0.3)' },
-            }
+            main: ["Rajdhani", "sans-serif"],
+            display: ["Orbitron", "sans-serif"],
+            elegant: ["Cinzel", "serif"],
+            code: ["Share Tech Mono", "monospace"]
           }
         }
       }
@@ -73,35 +52,35 @@
   </script>
 
   <style>
-    body {
-      background-color: #000;
-      overflow: hidden;
-      margin: 0;
-    }
-    /* Custom utility for the radar sweep */
-    .radar-sweep {
-      background: linear-gradient(45deg, rgba(2,167,202,0) 0%, rgba(2,167,202,0.4) 100%);
-    }
-    /* Hide scrollbars */
-    ::-webkit-scrollbar {
-      display: none;
-    }
+    body { background:#000; overflow:hidden; margin:0; }
+    ::-webkit-scrollbar { display:none; }
   </style>
 
+  <!-- Importmap: SOLO runtime libs -->
   <script type="importmap">
 {
   "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-    "react/": "https://aistudiocdn.com/react@^19.2.1/",
     "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
     "three": "https://aistudiocdn.com/three@^0.181.2",
     "@google/genai": "https://aistudiocdn.com/@google/genai@^1.32.0",
-    "framer-motion": "https://esm.sh/framer-motion@^12.23.26"
+    "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
+    "vite": "https://esm.sh/vite@^7.3.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
+
+  <link rel="stylesheet" href="./index.css">
+<link rel="stylesheet" href="/index.css">
 </head>
+
 <body>
   <div id="root"></div>
+
+  <!-- ✅ SOLO RELATIVO -->
+  <script type="module" src="./index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
 </body>
 </html>
