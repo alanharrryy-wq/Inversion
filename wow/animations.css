@@ -1,0 +1,178 @@
+:root {
+  --wow-grain-opacity: 0.08;
+  --wow-vignette-opacity: 0.66;
+  --wow-sweep-opacity: 0.2;
+  --wow-glow-cyan: rgba(2, 167, 202, 0.32);
+  --wow-glow-teal: rgba(0, 245, 212, 0.28);
+  --wow-glow-gold: rgba(171, 123, 38, 0.28);
+  --wow-duration-fast: 240ms;
+  --wow-duration-base: 560ms;
+  --wow-duration-slow: 1200ms;
+}
+
+@keyframes wow-fade-up {
+  from { opacity: 0; transform: translate3d(0, 16px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes wow-fade-down {
+  from { opacity: 0; transform: translate3d(0, -16px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes wow-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes wow-scale-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes wow-sweep-x {
+  0% { transform: translate3d(-40%, 0, 0) skewX(-8deg); opacity: 0; }
+  15% { opacity: var(--wow-sweep-opacity); }
+  100% { transform: translate3d(42%, 0, 0) skewX(-8deg); opacity: 0; }
+}
+
+@keyframes wow-sweep-y {
+  0% { transform: translate3d(0, -42%, 0) skewY(-6deg); opacity: 0; }
+  15% { opacity: var(--wow-sweep-opacity); }
+  100% { transform: translate3d(0, 44%, 0) skewY(-6deg); opacity: 0; }
+}
+
+@keyframes wow-glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 rgba(2, 167, 202, 0); }
+  50% { box-shadow: 0 0 26px var(--wow-glow-cyan); }
+}
+
+@keyframes wow-glow-pulse-teal {
+  0%, 100% { box-shadow: 0 0 0 rgba(0, 245, 212, 0); }
+  50% { box-shadow: 0 0 28px var(--wow-glow-teal); }
+}
+
+@keyframes wow-glow-pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 rgba(171, 123, 38, 0); }
+  50% { box-shadow: 0 0 28px var(--wow-glow-gold); }
+}
+
+@keyframes wow-grain-drift {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-1.2%, 1%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes wow-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.008); }
+}
+
+@keyframes wow-stagger-in {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); filter: blur(4px); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
+}
+
+@keyframes wow-reveal-mask {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes wow-line-scan {
+  0% { transform: translate3d(0, -120%, 0); opacity: 0; }
+  30% { opacity: .7; }
+  100% { transform: translate3d(0, 120%, 0); opacity: 0; }
+}
+
+@keyframes wow-deck-enter {
+  from { opacity: 0; transform: translate3d(0, 18px, 0) scale(.985); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes wow-badge-pop {
+  from { opacity: 0; transform: translate3d(0, 8px, 0) scale(.96); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes wow-cinema-beat-1 {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes wow-cinema-beat-2 {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes wow-cinema-beat-3 {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes wow-case-reveal {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes wow-case-sheen {
+  0% { transform: translateX(-35%); opacity: 0; }
+  25% { opacity: .18; }
+  100% { transform: translateX(35%); opacity: 0; }
+}
+
+.wow-anim-fade-up { animation: wow-fade-up var(--wow-duration-base) cubic-bezier(.2,.8,.2,1) both; }
+.wow-anim-fade-down { animation: wow-fade-down var(--wow-duration-base) cubic-bezier(.2,.8,.2,1) both; }
+.wow-anim-fade-in { animation: wow-fade-in var(--wow-duration-base) ease both; }
+.wow-anim-scale-in { animation: wow-scale-in var(--wow-duration-base) cubic-bezier(.2,.8,.2,1) both; }
+.wow-anim-stagger-in { animation: wow-stagger-in var(--wow-duration-base) cubic-bezier(.2,.8,.2,1) both; }
+.wow-anim-breathe { animation: wow-breathe 3.8s ease-in-out infinite; }
+.wow-anim-glow-cyan { animation: wow-glow-pulse 2.2s ease-in-out infinite; }
+.wow-anim-glow-teal { animation: wow-glow-pulse-teal 2.4s ease-in-out infinite; }
+.wow-anim-glow-gold { animation: wow-glow-pulse-gold 2.6s ease-in-out infinite; }
+.wow-anim-deck-enter { animation: wow-deck-enter .58s cubic-bezier(.2,.8,.2,1) both; }
+.wow-anim-badge-pop { animation: wow-badge-pop .48s cubic-bezier(.2,.8,.2,1) both; }
+
+.wow-anim-sweep-x::before,
+.wow-anim-sweep-y::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  background: linear-gradient(92deg, transparent 20%, rgba(255,255,255,.22) 49%, transparent 76%);
+  mix-blend-mode: screen;
+}
+
+.wow-anim-sweep-x::before { animation: wow-sweep-x 820ms cubic-bezier(.2,.8,.2,1) 1; }
+.wow-anim-sweep-y::before { animation: wow-sweep-y 820ms cubic-bezier(.2,.8,.2,1) 1; }
+
+.wow-case-reveal-step-1 { animation: wow-cinema-beat-1 520ms cubic-bezier(.2,.8,.2,1) both; }
+.wow-case-reveal-step-2 { animation: wow-cinema-beat-2 640ms cubic-bezier(.2,.8,.2,1) both; }
+.wow-case-reveal-step-3 { animation: wow-cinema-beat-3 760ms cubic-bezier(.2,.8,.2,1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wow-anim-fade-up,
+  .wow-anim-fade-down,
+  .wow-anim-fade-in,
+  .wow-anim-scale-in,
+  .wow-anim-stagger-in,
+  .wow-anim-breathe,
+  .wow-anim-glow-cyan,
+  .wow-anim-glow-teal,
+  .wow-anim-glow-gold,
+  .wow-anim-deck-enter,
+  .wow-anim-badge-pop,
+  .wow-case-reveal-step-1,
+  .wow-case-reveal-step-2,
+  .wow-case-reveal-step-3 {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .wow-anim-sweep-x::before,
+  .wow-anim-sweep-y::before {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}

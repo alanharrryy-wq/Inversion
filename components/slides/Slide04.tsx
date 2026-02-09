@@ -1,5 +1,8 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { SlideContainer, Header, NavArea } from "../SlideRenderer";
+import { WOW_DEMO, WOW_EVIDENCE_IMPACT, WOW_PROOF_LOCK } from "../../config/wow";
+import { useStableTimeout } from "../../wow";
+import { emitTourEvent } from "../../wow/tour";
 
 /**
  * =============================================================
@@ -560,6 +563,8 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
 }) => {
   const reducedMotion = usePrefersReducedMotion();
   const { toasts, push } = useToasts();
+  const wowEvidence = WOW_DEMO && WOW_EVIDENCE_IMPACT;
+  const wowProofLock = WOW_DEMO && WOW_PROOF_LOCK;
 
   // Global focus + interactive state
   const [activeAct, setActiveAct] = useState<ActId | null>(null);
@@ -573,6 +578,9 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
 
   // Evidence overlay toggle
   const [evidenceOverlay, setEvidenceOverlay] = useState(false);
+  const [evidenceFlash, setEvidenceFlash] = useState(false);
+  const [proofCommitPulse, setProofCommitPulse] = useState(false);
+  const proofPulseTimeout = useStableTimeout();
 
   // Proximity glow
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -607,6 +615,7 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
   // Keyboard controls: ESC clears lock and tooltip; "E" toggles overlay
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === "F1" || e.key === "F2" || e.key === "F3" || e.key === "F4") return;
       if (e.key === "Escape") {
         setLockFocus(false);
         setActiveAct(null);
@@ -750,6 +759,7 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
 
   const onBadgeEnter = (id: BadgeId) => {
     setHoverBadge(id);
+    emitTourEvent("evidence:hover", { badge: id });
   };
   const onBadgeLeave = (id: BadgeId) => {
     // If locked, keep it
@@ -764,7 +774,24 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
       .slice(2, 6)
       .toUpperCase()}`;
     const ok = await copyText(token);
+    if (wowEvidence) {
+      setEvidenceFlash(true);
+      window.setTimeout(() => setEvidenceFlash(false), 560);
+    }
+    if (wowProofLock) {
+      setProofCommitPulse(true);
+      proofPulseTimeout.schedule(() => setProofCommitPulse(false), 640);
+    }
+    emitTourEvent("evidence:copied", { tokenCopied: ok });
     push(ok ? `Evidence token copied: ${token}` : `Could not copy token: ${token}`, ok ? "ok" : "warn");
+  };
+
+  const onBadgeLockToggle = (id: BadgeId) => {
+    setLockedBadge((prev) => {
+      const next = prev === id ? null : id;
+      if (next) emitTourEvent("evidence:locked", { badge: id });
+      return next;
+    });
   };
 
   // Act container handlers
@@ -777,7 +804,13 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
     // Lock always centers on Act II (the question)
     setLockFocus((v) => !v);
     setActiveAct(null);
+    if (wowProofLock) {
+      setProofCommitPulse(true);
+      proofPulseTimeout.schedule(() => setProofCommitPulse(false), 640);
+    }
   };
+
+  const selectedEvidence = hoverBadge ?? lockedBadge;
 
   return (
     <SlideContainer>
@@ -859,6 +892,24 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
           animation: narrativePulse 900ms ease-out;
         }
 
+        @keyframes wowEvidencePulse {
+          0% { opacity: 0; transform: scale(0.985); }
+          50% { opacity: 1; }
+          100% { opacity: 0; transform: scale(1); }
+        }
+        .wow-evidence-pulse {
+          animation: wowEvidencePulse 540ms cubic-bezier(.2,.8,.2,1);
+        }
+
+        @keyframes proofCommitCeremony {
+          0% { opacity: 0; transform: scale(0.985); }
+          30% { opacity: 1; }
+          100% { opacity: 0; transform: scale(1); }
+        }
+        .proof-commit-pulse {
+          animation: proofCommitCeremony 640ms cubic-bezier(.2,.8,.2,1);
+        }
+
         @keyframes softGlowSweep {
           0% { transform: translateX(-40%); opacity: 0.0; }
           20% { opacity: 0.10; }
@@ -927,7 +978,15 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
       <Header title="PROPUESTA DE VALOR" breadcrumb="SOLUCIÓN" slideNum={5} />
 
       {/* Layout wrapper */}
-      <div ref={containerRef} className="relative h-full w-full px-16 pt-4 pb-10">
+      <div ref={containerRef} className={`relative h-full w-full px-16 pt-4 pb-10 ${wowEvidence ? "wow-s04-evidence" : ""}`}>
+        {wowProofLock && selectedEvidence && (
+          <div
+            className="pointer-events-none absolute inset-0 z-[26]"
+            style={{
+              background: "radial-gradient(920px 640px at 74% 42%, rgba(0,0,0,0.02), rgba(0,0,0,0.44) 72%)",
+            }}
+          />
+        )}
         {/* Top header line (right tag) */}
         <div className="absolute right-16 top-[92px] z-[5] flex items-center gap-2">
           <div className="h-2 w-2 rounded-full bg-cyan/60 shadow-[0_0_16px_rgba(2,167,202,0.20)]" />
@@ -1147,16 +1206,18 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
                         className={cx(
                           "a11y-focus group relative rounded-2xl border px-4 py-3 text-left transition-all duration-200",
                           "bg-black/28 backdrop-blur-md",
+                          wowEvidence && "hover:-translate-y-[2px] hover:scale-[1.01]",
                           t.border,
                           t.glow,
                           t.glowHover,
                           on && "badge-breath",
+                          wowProofLock && on && "shadow-[0_0_42px_rgba(2,167,202,0.28)]",
                           isLocked && "ring-1 " + t.ring
                         )}
                         data-badge={b.id}
                         onMouseEnter={() => onBadgeEnter(b.id)}
                         onMouseLeave={() => onBadgeLeave(b.id)}
-                        onClick={() => setLockedBadge((prev) => (prev === b.id ? null : b.id))}
+                        onClick={() => onBadgeLockToggle(b.id)}
                         aria-label={`${b.label} badge`}
                       >
                         <div className="flex items-center justify-between gap-3">
@@ -1273,8 +1334,8 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
                   ? "border-cyan/35 bg-cyan/10 text-cyan/85 shadow-[0_0_22px_rgba(2,167,202,0.16)]"
                   : "border-white/10 bg-white/5 text-white/55 hover:text-white/80 hover:border-white/18"
               )}
-              onClick={() => setEvidenceOverlay((v) => !v)}
-            >
+                    onClick={() => setEvidenceOverlay((v) => !v)}
+                  >
               {evidenceOverlay ? "EVIDENCE OVERLAY: ON" : "EVIDENCE OVERLAY: OFF"}
             </button>
 
@@ -1306,6 +1367,18 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
             </button>
           </div>
         </div>
+      {wowEvidence && evidenceFlash && (
+        <div className="pointer-events-none absolute inset-0 z-[60] wow-evidence-pulse">
+          <div className="absolute inset-[18%] rounded-[28px] border border-cyan/35 shadow-[0_0_80px_rgba(2,167,202,0.22)]" />
+          <div className="absolute inset-0 opacity-[0.16]" style={{ background: "radial-gradient(900px 500px at 50% 50%, rgba(2,167,202,0.22), transparent 70%)" }} />
+        </div>
+      )}
+      {wowProofLock && proofCommitPulse && (
+        <div className="pointer-events-none absolute inset-0 z-[61] proof-commit-pulse">
+          <div className="absolute inset-[20%] rounded-[24px] border border-emerald-300/30 shadow-[0_0_70px_rgba(52,211,153,0.22)]" />
+          <div className="absolute inset-0 opacity-[0.18]" style={{ background: "radial-gradient(700px 360px at 50% 58%, rgba(52,211,153,0.24), transparent 72%)" }} />
+        </div>
+      )}
       {/* Badge tooltip (hover or locked) */}
       {badgeTooltipBadge && (
         <BadgeTooltip

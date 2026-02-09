@@ -1,0 +1,3547 @@
+:root {
+  --tour-bg: rgba(2, 6, 12, 0.72);
+  --tour-panel: rgba(2, 10, 18, 0.9);
+  --tour-line: rgba(255, 255, 255, 0.18);
+  --tour-cyan: rgba(2, 167, 202, 0.95);
+  --tour-text: rgba(236, 244, 255, 0.95);
+}
+.wow-tour-launch { position: absolute; right: 20px; bottom: 20px; z-index: 145; }
+.wow-tour-launch__btn { border: 1px solid var(--tour-line); border-radius: 10px; background: var(--tour-panel); color: var(--tour-text); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; padding: 10px 14px; }
+.wow-tour { position: absolute; inset: 0; z-index: 141; pointer-events: none; }
+.wow-tour__backdrop { position: absolute; inset: 0; background: var(--tour-bg); }
+.wow-tour__spotlight { position: absolute; border-radius: 14px; box-shadow: 0 0 0 9999px rgba(2,6,12,.64); pointer-events: none; }
+.wow-tour__ring { position: absolute; border-radius: 16px; border: 2px solid rgba(2,167,202,.72); box-shadow: 0 0 28px rgba(2,167,202,.32); pointer-events: none; animation: wow-tour-ring 1.8s ease-in-out infinite; }
+@keyframes wow-tour-ring { 0%,100% { opacity: .8; } 50% { opacity: 1; } }
+.wow-tour__coach { position: absolute; max-width: 360px; width: min(360px, 36vw); border: 1px solid var(--tour-line); border-radius: 14px; background: var(--tour-panel); color: var(--tour-text); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 20px 60px rgba(0,0,0,.6); padding: 12px; pointer-events: auto; }
+.wow-tour__hud { font-size: 10px; letter-spacing: .2em; color: rgba(2,167,202,.95); text-transform: uppercase; }
+.wow-tour__title { margin: 8px 0 0; font-size: 15px; letter-spacing: .04em; }
+.wow-tour__instruction { margin: 8px 0 0; font-size: 13px; line-height: 1.45; color: rgba(236,244,255,.84); }
+.wow-tour__paste { margin-top: 10px; width: 100%; border: 1px solid rgba(2,167,202,.45); border-radius: 10px; background: rgba(2,167,202,.15); color: rgba(228,247,255,.96); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; padding: 8px 10px; }
+.wow-tour__controls { margin-top: 12px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; }
+.wow-tour__controls button { border: 1px solid var(--tour-line); border-radius: 8px; background: rgba(255,255,255,.05); color: var(--tour-text); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 7px 8px; }
+.wow-tour__controls button:disabled { opacity: .4; cursor: not-allowed; }
+.wow-tour--reduced .wow-tour__ring { animation: none; }
+.wow-tour-x-0 { left: 0px; }
+.wow-tour-y-0 { top: 0px; }
+.wow-tour-x-2 { left: 2px; }
+.wow-tour-y-2 { top: 2px; }
+.wow-tour-x-4 { left: 4px; }
+.wow-tour-y-4 { top: 4px; }
+.wow-tour-x-6 { left: 6px; }
+.wow-tour-y-6 { top: 6px; }
+.wow-tour-x-8 { left: 8px; }
+.wow-tour-y-8 { top: 8px; }
+.wow-tour-x-10 { left: 10px; }
+.wow-tour-y-10 { top: 10px; }
+.wow-tour-x-12 { left: 12px; }
+.wow-tour-y-12 { top: 12px; }
+.wow-tour-x-14 { left: 14px; }
+.wow-tour-y-14 { top: 14px; }
+.wow-tour-x-16 { left: 16px; }
+.wow-tour-y-16 { top: 16px; }
+.wow-tour-x-18 { left: 18px; }
+.wow-tour-y-18 { top: 18px; }
+.wow-tour-x-20 { left: 20px; }
+.wow-tour-y-20 { top: 20px; }
+.wow-tour-x-22 { left: 22px; }
+.wow-tour-y-22 { top: 22px; }
+.wow-tour-x-24 { left: 24px; }
+.wow-tour-y-24 { top: 24px; }
+.wow-tour-x-26 { left: 26px; }
+.wow-tour-y-26 { top: 26px; }
+.wow-tour-x-28 { left: 28px; }
+.wow-tour-y-28 { top: 28px; }
+.wow-tour-x-30 { left: 30px; }
+.wow-tour-y-30 { top: 30px; }
+.wow-tour-x-32 { left: 32px; }
+.wow-tour-y-32 { top: 32px; }
+.wow-tour-x-34 { left: 34px; }
+.wow-tour-y-34 { top: 34px; }
+.wow-tour-x-36 { left: 36px; }
+.wow-tour-y-36 { top: 36px; }
+.wow-tour-x-38 { left: 38px; }
+.wow-tour-y-38 { top: 38px; }
+.wow-tour-x-40 { left: 40px; }
+.wow-tour-y-40 { top: 40px; }
+.wow-tour-x-42 { left: 42px; }
+.wow-tour-y-42 { top: 42px; }
+.wow-tour-x-44 { left: 44px; }
+.wow-tour-y-44 { top: 44px; }
+.wow-tour-x-46 { left: 46px; }
+.wow-tour-y-46 { top: 46px; }
+.wow-tour-x-48 { left: 48px; }
+.wow-tour-y-48 { top: 48px; }
+.wow-tour-x-50 { left: 50px; }
+.wow-tour-y-50 { top: 50px; }
+.wow-tour-x-52 { left: 52px; }
+.wow-tour-y-52 { top: 52px; }
+.wow-tour-x-54 { left: 54px; }
+.wow-tour-y-54 { top: 54px; }
+.wow-tour-x-56 { left: 56px; }
+.wow-tour-y-56 { top: 56px; }
+.wow-tour-x-58 { left: 58px; }
+.wow-tour-y-58 { top: 58px; }
+.wow-tour-x-60 { left: 60px; }
+.wow-tour-y-60 { top: 60px; }
+.wow-tour-x-62 { left: 62px; }
+.wow-tour-y-62 { top: 62px; }
+.wow-tour-x-64 { left: 64px; }
+.wow-tour-y-64 { top: 64px; }
+.wow-tour-x-66 { left: 66px; }
+.wow-tour-y-66 { top: 66px; }
+.wow-tour-x-68 { left: 68px; }
+.wow-tour-y-68 { top: 68px; }
+.wow-tour-x-70 { left: 70px; }
+.wow-tour-y-70 { top: 70px; }
+.wow-tour-x-72 { left: 72px; }
+.wow-tour-y-72 { top: 72px; }
+.wow-tour-x-74 { left: 74px; }
+.wow-tour-y-74 { top: 74px; }
+.wow-tour-x-76 { left: 76px; }
+.wow-tour-y-76 { top: 76px; }
+.wow-tour-x-78 { left: 78px; }
+.wow-tour-y-78 { top: 78px; }
+.wow-tour-x-80 { left: 80px; }
+.wow-tour-y-80 { top: 80px; }
+.wow-tour-x-82 { left: 82px; }
+.wow-tour-y-82 { top: 82px; }
+.wow-tour-x-84 { left: 84px; }
+.wow-tour-y-84 { top: 84px; }
+.wow-tour-x-86 { left: 86px; }
+.wow-tour-y-86 { top: 86px; }
+.wow-tour-x-88 { left: 88px; }
+.wow-tour-y-88 { top: 88px; }
+.wow-tour-x-90 { left: 90px; }
+.wow-tour-y-90 { top: 90px; }
+.wow-tour-x-92 { left: 92px; }
+.wow-tour-y-92 { top: 92px; }
+.wow-tour-x-94 { left: 94px; }
+.wow-tour-y-94 { top: 94px; }
+.wow-tour-x-96 { left: 96px; }
+.wow-tour-y-96 { top: 96px; }
+.wow-tour-x-98 { left: 98px; }
+.wow-tour-y-98 { top: 98px; }
+.wow-tour-x-100 { left: 100px; }
+.wow-tour-y-100 { top: 100px; }
+.wow-tour-x-102 { left: 102px; }
+.wow-tour-y-102 { top: 102px; }
+.wow-tour-x-104 { left: 104px; }
+.wow-tour-y-104 { top: 104px; }
+.wow-tour-x-106 { left: 106px; }
+.wow-tour-y-106 { top: 106px; }
+.wow-tour-x-108 { left: 108px; }
+.wow-tour-y-108 { top: 108px; }
+.wow-tour-x-110 { left: 110px; }
+.wow-tour-y-110 { top: 110px; }
+.wow-tour-x-112 { left: 112px; }
+.wow-tour-y-112 { top: 112px; }
+.wow-tour-x-114 { left: 114px; }
+.wow-tour-y-114 { top: 114px; }
+.wow-tour-x-116 { left: 116px; }
+.wow-tour-y-116 { top: 116px; }
+.wow-tour-x-118 { left: 118px; }
+.wow-tour-y-118 { top: 118px; }
+.wow-tour-x-120 { left: 120px; }
+.wow-tour-y-120 { top: 120px; }
+.wow-tour-x-122 { left: 122px; }
+.wow-tour-y-122 { top: 122px; }
+.wow-tour-x-124 { left: 124px; }
+.wow-tour-y-124 { top: 124px; }
+.wow-tour-x-126 { left: 126px; }
+.wow-tour-y-126 { top: 126px; }
+.wow-tour-x-128 { left: 128px; }
+.wow-tour-y-128 { top: 128px; }
+.wow-tour-x-130 { left: 130px; }
+.wow-tour-y-130 { top: 130px; }
+.wow-tour-x-132 { left: 132px; }
+.wow-tour-y-132 { top: 132px; }
+.wow-tour-x-134 { left: 134px; }
+.wow-tour-y-134 { top: 134px; }
+.wow-tour-x-136 { left: 136px; }
+.wow-tour-y-136 { top: 136px; }
+.wow-tour-x-138 { left: 138px; }
+.wow-tour-y-138 { top: 138px; }
+.wow-tour-x-140 { left: 140px; }
+.wow-tour-y-140 { top: 140px; }
+.wow-tour-x-142 { left: 142px; }
+.wow-tour-y-142 { top: 142px; }
+.wow-tour-x-144 { left: 144px; }
+.wow-tour-y-144 { top: 144px; }
+.wow-tour-x-146 { left: 146px; }
+.wow-tour-y-146 { top: 146px; }
+.wow-tour-x-148 { left: 148px; }
+.wow-tour-y-148 { top: 148px; }
+.wow-tour-x-150 { left: 150px; }
+.wow-tour-y-150 { top: 150px; }
+.wow-tour-x-152 { left: 152px; }
+.wow-tour-y-152 { top: 152px; }
+.wow-tour-x-154 { left: 154px; }
+.wow-tour-y-154 { top: 154px; }
+.wow-tour-x-156 { left: 156px; }
+.wow-tour-y-156 { top: 156px; }
+.wow-tour-x-158 { left: 158px; }
+.wow-tour-y-158 { top: 158px; }
+.wow-tour-x-160 { left: 160px; }
+.wow-tour-y-160 { top: 160px; }
+.wow-tour-x-162 { left: 162px; }
+.wow-tour-y-162 { top: 162px; }
+.wow-tour-x-164 { left: 164px; }
+.wow-tour-y-164 { top: 164px; }
+.wow-tour-x-166 { left: 166px; }
+.wow-tour-y-166 { top: 166px; }
+.wow-tour-x-168 { left: 168px; }
+.wow-tour-y-168 { top: 168px; }
+.wow-tour-x-170 { left: 170px; }
+.wow-tour-y-170 { top: 170px; }
+.wow-tour-x-172 { left: 172px; }
+.wow-tour-y-172 { top: 172px; }
+.wow-tour-x-174 { left: 174px; }
+.wow-tour-y-174 { top: 174px; }
+.wow-tour-x-176 { left: 176px; }
+.wow-tour-y-176 { top: 176px; }
+.wow-tour-x-178 { left: 178px; }
+.wow-tour-y-178 { top: 178px; }
+.wow-tour-x-180 { left: 180px; }
+.wow-tour-y-180 { top: 180px; }
+.wow-tour-x-182 { left: 182px; }
+.wow-tour-y-182 { top: 182px; }
+.wow-tour-x-184 { left: 184px; }
+.wow-tour-y-184 { top: 184px; }
+.wow-tour-x-186 { left: 186px; }
+.wow-tour-y-186 { top: 186px; }
+.wow-tour-x-188 { left: 188px; }
+.wow-tour-y-188 { top: 188px; }
+.wow-tour-x-190 { left: 190px; }
+.wow-tour-y-190 { top: 190px; }
+.wow-tour-x-192 { left: 192px; }
+.wow-tour-y-192 { top: 192px; }
+.wow-tour-x-194 { left: 194px; }
+.wow-tour-y-194 { top: 194px; }
+.wow-tour-x-196 { left: 196px; }
+.wow-tour-y-196 { top: 196px; }
+.wow-tour-x-198 { left: 198px; }
+.wow-tour-y-198 { top: 198px; }
+.wow-tour-x-200 { left: 200px; }
+.wow-tour-y-200 { top: 200px; }
+.wow-tour-x-202 { left: 202px; }
+.wow-tour-y-202 { top: 202px; }
+.wow-tour-x-204 { left: 204px; }
+.wow-tour-y-204 { top: 204px; }
+.wow-tour-x-206 { left: 206px; }
+.wow-tour-y-206 { top: 206px; }
+.wow-tour-x-208 { left: 208px; }
+.wow-tour-y-208 { top: 208px; }
+.wow-tour-x-210 { left: 210px; }
+.wow-tour-y-210 { top: 210px; }
+.wow-tour-x-212 { left: 212px; }
+.wow-tour-y-212 { top: 212px; }
+.wow-tour-x-214 { left: 214px; }
+.wow-tour-y-214 { top: 214px; }
+.wow-tour-x-216 { left: 216px; }
+.wow-tour-y-216 { top: 216px; }
+.wow-tour-x-218 { left: 218px; }
+.wow-tour-y-218 { top: 218px; }
+.wow-tour-x-220 { left: 220px; }
+.wow-tour-y-220 { top: 220px; }
+.wow-tour-x-222 { left: 222px; }
+.wow-tour-y-222 { top: 222px; }
+.wow-tour-x-224 { left: 224px; }
+.wow-tour-y-224 { top: 224px; }
+.wow-tour-x-226 { left: 226px; }
+.wow-tour-y-226 { top: 226px; }
+.wow-tour-x-228 { left: 228px; }
+.wow-tour-y-228 { top: 228px; }
+.wow-tour-x-230 { left: 230px; }
+.wow-tour-y-230 { top: 230px; }
+.wow-tour-x-232 { left: 232px; }
+.wow-tour-y-232 { top: 232px; }
+.wow-tour-x-234 { left: 234px; }
+.wow-tour-y-234 { top: 234px; }
+.wow-tour-x-236 { left: 236px; }
+.wow-tour-y-236 { top: 236px; }
+.wow-tour-x-238 { left: 238px; }
+.wow-tour-y-238 { top: 238px; }
+.wow-tour-x-240 { left: 240px; }
+.wow-tour-y-240 { top: 240px; }
+.wow-tour-x-242 { left: 242px; }
+.wow-tour-y-242 { top: 242px; }
+.wow-tour-x-244 { left: 244px; }
+.wow-tour-y-244 { top: 244px; }
+.wow-tour-x-246 { left: 246px; }
+.wow-tour-y-246 { top: 246px; }
+.wow-tour-x-248 { left: 248px; }
+.wow-tour-y-248 { top: 248px; }
+.wow-tour-x-250 { left: 250px; }
+.wow-tour-y-250 { top: 250px; }
+.wow-tour-x-252 { left: 252px; }
+.wow-tour-y-252 { top: 252px; }
+.wow-tour-x-254 { left: 254px; }
+.wow-tour-y-254 { top: 254px; }
+.wow-tour-x-256 { left: 256px; }
+.wow-tour-y-256 { top: 256px; }
+.wow-tour-x-258 { left: 258px; }
+.wow-tour-y-258 { top: 258px; }
+.wow-tour-x-260 { left: 260px; }
+.wow-tour-y-260 { top: 260px; }
+.wow-tour-x-262 { left: 262px; }
+.wow-tour-y-262 { top: 262px; }
+.wow-tour-x-264 { left: 264px; }
+.wow-tour-y-264 { top: 264px; }
+.wow-tour-x-266 { left: 266px; }
+.wow-tour-y-266 { top: 266px; }
+.wow-tour-x-268 { left: 268px; }
+.wow-tour-y-268 { top: 268px; }
+.wow-tour-x-270 { left: 270px; }
+.wow-tour-y-270 { top: 270px; }
+.wow-tour-x-272 { left: 272px; }
+.wow-tour-y-272 { top: 272px; }
+.wow-tour-x-274 { left: 274px; }
+.wow-tour-y-274 { top: 274px; }
+.wow-tour-x-276 { left: 276px; }
+.wow-tour-y-276 { top: 276px; }
+.wow-tour-x-278 { left: 278px; }
+.wow-tour-y-278 { top: 278px; }
+.wow-tour-x-280 { left: 280px; }
+.wow-tour-y-280 { top: 280px; }
+.wow-tour-x-282 { left: 282px; }
+.wow-tour-y-282 { top: 282px; }
+.wow-tour-x-284 { left: 284px; }
+.wow-tour-y-284 { top: 284px; }
+.wow-tour-x-286 { left: 286px; }
+.wow-tour-y-286 { top: 286px; }
+.wow-tour-x-288 { left: 288px; }
+.wow-tour-y-288 { top: 288px; }
+.wow-tour-x-290 { left: 290px; }
+.wow-tour-y-290 { top: 290px; }
+.wow-tour-x-292 { left: 292px; }
+.wow-tour-y-292 { top: 292px; }
+.wow-tour-x-294 { left: 294px; }
+.wow-tour-y-294 { top: 294px; }
+.wow-tour-x-296 { left: 296px; }
+.wow-tour-y-296 { top: 296px; }
+.wow-tour-x-298 { left: 298px; }
+.wow-tour-y-298 { top: 298px; }
+.wow-tour-x-300 { left: 300px; }
+.wow-tour-y-300 { top: 300px; }
+.wow-tour-x-302 { left: 302px; }
+.wow-tour-y-302 { top: 302px; }
+.wow-tour-x-304 { left: 304px; }
+.wow-tour-y-304 { top: 304px; }
+.wow-tour-x-306 { left: 306px; }
+.wow-tour-y-306 { top: 306px; }
+.wow-tour-x-308 { left: 308px; }
+.wow-tour-y-308 { top: 308px; }
+.wow-tour-x-310 { left: 310px; }
+.wow-tour-y-310 { top: 310px; }
+.wow-tour-x-312 { left: 312px; }
+.wow-tour-y-312 { top: 312px; }
+.wow-tour-x-314 { left: 314px; }
+.wow-tour-y-314 { top: 314px; }
+.wow-tour-x-316 { left: 316px; }
+.wow-tour-y-316 { top: 316px; }
+.wow-tour-x-318 { left: 318px; }
+.wow-tour-y-318 { top: 318px; }
+.wow-tour-x-320 { left: 320px; }
+.wow-tour-y-320 { top: 320px; }
+.wow-tour-x-322 { left: 322px; }
+.wow-tour-y-322 { top: 322px; }
+.wow-tour-x-324 { left: 324px; }
+.wow-tour-y-324 { top: 324px; }
+.wow-tour-x-326 { left: 326px; }
+.wow-tour-y-326 { top: 326px; }
+.wow-tour-x-328 { left: 328px; }
+.wow-tour-y-328 { top: 328px; }
+.wow-tour-x-330 { left: 330px; }
+.wow-tour-y-330 { top: 330px; }
+.wow-tour-x-332 { left: 332px; }
+.wow-tour-y-332 { top: 332px; }
+.wow-tour-x-334 { left: 334px; }
+.wow-tour-y-334 { top: 334px; }
+.wow-tour-x-336 { left: 336px; }
+.wow-tour-y-336 { top: 336px; }
+.wow-tour-x-338 { left: 338px; }
+.wow-tour-y-338 { top: 338px; }
+.wow-tour-x-340 { left: 340px; }
+.wow-tour-y-340 { top: 340px; }
+.wow-tour-x-342 { left: 342px; }
+.wow-tour-y-342 { top: 342px; }
+.wow-tour-x-344 { left: 344px; }
+.wow-tour-y-344 { top: 344px; }
+.wow-tour-x-346 { left: 346px; }
+.wow-tour-y-346 { top: 346px; }
+.wow-tour-x-348 { left: 348px; }
+.wow-tour-y-348 { top: 348px; }
+.wow-tour-x-350 { left: 350px; }
+.wow-tour-y-350 { top: 350px; }
+.wow-tour-x-352 { left: 352px; }
+.wow-tour-y-352 { top: 352px; }
+.wow-tour-x-354 { left: 354px; }
+.wow-tour-y-354 { top: 354px; }
+.wow-tour-x-356 { left: 356px; }
+.wow-tour-y-356 { top: 356px; }
+.wow-tour-x-358 { left: 358px; }
+.wow-tour-y-358 { top: 358px; }
+.wow-tour-x-360 { left: 360px; }
+.wow-tour-y-360 { top: 360px; }
+.wow-tour-x-362 { left: 362px; }
+.wow-tour-y-362 { top: 362px; }
+.wow-tour-x-364 { left: 364px; }
+.wow-tour-y-364 { top: 364px; }
+.wow-tour-x-366 { left: 366px; }
+.wow-tour-y-366 { top: 366px; }
+.wow-tour-x-368 { left: 368px; }
+.wow-tour-y-368 { top: 368px; }
+.wow-tour-x-370 { left: 370px; }
+.wow-tour-y-370 { top: 370px; }
+.wow-tour-x-372 { left: 372px; }
+.wow-tour-y-372 { top: 372px; }
+.wow-tour-x-374 { left: 374px; }
+.wow-tour-y-374 { top: 374px; }
+.wow-tour-x-376 { left: 376px; }
+.wow-tour-y-376 { top: 376px; }
+.wow-tour-x-378 { left: 378px; }
+.wow-tour-y-378 { top: 378px; }
+.wow-tour-x-380 { left: 380px; }
+.wow-tour-y-380 { top: 380px; }
+.wow-tour-x-382 { left: 382px; }
+.wow-tour-y-382 { top: 382px; }
+.wow-tour-x-384 { left: 384px; }
+.wow-tour-y-384 { top: 384px; }
+.wow-tour-x-386 { left: 386px; }
+.wow-tour-y-386 { top: 386px; }
+.wow-tour-x-388 { left: 388px; }
+.wow-tour-y-388 { top: 388px; }
+.wow-tour-x-390 { left: 390px; }
+.wow-tour-y-390 { top: 390px; }
+.wow-tour-x-392 { left: 392px; }
+.wow-tour-y-392 { top: 392px; }
+.wow-tour-x-394 { left: 394px; }
+.wow-tour-y-394 { top: 394px; }
+.wow-tour-x-396 { left: 396px; }
+.wow-tour-y-396 { top: 396px; }
+.wow-tour-x-398 { left: 398px; }
+.wow-tour-y-398 { top: 398px; }
+.wow-tour-x-400 { left: 400px; }
+.wow-tour-y-400 { top: 400px; }
+.wow-tour-w-0 { width: 0px; }
+.wow-tour-h-0 { height: 0px; }
+.wow-tour-w-2 { width: 2px; }
+.wow-tour-h-2 { height: 2px; }
+.wow-tour-w-4 { width: 4px; }
+.wow-tour-h-4 { height: 4px; }
+.wow-tour-w-6 { width: 6px; }
+.wow-tour-h-6 { height: 6px; }
+.wow-tour-w-8 { width: 8px; }
+.wow-tour-h-8 { height: 8px; }
+.wow-tour-w-10 { width: 10px; }
+.wow-tour-h-10 { height: 10px; }
+.wow-tour-w-12 { width: 12px; }
+.wow-tour-h-12 { height: 12px; }
+.wow-tour-w-14 { width: 14px; }
+.wow-tour-h-14 { height: 14px; }
+.wow-tour-w-16 { width: 16px; }
+.wow-tour-h-16 { height: 16px; }
+.wow-tour-w-18 { width: 18px; }
+.wow-tour-h-18 { height: 18px; }
+.wow-tour-w-20 { width: 20px; }
+.wow-tour-h-20 { height: 20px; }
+.wow-tour-w-22 { width: 22px; }
+.wow-tour-h-22 { height: 22px; }
+.wow-tour-w-24 { width: 24px; }
+.wow-tour-h-24 { height: 24px; }
+.wow-tour-w-26 { width: 26px; }
+.wow-tour-h-26 { height: 26px; }
+.wow-tour-w-28 { width: 28px; }
+.wow-tour-h-28 { height: 28px; }
+.wow-tour-w-30 { width: 30px; }
+.wow-tour-h-30 { height: 30px; }
+.wow-tour-w-32 { width: 32px; }
+.wow-tour-h-32 { height: 32px; }
+.wow-tour-w-34 { width: 34px; }
+.wow-tour-h-34 { height: 34px; }
+.wow-tour-w-36 { width: 36px; }
+.wow-tour-h-36 { height: 36px; }
+.wow-tour-w-38 { width: 38px; }
+.wow-tour-h-38 { height: 38px; }
+.wow-tour-w-40 { width: 40px; }
+.wow-tour-h-40 { height: 40px; }
+.wow-tour-w-42 { width: 42px; }
+.wow-tour-h-42 { height: 42px; }
+.wow-tour-w-44 { width: 44px; }
+.wow-tour-h-44 { height: 44px; }
+.wow-tour-w-46 { width: 46px; }
+.wow-tour-h-46 { height: 46px; }
+.wow-tour-w-48 { width: 48px; }
+.wow-tour-h-48 { height: 48px; }
+.wow-tour-w-50 { width: 50px; }
+.wow-tour-h-50 { height: 50px; }
+.wow-tour-w-52 { width: 52px; }
+.wow-tour-h-52 { height: 52px; }
+.wow-tour-w-54 { width: 54px; }
+.wow-tour-h-54 { height: 54px; }
+.wow-tour-w-56 { width: 56px; }
+.wow-tour-h-56 { height: 56px; }
+.wow-tour-w-58 { width: 58px; }
+.wow-tour-h-58 { height: 58px; }
+.wow-tour-w-60 { width: 60px; }
+.wow-tour-h-60 { height: 60px; }
+.wow-tour-w-62 { width: 62px; }
+.wow-tour-h-62 { height: 62px; }
+.wow-tour-w-64 { width: 64px; }
+.wow-tour-h-64 { height: 64px; }
+.wow-tour-w-66 { width: 66px; }
+.wow-tour-h-66 { height: 66px; }
+.wow-tour-w-68 { width: 68px; }
+.wow-tour-h-68 { height: 68px; }
+.wow-tour-w-70 { width: 70px; }
+.wow-tour-h-70 { height: 70px; }
+.wow-tour-w-72 { width: 72px; }
+.wow-tour-h-72 { height: 72px; }
+.wow-tour-w-74 { width: 74px; }
+.wow-tour-h-74 { height: 74px; }
+.wow-tour-w-76 { width: 76px; }
+.wow-tour-h-76 { height: 76px; }
+.wow-tour-w-78 { width: 78px; }
+.wow-tour-h-78 { height: 78px; }
+.wow-tour-w-80 { width: 80px; }
+.wow-tour-h-80 { height: 80px; }
+.wow-tour-w-82 { width: 82px; }
+.wow-tour-h-82 { height: 82px; }
+.wow-tour-w-84 { width: 84px; }
+.wow-tour-h-84 { height: 84px; }
+.wow-tour-w-86 { width: 86px; }
+.wow-tour-h-86 { height: 86px; }
+.wow-tour-w-88 { width: 88px; }
+.wow-tour-h-88 { height: 88px; }
+.wow-tour-w-90 { width: 90px; }
+.wow-tour-h-90 { height: 90px; }
+.wow-tour-w-92 { width: 92px; }
+.wow-tour-h-92 { height: 92px; }
+.wow-tour-w-94 { width: 94px; }
+.wow-tour-h-94 { height: 94px; }
+.wow-tour-w-96 { width: 96px; }
+.wow-tour-h-96 { height: 96px; }
+.wow-tour-w-98 { width: 98px; }
+.wow-tour-h-98 { height: 98px; }
+.wow-tour-w-100 { width: 100px; }
+.wow-tour-h-100 { height: 100px; }
+.wow-tour-w-102 { width: 102px; }
+.wow-tour-h-102 { height: 102px; }
+.wow-tour-w-104 { width: 104px; }
+.wow-tour-h-104 { height: 104px; }
+.wow-tour-w-106 { width: 106px; }
+.wow-tour-h-106 { height: 106px; }
+.wow-tour-w-108 { width: 108px; }
+.wow-tour-h-108 { height: 108px; }
+.wow-tour-w-110 { width: 110px; }
+.wow-tour-h-110 { height: 110px; }
+.wow-tour-w-112 { width: 112px; }
+.wow-tour-h-112 { height: 112px; }
+.wow-tour-w-114 { width: 114px; }
+.wow-tour-h-114 { height: 114px; }
+.wow-tour-w-116 { width: 116px; }
+.wow-tour-h-116 { height: 116px; }
+.wow-tour-w-118 { width: 118px; }
+.wow-tour-h-118 { height: 118px; }
+.wow-tour-w-120 { width: 120px; }
+.wow-tour-h-120 { height: 120px; }
+.wow-tour-w-122 { width: 122px; }
+.wow-tour-h-122 { height: 122px; }
+.wow-tour-w-124 { width: 124px; }
+.wow-tour-h-124 { height: 124px; }
+.wow-tour-w-126 { width: 126px; }
+.wow-tour-h-126 { height: 126px; }
+.wow-tour-w-128 { width: 128px; }
+.wow-tour-h-128 { height: 128px; }
+.wow-tour-w-130 { width: 130px; }
+.wow-tour-h-130 { height: 130px; }
+.wow-tour-w-132 { width: 132px; }
+.wow-tour-h-132 { height: 132px; }
+.wow-tour-w-134 { width: 134px; }
+.wow-tour-h-134 { height: 134px; }
+.wow-tour-w-136 { width: 136px; }
+.wow-tour-h-136 { height: 136px; }
+.wow-tour-w-138 { width: 138px; }
+.wow-tour-h-138 { height: 138px; }
+.wow-tour-w-140 { width: 140px; }
+.wow-tour-h-140 { height: 140px; }
+.wow-tour-w-142 { width: 142px; }
+.wow-tour-h-142 { height: 142px; }
+.wow-tour-w-144 { width: 144px; }
+.wow-tour-h-144 { height: 144px; }
+.wow-tour-w-146 { width: 146px; }
+.wow-tour-h-146 { height: 146px; }
+.wow-tour-w-148 { width: 148px; }
+.wow-tour-h-148 { height: 148px; }
+.wow-tour-w-150 { width: 150px; }
+.wow-tour-h-150 { height: 150px; }
+.wow-tour-w-152 { width: 152px; }
+.wow-tour-h-152 { height: 152px; }
+.wow-tour-w-154 { width: 154px; }
+.wow-tour-h-154 { height: 154px; }
+.wow-tour-w-156 { width: 156px; }
+.wow-tour-h-156 { height: 156px; }
+.wow-tour-w-158 { width: 158px; }
+.wow-tour-h-158 { height: 158px; }
+.wow-tour-w-160 { width: 160px; }
+.wow-tour-h-160 { height: 160px; }
+.wow-tour-w-162 { width: 162px; }
+.wow-tour-h-162 { height: 162px; }
+.wow-tour-w-164 { width: 164px; }
+.wow-tour-h-164 { height: 164px; }
+.wow-tour-w-166 { width: 166px; }
+.wow-tour-h-166 { height: 166px; }
+.wow-tour-w-168 { width: 168px; }
+.wow-tour-h-168 { height: 168px; }
+.wow-tour-w-170 { width: 170px; }
+.wow-tour-h-170 { height: 170px; }
+.wow-tour-w-172 { width: 172px; }
+.wow-tour-h-172 { height: 172px; }
+.wow-tour-w-174 { width: 174px; }
+.wow-tour-h-174 { height: 174px; }
+.wow-tour-w-176 { width: 176px; }
+.wow-tour-h-176 { height: 176px; }
+.wow-tour-w-178 { width: 178px; }
+.wow-tour-h-178 { height: 178px; }
+.wow-tour-w-180 { width: 180px; }
+.wow-tour-h-180 { height: 180px; }
+.wow-tour-w-182 { width: 182px; }
+.wow-tour-h-182 { height: 182px; }
+.wow-tour-w-184 { width: 184px; }
+.wow-tour-h-184 { height: 184px; }
+.wow-tour-w-186 { width: 186px; }
+.wow-tour-h-186 { height: 186px; }
+.wow-tour-w-188 { width: 188px; }
+.wow-tour-h-188 { height: 188px; }
+.wow-tour-w-190 { width: 190px; }
+.wow-tour-h-190 { height: 190px; }
+.wow-tour-w-192 { width: 192px; }
+.wow-tour-h-192 { height: 192px; }
+.wow-tour-w-194 { width: 194px; }
+.wow-tour-h-194 { height: 194px; }
+.wow-tour-w-196 { width: 196px; }
+.wow-tour-h-196 { height: 196px; }
+.wow-tour-w-198 { width: 198px; }
+.wow-tour-h-198 { height: 198px; }
+.wow-tour-w-200 { width: 200px; }
+.wow-tour-h-200 { height: 200px; }
+.wow-tour-w-202 { width: 202px; }
+.wow-tour-h-202 { height: 202px; }
+.wow-tour-w-204 { width: 204px; }
+.wow-tour-h-204 { height: 204px; }
+.wow-tour-w-206 { width: 206px; }
+.wow-tour-h-206 { height: 206px; }
+.wow-tour-w-208 { width: 208px; }
+.wow-tour-h-208 { height: 208px; }
+.wow-tour-w-210 { width: 210px; }
+.wow-tour-h-210 { height: 210px; }
+.wow-tour-w-212 { width: 212px; }
+.wow-tour-h-212 { height: 212px; }
+.wow-tour-w-214 { width: 214px; }
+.wow-tour-h-214 { height: 214px; }
+.wow-tour-w-216 { width: 216px; }
+.wow-tour-h-216 { height: 216px; }
+.wow-tour-w-218 { width: 218px; }
+.wow-tour-h-218 { height: 218px; }
+.wow-tour-w-220 { width: 220px; }
+.wow-tour-h-220 { height: 220px; }
+.wow-tour-w-222 { width: 222px; }
+.wow-tour-h-222 { height: 222px; }
+.wow-tour-w-224 { width: 224px; }
+.wow-tour-h-224 { height: 224px; }
+.wow-tour-w-226 { width: 226px; }
+.wow-tour-h-226 { height: 226px; }
+.wow-tour-w-228 { width: 228px; }
+.wow-tour-h-228 { height: 228px; }
+.wow-tour-w-230 { width: 230px; }
+.wow-tour-h-230 { height: 230px; }
+.wow-tour-w-232 { width: 232px; }
+.wow-tour-h-232 { height: 232px; }
+.wow-tour-w-234 { width: 234px; }
+.wow-tour-h-234 { height: 234px; }
+.wow-tour-w-236 { width: 236px; }
+.wow-tour-h-236 { height: 236px; }
+.wow-tour-w-238 { width: 238px; }
+.wow-tour-h-238 { height: 238px; }
+.wow-tour-w-240 { width: 240px; }
+.wow-tour-h-240 { height: 240px; }
+.wow-tour-w-242 { width: 242px; }
+.wow-tour-h-242 { height: 242px; }
+.wow-tour-w-244 { width: 244px; }
+.wow-tour-h-244 { height: 244px; }
+.wow-tour-w-246 { width: 246px; }
+.wow-tour-h-246 { height: 246px; }
+.wow-tour-w-248 { width: 248px; }
+.wow-tour-h-248 { height: 248px; }
+.wow-tour-w-250 { width: 250px; }
+.wow-tour-h-250 { height: 250px; }
+.wow-tour-w-252 { width: 252px; }
+.wow-tour-h-252 { height: 252px; }
+.wow-tour-w-254 { width: 254px; }
+.wow-tour-h-254 { height: 254px; }
+.wow-tour-w-256 { width: 256px; }
+.wow-tour-h-256 { height: 256px; }
+.wow-tour-w-258 { width: 258px; }
+.wow-tour-h-258 { height: 258px; }
+.wow-tour-w-260 { width: 260px; }
+.wow-tour-h-260 { height: 260px; }
+.wow-tour-w-262 { width: 262px; }
+.wow-tour-h-262 { height: 262px; }
+.wow-tour-w-264 { width: 264px; }
+.wow-tour-h-264 { height: 264px; }
+.wow-tour-w-266 { width: 266px; }
+.wow-tour-h-266 { height: 266px; }
+.wow-tour-w-268 { width: 268px; }
+.wow-tour-h-268 { height: 268px; }
+.wow-tour-w-270 { width: 270px; }
+.wow-tour-h-270 { height: 270px; }
+.wow-tour-w-272 { width: 272px; }
+.wow-tour-h-272 { height: 272px; }
+.wow-tour-w-274 { width: 274px; }
+.wow-tour-h-274 { height: 274px; }
+.wow-tour-w-276 { width: 276px; }
+.wow-tour-h-276 { height: 276px; }
+.wow-tour-w-278 { width: 278px; }
+.wow-tour-h-278 { height: 278px; }
+.wow-tour-w-280 { width: 280px; }
+.wow-tour-h-280 { height: 280px; }
+.wow-tour-w-282 { width: 282px; }
+.wow-tour-h-282 { height: 282px; }
+.wow-tour-w-284 { width: 284px; }
+.wow-tour-h-284 { height: 284px; }
+.wow-tour-w-286 { width: 286px; }
+.wow-tour-h-286 { height: 286px; }
+.wow-tour-w-288 { width: 288px; }
+.wow-tour-h-288 { height: 288px; }
+.wow-tour-w-290 { width: 290px; }
+.wow-tour-h-290 { height: 290px; }
+.wow-tour-w-292 { width: 292px; }
+.wow-tour-h-292 { height: 292px; }
+.wow-tour-w-294 { width: 294px; }
+.wow-tour-h-294 { height: 294px; }
+.wow-tour-w-296 { width: 296px; }
+.wow-tour-h-296 { height: 296px; }
+.wow-tour-w-298 { width: 298px; }
+.wow-tour-h-298 { height: 298px; }
+.wow-tour-w-300 { width: 300px; }
+.wow-tour-h-300 { height: 300px; }
+.wow-tour-w-302 { width: 302px; }
+.wow-tour-h-302 { height: 302px; }
+.wow-tour-w-304 { width: 304px; }
+.wow-tour-h-304 { height: 304px; }
+.wow-tour-w-306 { width: 306px; }
+.wow-tour-h-306 { height: 306px; }
+.wow-tour-w-308 { width: 308px; }
+.wow-tour-h-308 { height: 308px; }
+.wow-tour-w-310 { width: 310px; }
+.wow-tour-h-310 { height: 310px; }
+.wow-tour-w-312 { width: 312px; }
+.wow-tour-h-312 { height: 312px; }
+.wow-tour-w-314 { width: 314px; }
+.wow-tour-h-314 { height: 314px; }
+.wow-tour-w-316 { width: 316px; }
+.wow-tour-h-316 { height: 316px; }
+.wow-tour-w-318 { width: 318px; }
+.wow-tour-h-318 { height: 318px; }
+.wow-tour-w-320 { width: 320px; }
+.wow-tour-h-320 { height: 320px; }
+.wow-tour-w-322 { width: 322px; }
+.wow-tour-h-322 { height: 322px; }
+.wow-tour-w-324 { width: 324px; }
+.wow-tour-h-324 { height: 324px; }
+.wow-tour-w-326 { width: 326px; }
+.wow-tour-h-326 { height: 326px; }
+.wow-tour-w-328 { width: 328px; }
+.wow-tour-h-328 { height: 328px; }
+.wow-tour-w-330 { width: 330px; }
+.wow-tour-h-330 { height: 330px; }
+.wow-tour-w-332 { width: 332px; }
+.wow-tour-h-332 { height: 332px; }
+.wow-tour-w-334 { width: 334px; }
+.wow-tour-h-334 { height: 334px; }
+.wow-tour-w-336 { width: 336px; }
+.wow-tour-h-336 { height: 336px; }
+.wow-tour-w-338 { width: 338px; }
+.wow-tour-h-338 { height: 338px; }
+.wow-tour-w-340 { width: 340px; }
+.wow-tour-h-340 { height: 340px; }
+.wow-tour-w-342 { width: 342px; }
+.wow-tour-h-342 { height: 342px; }
+.wow-tour-w-344 { width: 344px; }
+.wow-tour-h-344 { height: 344px; }
+.wow-tour-w-346 { width: 346px; }
+.wow-tour-h-346 { height: 346px; }
+.wow-tour-w-348 { width: 348px; }
+.wow-tour-h-348 { height: 348px; }
+.wow-tour-w-350 { width: 350px; }
+.wow-tour-h-350 { height: 350px; }
+.wow-tour-w-352 { width: 352px; }
+.wow-tour-h-352 { height: 352px; }
+.wow-tour-w-354 { width: 354px; }
+.wow-tour-h-354 { height: 354px; }
+.wow-tour-w-356 { width: 356px; }
+.wow-tour-h-356 { height: 356px; }
+.wow-tour-w-358 { width: 358px; }
+.wow-tour-h-358 { height: 358px; }
+.wow-tour-w-360 { width: 360px; }
+.wow-tour-h-360 { height: 360px; }
+.wow-tour-w-362 { width: 362px; }
+.wow-tour-h-362 { height: 362px; }
+.wow-tour-w-364 { width: 364px; }
+.wow-tour-h-364 { height: 364px; }
+.wow-tour-w-366 { width: 366px; }
+.wow-tour-h-366 { height: 366px; }
+.wow-tour-w-368 { width: 368px; }
+.wow-tour-h-368 { height: 368px; }
+.wow-tour-w-370 { width: 370px; }
+.wow-tour-h-370 { height: 370px; }
+.wow-tour-w-372 { width: 372px; }
+.wow-tour-h-372 { height: 372px; }
+.wow-tour-w-374 { width: 374px; }
+.wow-tour-h-374 { height: 374px; }
+.wow-tour-w-376 { width: 376px; }
+.wow-tour-h-376 { height: 376px; }
+.wow-tour-w-378 { width: 378px; }
+.wow-tour-h-378 { height: 378px; }
+.wow-tour-w-380 { width: 380px; }
+.wow-tour-h-380 { height: 380px; }
+.wow-tour-w-382 { width: 382px; }
+.wow-tour-h-382 { height: 382px; }
+.wow-tour-w-384 { width: 384px; }
+.wow-tour-h-384 { height: 384px; }
+.wow-tour-w-386 { width: 386px; }
+.wow-tour-h-386 { height: 386px; }
+.wow-tour-w-388 { width: 388px; }
+.wow-tour-h-388 { height: 388px; }
+.wow-tour-w-390 { width: 390px; }
+.wow-tour-h-390 { height: 390px; }
+.wow-tour-w-392 { width: 392px; }
+.wow-tour-h-392 { height: 392px; }
+.wow-tour-w-394 { width: 394px; }
+.wow-tour-h-394 { height: 394px; }
+.wow-tour-w-396 { width: 396px; }
+.wow-tour-h-396 { height: 396px; }
+.wow-tour-w-398 { width: 398px; }
+.wow-tour-h-398 { height: 398px; }
+.wow-tour-w-400 { width: 400px; }
+.wow-tour-h-400 { height: 400px; }
+.wow-tour-r-0 { border-radius: 0px; }
+.wow-tour-r-2 { border-radius: 2px; }
+.wow-tour-r-4 { border-radius: 4px; }
+.wow-tour-r-6 { border-radius: 6px; }
+.wow-tour-r-8 { border-radius: 8px; }
+.wow-tour-r-10 { border-radius: 10px; }
+.wow-tour-r-12 { border-radius: 12px; }
+.wow-tour-r-14 { border-radius: 14px; }
+.wow-tour-r-16 { border-radius: 16px; }
+.wow-tour-r-18 { border-radius: 18px; }
+.wow-tour-r-20 { border-radius: 20px; }
+.wow-tour-r-22 { border-radius: 22px; }
+.wow-tour-r-24 { border-radius: 24px; }
+.wow-tour-r-26 { border-radius: 26px; }
+.wow-tour-r-28 { border-radius: 28px; }
+.wow-tour-r-30 { border-radius: 30px; }
+.wow-tour-r-32 { border-radius: 32px; }
+.wow-tour-r-34 { border-radius: 34px; }
+.wow-tour-r-36 { border-radius: 36px; }
+.wow-tour-r-38 { border-radius: 38px; }
+.wow-tour-r-40 { border-radius: 40px; }
+.wow-tour-r-42 { border-radius: 42px; }
+.wow-tour-r-44 { border-radius: 44px; }
+.wow-tour-r-46 { border-radius: 46px; }
+.wow-tour-r-48 { border-radius: 48px; }
+.wow-tour-r-50 { border-radius: 50px; }
+.wow-tour-r-52 { border-radius: 52px; }
+.wow-tour-r-54 { border-radius: 54px; }
+.wow-tour-r-56 { border-radius: 56px; }
+.wow-tour-r-58 { border-radius: 58px; }
+.wow-tour-r-60 { border-radius: 60px; }
+.wow-tour-r-62 { border-radius: 62px; }
+.wow-tour-r-64 { border-radius: 64px; }
+.wow-tour-r-66 { border-radius: 66px; }
+.wow-tour-r-68 { border-radius: 68px; }
+.wow-tour-r-70 { border-radius: 70px; }
+.wow-tour-r-72 { border-radius: 72px; }
+.wow-tour-r-74 { border-radius: 74px; }
+.wow-tour-r-76 { border-radius: 76px; }
+.wow-tour-r-78 { border-radius: 78px; }
+.wow-tour-r-80 { border-radius: 80px; }
+.wow-tour-r-82 { border-radius: 82px; }
+.wow-tour-r-84 { border-radius: 84px; }
+.wow-tour-r-86 { border-radius: 86px; }
+.wow-tour-r-88 { border-radius: 88px; }
+.wow-tour-r-90 { border-radius: 90px; }
+.wow-tour-r-92 { border-radius: 92px; }
+.wow-tour-r-94 { border-radius: 94px; }
+.wow-tour-r-96 { border-radius: 96px; }
+.wow-tour-r-98 { border-radius: 98px; }
+.wow-tour-r-100 { border-radius: 100px; }
+.wow-tour-r-102 { border-radius: 102px; }
+.wow-tour-r-104 { border-radius: 104px; }
+.wow-tour-r-106 { border-radius: 106px; }
+.wow-tour-r-108 { border-radius: 108px; }
+.wow-tour-r-110 { border-radius: 110px; }
+.wow-tour-r-112 { border-radius: 112px; }
+.wow-tour-r-114 { border-radius: 114px; }
+.wow-tour-r-116 { border-radius: 116px; }
+.wow-tour-r-118 { border-radius: 118px; }
+.wow-tour-r-120 { border-radius: 120px; }
+.wow-tour-r-122 { border-radius: 122px; }
+.wow-tour-r-124 { border-radius: 124px; }
+.wow-tour-r-126 { border-radius: 126px; }
+.wow-tour-r-128 { border-radius: 128px; }
+.wow-tour-r-130 { border-radius: 130px; }
+.wow-tour-r-132 { border-radius: 132px; }
+.wow-tour-r-134 { border-radius: 134px; }
+.wow-tour-r-136 { border-radius: 136px; }
+.wow-tour-r-138 { border-radius: 138px; }
+.wow-tour-r-140 { border-radius: 140px; }
+.wow-tour-r-142 { border-radius: 142px; }
+.wow-tour-r-144 { border-radius: 144px; }
+.wow-tour-r-146 { border-radius: 146px; }
+.wow-tour-r-148 { border-radius: 148px; }
+.wow-tour-r-150 { border-radius: 150px; }
+.wow-tour-r-152 { border-radius: 152px; }
+.wow-tour-r-154 { border-radius: 154px; }
+.wow-tour-r-156 { border-radius: 156px; }
+.wow-tour-r-158 { border-radius: 158px; }
+.wow-tour-r-160 { border-radius: 160px; }
+.wow-tour-r-162 { border-radius: 162px; }
+.wow-tour-r-164 { border-radius: 164px; }
+.wow-tour-r-166 { border-radius: 166px; }
+.wow-tour-r-168 { border-radius: 168px; }
+.wow-tour-r-170 { border-radius: 170px; }
+.wow-tour-r-172 { border-radius: 172px; }
+.wow-tour-r-174 { border-radius: 174px; }
+.wow-tour-r-176 { border-radius: 176px; }
+.wow-tour-r-178 { border-radius: 178px; }
+.wow-tour-r-180 { border-radius: 180px; }
+.wow-tour-r-182 { border-radius: 182px; }
+.wow-tour-r-184 { border-radius: 184px; }
+.wow-tour-r-186 { border-radius: 186px; }
+.wow-tour-r-188 { border-radius: 188px; }
+.wow-tour-r-190 { border-radius: 190px; }
+.wow-tour-r-192 { border-radius: 192px; }
+.wow-tour-r-194 { border-radius: 194px; }
+.wow-tour-r-196 { border-radius: 196px; }
+.wow-tour-r-198 { border-radius: 198px; }
+.wow-tour-r-200 { border-radius: 200px; }
+.wow-tour-r-202 { border-radius: 202px; }
+.wow-tour-r-204 { border-radius: 204px; }
+.wow-tour-r-206 { border-radius: 206px; }
+.wow-tour-r-208 { border-radius: 208px; }
+.wow-tour-r-210 { border-radius: 210px; }
+.wow-tour-r-212 { border-radius: 212px; }
+.wow-tour-r-214 { border-radius: 214px; }
+.wow-tour-r-216 { border-radius: 216px; }
+.wow-tour-r-218 { border-radius: 218px; }
+.wow-tour-r-220 { border-radius: 220px; }
+.wow-tour-r-222 { border-radius: 222px; }
+.wow-tour-r-224 { border-radius: 224px; }
+.wow-tour-r-226 { border-radius: 226px; }
+.wow-tour-r-228 { border-radius: 228px; }
+.wow-tour-r-230 { border-radius: 230px; }
+.wow-tour-r-232 { border-radius: 232px; }
+.wow-tour-r-234 { border-radius: 234px; }
+.wow-tour-r-236 { border-radius: 236px; }
+.wow-tour-r-238 { border-radius: 238px; }
+.wow-tour-r-240 { border-radius: 240px; }
+.wow-tour-m-0 { margin: 0px; }
+.wow-tour-p-0 { padding: 0px; }
+.wow-tour-m-2 { margin: 2px; }
+.wow-tour-p-2 { padding: 2px; }
+.wow-tour-m-4 { margin: 4px; }
+.wow-tour-p-4 { padding: 4px; }
+.wow-tour-m-6 { margin: 6px; }
+.wow-tour-p-6 { padding: 6px; }
+.wow-tour-m-8 { margin: 8px; }
+.wow-tour-p-8 { padding: 8px; }
+.wow-tour-m-10 { margin: 10px; }
+.wow-tour-p-10 { padding: 10px; }
+.wow-tour-m-12 { margin: 12px; }
+.wow-tour-p-12 { padding: 12px; }
+.wow-tour-m-14 { margin: 14px; }
+.wow-tour-p-14 { padding: 14px; }
+.wow-tour-m-16 { margin: 16px; }
+.wow-tour-p-16 { padding: 16px; }
+.wow-tour-m-18 { margin: 18px; }
+.wow-tour-p-18 { padding: 18px; }
+.wow-tour-m-20 { margin: 20px; }
+.wow-tour-p-20 { padding: 20px; }
+.wow-tour-m-22 { margin: 22px; }
+.wow-tour-p-22 { padding: 22px; }
+.wow-tour-m-24 { margin: 24px; }
+.wow-tour-p-24 { padding: 24px; }
+.wow-tour-m-26 { margin: 26px; }
+.wow-tour-p-26 { padding: 26px; }
+.wow-tour-m-28 { margin: 28px; }
+.wow-tour-p-28 { padding: 28px; }
+.wow-tour-m-30 { margin: 30px; }
+.wow-tour-p-30 { padding: 30px; }
+.wow-tour-m-32 { margin: 32px; }
+.wow-tour-p-32 { padding: 32px; }
+.wow-tour-m-34 { margin: 34px; }
+.wow-tour-p-34 { padding: 34px; }
+.wow-tour-m-36 { margin: 36px; }
+.wow-tour-p-36 { padding: 36px; }
+.wow-tour-m-38 { margin: 38px; }
+.wow-tour-p-38 { padding: 38px; }
+.wow-tour-m-40 { margin: 40px; }
+.wow-tour-p-40 { padding: 40px; }
+.wow-tour-m-42 { margin: 42px; }
+.wow-tour-p-42 { padding: 42px; }
+.wow-tour-m-44 { margin: 44px; }
+.wow-tour-p-44 { padding: 44px; }
+.wow-tour-m-46 { margin: 46px; }
+.wow-tour-p-46 { padding: 46px; }
+.wow-tour-m-48 { margin: 48px; }
+.wow-tour-p-48 { padding: 48px; }
+.wow-tour-m-50 { margin: 50px; }
+.wow-tour-p-50 { padding: 50px; }
+.wow-tour-m-52 { margin: 52px; }
+.wow-tour-p-52 { padding: 52px; }
+.wow-tour-m-54 { margin: 54px; }
+.wow-tour-p-54 { padding: 54px; }
+.wow-tour-m-56 { margin: 56px; }
+.wow-tour-p-56 { padding: 56px; }
+.wow-tour-m-58 { margin: 58px; }
+.wow-tour-p-58 { padding: 58px; }
+.wow-tour-m-60 { margin: 60px; }
+.wow-tour-p-60 { padding: 60px; }
+.wow-tour-m-62 { margin: 62px; }
+.wow-tour-p-62 { padding: 62px; }
+.wow-tour-m-64 { margin: 64px; }
+.wow-tour-p-64 { padding: 64px; }
+.wow-tour-m-66 { margin: 66px; }
+.wow-tour-p-66 { padding: 66px; }
+.wow-tour-m-68 { margin: 68px; }
+.wow-tour-p-68 { padding: 68px; }
+.wow-tour-m-70 { margin: 70px; }
+.wow-tour-p-70 { padding: 70px; }
+.wow-tour-m-72 { margin: 72px; }
+.wow-tour-p-72 { padding: 72px; }
+.wow-tour-m-74 { margin: 74px; }
+.wow-tour-p-74 { padding: 74px; }
+.wow-tour-m-76 { margin: 76px; }
+.wow-tour-p-76 { padding: 76px; }
+.wow-tour-m-78 { margin: 78px; }
+.wow-tour-p-78 { padding: 78px; }
+.wow-tour-m-80 { margin: 80px; }
+.wow-tour-p-80 { padding: 80px; }
+.wow-tour-m-82 { margin: 82px; }
+.wow-tour-p-82 { padding: 82px; }
+.wow-tour-m-84 { margin: 84px; }
+.wow-tour-p-84 { padding: 84px; }
+.wow-tour-m-86 { margin: 86px; }
+.wow-tour-p-86 { padding: 86px; }
+.wow-tour-m-88 { margin: 88px; }
+.wow-tour-p-88 { padding: 88px; }
+.wow-tour-m-90 { margin: 90px; }
+.wow-tour-p-90 { padding: 90px; }
+.wow-tour-m-92 { margin: 92px; }
+.wow-tour-p-92 { padding: 92px; }
+.wow-tour-m-94 { margin: 94px; }
+.wow-tour-p-94 { padding: 94px; }
+.wow-tour-m-96 { margin: 96px; }
+.wow-tour-p-96 { padding: 96px; }
+.wow-tour-m-98 { margin: 98px; }
+.wow-tour-p-98 { padding: 98px; }
+.wow-tour-m-100 { margin: 100px; }
+.wow-tour-p-100 { padding: 100px; }
+.wow-tour-m-102 { margin: 102px; }
+.wow-tour-p-102 { padding: 102px; }
+.wow-tour-m-104 { margin: 104px; }
+.wow-tour-p-104 { padding: 104px; }
+.wow-tour-m-106 { margin: 106px; }
+.wow-tour-p-106 { padding: 106px; }
+.wow-tour-m-108 { margin: 108px; }
+.wow-tour-p-108 { padding: 108px; }
+.wow-tour-m-110 { margin: 110px; }
+.wow-tour-p-110 { padding: 110px; }
+.wow-tour-m-112 { margin: 112px; }
+.wow-tour-p-112 { padding: 112px; }
+.wow-tour-m-114 { margin: 114px; }
+.wow-tour-p-114 { padding: 114px; }
+.wow-tour-m-116 { margin: 116px; }
+.wow-tour-p-116 { padding: 116px; }
+.wow-tour-m-118 { margin: 118px; }
+.wow-tour-p-118 { padding: 118px; }
+.wow-tour-m-120 { margin: 120px; }
+.wow-tour-p-120 { padding: 120px; }
+.wow-tour-m-122 { margin: 122px; }
+.wow-tour-p-122 { padding: 122px; }
+.wow-tour-m-124 { margin: 124px; }
+.wow-tour-p-124 { padding: 124px; }
+.wow-tour-m-126 { margin: 126px; }
+.wow-tour-p-126 { padding: 126px; }
+.wow-tour-m-128 { margin: 128px; }
+.wow-tour-p-128 { padding: 128px; }
+.wow-tour-m-130 { margin: 130px; }
+.wow-tour-p-130 { padding: 130px; }
+.wow-tour-m-132 { margin: 132px; }
+.wow-tour-p-132 { padding: 132px; }
+.wow-tour-m-134 { margin: 134px; }
+.wow-tour-p-134 { padding: 134px; }
+.wow-tour-m-136 { margin: 136px; }
+.wow-tour-p-136 { padding: 136px; }
+.wow-tour-m-138 { margin: 138px; }
+.wow-tour-p-138 { padding: 138px; }
+.wow-tour-m-140 { margin: 140px; }
+.wow-tour-p-140 { padding: 140px; }
+.wow-tour-m-142 { margin: 142px; }
+.wow-tour-p-142 { padding: 142px; }
+.wow-tour-m-144 { margin: 144px; }
+.wow-tour-p-144 { padding: 144px; }
+.wow-tour-m-146 { margin: 146px; }
+.wow-tour-p-146 { padding: 146px; }
+.wow-tour-m-148 { margin: 148px; }
+.wow-tour-p-148 { padding: 148px; }
+.wow-tour-m-150 { margin: 150px; }
+.wow-tour-p-150 { padding: 150px; }
+.wow-tour-m-152 { margin: 152px; }
+.wow-tour-p-152 { padding: 152px; }
+.wow-tour-m-154 { margin: 154px; }
+.wow-tour-p-154 { padding: 154px; }
+.wow-tour-m-156 { margin: 156px; }
+.wow-tour-p-156 { padding: 156px; }
+.wow-tour-m-158 { margin: 158px; }
+.wow-tour-p-158 { padding: 158px; }
+.wow-tour-m-160 { margin: 160px; }
+.wow-tour-p-160 { padding: 160px; }
+.wow-tour-m-162 { margin: 162px; }
+.wow-tour-p-162 { padding: 162px; }
+.wow-tour-m-164 { margin: 164px; }
+.wow-tour-p-164 { padding: 164px; }
+.wow-tour-m-166 { margin: 166px; }
+.wow-tour-p-166 { padding: 166px; }
+.wow-tour-m-168 { margin: 168px; }
+.wow-tour-p-168 { padding: 168px; }
+.wow-tour-m-170 { margin: 170px; }
+.wow-tour-p-170 { padding: 170px; }
+.wow-tour-m-172 { margin: 172px; }
+.wow-tour-p-172 { padding: 172px; }
+.wow-tour-m-174 { margin: 174px; }
+.wow-tour-p-174 { padding: 174px; }
+.wow-tour-m-176 { margin: 176px; }
+.wow-tour-p-176 { padding: 176px; }
+.wow-tour-m-178 { margin: 178px; }
+.wow-tour-p-178 { padding: 178px; }
+.wow-tour-m-180 { margin: 180px; }
+.wow-tour-p-180 { padding: 180px; }
+.wow-tour-m-182 { margin: 182px; }
+.wow-tour-p-182 { padding: 182px; }
+.wow-tour-m-184 { margin: 184px; }
+.wow-tour-p-184 { padding: 184px; }
+.wow-tour-m-186 { margin: 186px; }
+.wow-tour-p-186 { padding: 186px; }
+.wow-tour-m-188 { margin: 188px; }
+.wow-tour-p-188 { padding: 188px; }
+.wow-tour-m-190 { margin: 190px; }
+.wow-tour-p-190 { padding: 190px; }
+.wow-tour-m-192 { margin: 192px; }
+.wow-tour-p-192 { padding: 192px; }
+.wow-tour-m-194 { margin: 194px; }
+.wow-tour-p-194 { padding: 194px; }
+.wow-tour-m-196 { margin: 196px; }
+.wow-tour-p-196 { padding: 196px; }
+.wow-tour-m-198 { margin: 198px; }
+.wow-tour-p-198 { padding: 198px; }
+.wow-tour-m-200 { margin: 200px; }
+.wow-tour-p-200 { padding: 200px; }
+.wow-tour-m-202 { margin: 202px; }
+.wow-tour-p-202 { padding: 202px; }
+.wow-tour-m-204 { margin: 204px; }
+.wow-tour-p-204 { padding: 204px; }
+.wow-tour-m-206 { margin: 206px; }
+.wow-tour-p-206 { padding: 206px; }
+.wow-tour-m-208 { margin: 208px; }
+.wow-tour-p-208 { padding: 208px; }
+.wow-tour-m-210 { margin: 210px; }
+.wow-tour-p-210 { padding: 210px; }
+.wow-tour-m-212 { margin: 212px; }
+.wow-tour-p-212 { padding: 212px; }
+.wow-tour-m-214 { margin: 214px; }
+.wow-tour-p-214 { padding: 214px; }
+.wow-tour-m-216 { margin: 216px; }
+.wow-tour-p-216 { padding: 216px; }
+.wow-tour-m-218 { margin: 218px; }
+.wow-tour-p-218 { padding: 218px; }
+.wow-tour-m-220 { margin: 220px; }
+.wow-tour-p-220 { padding: 220px; }
+.wow-tour-m-222 { margin: 222px; }
+.wow-tour-p-222 { padding: 222px; }
+.wow-tour-m-224 { margin: 224px; }
+.wow-tour-p-224 { padding: 224px; }
+.wow-tour-m-226 { margin: 226px; }
+.wow-tour-p-226 { padding: 226px; }
+.wow-tour-m-228 { margin: 228px; }
+.wow-tour-p-228 { padding: 228px; }
+.wow-tour-m-230 { margin: 230px; }
+.wow-tour-p-230 { padding: 230px; }
+.wow-tour-m-232 { margin: 232px; }
+.wow-tour-p-232 { padding: 232px; }
+.wow-tour-m-234 { margin: 234px; }
+.wow-tour-p-234 { padding: 234px; }
+.wow-tour-m-236 { margin: 236px; }
+.wow-tour-p-236 { padding: 236px; }
+.wow-tour-m-238 { margin: 238px; }
+.wow-tour-p-238 { padding: 238px; }
+.wow-tour-m-240 { margin: 240px; }
+.wow-tour-p-240 { padding: 240px; }
+.wow-tour-o-0 { opacity: 0.00; }
+.wow-tour-o-1 { opacity: 0.01; }
+.wow-tour-o-2 { opacity: 0.02; }
+.wow-tour-o-3 { opacity: 0.03; }
+.wow-tour-o-4 { opacity: 0.04; }
+.wow-tour-o-5 { opacity: 0.05; }
+.wow-tour-o-6 { opacity: 0.06; }
+.wow-tour-o-7 { opacity: 0.07; }
+.wow-tour-o-8 { opacity: 0.08; }
+.wow-tour-o-9 { opacity: 0.09; }
+.wow-tour-o-10 { opacity: 0.10; }
+.wow-tour-o-11 { opacity: 0.11; }
+.wow-tour-o-12 { opacity: 0.12; }
+.wow-tour-o-13 { opacity: 0.13; }
+.wow-tour-o-14 { opacity: 0.14; }
+.wow-tour-o-15 { opacity: 0.15; }
+.wow-tour-o-16 { opacity: 0.16; }
+.wow-tour-o-17 { opacity: 0.17; }
+.wow-tour-o-18 { opacity: 0.18; }
+.wow-tour-o-19 { opacity: 0.19; }
+.wow-tour-o-20 { opacity: 0.20; }
+.wow-tour-o-21 { opacity: 0.21; }
+.wow-tour-o-22 { opacity: 0.22; }
+.wow-tour-o-23 { opacity: 0.23; }
+.wow-tour-o-24 { opacity: 0.24; }
+.wow-tour-o-25 { opacity: 0.25; }
+.wow-tour-o-26 { opacity: 0.26; }
+.wow-tour-o-27 { opacity: 0.27; }
+.wow-tour-o-28 { opacity: 0.28; }
+.wow-tour-o-29 { opacity: 0.29; }
+.wow-tour-o-30 { opacity: 0.30; }
+.wow-tour-o-31 { opacity: 0.31; }
+.wow-tour-o-32 { opacity: 0.32; }
+.wow-tour-o-33 { opacity: 0.33; }
+.wow-tour-o-34 { opacity: 0.34; }
+.wow-tour-o-35 { opacity: 0.35; }
+.wow-tour-o-36 { opacity: 0.36; }
+.wow-tour-o-37 { opacity: 0.37; }
+.wow-tour-o-38 { opacity: 0.38; }
+.wow-tour-o-39 { opacity: 0.39; }
+.wow-tour-o-40 { opacity: 0.40; }
+.wow-tour-o-41 { opacity: 0.41; }
+.wow-tour-o-42 { opacity: 0.42; }
+.wow-tour-o-43 { opacity: 0.43; }
+.wow-tour-o-44 { opacity: 0.44; }
+.wow-tour-o-45 { opacity: 0.45; }
+.wow-tour-o-46 { opacity: 0.46; }
+.wow-tour-o-47 { opacity: 0.47; }
+.wow-tour-o-48 { opacity: 0.48; }
+.wow-tour-o-49 { opacity: 0.49; }
+.wow-tour-o-50 { opacity: 0.50; }
+.wow-tour-o-51 { opacity: 0.51; }
+.wow-tour-o-52 { opacity: 0.52; }
+.wow-tour-o-53 { opacity: 0.53; }
+.wow-tour-o-54 { opacity: 0.54; }
+.wow-tour-o-55 { opacity: 0.55; }
+.wow-tour-o-56 { opacity: 0.56; }
+.wow-tour-o-57 { opacity: 0.57; }
+.wow-tour-o-58 { opacity: 0.58; }
+.wow-tour-o-59 { opacity: 0.59; }
+.wow-tour-o-60 { opacity: 0.60; }
+.wow-tour-o-61 { opacity: 0.61; }
+.wow-tour-o-62 { opacity: 0.62; }
+.wow-tour-o-63 { opacity: 0.63; }
+.wow-tour-o-64 { opacity: 0.64; }
+.wow-tour-o-65 { opacity: 0.65; }
+.wow-tour-o-66 { opacity: 0.66; }
+.wow-tour-o-67 { opacity: 0.67; }
+.wow-tour-o-68 { opacity: 0.68; }
+.wow-tour-o-69 { opacity: 0.69; }
+.wow-tour-o-70 { opacity: 0.70; }
+.wow-tour-o-71 { opacity: 0.71; }
+.wow-tour-o-72 { opacity: 0.72; }
+.wow-tour-o-73 { opacity: 0.73; }
+.wow-tour-o-74 { opacity: 0.74; }
+.wow-tour-o-75 { opacity: 0.75; }
+.wow-tour-o-76 { opacity: 0.76; }
+.wow-tour-o-77 { opacity: 0.77; }
+.wow-tour-o-78 { opacity: 0.78; }
+.wow-tour-o-79 { opacity: 0.79; }
+.wow-tour-o-80 { opacity: 0.80; }
+.wow-tour-o-81 { opacity: 0.81; }
+.wow-tour-o-82 { opacity: 0.82; }
+.wow-tour-o-83 { opacity: 0.83; }
+.wow-tour-o-84 { opacity: 0.84; }
+.wow-tour-o-85 { opacity: 0.85; }
+.wow-tour-o-86 { opacity: 0.86; }
+.wow-tour-o-87 { opacity: 0.87; }
+.wow-tour-o-88 { opacity: 0.88; }
+.wow-tour-o-89 { opacity: 0.89; }
+.wow-tour-o-90 { opacity: 0.90; }
+.wow-tour-o-91 { opacity: 0.91; }
+.wow-tour-o-92 { opacity: 0.92; }
+.wow-tour-o-93 { opacity: 0.93; }
+.wow-tour-o-94 { opacity: 0.94; }
+.wow-tour-o-95 { opacity: 0.95; }
+.wow-tour-o-96 { opacity: 0.96; }
+.wow-tour-o-97 { opacity: 0.97; }
+.wow-tour-o-98 { opacity: 0.98; }
+.wow-tour-o-99 { opacity: 0.99; }
+.wow-tour-o-100 { opacity: 1.00; }
+.wow-tour-rot-0 { transform: rotate(0deg); }
+.wow-tour-rot-2 { transform: rotate(2deg); }
+.wow-tour-rot-4 { transform: rotate(4deg); }
+.wow-tour-rot-6 { transform: rotate(6deg); }
+.wow-tour-rot-8 { transform: rotate(8deg); }
+.wow-tour-rot-10 { transform: rotate(10deg); }
+.wow-tour-rot-12 { transform: rotate(12deg); }
+.wow-tour-rot-14 { transform: rotate(14deg); }
+.wow-tour-rot-16 { transform: rotate(16deg); }
+.wow-tour-rot-18 { transform: rotate(18deg); }
+.wow-tour-rot-20 { transform: rotate(20deg); }
+.wow-tour-rot-22 { transform: rotate(22deg); }
+.wow-tour-rot-24 { transform: rotate(24deg); }
+.wow-tour-rot-26 { transform: rotate(26deg); }
+.wow-tour-rot-28 { transform: rotate(28deg); }
+.wow-tour-rot-30 { transform: rotate(30deg); }
+.wow-tour-rot-32 { transform: rotate(32deg); }
+.wow-tour-rot-34 { transform: rotate(34deg); }
+.wow-tour-rot-36 { transform: rotate(36deg); }
+.wow-tour-rot-38 { transform: rotate(38deg); }
+.wow-tour-rot-40 { transform: rotate(40deg); }
+.wow-tour-rot-42 { transform: rotate(42deg); }
+.wow-tour-rot-44 { transform: rotate(44deg); }
+.wow-tour-rot-46 { transform: rotate(46deg); }
+.wow-tour-rot-48 { transform: rotate(48deg); }
+.wow-tour-rot-50 { transform: rotate(50deg); }
+.wow-tour-rot-52 { transform: rotate(52deg); }
+.wow-tour-rot-54 { transform: rotate(54deg); }
+.wow-tour-rot-56 { transform: rotate(56deg); }
+.wow-tour-rot-58 { transform: rotate(58deg); }
+.wow-tour-rot-60 { transform: rotate(60deg); }
+.wow-tour-rot-62 { transform: rotate(62deg); }
+.wow-tour-rot-64 { transform: rotate(64deg); }
+.wow-tour-rot-66 { transform: rotate(66deg); }
+.wow-tour-rot-68 { transform: rotate(68deg); }
+.wow-tour-rot-70 { transform: rotate(70deg); }
+.wow-tour-rot-72 { transform: rotate(72deg); }
+.wow-tour-rot-74 { transform: rotate(74deg); }
+.wow-tour-rot-76 { transform: rotate(76deg); }
+.wow-tour-rot-78 { transform: rotate(78deg); }
+.wow-tour-rot-80 { transform: rotate(80deg); }
+.wow-tour-rot-82 { transform: rotate(82deg); }
+.wow-tour-rot-84 { transform: rotate(84deg); }
+.wow-tour-rot-86 { transform: rotate(86deg); }
+.wow-tour-rot-88 { transform: rotate(88deg); }
+.wow-tour-rot-90 { transform: rotate(90deg); }
+.wow-tour-rot-92 { transform: rotate(92deg); }
+.wow-tour-rot-94 { transform: rotate(94deg); }
+.wow-tour-rot-96 { transform: rotate(96deg); }
+.wow-tour-rot-98 { transform: rotate(98deg); }
+.wow-tour-rot-100 { transform: rotate(100deg); }
+.wow-tour-rot-102 { transform: rotate(102deg); }
+.wow-tour-rot-104 { transform: rotate(104deg); }
+.wow-tour-rot-106 { transform: rotate(106deg); }
+.wow-tour-rot-108 { transform: rotate(108deg); }
+.wow-tour-rot-110 { transform: rotate(110deg); }
+.wow-tour-rot-112 { transform: rotate(112deg); }
+.wow-tour-rot-114 { transform: rotate(114deg); }
+.wow-tour-rot-116 { transform: rotate(116deg); }
+.wow-tour-rot-118 { transform: rotate(118deg); }
+.wow-tour-rot-120 { transform: rotate(120deg); }
+.wow-tour-rot-122 { transform: rotate(122deg); }
+.wow-tour-rot-124 { transform: rotate(124deg); }
+.wow-tour-rot-126 { transform: rotate(126deg); }
+.wow-tour-rot-128 { transform: rotate(128deg); }
+.wow-tour-rot-130 { transform: rotate(130deg); }
+.wow-tour-rot-132 { transform: rotate(132deg); }
+.wow-tour-rot-134 { transform: rotate(134deg); }
+.wow-tour-rot-136 { transform: rotate(136deg); }
+.wow-tour-rot-138 { transform: rotate(138deg); }
+.wow-tour-rot-140 { transform: rotate(140deg); }
+.wow-tour-rot-142 { transform: rotate(142deg); }
+.wow-tour-rot-144 { transform: rotate(144deg); }
+.wow-tour-rot-146 { transform: rotate(146deg); }
+.wow-tour-rot-148 { transform: rotate(148deg); }
+.wow-tour-rot-150 { transform: rotate(150deg); }
+.wow-tour-rot-152 { transform: rotate(152deg); }
+.wow-tour-rot-154 { transform: rotate(154deg); }
+.wow-tour-rot-156 { transform: rotate(156deg); }
+.wow-tour-rot-158 { transform: rotate(158deg); }
+.wow-tour-rot-160 { transform: rotate(160deg); }
+.wow-tour-rot-162 { transform: rotate(162deg); }
+.wow-tour-rot-164 { transform: rotate(164deg); }
+.wow-tour-rot-166 { transform: rotate(166deg); }
+.wow-tour-rot-168 { transform: rotate(168deg); }
+.wow-tour-rot-170 { transform: rotate(170deg); }
+.wow-tour-rot-172 { transform: rotate(172deg); }
+.wow-tour-rot-174 { transform: rotate(174deg); }
+.wow-tour-rot-176 { transform: rotate(176deg); }
+.wow-tour-rot-178 { transform: rotate(178deg); }
+.wow-tour-rot-180 { transform: rotate(180deg); }
+.wow-tour-rot-182 { transform: rotate(182deg); }
+.wow-tour-rot-184 { transform: rotate(184deg); }
+.wow-tour-rot-186 { transform: rotate(186deg); }
+.wow-tour-rot-188 { transform: rotate(188deg); }
+.wow-tour-rot-190 { transform: rotate(190deg); }
+.wow-tour-rot-192 { transform: rotate(192deg); }
+.wow-tour-rot-194 { transform: rotate(194deg); }
+.wow-tour-rot-196 { transform: rotate(196deg); }
+.wow-tour-rot-198 { transform: rotate(198deg); }
+.wow-tour-rot-200 { transform: rotate(200deg); }
+.wow-tour-rot-202 { transform: rotate(202deg); }
+.wow-tour-rot-204 { transform: rotate(204deg); }
+.wow-tour-rot-206 { transform: rotate(206deg); }
+.wow-tour-rot-208 { transform: rotate(208deg); }
+.wow-tour-rot-210 { transform: rotate(210deg); }
+.wow-tour-rot-212 { transform: rotate(212deg); }
+.wow-tour-rot-214 { transform: rotate(214deg); }
+.wow-tour-rot-216 { transform: rotate(216deg); }
+.wow-tour-rot-218 { transform: rotate(218deg); }
+.wow-tour-rot-220 { transform: rotate(220deg); }
+.wow-tour-rot-222 { transform: rotate(222deg); }
+.wow-tour-rot-224 { transform: rotate(224deg); }
+.wow-tour-rot-226 { transform: rotate(226deg); }
+.wow-tour-rot-228 { transform: rotate(228deg); }
+.wow-tour-rot-230 { transform: rotate(230deg); }
+.wow-tour-rot-232 { transform: rotate(232deg); }
+.wow-tour-rot-234 { transform: rotate(234deg); }
+.wow-tour-rot-236 { transform: rotate(236deg); }
+.wow-tour-rot-238 { transform: rotate(238deg); }
+.wow-tour-rot-240 { transform: rotate(240deg); }
+.wow-tour-rot-242 { transform: rotate(242deg); }
+.wow-tour-rot-244 { transform: rotate(244deg); }
+.wow-tour-rot-246 { transform: rotate(246deg); }
+.wow-tour-rot-248 { transform: rotate(248deg); }
+.wow-tour-rot-250 { transform: rotate(250deg); }
+.wow-tour-rot-252 { transform: rotate(252deg); }
+.wow-tour-rot-254 { transform: rotate(254deg); }
+.wow-tour-rot-256 { transform: rotate(256deg); }
+.wow-tour-rot-258 { transform: rotate(258deg); }
+.wow-tour-rot-260 { transform: rotate(260deg); }
+.wow-tour-rot-262 { transform: rotate(262deg); }
+.wow-tour-rot-264 { transform: rotate(264deg); }
+.wow-tour-rot-266 { transform: rotate(266deg); }
+.wow-tour-rot-268 { transform: rotate(268deg); }
+.wow-tour-rot-270 { transform: rotate(270deg); }
+.wow-tour-rot-272 { transform: rotate(272deg); }
+.wow-tour-rot-274 { transform: rotate(274deg); }
+.wow-tour-rot-276 { transform: rotate(276deg); }
+.wow-tour-rot-278 { transform: rotate(278deg); }
+.wow-tour-rot-280 { transform: rotate(280deg); }
+.wow-tour-rot-282 { transform: rotate(282deg); }
+.wow-tour-rot-284 { transform: rotate(284deg); }
+.wow-tour-rot-286 { transform: rotate(286deg); }
+.wow-tour-rot-288 { transform: rotate(288deg); }
+.wow-tour-rot-290 { transform: rotate(290deg); }
+.wow-tour-rot-292 { transform: rotate(292deg); }
+.wow-tour-rot-294 { transform: rotate(294deg); }
+.wow-tour-rot-296 { transform: rotate(296deg); }
+.wow-tour-rot-298 { transform: rotate(298deg); }
+.wow-tour-rot-300 { transform: rotate(300deg); }
+.wow-tour-rot-302 { transform: rotate(302deg); }
+.wow-tour-rot-304 { transform: rotate(304deg); }
+.wow-tour-rot-306 { transform: rotate(306deg); }
+.wow-tour-rot-308 { transform: rotate(308deg); }
+.wow-tour-rot-310 { transform: rotate(310deg); }
+.wow-tour-rot-312 { transform: rotate(312deg); }
+.wow-tour-rot-314 { transform: rotate(314deg); }
+.wow-tour-rot-316 { transform: rotate(316deg); }
+.wow-tour-rot-318 { transform: rotate(318deg); }
+.wow-tour-rot-320 { transform: rotate(320deg); }
+.wow-tour-rot-322 { transform: rotate(322deg); }
+.wow-tour-rot-324 { transform: rotate(324deg); }
+.wow-tour-rot-326 { transform: rotate(326deg); }
+.wow-tour-rot-328 { transform: rotate(328deg); }
+.wow-tour-rot-330 { transform: rotate(330deg); }
+.wow-tour-rot-332 { transform: rotate(332deg); }
+.wow-tour-rot-334 { transform: rotate(334deg); }
+.wow-tour-rot-336 { transform: rotate(336deg); }
+.wow-tour-rot-338 { transform: rotate(338deg); }
+.wow-tour-rot-340 { transform: rotate(340deg); }
+.wow-tour-rot-342 { transform: rotate(342deg); }
+.wow-tour-rot-344 { transform: rotate(344deg); }
+.wow-tour-rot-346 { transform: rotate(346deg); }
+.wow-tour-rot-348 { transform: rotate(348deg); }
+.wow-tour-rot-350 { transform: rotate(350deg); }
+.wow-tour-rot-352 { transform: rotate(352deg); }
+.wow-tour-rot-354 { transform: rotate(354deg); }
+.wow-tour-rot-356 { transform: rotate(356deg); }
+.wow-tour-rot-358 { transform: rotate(358deg); }
+.wow-tour-rot-360 { transform: rotate(360deg); }
+.wow-tour-tx-0 { transform: translateX(-180px); }
+.wow-tour-ty-0 { transform: translateY(-180px); }
+.wow-tour-tx-1 { transform: translateX(-178px); }
+.wow-tour-ty-1 { transform: translateY(-178px); }
+.wow-tour-tx-2 { transform: translateX(-176px); }
+.wow-tour-ty-2 { transform: translateY(-176px); }
+.wow-tour-tx-3 { transform: translateX(-174px); }
+.wow-tour-ty-3 { transform: translateY(-174px); }
+.wow-tour-tx-4 { transform: translateX(-172px); }
+.wow-tour-ty-4 { transform: translateY(-172px); }
+.wow-tour-tx-5 { transform: translateX(-170px); }
+.wow-tour-ty-5 { transform: translateY(-170px); }
+.wow-tour-tx-6 { transform: translateX(-168px); }
+.wow-tour-ty-6 { transform: translateY(-168px); }
+.wow-tour-tx-7 { transform: translateX(-166px); }
+.wow-tour-ty-7 { transform: translateY(-166px); }
+.wow-tour-tx-8 { transform: translateX(-164px); }
+.wow-tour-ty-8 { transform: translateY(-164px); }
+.wow-tour-tx-9 { transform: translateX(-162px); }
+.wow-tour-ty-9 { transform: translateY(-162px); }
+.wow-tour-tx-10 { transform: translateX(-160px); }
+.wow-tour-ty-10 { transform: translateY(-160px); }
+.wow-tour-tx-11 { transform: translateX(-158px); }
+.wow-tour-ty-11 { transform: translateY(-158px); }
+.wow-tour-tx-12 { transform: translateX(-156px); }
+.wow-tour-ty-12 { transform: translateY(-156px); }
+.wow-tour-tx-13 { transform: translateX(-154px); }
+.wow-tour-ty-13 { transform: translateY(-154px); }
+.wow-tour-tx-14 { transform: translateX(-152px); }
+.wow-tour-ty-14 { transform: translateY(-152px); }
+.wow-tour-tx-15 { transform: translateX(-150px); }
+.wow-tour-ty-15 { transform: translateY(-150px); }
+.wow-tour-tx-16 { transform: translateX(-148px); }
+.wow-tour-ty-16 { transform: translateY(-148px); }
+.wow-tour-tx-17 { transform: translateX(-146px); }
+.wow-tour-ty-17 { transform: translateY(-146px); }
+.wow-tour-tx-18 { transform: translateX(-144px); }
+.wow-tour-ty-18 { transform: translateY(-144px); }
+.wow-tour-tx-19 { transform: translateX(-142px); }
+.wow-tour-ty-19 { transform: translateY(-142px); }
+.wow-tour-tx-20 { transform: translateX(-140px); }
+.wow-tour-ty-20 { transform: translateY(-140px); }
+.wow-tour-tx-21 { transform: translateX(-138px); }
+.wow-tour-ty-21 { transform: translateY(-138px); }
+.wow-tour-tx-22 { transform: translateX(-136px); }
+.wow-tour-ty-22 { transform: translateY(-136px); }
+.wow-tour-tx-23 { transform: translateX(-134px); }
+.wow-tour-ty-23 { transform: translateY(-134px); }
+.wow-tour-tx-24 { transform: translateX(-132px); }
+.wow-tour-ty-24 { transform: translateY(-132px); }
+.wow-tour-tx-25 { transform: translateX(-130px); }
+.wow-tour-ty-25 { transform: translateY(-130px); }
+.wow-tour-tx-26 { transform: translateX(-128px); }
+.wow-tour-ty-26 { transform: translateY(-128px); }
+.wow-tour-tx-27 { transform: translateX(-126px); }
+.wow-tour-ty-27 { transform: translateY(-126px); }
+.wow-tour-tx-28 { transform: translateX(-124px); }
+.wow-tour-ty-28 { transform: translateY(-124px); }
+.wow-tour-tx-29 { transform: translateX(-122px); }
+.wow-tour-ty-29 { transform: translateY(-122px); }
+.wow-tour-tx-30 { transform: translateX(-120px); }
+.wow-tour-ty-30 { transform: translateY(-120px); }
+.wow-tour-tx-31 { transform: translateX(-118px); }
+.wow-tour-ty-31 { transform: translateY(-118px); }
+.wow-tour-tx-32 { transform: translateX(-116px); }
+.wow-tour-ty-32 { transform: translateY(-116px); }
+.wow-tour-tx-33 { transform: translateX(-114px); }
+.wow-tour-ty-33 { transform: translateY(-114px); }
+.wow-tour-tx-34 { transform: translateX(-112px); }
+.wow-tour-ty-34 { transform: translateY(-112px); }
+.wow-tour-tx-35 { transform: translateX(-110px); }
+.wow-tour-ty-35 { transform: translateY(-110px); }
+.wow-tour-tx-36 { transform: translateX(-108px); }
+.wow-tour-ty-36 { transform: translateY(-108px); }
+.wow-tour-tx-37 { transform: translateX(-106px); }
+.wow-tour-ty-37 { transform: translateY(-106px); }
+.wow-tour-tx-38 { transform: translateX(-104px); }
+.wow-tour-ty-38 { transform: translateY(-104px); }
+.wow-tour-tx-39 { transform: translateX(-102px); }
+.wow-tour-ty-39 { transform: translateY(-102px); }
+.wow-tour-tx-40 { transform: translateX(-100px); }
+.wow-tour-ty-40 { transform: translateY(-100px); }
+.wow-tour-tx-41 { transform: translateX(-98px); }
+.wow-tour-ty-41 { transform: translateY(-98px); }
+.wow-tour-tx-42 { transform: translateX(-96px); }
+.wow-tour-ty-42 { transform: translateY(-96px); }
+.wow-tour-tx-43 { transform: translateX(-94px); }
+.wow-tour-ty-43 { transform: translateY(-94px); }
+.wow-tour-tx-44 { transform: translateX(-92px); }
+.wow-tour-ty-44 { transform: translateY(-92px); }
+.wow-tour-tx-45 { transform: translateX(-90px); }
+.wow-tour-ty-45 { transform: translateY(-90px); }
+.wow-tour-tx-46 { transform: translateX(-88px); }
+.wow-tour-ty-46 { transform: translateY(-88px); }
+.wow-tour-tx-47 { transform: translateX(-86px); }
+.wow-tour-ty-47 { transform: translateY(-86px); }
+.wow-tour-tx-48 { transform: translateX(-84px); }
+.wow-tour-ty-48 { transform: translateY(-84px); }
+.wow-tour-tx-49 { transform: translateX(-82px); }
+.wow-tour-ty-49 { transform: translateY(-82px); }
+.wow-tour-tx-50 { transform: translateX(-80px); }
+.wow-tour-ty-50 { transform: translateY(-80px); }
+.wow-tour-tx-51 { transform: translateX(-78px); }
+.wow-tour-ty-51 { transform: translateY(-78px); }
+.wow-tour-tx-52 { transform: translateX(-76px); }
+.wow-tour-ty-52 { transform: translateY(-76px); }
+.wow-tour-tx-53 { transform: translateX(-74px); }
+.wow-tour-ty-53 { transform: translateY(-74px); }
+.wow-tour-tx-54 { transform: translateX(-72px); }
+.wow-tour-ty-54 { transform: translateY(-72px); }
+.wow-tour-tx-55 { transform: translateX(-70px); }
+.wow-tour-ty-55 { transform: translateY(-70px); }
+.wow-tour-tx-56 { transform: translateX(-68px); }
+.wow-tour-ty-56 { transform: translateY(-68px); }
+.wow-tour-tx-57 { transform: translateX(-66px); }
+.wow-tour-ty-57 { transform: translateY(-66px); }
+.wow-tour-tx-58 { transform: translateX(-64px); }
+.wow-tour-ty-58 { transform: translateY(-64px); }
+.wow-tour-tx-59 { transform: translateX(-62px); }
+.wow-tour-ty-59 { transform: translateY(-62px); }
+.wow-tour-tx-60 { transform: translateX(-60px); }
+.wow-tour-ty-60 { transform: translateY(-60px); }
+.wow-tour-tx-61 { transform: translateX(-58px); }
+.wow-tour-ty-61 { transform: translateY(-58px); }
+.wow-tour-tx-62 { transform: translateX(-56px); }
+.wow-tour-ty-62 { transform: translateY(-56px); }
+.wow-tour-tx-63 { transform: translateX(-54px); }
+.wow-tour-ty-63 { transform: translateY(-54px); }
+.wow-tour-tx-64 { transform: translateX(-52px); }
+.wow-tour-ty-64 { transform: translateY(-52px); }
+.wow-tour-tx-65 { transform: translateX(-50px); }
+.wow-tour-ty-65 { transform: translateY(-50px); }
+.wow-tour-tx-66 { transform: translateX(-48px); }
+.wow-tour-ty-66 { transform: translateY(-48px); }
+.wow-tour-tx-67 { transform: translateX(-46px); }
+.wow-tour-ty-67 { transform: translateY(-46px); }
+.wow-tour-tx-68 { transform: translateX(-44px); }
+.wow-tour-ty-68 { transform: translateY(-44px); }
+.wow-tour-tx-69 { transform: translateX(-42px); }
+.wow-tour-ty-69 { transform: translateY(-42px); }
+.wow-tour-tx-70 { transform: translateX(-40px); }
+.wow-tour-ty-70 { transform: translateY(-40px); }
+.wow-tour-tx-71 { transform: translateX(-38px); }
+.wow-tour-ty-71 { transform: translateY(-38px); }
+.wow-tour-tx-72 { transform: translateX(-36px); }
+.wow-tour-ty-72 { transform: translateY(-36px); }
+.wow-tour-tx-73 { transform: translateX(-34px); }
+.wow-tour-ty-73 { transform: translateY(-34px); }
+.wow-tour-tx-74 { transform: translateX(-32px); }
+.wow-tour-ty-74 { transform: translateY(-32px); }
+.wow-tour-tx-75 { transform: translateX(-30px); }
+.wow-tour-ty-75 { transform: translateY(-30px); }
+.wow-tour-tx-76 { transform: translateX(-28px); }
+.wow-tour-ty-76 { transform: translateY(-28px); }
+.wow-tour-tx-77 { transform: translateX(-26px); }
+.wow-tour-ty-77 { transform: translateY(-26px); }
+.wow-tour-tx-78 { transform: translateX(-24px); }
+.wow-tour-ty-78 { transform: translateY(-24px); }
+.wow-tour-tx-79 { transform: translateX(-22px); }
+.wow-tour-ty-79 { transform: translateY(-22px); }
+.wow-tour-tx-80 { transform: translateX(-20px); }
+.wow-tour-ty-80 { transform: translateY(-20px); }
+.wow-tour-tx-81 { transform: translateX(-18px); }
+.wow-tour-ty-81 { transform: translateY(-18px); }
+.wow-tour-tx-82 { transform: translateX(-16px); }
+.wow-tour-ty-82 { transform: translateY(-16px); }
+.wow-tour-tx-83 { transform: translateX(-14px); }
+.wow-tour-ty-83 { transform: translateY(-14px); }
+.wow-tour-tx-84 { transform: translateX(-12px); }
+.wow-tour-ty-84 { transform: translateY(-12px); }
+.wow-tour-tx-85 { transform: translateX(-10px); }
+.wow-tour-ty-85 { transform: translateY(-10px); }
+.wow-tour-tx-86 { transform: translateX(-8px); }
+.wow-tour-ty-86 { transform: translateY(-8px); }
+.wow-tour-tx-87 { transform: translateX(-6px); }
+.wow-tour-ty-87 { transform: translateY(-6px); }
+.wow-tour-tx-88 { transform: translateX(-4px); }
+.wow-tour-ty-88 { transform: translateY(-4px); }
+.wow-tour-tx-89 { transform: translateX(-2px); }
+.wow-tour-ty-89 { transform: translateY(-2px); }
+.wow-tour-tx-90 { transform: translateX(0px); }
+.wow-tour-ty-90 { transform: translateY(0px); }
+.wow-tour-tx-91 { transform: translateX(2px); }
+.wow-tour-ty-91 { transform: translateY(2px); }
+.wow-tour-tx-92 { transform: translateX(4px); }
+.wow-tour-ty-92 { transform: translateY(4px); }
+.wow-tour-tx-93 { transform: translateX(6px); }
+.wow-tour-ty-93 { transform: translateY(6px); }
+.wow-tour-tx-94 { transform: translateX(8px); }
+.wow-tour-ty-94 { transform: translateY(8px); }
+.wow-tour-tx-95 { transform: translateX(10px); }
+.wow-tour-ty-95 { transform: translateY(10px); }
+.wow-tour-tx-96 { transform: translateX(12px); }
+.wow-tour-ty-96 { transform: translateY(12px); }
+.wow-tour-tx-97 { transform: translateX(14px); }
+.wow-tour-ty-97 { transform: translateY(14px); }
+.wow-tour-tx-98 { transform: translateX(16px); }
+.wow-tour-ty-98 { transform: translateY(16px); }
+.wow-tour-tx-99 { transform: translateX(18px); }
+.wow-tour-ty-99 { transform: translateY(18px); }
+.wow-tour-tx-100 { transform: translateX(20px); }
+.wow-tour-ty-100 { transform: translateY(20px); }
+.wow-tour-tx-101 { transform: translateX(22px); }
+.wow-tour-ty-101 { transform: translateY(22px); }
+.wow-tour-tx-102 { transform: translateX(24px); }
+.wow-tour-ty-102 { transform: translateY(24px); }
+.wow-tour-tx-103 { transform: translateX(26px); }
+.wow-tour-ty-103 { transform: translateY(26px); }
+.wow-tour-tx-104 { transform: translateX(28px); }
+.wow-tour-ty-104 { transform: translateY(28px); }
+.wow-tour-tx-105 { transform: translateX(30px); }
+.wow-tour-ty-105 { transform: translateY(30px); }
+.wow-tour-tx-106 { transform: translateX(32px); }
+.wow-tour-ty-106 { transform: translateY(32px); }
+.wow-tour-tx-107 { transform: translateX(34px); }
+.wow-tour-ty-107 { transform: translateY(34px); }
+.wow-tour-tx-108 { transform: translateX(36px); }
+.wow-tour-ty-108 { transform: translateY(36px); }
+.wow-tour-tx-109 { transform: translateX(38px); }
+.wow-tour-ty-109 { transform: translateY(38px); }
+.wow-tour-tx-110 { transform: translateX(40px); }
+.wow-tour-ty-110 { transform: translateY(40px); }
+.wow-tour-tx-111 { transform: translateX(42px); }
+.wow-tour-ty-111 { transform: translateY(42px); }
+.wow-tour-tx-112 { transform: translateX(44px); }
+.wow-tour-ty-112 { transform: translateY(44px); }
+.wow-tour-tx-113 { transform: translateX(46px); }
+.wow-tour-ty-113 { transform: translateY(46px); }
+.wow-tour-tx-114 { transform: translateX(48px); }
+.wow-tour-ty-114 { transform: translateY(48px); }
+.wow-tour-tx-115 { transform: translateX(50px); }
+.wow-tour-ty-115 { transform: translateY(50px); }
+.wow-tour-tx-116 { transform: translateX(52px); }
+.wow-tour-ty-116 { transform: translateY(52px); }
+.wow-tour-tx-117 { transform: translateX(54px); }
+.wow-tour-ty-117 { transform: translateY(54px); }
+.wow-tour-tx-118 { transform: translateX(56px); }
+.wow-tour-ty-118 { transform: translateY(56px); }
+.wow-tour-tx-119 { transform: translateX(58px); }
+.wow-tour-ty-119 { transform: translateY(58px); }
+.wow-tour-tx-120 { transform: translateX(60px); }
+.wow-tour-ty-120 { transform: translateY(60px); }
+.wow-tour-tx-121 { transform: translateX(62px); }
+.wow-tour-ty-121 { transform: translateY(62px); }
+.wow-tour-tx-122 { transform: translateX(64px); }
+.wow-tour-ty-122 { transform: translateY(64px); }
+.wow-tour-tx-123 { transform: translateX(66px); }
+.wow-tour-ty-123 { transform: translateY(66px); }
+.wow-tour-tx-124 { transform: translateX(68px); }
+.wow-tour-ty-124 { transform: translateY(68px); }
+.wow-tour-tx-125 { transform: translateX(70px); }
+.wow-tour-ty-125 { transform: translateY(70px); }
+.wow-tour-tx-126 { transform: translateX(72px); }
+.wow-tour-ty-126 { transform: translateY(72px); }
+.wow-tour-tx-127 { transform: translateX(74px); }
+.wow-tour-ty-127 { transform: translateY(74px); }
+.wow-tour-tx-128 { transform: translateX(76px); }
+.wow-tour-ty-128 { transform: translateY(76px); }
+.wow-tour-tx-129 { transform: translateX(78px); }
+.wow-tour-ty-129 { transform: translateY(78px); }
+.wow-tour-tx-130 { transform: translateX(80px); }
+.wow-tour-ty-130 { transform: translateY(80px); }
+.wow-tour-tx-131 { transform: translateX(82px); }
+.wow-tour-ty-131 { transform: translateY(82px); }
+.wow-tour-tx-132 { transform: translateX(84px); }
+.wow-tour-ty-132 { transform: translateY(84px); }
+.wow-tour-tx-133 { transform: translateX(86px); }
+.wow-tour-ty-133 { transform: translateY(86px); }
+.wow-tour-tx-134 { transform: translateX(88px); }
+.wow-tour-ty-134 { transform: translateY(88px); }
+.wow-tour-tx-135 { transform: translateX(90px); }
+.wow-tour-ty-135 { transform: translateY(90px); }
+.wow-tour-tx-136 { transform: translateX(92px); }
+.wow-tour-ty-136 { transform: translateY(92px); }
+.wow-tour-tx-137 { transform: translateX(94px); }
+.wow-tour-ty-137 { transform: translateY(94px); }
+.wow-tour-tx-138 { transform: translateX(96px); }
+.wow-tour-ty-138 { transform: translateY(96px); }
+.wow-tour-tx-139 { transform: translateX(98px); }
+.wow-tour-ty-139 { transform: translateY(98px); }
+.wow-tour-tx-140 { transform: translateX(100px); }
+.wow-tour-ty-140 { transform: translateY(100px); }
+.wow-tour-tx-141 { transform: translateX(102px); }
+.wow-tour-ty-141 { transform: translateY(102px); }
+.wow-tour-tx-142 { transform: translateX(104px); }
+.wow-tour-ty-142 { transform: translateY(104px); }
+.wow-tour-tx-143 { transform: translateX(106px); }
+.wow-tour-ty-143 { transform: translateY(106px); }
+.wow-tour-tx-144 { transform: translateX(108px); }
+.wow-tour-ty-144 { transform: translateY(108px); }
+.wow-tour-tx-145 { transform: translateX(110px); }
+.wow-tour-ty-145 { transform: translateY(110px); }
+.wow-tour-tx-146 { transform: translateX(112px); }
+.wow-tour-ty-146 { transform: translateY(112px); }
+.wow-tour-tx-147 { transform: translateX(114px); }
+.wow-tour-ty-147 { transform: translateY(114px); }
+.wow-tour-tx-148 { transform: translateX(116px); }
+.wow-tour-ty-148 { transform: translateY(116px); }
+.wow-tour-tx-149 { transform: translateX(118px); }
+.wow-tour-ty-149 { transform: translateY(118px); }
+.wow-tour-tx-150 { transform: translateX(120px); }
+.wow-tour-ty-150 { transform: translateY(120px); }
+.wow-tour-tx-151 { transform: translateX(122px); }
+.wow-tour-ty-151 { transform: translateY(122px); }
+.wow-tour-tx-152 { transform: translateX(124px); }
+.wow-tour-ty-152 { transform: translateY(124px); }
+.wow-tour-tx-153 { transform: translateX(126px); }
+.wow-tour-ty-153 { transform: translateY(126px); }
+.wow-tour-tx-154 { transform: translateX(128px); }
+.wow-tour-ty-154 { transform: translateY(128px); }
+.wow-tour-tx-155 { transform: translateX(130px); }
+.wow-tour-ty-155 { transform: translateY(130px); }
+.wow-tour-tx-156 { transform: translateX(132px); }
+.wow-tour-ty-156 { transform: translateY(132px); }
+.wow-tour-tx-157 { transform: translateX(134px); }
+.wow-tour-ty-157 { transform: translateY(134px); }
+.wow-tour-tx-158 { transform: translateX(136px); }
+.wow-tour-ty-158 { transform: translateY(136px); }
+.wow-tour-tx-159 { transform: translateX(138px); }
+.wow-tour-ty-159 { transform: translateY(138px); }
+.wow-tour-tx-160 { transform: translateX(140px); }
+.wow-tour-ty-160 { transform: translateY(140px); }
+.wow-tour-tx-161 { transform: translateX(142px); }
+.wow-tour-ty-161 { transform: translateY(142px); }
+.wow-tour-tx-162 { transform: translateX(144px); }
+.wow-tour-ty-162 { transform: translateY(144px); }
+.wow-tour-tx-163 { transform: translateX(146px); }
+.wow-tour-ty-163 { transform: translateY(146px); }
+.wow-tour-tx-164 { transform: translateX(148px); }
+.wow-tour-ty-164 { transform: translateY(148px); }
+.wow-tour-tx-165 { transform: translateX(150px); }
+.wow-tour-ty-165 { transform: translateY(150px); }
+.wow-tour-tx-166 { transform: translateX(152px); }
+.wow-tour-ty-166 { transform: translateY(152px); }
+.wow-tour-tx-167 { transform: translateX(154px); }
+.wow-tour-ty-167 { transform: translateY(154px); }
+.wow-tour-tx-168 { transform: translateX(156px); }
+.wow-tour-ty-168 { transform: translateY(156px); }
+.wow-tour-tx-169 { transform: translateX(158px); }
+.wow-tour-ty-169 { transform: translateY(158px); }
+.wow-tour-tx-170 { transform: translateX(160px); }
+.wow-tour-ty-170 { transform: translateY(160px); }
+.wow-tour-tx-171 { transform: translateX(162px); }
+.wow-tour-ty-171 { transform: translateY(162px); }
+.wow-tour-tx-172 { transform: translateX(164px); }
+.wow-tour-ty-172 { transform: translateY(164px); }
+.wow-tour-tx-173 { transform: translateX(166px); }
+.wow-tour-ty-173 { transform: translateY(166px); }
+.wow-tour-tx-174 { transform: translateX(168px); }
+.wow-tour-ty-174 { transform: translateY(168px); }
+.wow-tour-tx-175 { transform: translateX(170px); }
+.wow-tour-ty-175 { transform: translateY(170px); }
+.wow-tour-tx-176 { transform: translateX(172px); }
+.wow-tour-ty-176 { transform: translateY(172px); }
+.wow-tour-tx-177 { transform: translateX(174px); }
+.wow-tour-ty-177 { transform: translateY(174px); }
+.wow-tour-tx-178 { transform: translateX(176px); }
+.wow-tour-ty-178 { transform: translateY(176px); }
+.wow-tour-tx-179 { transform: translateX(178px); }
+.wow-tour-ty-179 { transform: translateY(178px); }
+.wow-tour-tx-180 { transform: translateX(180px); }
+.wow-tour-ty-180 { transform: translateY(180px); }
+.wow-tour-blur-0 { filter: blur(0px); }
+.wow-tour-blur-1 { filter: blur(1px); }
+.wow-tour-blur-2 { filter: blur(2px); }
+.wow-tour-blur-3 { filter: blur(3px); }
+.wow-tour-blur-4 { filter: blur(4px); }
+.wow-tour-blur-5 { filter: blur(5px); }
+.wow-tour-blur-6 { filter: blur(6px); }
+.wow-tour-blur-7 { filter: blur(7px); }
+.wow-tour-blur-8 { filter: blur(8px); }
+.wow-tour-blur-9 { filter: blur(9px); }
+.wow-tour-blur-10 { filter: blur(10px); }
+.wow-tour-blur-11 { filter: blur(11px); }
+.wow-tour-blur-12 { filter: blur(12px); }
+.wow-tour-blur-13 { filter: blur(13px); }
+.wow-tour-blur-14 { filter: blur(14px); }
+.wow-tour-blur-15 { filter: blur(15px); }
+.wow-tour-blur-16 { filter: blur(16px); }
+.wow-tour-blur-17 { filter: blur(17px); }
+.wow-tour-blur-18 { filter: blur(18px); }
+.wow-tour-blur-19 { filter: blur(19px); }
+.wow-tour-blur-20 { filter: blur(20px); }
+.wow-tour-blur-21 { filter: blur(21px); }
+.wow-tour-blur-22 { filter: blur(22px); }
+.wow-tour-blur-23 { filter: blur(23px); }
+.wow-tour-blur-24 { filter: blur(24px); }
+.wow-tour-blur-25 { filter: blur(25px); }
+.wow-tour-blur-26 { filter: blur(26px); }
+.wow-tour-blur-27 { filter: blur(27px); }
+.wow-tour-blur-28 { filter: blur(28px); }
+.wow-tour-blur-29 { filter: blur(29px); }
+.wow-tour-blur-30 { filter: blur(30px); }
+.wow-tour-blur-31 { filter: blur(31px); }
+.wow-tour-blur-32 { filter: blur(32px); }
+.wow-tour-blur-33 { filter: blur(33px); }
+.wow-tour-blur-34 { filter: blur(34px); }
+.wow-tour-blur-35 { filter: blur(35px); }
+.wow-tour-blur-36 { filter: blur(36px); }
+.wow-tour-blur-37 { filter: blur(37px); }
+.wow-tour-blur-38 { filter: blur(38px); }
+.wow-tour-blur-39 { filter: blur(39px); }
+.wow-tour-blur-40 { filter: blur(40px); }
+.wow-tour-blur-41 { filter: blur(41px); }
+.wow-tour-blur-42 { filter: blur(42px); }
+.wow-tour-blur-43 { filter: blur(43px); }
+.wow-tour-blur-44 { filter: blur(44px); }
+.wow-tour-blur-45 { filter: blur(45px); }
+.wow-tour-blur-46 { filter: blur(46px); }
+.wow-tour-blur-47 { filter: blur(47px); }
+.wow-tour-blur-48 { filter: blur(48px); }
+.wow-tour-blur-49 { filter: blur(49px); }
+.wow-tour-blur-50 { filter: blur(50px); }
+.wow-tour-blur-51 { filter: blur(51px); }
+.wow-tour-blur-52 { filter: blur(52px); }
+.wow-tour-blur-53 { filter: blur(53px); }
+.wow-tour-blur-54 { filter: blur(54px); }
+.wow-tour-blur-55 { filter: blur(55px); }
+.wow-tour-blur-56 { filter: blur(56px); }
+.wow-tour-blur-57 { filter: blur(57px); }
+.wow-tour-blur-58 { filter: blur(58px); }
+.wow-tour-blur-59 { filter: blur(59px); }
+.wow-tour-blur-60 { filter: blur(60px); }
+.wow-tour-blur-61 { filter: blur(61px); }
+.wow-tour-blur-62 { filter: blur(62px); }
+.wow-tour-blur-63 { filter: blur(63px); }
+.wow-tour-blur-64 { filter: blur(64px); }
+.wow-tour-blur-65 { filter: blur(65px); }
+.wow-tour-blur-66 { filter: blur(66px); }
+.wow-tour-blur-67 { filter: blur(67px); }
+.wow-tour-blur-68 { filter: blur(68px); }
+.wow-tour-blur-69 { filter: blur(69px); }
+.wow-tour-blur-70 { filter: blur(70px); }
+.wow-tour-blur-71 { filter: blur(71px); }
+.wow-tour-blur-72 { filter: blur(72px); }
+.wow-tour-blur-73 { filter: blur(73px); }
+.wow-tour-blur-74 { filter: blur(74px); }
+.wow-tour-blur-75 { filter: blur(75px); }
+.wow-tour-blur-76 { filter: blur(76px); }
+.wow-tour-blur-77 { filter: blur(77px); }
+.wow-tour-blur-78 { filter: blur(78px); }
+.wow-tour-blur-79 { filter: blur(79px); }
+.wow-tour-blur-80 { filter: blur(80px); }
+.wow-tour-blur-81 { filter: blur(81px); }
+.wow-tour-blur-82 { filter: blur(82px); }
+.wow-tour-blur-83 { filter: blur(83px); }
+.wow-tour-blur-84 { filter: blur(84px); }
+.wow-tour-blur-85 { filter: blur(85px); }
+.wow-tour-blur-86 { filter: blur(86px); }
+.wow-tour-blur-87 { filter: blur(87px); }
+.wow-tour-blur-88 { filter: blur(88px); }
+.wow-tour-blur-89 { filter: blur(89px); }
+.wow-tour-blur-90 { filter: blur(90px); }
+.wow-tour-blur-91 { filter: blur(91px); }
+.wow-tour-blur-92 { filter: blur(92px); }
+.wow-tour-blur-93 { filter: blur(93px); }
+.wow-tour-blur-94 { filter: blur(94px); }
+.wow-tour-blur-95 { filter: blur(95px); }
+.wow-tour-blur-96 { filter: blur(96px); }
+.wow-tour-blur-97 { filter: blur(97px); }
+.wow-tour-blur-98 { filter: blur(98px); }
+.wow-tour-blur-99 { filter: blur(99px); }
+.wow-tour-blur-100 { filter: blur(100px); }
+.wow-tour-blur-101 { filter: blur(101px); }
+.wow-tour-blur-102 { filter: blur(102px); }
+.wow-tour-blur-103 { filter: blur(103px); }
+.wow-tour-blur-104 { filter: blur(104px); }
+.wow-tour-blur-105 { filter: blur(105px); }
+.wow-tour-blur-106 { filter: blur(106px); }
+.wow-tour-blur-107 { filter: blur(107px); }
+.wow-tour-blur-108 { filter: blur(108px); }
+.wow-tour-blur-109 { filter: blur(109px); }
+.wow-tour-blur-110 { filter: blur(110px); }
+.wow-tour-blur-111 { filter: blur(111px); }
+.wow-tour-blur-112 { filter: blur(112px); }
+.wow-tour-blur-113 { filter: blur(113px); }
+.wow-tour-blur-114 { filter: blur(114px); }
+.wow-tour-blur-115 { filter: blur(115px); }
+.wow-tour-blur-116 { filter: blur(116px); }
+.wow-tour-blur-117 { filter: blur(117px); }
+.wow-tour-blur-118 { filter: blur(118px); }
+.wow-tour-blur-119 { filter: blur(119px); }
+.wow-tour-blur-120 { filter: blur(120px); }
+.wow-tour-scale-0 { transform: scale(0.60); }
+.wow-tour-scale-2 { transform: scale(0.62); }
+.wow-tour-scale-4 { transform: scale(0.64); }
+.wow-tour-scale-6 { transform: scale(0.66); }
+.wow-tour-scale-8 { transform: scale(0.68); }
+.wow-tour-scale-10 { transform: scale(0.70); }
+.wow-tour-scale-12 { transform: scale(0.72); }
+.wow-tour-scale-14 { transform: scale(0.74); }
+.wow-tour-scale-16 { transform: scale(0.76); }
+.wow-tour-scale-18 { transform: scale(0.78); }
+.wow-tour-scale-20 { transform: scale(0.80); }
+.wow-tour-scale-22 { transform: scale(0.82); }
+.wow-tour-scale-24 { transform: scale(0.84); }
+.wow-tour-scale-26 { transform: scale(0.86); }
+.wow-tour-scale-28 { transform: scale(0.88); }
+.wow-tour-scale-30 { transform: scale(0.90); }
+.wow-tour-scale-32 { transform: scale(0.92); }
+.wow-tour-scale-34 { transform: scale(0.94); }
+.wow-tour-scale-36 { transform: scale(0.96); }
+.wow-tour-scale-38 { transform: scale(0.98); }
+.wow-tour-scale-40 { transform: scale(1.00); }
+.wow-tour-scale-42 { transform: scale(1.02); }
+.wow-tour-scale-44 { transform: scale(1.04); }
+.wow-tour-scale-46 { transform: scale(1.06); }
+.wow-tour-scale-48 { transform: scale(1.08); }
+.wow-tour-scale-50 { transform: scale(1.10); }
+.wow-tour-scale-52 { transform: scale(1.12); }
+.wow-tour-scale-54 { transform: scale(1.14); }
+.wow-tour-scale-56 { transform: scale(1.16); }
+.wow-tour-scale-58 { transform: scale(1.18); }
+.wow-tour-scale-60 { transform: scale(1.20); }
+.wow-tour-scale-62 { transform: scale(1.22); }
+.wow-tour-scale-64 { transform: scale(1.24); }
+.wow-tour-scale-66 { transform: scale(1.26); }
+.wow-tour-scale-68 { transform: scale(1.28); }
+.wow-tour-scale-70 { transform: scale(1.30); }
+.wow-tour-scale-72 { transform: scale(1.32); }
+.wow-tour-scale-74 { transform: scale(1.34); }
+.wow-tour-scale-76 { transform: scale(1.36); }
+.wow-tour-scale-78 { transform: scale(1.38); }
+.wow-tour-scale-80 { transform: scale(1.40); }
+.wow-tour-scale-82 { transform: scale(1.42); }
+.wow-tour-scale-84 { transform: scale(1.44); }
+.wow-tour-scale-86 { transform: scale(1.46); }
+.wow-tour-scale-88 { transform: scale(1.48); }
+.wow-tour-scale-90 { transform: scale(1.50); }
+.wow-tour-scale-92 { transform: scale(1.52); }
+.wow-tour-scale-94 { transform: scale(1.54); }
+.wow-tour-scale-96 { transform: scale(1.56); }
+.wow-tour-scale-98 { transform: scale(1.58); }
+.wow-tour-scale-100 { transform: scale(1.60); }
+.wow-tour-scale-102 { transform: scale(1.62); }
+.wow-tour-scale-104 { transform: scale(1.64); }
+.wow-tour-scale-106 { transform: scale(1.66); }
+.wow-tour-scale-108 { transform: scale(1.68); }
+.wow-tour-scale-110 { transform: scale(1.70); }
+.wow-tour-scale-112 { transform: scale(1.72); }
+.wow-tour-scale-114 { transform: scale(1.74); }
+.wow-tour-scale-116 { transform: scale(1.76); }
+.wow-tour-scale-118 { transform: scale(1.78); }
+.wow-tour-scale-120 { transform: scale(1.80); }
+.wow-tour-scale-122 { transform: scale(1.82); }
+.wow-tour-scale-124 { transform: scale(1.84); }
+.wow-tour-scale-126 { transform: scale(1.86); }
+.wow-tour-scale-128 { transform: scale(1.88); }
+.wow-tour-scale-130 { transform: scale(1.90); }
+.wow-tour-scale-132 { transform: scale(1.92); }
+.wow-tour-scale-134 { transform: scale(1.94); }
+.wow-tour-scale-136 { transform: scale(1.96); }
+.wow-tour-scale-138 { transform: scale(1.98); }
+.wow-tour-scale-140 { transform: scale(2.00); }
+.wow-tour-scale-142 { transform: scale(2.02); }
+.wow-tour-scale-144 { transform: scale(2.04); }
+.wow-tour-scale-146 { transform: scale(2.06); }
+.wow-tour-scale-148 { transform: scale(2.08); }
+.wow-tour-scale-150 { transform: scale(2.10); }
+.wow-tour-scale-152 { transform: scale(2.12); }
+.wow-tour-scale-154 { transform: scale(2.14); }
+.wow-tour-scale-156 { transform: scale(2.16); }
+.wow-tour-scale-158 { transform: scale(2.18); }
+.wow-tour-scale-160 { transform: scale(2.20); }
+.wow-tour-bg-cyan-0 { background-color: rgba(2,167,202,0.00); }
+.wow-tour-bg-gold-0 { background-color: rgba(171,123,38,0.00); }
+.wow-tour-bg-white-0 { background-color: rgba(255,255,255,0.00); }
+.wow-tour-bg-cyan-1 { background-color: rgba(2,167,202,0.01); }
+.wow-tour-bg-gold-1 { background-color: rgba(171,123,38,0.01); }
+.wow-tour-bg-white-1 { background-color: rgba(255,255,255,0.01); }
+.wow-tour-bg-cyan-2 { background-color: rgba(2,167,202,0.02); }
+.wow-tour-bg-gold-2 { background-color: rgba(171,123,38,0.02); }
+.wow-tour-bg-white-2 { background-color: rgba(255,255,255,0.02); }
+.wow-tour-bg-cyan-3 { background-color: rgba(2,167,202,0.02); }
+.wow-tour-bg-gold-3 { background-color: rgba(171,123,38,0.02); }
+.wow-tour-bg-white-3 { background-color: rgba(255,255,255,0.02); }
+.wow-tour-bg-cyan-4 { background-color: rgba(2,167,202,0.03); }
+.wow-tour-bg-gold-4 { background-color: rgba(171,123,38,0.03); }
+.wow-tour-bg-white-4 { background-color: rgba(255,255,255,0.03); }
+.wow-tour-bg-cyan-5 { background-color: rgba(2,167,202,0.04); }
+.wow-tour-bg-gold-5 { background-color: rgba(171,123,38,0.04); }
+.wow-tour-bg-white-5 { background-color: rgba(255,255,255,0.04); }
+.wow-tour-bg-cyan-6 { background-color: rgba(2,167,202,0.05); }
+.wow-tour-bg-gold-6 { background-color: rgba(171,123,38,0.05); }
+.wow-tour-bg-white-6 { background-color: rgba(255,255,255,0.05); }
+.wow-tour-bg-cyan-7 { background-color: rgba(2,167,202,0.06); }
+.wow-tour-bg-gold-7 { background-color: rgba(171,123,38,0.06); }
+.wow-tour-bg-white-7 { background-color: rgba(255,255,255,0.06); }
+.wow-tour-bg-cyan-8 { background-color: rgba(2,167,202,0.07); }
+.wow-tour-bg-gold-8 { background-color: rgba(171,123,38,0.07); }
+.wow-tour-bg-white-8 { background-color: rgba(255,255,255,0.07); }
+.wow-tour-bg-cyan-9 { background-color: rgba(2,167,202,0.08); }
+.wow-tour-bg-gold-9 { background-color: rgba(171,123,38,0.08); }
+.wow-tour-bg-white-9 { background-color: rgba(255,255,255,0.08); }
+.wow-tour-bg-cyan-10 { background-color: rgba(2,167,202,0.08); }
+.wow-tour-bg-gold-10 { background-color: rgba(171,123,38,0.08); }
+.wow-tour-bg-white-10 { background-color: rgba(255,255,255,0.08); }
+.wow-tour-bg-cyan-11 { background-color: rgba(2,167,202,0.09); }
+.wow-tour-bg-gold-11 { background-color: rgba(171,123,38,0.09); }
+.wow-tour-bg-white-11 { background-color: rgba(255,255,255,0.09); }
+.wow-tour-bg-cyan-12 { background-color: rgba(2,167,202,0.10); }
+.wow-tour-bg-gold-12 { background-color: rgba(171,123,38,0.10); }
+.wow-tour-bg-white-12 { background-color: rgba(255,255,255,0.10); }
+.wow-tour-bg-cyan-13 { background-color: rgba(2,167,202,0.11); }
+.wow-tour-bg-gold-13 { background-color: rgba(171,123,38,0.11); }
+.wow-tour-bg-white-13 { background-color: rgba(255,255,255,0.11); }
+.wow-tour-bg-cyan-14 { background-color: rgba(2,167,202,0.12); }
+.wow-tour-bg-gold-14 { background-color: rgba(171,123,38,0.12); }
+.wow-tour-bg-white-14 { background-color: rgba(255,255,255,0.12); }
+.wow-tour-bg-cyan-15 { background-color: rgba(2,167,202,0.12); }
+.wow-tour-bg-gold-15 { background-color: rgba(171,123,38,0.12); }
+.wow-tour-bg-white-15 { background-color: rgba(255,255,255,0.12); }
+.wow-tour-bg-cyan-16 { background-color: rgba(2,167,202,0.13); }
+.wow-tour-bg-gold-16 { background-color: rgba(171,123,38,0.13); }
+.wow-tour-bg-white-16 { background-color: rgba(255,255,255,0.13); }
+.wow-tour-bg-cyan-17 { background-color: rgba(2,167,202,0.14); }
+.wow-tour-bg-gold-17 { background-color: rgba(171,123,38,0.14); }
+.wow-tour-bg-white-17 { background-color: rgba(255,255,255,0.14); }
+.wow-tour-bg-cyan-18 { background-color: rgba(2,167,202,0.15); }
+.wow-tour-bg-gold-18 { background-color: rgba(171,123,38,0.15); }
+.wow-tour-bg-white-18 { background-color: rgba(255,255,255,0.15); }
+.wow-tour-bg-cyan-19 { background-color: rgba(2,167,202,0.16); }
+.wow-tour-bg-gold-19 { background-color: rgba(171,123,38,0.16); }
+.wow-tour-bg-white-19 { background-color: rgba(255,255,255,0.16); }
+.wow-tour-bg-cyan-20 { background-color: rgba(2,167,202,0.17); }
+.wow-tour-bg-gold-20 { background-color: rgba(171,123,38,0.17); }
+.wow-tour-bg-white-20 { background-color: rgba(255,255,255,0.17); }
+.wow-tour-bg-cyan-21 { background-color: rgba(2,167,202,0.18); }
+.wow-tour-bg-gold-21 { background-color: rgba(171,123,38,0.18); }
+.wow-tour-bg-white-21 { background-color: rgba(255,255,255,0.18); }
+.wow-tour-bg-cyan-22 { background-color: rgba(2,167,202,0.18); }
+.wow-tour-bg-gold-22 { background-color: rgba(171,123,38,0.18); }
+.wow-tour-bg-white-22 { background-color: rgba(255,255,255,0.18); }
+.wow-tour-bg-cyan-23 { background-color: rgba(2,167,202,0.19); }
+.wow-tour-bg-gold-23 { background-color: rgba(171,123,38,0.19); }
+.wow-tour-bg-white-23 { background-color: rgba(255,255,255,0.19); }
+.wow-tour-bg-cyan-24 { background-color: rgba(2,167,202,0.20); }
+.wow-tour-bg-gold-24 { background-color: rgba(171,123,38,0.20); }
+.wow-tour-bg-white-24 { background-color: rgba(255,255,255,0.20); }
+.wow-tour-bg-cyan-25 { background-color: rgba(2,167,202,0.21); }
+.wow-tour-bg-gold-25 { background-color: rgba(171,123,38,0.21); }
+.wow-tour-bg-white-25 { background-color: rgba(255,255,255,0.21); }
+.wow-tour-bg-cyan-26 { background-color: rgba(2,167,202,0.22); }
+.wow-tour-bg-gold-26 { background-color: rgba(171,123,38,0.22); }
+.wow-tour-bg-white-26 { background-color: rgba(255,255,255,0.22); }
+.wow-tour-bg-cyan-27 { background-color: rgba(2,167,202,0.22); }
+.wow-tour-bg-gold-27 { background-color: rgba(171,123,38,0.22); }
+.wow-tour-bg-white-27 { background-color: rgba(255,255,255,0.22); }
+.wow-tour-bg-cyan-28 { background-color: rgba(2,167,202,0.23); }
+.wow-tour-bg-gold-28 { background-color: rgba(171,123,38,0.23); }
+.wow-tour-bg-white-28 { background-color: rgba(255,255,255,0.23); }
+.wow-tour-bg-cyan-29 { background-color: rgba(2,167,202,0.24); }
+.wow-tour-bg-gold-29 { background-color: rgba(171,123,38,0.24); }
+.wow-tour-bg-white-29 { background-color: rgba(255,255,255,0.24); }
+.wow-tour-bg-cyan-30 { background-color: rgba(2,167,202,0.25); }
+.wow-tour-bg-gold-30 { background-color: rgba(171,123,38,0.25); }
+.wow-tour-bg-white-30 { background-color: rgba(255,255,255,0.25); }
+.wow-tour-bg-cyan-31 { background-color: rgba(2,167,202,0.26); }
+.wow-tour-bg-gold-31 { background-color: rgba(171,123,38,0.26); }
+.wow-tour-bg-white-31 { background-color: rgba(255,255,255,0.26); }
+.wow-tour-bg-cyan-32 { background-color: rgba(2,167,202,0.27); }
+.wow-tour-bg-gold-32 { background-color: rgba(171,123,38,0.27); }
+.wow-tour-bg-white-32 { background-color: rgba(255,255,255,0.27); }
+.wow-tour-bg-cyan-33 { background-color: rgba(2,167,202,0.28); }
+.wow-tour-bg-gold-33 { background-color: rgba(171,123,38,0.28); }
+.wow-tour-bg-white-33 { background-color: rgba(255,255,255,0.28); }
+.wow-tour-bg-cyan-34 { background-color: rgba(2,167,202,0.28); }
+.wow-tour-bg-gold-34 { background-color: rgba(171,123,38,0.28); }
+.wow-tour-bg-white-34 { background-color: rgba(255,255,255,0.28); }
+.wow-tour-bg-cyan-35 { background-color: rgba(2,167,202,0.29); }
+.wow-tour-bg-gold-35 { background-color: rgba(171,123,38,0.29); }
+.wow-tour-bg-white-35 { background-color: rgba(255,255,255,0.29); }
+.wow-tour-bg-cyan-36 { background-color: rgba(2,167,202,0.30); }
+.wow-tour-bg-gold-36 { background-color: rgba(171,123,38,0.30); }
+.wow-tour-bg-white-36 { background-color: rgba(255,255,255,0.30); }
+.wow-tour-bg-cyan-37 { background-color: rgba(2,167,202,0.31); }
+.wow-tour-bg-gold-37 { background-color: rgba(171,123,38,0.31); }
+.wow-tour-bg-white-37 { background-color: rgba(255,255,255,0.31); }
+.wow-tour-bg-cyan-38 { background-color: rgba(2,167,202,0.32); }
+.wow-tour-bg-gold-38 { background-color: rgba(171,123,38,0.32); }
+.wow-tour-bg-white-38 { background-color: rgba(255,255,255,0.32); }
+.wow-tour-bg-cyan-39 { background-color: rgba(2,167,202,0.32); }
+.wow-tour-bg-gold-39 { background-color: rgba(171,123,38,0.32); }
+.wow-tour-bg-white-39 { background-color: rgba(255,255,255,0.32); }
+.wow-tour-bg-cyan-40 { background-color: rgba(2,167,202,0.33); }
+.wow-tour-bg-gold-40 { background-color: rgba(171,123,38,0.33); }
+.wow-tour-bg-white-40 { background-color: rgba(255,255,255,0.33); }
+.wow-tour-bg-cyan-41 { background-color: rgba(2,167,202,0.34); }
+.wow-tour-bg-gold-41 { background-color: rgba(171,123,38,0.34); }
+.wow-tour-bg-white-41 { background-color: rgba(255,255,255,0.34); }
+.wow-tour-bg-cyan-42 { background-color: rgba(2,167,202,0.35); }
+.wow-tour-bg-gold-42 { background-color: rgba(171,123,38,0.35); }
+.wow-tour-bg-white-42 { background-color: rgba(255,255,255,0.35); }
+.wow-tour-bg-cyan-43 { background-color: rgba(2,167,202,0.36); }
+.wow-tour-bg-gold-43 { background-color: rgba(171,123,38,0.36); }
+.wow-tour-bg-white-43 { background-color: rgba(255,255,255,0.36); }
+.wow-tour-bg-cyan-44 { background-color: rgba(2,167,202,0.37); }
+.wow-tour-bg-gold-44 { background-color: rgba(171,123,38,0.37); }
+.wow-tour-bg-white-44 { background-color: rgba(255,255,255,0.37); }
+.wow-tour-bg-cyan-45 { background-color: rgba(2,167,202,0.38); }
+.wow-tour-bg-gold-45 { background-color: rgba(171,123,38,0.38); }
+.wow-tour-bg-white-45 { background-color: rgba(255,255,255,0.38); }
+.wow-tour-bg-cyan-46 { background-color: rgba(2,167,202,0.38); }
+.wow-tour-bg-gold-46 { background-color: rgba(171,123,38,0.38); }
+.wow-tour-bg-white-46 { background-color: rgba(255,255,255,0.38); }
+.wow-tour-bg-cyan-47 { background-color: rgba(2,167,202,0.39); }
+.wow-tour-bg-gold-47 { background-color: rgba(171,123,38,0.39); }
+.wow-tour-bg-white-47 { background-color: rgba(255,255,255,0.39); }
+.wow-tour-bg-cyan-48 { background-color: rgba(2,167,202,0.40); }
+.wow-tour-bg-gold-48 { background-color: rgba(171,123,38,0.40); }
+.wow-tour-bg-white-48 { background-color: rgba(255,255,255,0.40); }
+.wow-tour-bg-cyan-49 { background-color: rgba(2,167,202,0.41); }
+.wow-tour-bg-gold-49 { background-color: rgba(171,123,38,0.41); }
+.wow-tour-bg-white-49 { background-color: rgba(255,255,255,0.41); }
+.wow-tour-bg-cyan-50 { background-color: rgba(2,167,202,0.42); }
+.wow-tour-bg-gold-50 { background-color: rgba(171,123,38,0.42); }
+.wow-tour-bg-white-50 { background-color: rgba(255,255,255,0.42); }
+.wow-tour-bg-cyan-51 { background-color: rgba(2,167,202,0.42); }
+.wow-tour-bg-gold-51 { background-color: rgba(171,123,38,0.42); }
+.wow-tour-bg-white-51 { background-color: rgba(255,255,255,0.42); }
+.wow-tour-bg-cyan-52 { background-color: rgba(2,167,202,0.43); }
+.wow-tour-bg-gold-52 { background-color: rgba(171,123,38,0.43); }
+.wow-tour-bg-white-52 { background-color: rgba(255,255,255,0.43); }
+.wow-tour-bg-cyan-53 { background-color: rgba(2,167,202,0.44); }
+.wow-tour-bg-gold-53 { background-color: rgba(171,123,38,0.44); }
+.wow-tour-bg-white-53 { background-color: rgba(255,255,255,0.44); }
+.wow-tour-bg-cyan-54 { background-color: rgba(2,167,202,0.45); }
+.wow-tour-bg-gold-54 { background-color: rgba(171,123,38,0.45); }
+.wow-tour-bg-white-54 { background-color: rgba(255,255,255,0.45); }
+.wow-tour-bg-cyan-55 { background-color: rgba(2,167,202,0.46); }
+.wow-tour-bg-gold-55 { background-color: rgba(171,123,38,0.46); }
+.wow-tour-bg-white-55 { background-color: rgba(255,255,255,0.46); }
+.wow-tour-bg-cyan-56 { background-color: rgba(2,167,202,0.47); }
+.wow-tour-bg-gold-56 { background-color: rgba(171,123,38,0.47); }
+.wow-tour-bg-white-56 { background-color: rgba(255,255,255,0.47); }
+.wow-tour-bg-cyan-57 { background-color: rgba(2,167,202,0.48); }
+.wow-tour-bg-gold-57 { background-color: rgba(171,123,38,0.48); }
+.wow-tour-bg-white-57 { background-color: rgba(255,255,255,0.48); }
+.wow-tour-bg-cyan-58 { background-color: rgba(2,167,202,0.48); }
+.wow-tour-bg-gold-58 { background-color: rgba(171,123,38,0.48); }
+.wow-tour-bg-white-58 { background-color: rgba(255,255,255,0.48); }
+.wow-tour-bg-cyan-59 { background-color: rgba(2,167,202,0.49); }
+.wow-tour-bg-gold-59 { background-color: rgba(171,123,38,0.49); }
+.wow-tour-bg-white-59 { background-color: rgba(255,255,255,0.49); }
+.wow-tour-bg-cyan-60 { background-color: rgba(2,167,202,0.50); }
+.wow-tour-bg-gold-60 { background-color: rgba(171,123,38,0.50); }
+.wow-tour-bg-white-60 { background-color: rgba(255,255,255,0.50); }
+.wow-tour-bg-cyan-61 { background-color: rgba(2,167,202,0.51); }
+.wow-tour-bg-gold-61 { background-color: rgba(171,123,38,0.51); }
+.wow-tour-bg-white-61 { background-color: rgba(255,255,255,0.51); }
+.wow-tour-bg-cyan-62 { background-color: rgba(2,167,202,0.52); }
+.wow-tour-bg-gold-62 { background-color: rgba(171,123,38,0.52); }
+.wow-tour-bg-white-62 { background-color: rgba(255,255,255,0.52); }
+.wow-tour-bg-cyan-63 { background-color: rgba(2,167,202,0.52); }
+.wow-tour-bg-gold-63 { background-color: rgba(171,123,38,0.52); }
+.wow-tour-bg-white-63 { background-color: rgba(255,255,255,0.52); }
+.wow-tour-bg-cyan-64 { background-color: rgba(2,167,202,0.53); }
+.wow-tour-bg-gold-64 { background-color: rgba(171,123,38,0.53); }
+.wow-tour-bg-white-64 { background-color: rgba(255,255,255,0.53); }
+.wow-tour-bg-cyan-65 { background-color: rgba(2,167,202,0.54); }
+.wow-tour-bg-gold-65 { background-color: rgba(171,123,38,0.54); }
+.wow-tour-bg-white-65 { background-color: rgba(255,255,255,0.54); }
+.wow-tour-bg-cyan-66 { background-color: rgba(2,167,202,0.55); }
+.wow-tour-bg-gold-66 { background-color: rgba(171,123,38,0.55); }
+.wow-tour-bg-white-66 { background-color: rgba(255,255,255,0.55); }
+.wow-tour-bg-cyan-67 { background-color: rgba(2,167,202,0.56); }
+.wow-tour-bg-gold-67 { background-color: rgba(171,123,38,0.56); }
+.wow-tour-bg-white-67 { background-color: rgba(255,255,255,0.56); }
+.wow-tour-bg-cyan-68 { background-color: rgba(2,167,202,0.57); }
+.wow-tour-bg-gold-68 { background-color: rgba(171,123,38,0.57); }
+.wow-tour-bg-white-68 { background-color: rgba(255,255,255,0.57); }
+.wow-tour-bg-cyan-69 { background-color: rgba(2,167,202,0.57); }
+.wow-tour-bg-gold-69 { background-color: rgba(171,123,38,0.57); }
+.wow-tour-bg-white-69 { background-color: rgba(255,255,255,0.57); }
+.wow-tour-bg-cyan-70 { background-color: rgba(2,167,202,0.58); }
+.wow-tour-bg-gold-70 { background-color: rgba(171,123,38,0.58); }
+.wow-tour-bg-white-70 { background-color: rgba(255,255,255,0.58); }
+.wow-tour-bg-cyan-71 { background-color: rgba(2,167,202,0.59); }
+.wow-tour-bg-gold-71 { background-color: rgba(171,123,38,0.59); }
+.wow-tour-bg-white-71 { background-color: rgba(255,255,255,0.59); }
+.wow-tour-bg-cyan-72 { background-color: rgba(2,167,202,0.60); }
+.wow-tour-bg-gold-72 { background-color: rgba(171,123,38,0.60); }
+.wow-tour-bg-white-72 { background-color: rgba(255,255,255,0.60); }
+.wow-tour-bg-cyan-73 { background-color: rgba(2,167,202,0.61); }
+.wow-tour-bg-gold-73 { background-color: rgba(171,123,38,0.61); }
+.wow-tour-bg-white-73 { background-color: rgba(255,255,255,0.61); }
+.wow-tour-bg-cyan-74 { background-color: rgba(2,167,202,0.62); }
+.wow-tour-bg-gold-74 { background-color: rgba(171,123,38,0.62); }
+.wow-tour-bg-white-74 { background-color: rgba(255,255,255,0.62); }
+.wow-tour-bg-cyan-75 { background-color: rgba(2,167,202,0.62); }
+.wow-tour-bg-gold-75 { background-color: rgba(171,123,38,0.62); }
+.wow-tour-bg-white-75 { background-color: rgba(255,255,255,0.62); }
+.wow-tour-bg-cyan-76 { background-color: rgba(2,167,202,0.63); }
+.wow-tour-bg-gold-76 { background-color: rgba(171,123,38,0.63); }
+.wow-tour-bg-white-76 { background-color: rgba(255,255,255,0.63); }
+.wow-tour-bg-cyan-77 { background-color: rgba(2,167,202,0.64); }
+.wow-tour-bg-gold-77 { background-color: rgba(171,123,38,0.64); }
+.wow-tour-bg-white-77 { background-color: rgba(255,255,255,0.64); }
+.wow-tour-bg-cyan-78 { background-color: rgba(2,167,202,0.65); }
+.wow-tour-bg-gold-78 { background-color: rgba(171,123,38,0.65); }
+.wow-tour-bg-white-78 { background-color: rgba(255,255,255,0.65); }
+.wow-tour-bg-cyan-79 { background-color: rgba(2,167,202,0.66); }
+.wow-tour-bg-gold-79 { background-color: rgba(171,123,38,0.66); }
+.wow-tour-bg-white-79 { background-color: rgba(255,255,255,0.66); }
+.wow-tour-bg-cyan-80 { background-color: rgba(2,167,202,0.67); }
+.wow-tour-bg-gold-80 { background-color: rgba(171,123,38,0.67); }
+.wow-tour-bg-white-80 { background-color: rgba(255,255,255,0.67); }
+.wow-tour-bg-cyan-81 { background-color: rgba(2,167,202,0.68); }
+.wow-tour-bg-gold-81 { background-color: rgba(171,123,38,0.68); }
+.wow-tour-bg-white-81 { background-color: rgba(255,255,255,0.68); }
+.wow-tour-bg-cyan-82 { background-color: rgba(2,167,202,0.68); }
+.wow-tour-bg-gold-82 { background-color: rgba(171,123,38,0.68); }
+.wow-tour-bg-white-82 { background-color: rgba(255,255,255,0.68); }
+.wow-tour-bg-cyan-83 { background-color: rgba(2,167,202,0.69); }
+.wow-tour-bg-gold-83 { background-color: rgba(171,123,38,0.69); }
+.wow-tour-bg-white-83 { background-color: rgba(255,255,255,0.69); }
+.wow-tour-bg-cyan-84 { background-color: rgba(2,167,202,0.70); }
+.wow-tour-bg-gold-84 { background-color: rgba(171,123,38,0.70); }
+.wow-tour-bg-white-84 { background-color: rgba(255,255,255,0.70); }
+.wow-tour-bg-cyan-85 { background-color: rgba(2,167,202,0.71); }
+.wow-tour-bg-gold-85 { background-color: rgba(171,123,38,0.71); }
+.wow-tour-bg-white-85 { background-color: rgba(255,255,255,0.71); }
+.wow-tour-bg-cyan-86 { background-color: rgba(2,167,202,0.72); }
+.wow-tour-bg-gold-86 { background-color: rgba(171,123,38,0.72); }
+.wow-tour-bg-white-86 { background-color: rgba(255,255,255,0.72); }
+.wow-tour-bg-cyan-87 { background-color: rgba(2,167,202,0.72); }
+.wow-tour-bg-gold-87 { background-color: rgba(171,123,38,0.72); }
+.wow-tour-bg-white-87 { background-color: rgba(255,255,255,0.72); }
+.wow-tour-bg-cyan-88 { background-color: rgba(2,167,202,0.73); }
+.wow-tour-bg-gold-88 { background-color: rgba(171,123,38,0.73); }
+.wow-tour-bg-white-88 { background-color: rgba(255,255,255,0.73); }
+.wow-tour-bg-cyan-89 { background-color: rgba(2,167,202,0.74); }
+.wow-tour-bg-gold-89 { background-color: rgba(171,123,38,0.74); }
+.wow-tour-bg-white-89 { background-color: rgba(255,255,255,0.74); }
+.wow-tour-bg-cyan-90 { background-color: rgba(2,167,202,0.75); }
+.wow-tour-bg-gold-90 { background-color: rgba(171,123,38,0.75); }
+.wow-tour-bg-white-90 { background-color: rgba(255,255,255,0.75); }
+.wow-tour-bg-cyan-91 { background-color: rgba(2,167,202,0.76); }
+.wow-tour-bg-gold-91 { background-color: rgba(171,123,38,0.76); }
+.wow-tour-bg-white-91 { background-color: rgba(255,255,255,0.76); }
+.wow-tour-bg-cyan-92 { background-color: rgba(2,167,202,0.77); }
+.wow-tour-bg-gold-92 { background-color: rgba(171,123,38,0.77); }
+.wow-tour-bg-white-92 { background-color: rgba(255,255,255,0.77); }
+.wow-tour-bg-cyan-93 { background-color: rgba(2,167,202,0.78); }
+.wow-tour-bg-gold-93 { background-color: rgba(171,123,38,0.78); }
+.wow-tour-bg-white-93 { background-color: rgba(255,255,255,0.78); }
+.wow-tour-bg-cyan-94 { background-color: rgba(2,167,202,0.78); }
+.wow-tour-bg-gold-94 { background-color: rgba(171,123,38,0.78); }
+.wow-tour-bg-white-94 { background-color: rgba(255,255,255,0.78); }
+.wow-tour-bg-cyan-95 { background-color: rgba(2,167,202,0.79); }
+.wow-tour-bg-gold-95 { background-color: rgba(171,123,38,0.79); }
+.wow-tour-bg-white-95 { background-color: rgba(255,255,255,0.79); }
+.wow-tour-bg-cyan-96 { background-color: rgba(2,167,202,0.80); }
+.wow-tour-bg-gold-96 { background-color: rgba(171,123,38,0.80); }
+.wow-tour-bg-white-96 { background-color: rgba(255,255,255,0.80); }
+.wow-tour-bg-cyan-97 { background-color: rgba(2,167,202,0.81); }
+.wow-tour-bg-gold-97 { background-color: rgba(171,123,38,0.81); }
+.wow-tour-bg-white-97 { background-color: rgba(255,255,255,0.81); }
+.wow-tour-bg-cyan-98 { background-color: rgba(2,167,202,0.82); }
+.wow-tour-bg-gold-98 { background-color: rgba(171,123,38,0.82); }
+.wow-tour-bg-white-98 { background-color: rgba(255,255,255,0.82); }
+.wow-tour-bg-cyan-99 { background-color: rgba(2,167,202,0.82); }
+.wow-tour-bg-gold-99 { background-color: rgba(171,123,38,0.82); }
+.wow-tour-bg-white-99 { background-color: rgba(255,255,255,0.82); }
+.wow-tour-bg-cyan-100 { background-color: rgba(2,167,202,0.83); }
+.wow-tour-bg-gold-100 { background-color: rgba(171,123,38,0.83); }
+.wow-tour-bg-white-100 { background-color: rgba(255,255,255,0.83); }
+.wow-tour-bg-cyan-101 { background-color: rgba(2,167,202,0.84); }
+.wow-tour-bg-gold-101 { background-color: rgba(171,123,38,0.84); }
+.wow-tour-bg-white-101 { background-color: rgba(255,255,255,0.84); }
+.wow-tour-bg-cyan-102 { background-color: rgba(2,167,202,0.85); }
+.wow-tour-bg-gold-102 { background-color: rgba(171,123,38,0.85); }
+.wow-tour-bg-white-102 { background-color: rgba(255,255,255,0.85); }
+.wow-tour-bg-cyan-103 { background-color: rgba(2,167,202,0.86); }
+.wow-tour-bg-gold-103 { background-color: rgba(171,123,38,0.86); }
+.wow-tour-bg-white-103 { background-color: rgba(255,255,255,0.86); }
+.wow-tour-bg-cyan-104 { background-color: rgba(2,167,202,0.87); }
+.wow-tour-bg-gold-104 { background-color: rgba(171,123,38,0.87); }
+.wow-tour-bg-white-104 { background-color: rgba(255,255,255,0.87); }
+.wow-tour-bg-cyan-105 { background-color: rgba(2,167,202,0.88); }
+.wow-tour-bg-gold-105 { background-color: rgba(171,123,38,0.88); }
+.wow-tour-bg-white-105 { background-color: rgba(255,255,255,0.88); }
+.wow-tour-bg-cyan-106 { background-color: rgba(2,167,202,0.88); }
+.wow-tour-bg-gold-106 { background-color: rgba(171,123,38,0.88); }
+.wow-tour-bg-white-106 { background-color: rgba(255,255,255,0.88); }
+.wow-tour-bg-cyan-107 { background-color: rgba(2,167,202,0.89); }
+.wow-tour-bg-gold-107 { background-color: rgba(171,123,38,0.89); }
+.wow-tour-bg-white-107 { background-color: rgba(255,255,255,0.89); }
+.wow-tour-bg-cyan-108 { background-color: rgba(2,167,202,0.90); }
+.wow-tour-bg-gold-108 { background-color: rgba(171,123,38,0.90); }
+.wow-tour-bg-white-108 { background-color: rgba(255,255,255,0.90); }
+.wow-tour-bg-cyan-109 { background-color: rgba(2,167,202,0.91); }
+.wow-tour-bg-gold-109 { background-color: rgba(171,123,38,0.91); }
+.wow-tour-bg-white-109 { background-color: rgba(255,255,255,0.91); }
+.wow-tour-bg-cyan-110 { background-color: rgba(2,167,202,0.92); }
+.wow-tour-bg-gold-110 { background-color: rgba(171,123,38,0.92); }
+.wow-tour-bg-white-110 { background-color: rgba(255,255,255,0.92); }
+.wow-tour-bg-cyan-111 { background-color: rgba(2,167,202,0.92); }
+.wow-tour-bg-gold-111 { background-color: rgba(171,123,38,0.92); }
+.wow-tour-bg-white-111 { background-color: rgba(255,255,255,0.92); }
+.wow-tour-bg-cyan-112 { background-color: rgba(2,167,202,0.93); }
+.wow-tour-bg-gold-112 { background-color: rgba(171,123,38,0.93); }
+.wow-tour-bg-white-112 { background-color: rgba(255,255,255,0.93); }
+.wow-tour-bg-cyan-113 { background-color: rgba(2,167,202,0.94); }
+.wow-tour-bg-gold-113 { background-color: rgba(171,123,38,0.94); }
+.wow-tour-bg-white-113 { background-color: rgba(255,255,255,0.94); }
+.wow-tour-bg-cyan-114 { background-color: rgba(2,167,202,0.95); }
+.wow-tour-bg-gold-114 { background-color: rgba(171,123,38,0.95); }
+.wow-tour-bg-white-114 { background-color: rgba(255,255,255,0.95); }
+.wow-tour-bg-cyan-115 { background-color: rgba(2,167,202,0.96); }
+.wow-tour-bg-gold-115 { background-color: rgba(171,123,38,0.96); }
+.wow-tour-bg-white-115 { background-color: rgba(255,255,255,0.96); }
+.wow-tour-bg-cyan-116 { background-color: rgba(2,167,202,0.97); }
+.wow-tour-bg-gold-116 { background-color: rgba(171,123,38,0.97); }
+.wow-tour-bg-white-116 { background-color: rgba(255,255,255,0.97); }
+.wow-tour-bg-cyan-117 { background-color: rgba(2,167,202,0.98); }
+.wow-tour-bg-gold-117 { background-color: rgba(171,123,38,0.98); }
+.wow-tour-bg-white-117 { background-color: rgba(255,255,255,0.98); }
+.wow-tour-bg-cyan-118 { background-color: rgba(2,167,202,0.98); }
+.wow-tour-bg-gold-118 { background-color: rgba(171,123,38,0.98); }
+.wow-tour-bg-white-118 { background-color: rgba(255,255,255,0.98); }
+.wow-tour-bg-cyan-119 { background-color: rgba(2,167,202,0.99); }
+.wow-tour-bg-gold-119 { background-color: rgba(171,123,38,0.99); }
+.wow-tour-bg-white-119 { background-color: rgba(255,255,255,0.99); }
+.wow-tour-bg-cyan-120 { background-color: rgba(2,167,202,1.00); }
+.wow-tour-bg-gold-120 { background-color: rgba(171,123,38,1.00); }
+.wow-tour-bg-white-120 { background-color: rgba(255,255,255,1.00); }
+.wow-tour-b-cyan-0 { border-color: rgba(2,167,202,0.00); }
+.wow-tour-b-gold-0 { border-color: rgba(171,123,38,0.00); }
+.wow-tour-b-white-0 { border-color: rgba(255,255,255,0.00); }
+.wow-tour-b-cyan-1 { border-color: rgba(2,167,202,0.01); }
+.wow-tour-b-gold-1 { border-color: rgba(171,123,38,0.01); }
+.wow-tour-b-white-1 { border-color: rgba(255,255,255,0.01); }
+.wow-tour-b-cyan-2 { border-color: rgba(2,167,202,0.02); }
+.wow-tour-b-gold-2 { border-color: rgba(171,123,38,0.02); }
+.wow-tour-b-white-2 { border-color: rgba(255,255,255,0.02); }
+.wow-tour-b-cyan-3 { border-color: rgba(2,167,202,0.02); }
+.wow-tour-b-gold-3 { border-color: rgba(171,123,38,0.02); }
+.wow-tour-b-white-3 { border-color: rgba(255,255,255,0.02); }
+.wow-tour-b-cyan-4 { border-color: rgba(2,167,202,0.03); }
+.wow-tour-b-gold-4 { border-color: rgba(171,123,38,0.03); }
+.wow-tour-b-white-4 { border-color: rgba(255,255,255,0.03); }
+.wow-tour-b-cyan-5 { border-color: rgba(2,167,202,0.04); }
+.wow-tour-b-gold-5 { border-color: rgba(171,123,38,0.04); }
+.wow-tour-b-white-5 { border-color: rgba(255,255,255,0.04); }
+.wow-tour-b-cyan-6 { border-color: rgba(2,167,202,0.05); }
+.wow-tour-b-gold-6 { border-color: rgba(171,123,38,0.05); }
+.wow-tour-b-white-6 { border-color: rgba(255,255,255,0.05); }
+.wow-tour-b-cyan-7 { border-color: rgba(2,167,202,0.06); }
+.wow-tour-b-gold-7 { border-color: rgba(171,123,38,0.06); }
+.wow-tour-b-white-7 { border-color: rgba(255,255,255,0.06); }
+.wow-tour-b-cyan-8 { border-color: rgba(2,167,202,0.07); }
+.wow-tour-b-gold-8 { border-color: rgba(171,123,38,0.07); }
+.wow-tour-b-white-8 { border-color: rgba(255,255,255,0.07); }
+.wow-tour-b-cyan-9 { border-color: rgba(2,167,202,0.08); }
+.wow-tour-b-gold-9 { border-color: rgba(171,123,38,0.08); }
+.wow-tour-b-white-9 { border-color: rgba(255,255,255,0.08); }
+.wow-tour-b-cyan-10 { border-color: rgba(2,167,202,0.08); }
+.wow-tour-b-gold-10 { border-color: rgba(171,123,38,0.08); }
+.wow-tour-b-white-10 { border-color: rgba(255,255,255,0.08); }
+.wow-tour-b-cyan-11 { border-color: rgba(2,167,202,0.09); }
+.wow-tour-b-gold-11 { border-color: rgba(171,123,38,0.09); }
+.wow-tour-b-white-11 { border-color: rgba(255,255,255,0.09); }
+.wow-tour-b-cyan-12 { border-color: rgba(2,167,202,0.10); }
+.wow-tour-b-gold-12 { border-color: rgba(171,123,38,0.10); }
+.wow-tour-b-white-12 { border-color: rgba(255,255,255,0.10); }
+.wow-tour-b-cyan-13 { border-color: rgba(2,167,202,0.11); }
+.wow-tour-b-gold-13 { border-color: rgba(171,123,38,0.11); }
+.wow-tour-b-white-13 { border-color: rgba(255,255,255,0.11); }
+.wow-tour-b-cyan-14 { border-color: rgba(2,167,202,0.12); }
+.wow-tour-b-gold-14 { border-color: rgba(171,123,38,0.12); }
+.wow-tour-b-white-14 { border-color: rgba(255,255,255,0.12); }
+.wow-tour-b-cyan-15 { border-color: rgba(2,167,202,0.12); }
+.wow-tour-b-gold-15 { border-color: rgba(171,123,38,0.12); }
+.wow-tour-b-white-15 { border-color: rgba(255,255,255,0.12); }
+.wow-tour-b-cyan-16 { border-color: rgba(2,167,202,0.13); }
+.wow-tour-b-gold-16 { border-color: rgba(171,123,38,0.13); }
+.wow-tour-b-white-16 { border-color: rgba(255,255,255,0.13); }
+.wow-tour-b-cyan-17 { border-color: rgba(2,167,202,0.14); }
+.wow-tour-b-gold-17 { border-color: rgba(171,123,38,0.14); }
+.wow-tour-b-white-17 { border-color: rgba(255,255,255,0.14); }
+.wow-tour-b-cyan-18 { border-color: rgba(2,167,202,0.15); }
+.wow-tour-b-gold-18 { border-color: rgba(171,123,38,0.15); }
+.wow-tour-b-white-18 { border-color: rgba(255,255,255,0.15); }
+.wow-tour-b-cyan-19 { border-color: rgba(2,167,202,0.16); }
+.wow-tour-b-gold-19 { border-color: rgba(171,123,38,0.16); }
+.wow-tour-b-white-19 { border-color: rgba(255,255,255,0.16); }
+.wow-tour-b-cyan-20 { border-color: rgba(2,167,202,0.17); }
+.wow-tour-b-gold-20 { border-color: rgba(171,123,38,0.17); }
+.wow-tour-b-white-20 { border-color: rgba(255,255,255,0.17); }
+.wow-tour-b-cyan-21 { border-color: rgba(2,167,202,0.18); }
+.wow-tour-b-gold-21 { border-color: rgba(171,123,38,0.18); }
+.wow-tour-b-white-21 { border-color: rgba(255,255,255,0.18); }
+.wow-tour-b-cyan-22 { border-color: rgba(2,167,202,0.18); }
+.wow-tour-b-gold-22 { border-color: rgba(171,123,38,0.18); }
+.wow-tour-b-white-22 { border-color: rgba(255,255,255,0.18); }
+.wow-tour-b-cyan-23 { border-color: rgba(2,167,202,0.19); }
+.wow-tour-b-gold-23 { border-color: rgba(171,123,38,0.19); }
+.wow-tour-b-white-23 { border-color: rgba(255,255,255,0.19); }
+.wow-tour-b-cyan-24 { border-color: rgba(2,167,202,0.20); }
+.wow-tour-b-gold-24 { border-color: rgba(171,123,38,0.20); }
+.wow-tour-b-white-24 { border-color: rgba(255,255,255,0.20); }
+.wow-tour-b-cyan-25 { border-color: rgba(2,167,202,0.21); }
+.wow-tour-b-gold-25 { border-color: rgba(171,123,38,0.21); }
+.wow-tour-b-white-25 { border-color: rgba(255,255,255,0.21); }
+.wow-tour-b-cyan-26 { border-color: rgba(2,167,202,0.22); }
+.wow-tour-b-gold-26 { border-color: rgba(171,123,38,0.22); }
+.wow-tour-b-white-26 { border-color: rgba(255,255,255,0.22); }
+.wow-tour-b-cyan-27 { border-color: rgba(2,167,202,0.22); }
+.wow-tour-b-gold-27 { border-color: rgba(171,123,38,0.22); }
+.wow-tour-b-white-27 { border-color: rgba(255,255,255,0.22); }
+.wow-tour-b-cyan-28 { border-color: rgba(2,167,202,0.23); }
+.wow-tour-b-gold-28 { border-color: rgba(171,123,38,0.23); }
+.wow-tour-b-white-28 { border-color: rgba(255,255,255,0.23); }
+.wow-tour-b-cyan-29 { border-color: rgba(2,167,202,0.24); }
+.wow-tour-b-gold-29 { border-color: rgba(171,123,38,0.24); }
+.wow-tour-b-white-29 { border-color: rgba(255,255,255,0.24); }
+.wow-tour-b-cyan-30 { border-color: rgba(2,167,202,0.25); }
+.wow-tour-b-gold-30 { border-color: rgba(171,123,38,0.25); }
+.wow-tour-b-white-30 { border-color: rgba(255,255,255,0.25); }
+.wow-tour-b-cyan-31 { border-color: rgba(2,167,202,0.26); }
+.wow-tour-b-gold-31 { border-color: rgba(171,123,38,0.26); }
+.wow-tour-b-white-31 { border-color: rgba(255,255,255,0.26); }
+.wow-tour-b-cyan-32 { border-color: rgba(2,167,202,0.27); }
+.wow-tour-b-gold-32 { border-color: rgba(171,123,38,0.27); }
+.wow-tour-b-white-32 { border-color: rgba(255,255,255,0.27); }
+.wow-tour-b-cyan-33 { border-color: rgba(2,167,202,0.28); }
+.wow-tour-b-gold-33 { border-color: rgba(171,123,38,0.28); }
+.wow-tour-b-white-33 { border-color: rgba(255,255,255,0.28); }
+.wow-tour-b-cyan-34 { border-color: rgba(2,167,202,0.28); }
+.wow-tour-b-gold-34 { border-color: rgba(171,123,38,0.28); }
+.wow-tour-b-white-34 { border-color: rgba(255,255,255,0.28); }
+.wow-tour-b-cyan-35 { border-color: rgba(2,167,202,0.29); }
+.wow-tour-b-gold-35 { border-color: rgba(171,123,38,0.29); }
+.wow-tour-b-white-35 { border-color: rgba(255,255,255,0.29); }
+.wow-tour-b-cyan-36 { border-color: rgba(2,167,202,0.30); }
+.wow-tour-b-gold-36 { border-color: rgba(171,123,38,0.30); }
+.wow-tour-b-white-36 { border-color: rgba(255,255,255,0.30); }
+.wow-tour-b-cyan-37 { border-color: rgba(2,167,202,0.31); }
+.wow-tour-b-gold-37 { border-color: rgba(171,123,38,0.31); }
+.wow-tour-b-white-37 { border-color: rgba(255,255,255,0.31); }
+.wow-tour-b-cyan-38 { border-color: rgba(2,167,202,0.32); }
+.wow-tour-b-gold-38 { border-color: rgba(171,123,38,0.32); }
+.wow-tour-b-white-38 { border-color: rgba(255,255,255,0.32); }
+.wow-tour-b-cyan-39 { border-color: rgba(2,167,202,0.32); }
+.wow-tour-b-gold-39 { border-color: rgba(171,123,38,0.32); }
+.wow-tour-b-white-39 { border-color: rgba(255,255,255,0.32); }
+.wow-tour-b-cyan-40 { border-color: rgba(2,167,202,0.33); }
+.wow-tour-b-gold-40 { border-color: rgba(171,123,38,0.33); }
+.wow-tour-b-white-40 { border-color: rgba(255,255,255,0.33); }
+.wow-tour-b-cyan-41 { border-color: rgba(2,167,202,0.34); }
+.wow-tour-b-gold-41 { border-color: rgba(171,123,38,0.34); }
+.wow-tour-b-white-41 { border-color: rgba(255,255,255,0.34); }
+.wow-tour-b-cyan-42 { border-color: rgba(2,167,202,0.35); }
+.wow-tour-b-gold-42 { border-color: rgba(171,123,38,0.35); }
+.wow-tour-b-white-42 { border-color: rgba(255,255,255,0.35); }
+.wow-tour-b-cyan-43 { border-color: rgba(2,167,202,0.36); }
+.wow-tour-b-gold-43 { border-color: rgba(171,123,38,0.36); }
+.wow-tour-b-white-43 { border-color: rgba(255,255,255,0.36); }
+.wow-tour-b-cyan-44 { border-color: rgba(2,167,202,0.37); }
+.wow-tour-b-gold-44 { border-color: rgba(171,123,38,0.37); }
+.wow-tour-b-white-44 { border-color: rgba(255,255,255,0.37); }
+.wow-tour-b-cyan-45 { border-color: rgba(2,167,202,0.38); }
+.wow-tour-b-gold-45 { border-color: rgba(171,123,38,0.38); }
+.wow-tour-b-white-45 { border-color: rgba(255,255,255,0.38); }
+.wow-tour-b-cyan-46 { border-color: rgba(2,167,202,0.38); }
+.wow-tour-b-gold-46 { border-color: rgba(171,123,38,0.38); }
+.wow-tour-b-white-46 { border-color: rgba(255,255,255,0.38); }
+.wow-tour-b-cyan-47 { border-color: rgba(2,167,202,0.39); }
+.wow-tour-b-gold-47 { border-color: rgba(171,123,38,0.39); }
+.wow-tour-b-white-47 { border-color: rgba(255,255,255,0.39); }
+.wow-tour-b-cyan-48 { border-color: rgba(2,167,202,0.40); }
+.wow-tour-b-gold-48 { border-color: rgba(171,123,38,0.40); }
+.wow-tour-b-white-48 { border-color: rgba(255,255,255,0.40); }
+.wow-tour-b-cyan-49 { border-color: rgba(2,167,202,0.41); }
+.wow-tour-b-gold-49 { border-color: rgba(171,123,38,0.41); }
+.wow-tour-b-white-49 { border-color: rgba(255,255,255,0.41); }
+.wow-tour-b-cyan-50 { border-color: rgba(2,167,202,0.42); }
+.wow-tour-b-gold-50 { border-color: rgba(171,123,38,0.42); }
+.wow-tour-b-white-50 { border-color: rgba(255,255,255,0.42); }
+.wow-tour-b-cyan-51 { border-color: rgba(2,167,202,0.42); }
+.wow-tour-b-gold-51 { border-color: rgba(171,123,38,0.42); }
+.wow-tour-b-white-51 { border-color: rgba(255,255,255,0.42); }
+.wow-tour-b-cyan-52 { border-color: rgba(2,167,202,0.43); }
+.wow-tour-b-gold-52 { border-color: rgba(171,123,38,0.43); }
+.wow-tour-b-white-52 { border-color: rgba(255,255,255,0.43); }
+.wow-tour-b-cyan-53 { border-color: rgba(2,167,202,0.44); }
+.wow-tour-b-gold-53 { border-color: rgba(171,123,38,0.44); }
+.wow-tour-b-white-53 { border-color: rgba(255,255,255,0.44); }
+.wow-tour-b-cyan-54 { border-color: rgba(2,167,202,0.45); }
+.wow-tour-b-gold-54 { border-color: rgba(171,123,38,0.45); }
+.wow-tour-b-white-54 { border-color: rgba(255,255,255,0.45); }
+.wow-tour-b-cyan-55 { border-color: rgba(2,167,202,0.46); }
+.wow-tour-b-gold-55 { border-color: rgba(171,123,38,0.46); }
+.wow-tour-b-white-55 { border-color: rgba(255,255,255,0.46); }
+.wow-tour-b-cyan-56 { border-color: rgba(2,167,202,0.47); }
+.wow-tour-b-gold-56 { border-color: rgba(171,123,38,0.47); }
+.wow-tour-b-white-56 { border-color: rgba(255,255,255,0.47); }
+.wow-tour-b-cyan-57 { border-color: rgba(2,167,202,0.48); }
+.wow-tour-b-gold-57 { border-color: rgba(171,123,38,0.48); }
+.wow-tour-b-white-57 { border-color: rgba(255,255,255,0.48); }
+.wow-tour-b-cyan-58 { border-color: rgba(2,167,202,0.48); }
+.wow-tour-b-gold-58 { border-color: rgba(171,123,38,0.48); }
+.wow-tour-b-white-58 { border-color: rgba(255,255,255,0.48); }
+.wow-tour-b-cyan-59 { border-color: rgba(2,167,202,0.49); }
+.wow-tour-b-gold-59 { border-color: rgba(171,123,38,0.49); }
+.wow-tour-b-white-59 { border-color: rgba(255,255,255,0.49); }
+.wow-tour-b-cyan-60 { border-color: rgba(2,167,202,0.50); }
+.wow-tour-b-gold-60 { border-color: rgba(171,123,38,0.50); }
+.wow-tour-b-white-60 { border-color: rgba(255,255,255,0.50); }
+.wow-tour-b-cyan-61 { border-color: rgba(2,167,202,0.51); }
+.wow-tour-b-gold-61 { border-color: rgba(171,123,38,0.51); }
+.wow-tour-b-white-61 { border-color: rgba(255,255,255,0.51); }
+.wow-tour-b-cyan-62 { border-color: rgba(2,167,202,0.52); }
+.wow-tour-b-gold-62 { border-color: rgba(171,123,38,0.52); }
+.wow-tour-b-white-62 { border-color: rgba(255,255,255,0.52); }
+.wow-tour-b-cyan-63 { border-color: rgba(2,167,202,0.52); }
+.wow-tour-b-gold-63 { border-color: rgba(171,123,38,0.52); }
+.wow-tour-b-white-63 { border-color: rgba(255,255,255,0.52); }
+.wow-tour-b-cyan-64 { border-color: rgba(2,167,202,0.53); }
+.wow-tour-b-gold-64 { border-color: rgba(171,123,38,0.53); }
+.wow-tour-b-white-64 { border-color: rgba(255,255,255,0.53); }
+.wow-tour-b-cyan-65 { border-color: rgba(2,167,202,0.54); }
+.wow-tour-b-gold-65 { border-color: rgba(171,123,38,0.54); }
+.wow-tour-b-white-65 { border-color: rgba(255,255,255,0.54); }
+.wow-tour-b-cyan-66 { border-color: rgba(2,167,202,0.55); }
+.wow-tour-b-gold-66 { border-color: rgba(171,123,38,0.55); }
+.wow-tour-b-white-66 { border-color: rgba(255,255,255,0.55); }
+.wow-tour-b-cyan-67 { border-color: rgba(2,167,202,0.56); }
+.wow-tour-b-gold-67 { border-color: rgba(171,123,38,0.56); }
+.wow-tour-b-white-67 { border-color: rgba(255,255,255,0.56); }
+.wow-tour-b-cyan-68 { border-color: rgba(2,167,202,0.57); }
+.wow-tour-b-gold-68 { border-color: rgba(171,123,38,0.57); }
+.wow-tour-b-white-68 { border-color: rgba(255,255,255,0.57); }
+.wow-tour-b-cyan-69 { border-color: rgba(2,167,202,0.57); }
+.wow-tour-b-gold-69 { border-color: rgba(171,123,38,0.57); }
+.wow-tour-b-white-69 { border-color: rgba(255,255,255,0.57); }
+.wow-tour-b-cyan-70 { border-color: rgba(2,167,202,0.58); }
+.wow-tour-b-gold-70 { border-color: rgba(171,123,38,0.58); }
+.wow-tour-b-white-70 { border-color: rgba(255,255,255,0.58); }
+.wow-tour-b-cyan-71 { border-color: rgba(2,167,202,0.59); }
+.wow-tour-b-gold-71 { border-color: rgba(171,123,38,0.59); }
+.wow-tour-b-white-71 { border-color: rgba(255,255,255,0.59); }
+.wow-tour-b-cyan-72 { border-color: rgba(2,167,202,0.60); }
+.wow-tour-b-gold-72 { border-color: rgba(171,123,38,0.60); }
+.wow-tour-b-white-72 { border-color: rgba(255,255,255,0.60); }
+.wow-tour-b-cyan-73 { border-color: rgba(2,167,202,0.61); }
+.wow-tour-b-gold-73 { border-color: rgba(171,123,38,0.61); }
+.wow-tour-b-white-73 { border-color: rgba(255,255,255,0.61); }
+.wow-tour-b-cyan-74 { border-color: rgba(2,167,202,0.62); }
+.wow-tour-b-gold-74 { border-color: rgba(171,123,38,0.62); }
+.wow-tour-b-white-74 { border-color: rgba(255,255,255,0.62); }
+.wow-tour-b-cyan-75 { border-color: rgba(2,167,202,0.62); }
+.wow-tour-b-gold-75 { border-color: rgba(171,123,38,0.62); }
+.wow-tour-b-white-75 { border-color: rgba(255,255,255,0.62); }
+.wow-tour-b-cyan-76 { border-color: rgba(2,167,202,0.63); }
+.wow-tour-b-gold-76 { border-color: rgba(171,123,38,0.63); }
+.wow-tour-b-white-76 { border-color: rgba(255,255,255,0.63); }
+.wow-tour-b-cyan-77 { border-color: rgba(2,167,202,0.64); }
+.wow-tour-b-gold-77 { border-color: rgba(171,123,38,0.64); }
+.wow-tour-b-white-77 { border-color: rgba(255,255,255,0.64); }
+.wow-tour-b-cyan-78 { border-color: rgba(2,167,202,0.65); }
+.wow-tour-b-gold-78 { border-color: rgba(171,123,38,0.65); }
+.wow-tour-b-white-78 { border-color: rgba(255,255,255,0.65); }
+.wow-tour-b-cyan-79 { border-color: rgba(2,167,202,0.66); }
+.wow-tour-b-gold-79 { border-color: rgba(171,123,38,0.66); }
+.wow-tour-b-white-79 { border-color: rgba(255,255,255,0.66); }
+.wow-tour-b-cyan-80 { border-color: rgba(2,167,202,0.67); }
+.wow-tour-b-gold-80 { border-color: rgba(171,123,38,0.67); }
+.wow-tour-b-white-80 { border-color: rgba(255,255,255,0.67); }
+.wow-tour-b-cyan-81 { border-color: rgba(2,167,202,0.68); }
+.wow-tour-b-gold-81 { border-color: rgba(171,123,38,0.68); }
+.wow-tour-b-white-81 { border-color: rgba(255,255,255,0.68); }
+.wow-tour-b-cyan-82 { border-color: rgba(2,167,202,0.68); }
+.wow-tour-b-gold-82 { border-color: rgba(171,123,38,0.68); }
+.wow-tour-b-white-82 { border-color: rgba(255,255,255,0.68); }
+.wow-tour-b-cyan-83 { border-color: rgba(2,167,202,0.69); }
+.wow-tour-b-gold-83 { border-color: rgba(171,123,38,0.69); }
+.wow-tour-b-white-83 { border-color: rgba(255,255,255,0.69); }
+.wow-tour-b-cyan-84 { border-color: rgba(2,167,202,0.70); }
+.wow-tour-b-gold-84 { border-color: rgba(171,123,38,0.70); }
+.wow-tour-b-white-84 { border-color: rgba(255,255,255,0.70); }
+.wow-tour-b-cyan-85 { border-color: rgba(2,167,202,0.71); }
+.wow-tour-b-gold-85 { border-color: rgba(171,123,38,0.71); }
+.wow-tour-b-white-85 { border-color: rgba(255,255,255,0.71); }
+.wow-tour-b-cyan-86 { border-color: rgba(2,167,202,0.72); }
+.wow-tour-b-gold-86 { border-color: rgba(171,123,38,0.72); }
+.wow-tour-b-white-86 { border-color: rgba(255,255,255,0.72); }
+.wow-tour-b-cyan-87 { border-color: rgba(2,167,202,0.72); }
+.wow-tour-b-gold-87 { border-color: rgba(171,123,38,0.72); }
+.wow-tour-b-white-87 { border-color: rgba(255,255,255,0.72); }
+.wow-tour-b-cyan-88 { border-color: rgba(2,167,202,0.73); }
+.wow-tour-b-gold-88 { border-color: rgba(171,123,38,0.73); }
+.wow-tour-b-white-88 { border-color: rgba(255,255,255,0.73); }
+.wow-tour-b-cyan-89 { border-color: rgba(2,167,202,0.74); }
+.wow-tour-b-gold-89 { border-color: rgba(171,123,38,0.74); }
+.wow-tour-b-white-89 { border-color: rgba(255,255,255,0.74); }
+.wow-tour-b-cyan-90 { border-color: rgba(2,167,202,0.75); }
+.wow-tour-b-gold-90 { border-color: rgba(171,123,38,0.75); }
+.wow-tour-b-white-90 { border-color: rgba(255,255,255,0.75); }
+.wow-tour-b-cyan-91 { border-color: rgba(2,167,202,0.76); }
+.wow-tour-b-gold-91 { border-color: rgba(171,123,38,0.76); }
+.wow-tour-b-white-91 { border-color: rgba(255,255,255,0.76); }
+.wow-tour-b-cyan-92 { border-color: rgba(2,167,202,0.77); }
+.wow-tour-b-gold-92 { border-color: rgba(171,123,38,0.77); }
+.wow-tour-b-white-92 { border-color: rgba(255,255,255,0.77); }
+.wow-tour-b-cyan-93 { border-color: rgba(2,167,202,0.78); }
+.wow-tour-b-gold-93 { border-color: rgba(171,123,38,0.78); }
+.wow-tour-b-white-93 { border-color: rgba(255,255,255,0.78); }
+.wow-tour-b-cyan-94 { border-color: rgba(2,167,202,0.78); }
+.wow-tour-b-gold-94 { border-color: rgba(171,123,38,0.78); }
+.wow-tour-b-white-94 { border-color: rgba(255,255,255,0.78); }
+.wow-tour-b-cyan-95 { border-color: rgba(2,167,202,0.79); }
+.wow-tour-b-gold-95 { border-color: rgba(171,123,38,0.79); }
+.wow-tour-b-white-95 { border-color: rgba(255,255,255,0.79); }
+.wow-tour-b-cyan-96 { border-color: rgba(2,167,202,0.80); }
+.wow-tour-b-gold-96 { border-color: rgba(171,123,38,0.80); }
+.wow-tour-b-white-96 { border-color: rgba(255,255,255,0.80); }
+.wow-tour-b-cyan-97 { border-color: rgba(2,167,202,0.81); }
+.wow-tour-b-gold-97 { border-color: rgba(171,123,38,0.81); }
+.wow-tour-b-white-97 { border-color: rgba(255,255,255,0.81); }
+.wow-tour-b-cyan-98 { border-color: rgba(2,167,202,0.82); }
+.wow-tour-b-gold-98 { border-color: rgba(171,123,38,0.82); }
+.wow-tour-b-white-98 { border-color: rgba(255,255,255,0.82); }
+.wow-tour-b-cyan-99 { border-color: rgba(2,167,202,0.82); }
+.wow-tour-b-gold-99 { border-color: rgba(171,123,38,0.82); }
+.wow-tour-b-white-99 { border-color: rgba(255,255,255,0.82); }
+.wow-tour-b-cyan-100 { border-color: rgba(2,167,202,0.83); }
+.wow-tour-b-gold-100 { border-color: rgba(171,123,38,0.83); }
+.wow-tour-b-white-100 { border-color: rgba(255,255,255,0.83); }
+.wow-tour-b-cyan-101 { border-color: rgba(2,167,202,0.84); }
+.wow-tour-b-gold-101 { border-color: rgba(171,123,38,0.84); }
+.wow-tour-b-white-101 { border-color: rgba(255,255,255,0.84); }
+.wow-tour-b-cyan-102 { border-color: rgba(2,167,202,0.85); }
+.wow-tour-b-gold-102 { border-color: rgba(171,123,38,0.85); }
+.wow-tour-b-white-102 { border-color: rgba(255,255,255,0.85); }
+.wow-tour-b-cyan-103 { border-color: rgba(2,167,202,0.86); }
+.wow-tour-b-gold-103 { border-color: rgba(171,123,38,0.86); }
+.wow-tour-b-white-103 { border-color: rgba(255,255,255,0.86); }
+.wow-tour-b-cyan-104 { border-color: rgba(2,167,202,0.87); }
+.wow-tour-b-gold-104 { border-color: rgba(171,123,38,0.87); }
+.wow-tour-b-white-104 { border-color: rgba(255,255,255,0.87); }
+.wow-tour-b-cyan-105 { border-color: rgba(2,167,202,0.88); }
+.wow-tour-b-gold-105 { border-color: rgba(171,123,38,0.88); }
+.wow-tour-b-white-105 { border-color: rgba(255,255,255,0.88); }
+.wow-tour-b-cyan-106 { border-color: rgba(2,167,202,0.88); }
+.wow-tour-b-gold-106 { border-color: rgba(171,123,38,0.88); }
+.wow-tour-b-white-106 { border-color: rgba(255,255,255,0.88); }
+.wow-tour-b-cyan-107 { border-color: rgba(2,167,202,0.89); }
+.wow-tour-b-gold-107 { border-color: rgba(171,123,38,0.89); }
+.wow-tour-b-white-107 { border-color: rgba(255,255,255,0.89); }
+.wow-tour-b-cyan-108 { border-color: rgba(2,167,202,0.90); }
+.wow-tour-b-gold-108 { border-color: rgba(171,123,38,0.90); }
+.wow-tour-b-white-108 { border-color: rgba(255,255,255,0.90); }
+.wow-tour-b-cyan-109 { border-color: rgba(2,167,202,0.91); }
+.wow-tour-b-gold-109 { border-color: rgba(171,123,38,0.91); }
+.wow-tour-b-white-109 { border-color: rgba(255,255,255,0.91); }
+.wow-tour-b-cyan-110 { border-color: rgba(2,167,202,0.92); }
+.wow-tour-b-gold-110 { border-color: rgba(171,123,38,0.92); }
+.wow-tour-b-white-110 { border-color: rgba(255,255,255,0.92); }
+.wow-tour-b-cyan-111 { border-color: rgba(2,167,202,0.92); }
+.wow-tour-b-gold-111 { border-color: rgba(171,123,38,0.92); }
+.wow-tour-b-white-111 { border-color: rgba(255,255,255,0.92); }
+.wow-tour-b-cyan-112 { border-color: rgba(2,167,202,0.93); }
+.wow-tour-b-gold-112 { border-color: rgba(171,123,38,0.93); }
+.wow-tour-b-white-112 { border-color: rgba(255,255,255,0.93); }
+.wow-tour-b-cyan-113 { border-color: rgba(2,167,202,0.94); }
+.wow-tour-b-gold-113 { border-color: rgba(171,123,38,0.94); }
+.wow-tour-b-white-113 { border-color: rgba(255,255,255,0.94); }
+.wow-tour-b-cyan-114 { border-color: rgba(2,167,202,0.95); }
+.wow-tour-b-gold-114 { border-color: rgba(171,123,38,0.95); }
+.wow-tour-b-white-114 { border-color: rgba(255,255,255,0.95); }
+.wow-tour-b-cyan-115 { border-color: rgba(2,167,202,0.96); }
+.wow-tour-b-gold-115 { border-color: rgba(171,123,38,0.96); }
+.wow-tour-b-white-115 { border-color: rgba(255,255,255,0.96); }
+.wow-tour-b-cyan-116 { border-color: rgba(2,167,202,0.97); }
+.wow-tour-b-gold-116 { border-color: rgba(171,123,38,0.97); }
+.wow-tour-b-white-116 { border-color: rgba(255,255,255,0.97); }
+.wow-tour-b-cyan-117 { border-color: rgba(2,167,202,0.98); }
+.wow-tour-b-gold-117 { border-color: rgba(171,123,38,0.98); }
+.wow-tour-b-white-117 { border-color: rgba(255,255,255,0.98); }
+.wow-tour-b-cyan-118 { border-color: rgba(2,167,202,0.98); }
+.wow-tour-b-gold-118 { border-color: rgba(171,123,38,0.98); }
+.wow-tour-b-white-118 { border-color: rgba(255,255,255,0.98); }
+.wow-tour-b-cyan-119 { border-color: rgba(2,167,202,0.99); }
+.wow-tour-b-gold-119 { border-color: rgba(171,123,38,0.99); }
+.wow-tour-b-white-119 { border-color: rgba(255,255,255,0.99); }
+.wow-tour-b-cyan-120 { border-color: rgba(2,167,202,1.00); }
+.wow-tour-b-gold-120 { border-color: rgba(171,123,38,1.00); }
+.wow-tour-b-white-120 { border-color: rgba(255,255,255,1.00); }
+.wow-tour-shadow-cyan-0 { box-shadow: 0 0 8px rgba(2,167,202,0.00); }
+.wow-tour-shadow-black-0 { box-shadow: 0 0 8px rgba(0,0,0,0.00); }
+.wow-tour-shadow-cyan-1 { box-shadow: 0 0 10px rgba(2,167,202,0.00); }
+.wow-tour-shadow-black-1 { box-shadow: 0 0 10px rgba(0,0,0,0.00); }
+.wow-tour-shadow-cyan-2 { box-shadow: 0 0 12px rgba(2,167,202,0.01); }
+.wow-tour-shadow-black-2 { box-shadow: 0 0 12px rgba(0,0,0,0.01); }
+.wow-tour-shadow-cyan-3 { box-shadow: 0 0 14px rgba(2,167,202,0.01); }
+.wow-tour-shadow-black-3 { box-shadow: 0 0 14px rgba(0,0,0,0.01); }
+.wow-tour-shadow-cyan-4 { box-shadow: 0 0 16px rgba(2,167,202,0.02); }
+.wow-tour-shadow-black-4 { box-shadow: 0 0 16px rgba(0,0,0,0.02); }
+.wow-tour-shadow-cyan-5 { box-shadow: 0 0 18px rgba(2,167,202,0.02); }
+.wow-tour-shadow-black-5 { box-shadow: 0 0 18px rgba(0,0,0,0.02); }
+.wow-tour-shadow-cyan-6 { box-shadow: 0 0 20px rgba(2,167,202,0.03); }
+.wow-tour-shadow-black-6 { box-shadow: 0 0 20px rgba(0,0,0,0.03); }
+.wow-tour-shadow-cyan-7 { box-shadow: 0 0 22px rgba(2,167,202,0.03); }
+.wow-tour-shadow-black-7 { box-shadow: 0 0 22px rgba(0,0,0,0.03); }
+.wow-tour-shadow-cyan-8 { box-shadow: 0 0 24px rgba(2,167,202,0.04); }
+.wow-tour-shadow-black-8 { box-shadow: 0 0 24px rgba(0,0,0,0.04); }
+.wow-tour-shadow-cyan-9 { box-shadow: 0 0 26px rgba(2,167,202,0.04); }
+.wow-tour-shadow-black-9 { box-shadow: 0 0 26px rgba(0,0,0,0.04); }
+.wow-tour-shadow-cyan-10 { box-shadow: 0 0 28px rgba(2,167,202,0.05); }
+.wow-tour-shadow-black-10 { box-shadow: 0 0 28px rgba(0,0,0,0.05); }
+.wow-tour-shadow-cyan-11 { box-shadow: 0 0 30px rgba(2,167,202,0.05); }
+.wow-tour-shadow-black-11 { box-shadow: 0 0 30px rgba(0,0,0,0.05); }
+.wow-tour-shadow-cyan-12 { box-shadow: 0 0 32px rgba(2,167,202,0.05); }
+.wow-tour-shadow-black-12 { box-shadow: 0 0 32px rgba(0,0,0,0.05); }
+.wow-tour-shadow-cyan-13 { box-shadow: 0 0 34px rgba(2,167,202,0.06); }
+.wow-tour-shadow-black-13 { box-shadow: 0 0 34px rgba(0,0,0,0.06); }
+.wow-tour-shadow-cyan-14 { box-shadow: 0 0 36px rgba(2,167,202,0.06); }
+.wow-tour-shadow-black-14 { box-shadow: 0 0 36px rgba(0,0,0,0.06); }
+.wow-tour-shadow-cyan-15 { box-shadow: 0 0 38px rgba(2,167,202,0.07); }
+.wow-tour-shadow-black-15 { box-shadow: 0 0 38px rgba(0,0,0,0.07); }
+.wow-tour-shadow-cyan-16 { box-shadow: 0 0 40px rgba(2,167,202,0.07); }
+.wow-tour-shadow-black-16 { box-shadow: 0 0 40px rgba(0,0,0,0.07); }
+.wow-tour-shadow-cyan-17 { box-shadow: 0 0 42px rgba(2,167,202,0.08); }
+.wow-tour-shadow-black-17 { box-shadow: 0 0 42px rgba(0,0,0,0.08); }
+.wow-tour-shadow-cyan-18 { box-shadow: 0 0 44px rgba(2,167,202,0.08); }
+.wow-tour-shadow-black-18 { box-shadow: 0 0 44px rgba(0,0,0,0.08); }
+.wow-tour-shadow-cyan-19 { box-shadow: 0 0 46px rgba(2,167,202,0.09); }
+.wow-tour-shadow-black-19 { box-shadow: 0 0 46px rgba(0,0,0,0.09); }
+.wow-tour-shadow-cyan-20 { box-shadow: 0 0 48px rgba(2,167,202,0.09); }
+.wow-tour-shadow-black-20 { box-shadow: 0 0 48px rgba(0,0,0,0.09); }
+.wow-tour-shadow-cyan-21 { box-shadow: 0 0 50px rgba(2,167,202,0.10); }
+.wow-tour-shadow-black-21 { box-shadow: 0 0 50px rgba(0,0,0,0.10); }
+.wow-tour-shadow-cyan-22 { box-shadow: 0 0 52px rgba(2,167,202,0.10); }
+.wow-tour-shadow-black-22 { box-shadow: 0 0 52px rgba(0,0,0,0.10); }
+.wow-tour-shadow-cyan-23 { box-shadow: 0 0 54px rgba(2,167,202,0.10); }
+.wow-tour-shadow-black-23 { box-shadow: 0 0 54px rgba(0,0,0,0.10); }
+.wow-tour-shadow-cyan-24 { box-shadow: 0 0 56px rgba(2,167,202,0.11); }
+.wow-tour-shadow-black-24 { box-shadow: 0 0 56px rgba(0,0,0,0.11); }
+.wow-tour-shadow-cyan-25 { box-shadow: 0 0 58px rgba(2,167,202,0.11); }
+.wow-tour-shadow-black-25 { box-shadow: 0 0 58px rgba(0,0,0,0.11); }
+.wow-tour-shadow-cyan-26 { box-shadow: 0 0 60px rgba(2,167,202,0.12); }
+.wow-tour-shadow-black-26 { box-shadow: 0 0 60px rgba(0,0,0,0.12); }
+.wow-tour-shadow-cyan-27 { box-shadow: 0 0 62px rgba(2,167,202,0.12); }
+.wow-tour-shadow-black-27 { box-shadow: 0 0 62px rgba(0,0,0,0.12); }
+.wow-tour-shadow-cyan-28 { box-shadow: 0 0 64px rgba(2,167,202,0.13); }
+.wow-tour-shadow-black-28 { box-shadow: 0 0 64px rgba(0,0,0,0.13); }
+.wow-tour-shadow-cyan-29 { box-shadow: 0 0 66px rgba(2,167,202,0.13); }
+.wow-tour-shadow-black-29 { box-shadow: 0 0 66px rgba(0,0,0,0.13); }
+.wow-tour-shadow-cyan-30 { box-shadow: 0 0 68px rgba(2,167,202,0.14); }
+.wow-tour-shadow-black-30 { box-shadow: 0 0 68px rgba(0,0,0,0.14); }
+.wow-tour-shadow-cyan-31 { box-shadow: 0 0 70px rgba(2,167,202,0.14); }
+.wow-tour-shadow-black-31 { box-shadow: 0 0 70px rgba(0,0,0,0.14); }
+.wow-tour-shadow-cyan-32 { box-shadow: 0 0 72px rgba(2,167,202,0.15); }
+.wow-tour-shadow-black-32 { box-shadow: 0 0 72px rgba(0,0,0,0.15); }
+.wow-tour-shadow-cyan-33 { box-shadow: 0 0 74px rgba(2,167,202,0.15); }
+.wow-tour-shadow-black-33 { box-shadow: 0 0 74px rgba(0,0,0,0.15); }
+.wow-tour-shadow-cyan-34 { box-shadow: 0 0 76px rgba(2,167,202,0.15); }
+.wow-tour-shadow-black-34 { box-shadow: 0 0 76px rgba(0,0,0,0.15); }
+.wow-tour-shadow-cyan-35 { box-shadow: 0 0 78px rgba(2,167,202,0.16); }
+.wow-tour-shadow-black-35 { box-shadow: 0 0 78px rgba(0,0,0,0.16); }
+.wow-tour-shadow-cyan-36 { box-shadow: 0 0 80px rgba(2,167,202,0.16); }
+.wow-tour-shadow-black-36 { box-shadow: 0 0 80px rgba(0,0,0,0.16); }
+.wow-tour-shadow-cyan-37 { box-shadow: 0 0 82px rgba(2,167,202,0.17); }
+.wow-tour-shadow-black-37 { box-shadow: 0 0 82px rgba(0,0,0,0.17); }
+.wow-tour-shadow-cyan-38 { box-shadow: 0 0 84px rgba(2,167,202,0.17); }
+.wow-tour-shadow-black-38 { box-shadow: 0 0 84px rgba(0,0,0,0.17); }
+.wow-tour-shadow-cyan-39 { box-shadow: 0 0 86px rgba(2,167,202,0.18); }
+.wow-tour-shadow-black-39 { box-shadow: 0 0 86px rgba(0,0,0,0.18); }
+.wow-tour-shadow-cyan-40 { box-shadow: 0 0 88px rgba(2,167,202,0.18); }
+.wow-tour-shadow-black-40 { box-shadow: 0 0 88px rgba(0,0,0,0.18); }
+.wow-tour-shadow-cyan-41 { box-shadow: 0 0 90px rgba(2,167,202,0.19); }
+.wow-tour-shadow-black-41 { box-shadow: 0 0 90px rgba(0,0,0,0.19); }
+.wow-tour-shadow-cyan-42 { box-shadow: 0 0 92px rgba(2,167,202,0.19); }
+.wow-tour-shadow-black-42 { box-shadow: 0 0 92px rgba(0,0,0,0.19); }
+.wow-tour-shadow-cyan-43 { box-shadow: 0 0 94px rgba(2,167,202,0.20); }
+.wow-tour-shadow-black-43 { box-shadow: 0 0 94px rgba(0,0,0,0.20); }
+.wow-tour-shadow-cyan-44 { box-shadow: 0 0 96px rgba(2,167,202,0.20); }
+.wow-tour-shadow-black-44 { box-shadow: 0 0 96px rgba(0,0,0,0.20); }
+.wow-tour-shadow-cyan-45 { box-shadow: 0 0 98px rgba(2,167,202,0.20); }
+.wow-tour-shadow-black-45 { box-shadow: 0 0 98px rgba(0,0,0,0.20); }
+.wow-tour-shadow-cyan-46 { box-shadow: 0 0 100px rgba(2,167,202,0.21); }
+.wow-tour-shadow-black-46 { box-shadow: 0 0 100px rgba(0,0,0,0.21); }
+.wow-tour-shadow-cyan-47 { box-shadow: 0 0 102px rgba(2,167,202,0.21); }
+.wow-tour-shadow-black-47 { box-shadow: 0 0 102px rgba(0,0,0,0.21); }
+.wow-tour-shadow-cyan-48 { box-shadow: 0 0 104px rgba(2,167,202,0.22); }
+.wow-tour-shadow-black-48 { box-shadow: 0 0 104px rgba(0,0,0,0.22); }
+.wow-tour-shadow-cyan-49 { box-shadow: 0 0 106px rgba(2,167,202,0.22); }
+.wow-tour-shadow-black-49 { box-shadow: 0 0 106px rgba(0,0,0,0.22); }
+.wow-tour-shadow-cyan-50 { box-shadow: 0 0 108px rgba(2,167,202,0.23); }
+.wow-tour-shadow-black-50 { box-shadow: 0 0 108px rgba(0,0,0,0.23); }
+.wow-tour-shadow-cyan-51 { box-shadow: 0 0 110px rgba(2,167,202,0.23); }
+.wow-tour-shadow-black-51 { box-shadow: 0 0 110px rgba(0,0,0,0.23); }
+.wow-tour-shadow-cyan-52 { box-shadow: 0 0 112px rgba(2,167,202,0.24); }
+.wow-tour-shadow-black-52 { box-shadow: 0 0 112px rgba(0,0,0,0.24); }
+.wow-tour-shadow-cyan-53 { box-shadow: 0 0 114px rgba(2,167,202,0.24); }
+.wow-tour-shadow-black-53 { box-shadow: 0 0 114px rgba(0,0,0,0.24); }
+.wow-tour-shadow-cyan-54 { box-shadow: 0 0 116px rgba(2,167,202,0.25); }
+.wow-tour-shadow-black-54 { box-shadow: 0 0 116px rgba(0,0,0,0.25); }
+.wow-tour-shadow-cyan-55 { box-shadow: 0 0 118px rgba(2,167,202,0.25); }
+.wow-tour-shadow-black-55 { box-shadow: 0 0 118px rgba(0,0,0,0.25); }
+.wow-tour-shadow-cyan-56 { box-shadow: 0 0 120px rgba(2,167,202,0.25); }
+.wow-tour-shadow-black-56 { box-shadow: 0 0 120px rgba(0,0,0,0.25); }
+.wow-tour-shadow-cyan-57 { box-shadow: 0 0 122px rgba(2,167,202,0.26); }
+.wow-tour-shadow-black-57 { box-shadow: 0 0 122px rgba(0,0,0,0.26); }
+.wow-tour-shadow-cyan-58 { box-shadow: 0 0 124px rgba(2,167,202,0.26); }
+.wow-tour-shadow-black-58 { box-shadow: 0 0 124px rgba(0,0,0,0.26); }
+.wow-tour-shadow-cyan-59 { box-shadow: 0 0 126px rgba(2,167,202,0.27); }
+.wow-tour-shadow-black-59 { box-shadow: 0 0 126px rgba(0,0,0,0.27); }
+.wow-tour-shadow-cyan-60 { box-shadow: 0 0 128px rgba(2,167,202,0.27); }
+.wow-tour-shadow-black-60 { box-shadow: 0 0 128px rgba(0,0,0,0.27); }
+.wow-tour-shadow-cyan-61 { box-shadow: 0 0 130px rgba(2,167,202,0.28); }
+.wow-tour-shadow-black-61 { box-shadow: 0 0 130px rgba(0,0,0,0.28); }
+.wow-tour-shadow-cyan-62 { box-shadow: 0 0 132px rgba(2,167,202,0.28); }
+.wow-tour-shadow-black-62 { box-shadow: 0 0 132px rgba(0,0,0,0.28); }
+.wow-tour-shadow-cyan-63 { box-shadow: 0 0 134px rgba(2,167,202,0.29); }
+.wow-tour-shadow-black-63 { box-shadow: 0 0 134px rgba(0,0,0,0.29); }
+.wow-tour-shadow-cyan-64 { box-shadow: 0 0 136px rgba(2,167,202,0.29); }
+.wow-tour-shadow-black-64 { box-shadow: 0 0 136px rgba(0,0,0,0.29); }
+.wow-tour-shadow-cyan-65 { box-shadow: 0 0 138px rgba(2,167,202,0.30); }
+.wow-tour-shadow-black-65 { box-shadow: 0 0 138px rgba(0,0,0,0.30); }
+.wow-tour-shadow-cyan-66 { box-shadow: 0 0 140px rgba(2,167,202,0.30); }
+.wow-tour-shadow-black-66 { box-shadow: 0 0 140px rgba(0,0,0,0.30); }
+.wow-tour-shadow-cyan-67 { box-shadow: 0 0 142px rgba(2,167,202,0.30); }
+.wow-tour-shadow-black-67 { box-shadow: 0 0 142px rgba(0,0,0,0.30); }
+.wow-tour-shadow-cyan-68 { box-shadow: 0 0 144px rgba(2,167,202,0.31); }
+.wow-tour-shadow-black-68 { box-shadow: 0 0 144px rgba(0,0,0,0.31); }
+.wow-tour-shadow-cyan-69 { box-shadow: 0 0 146px rgba(2,167,202,0.31); }
+.wow-tour-shadow-black-69 { box-shadow: 0 0 146px rgba(0,0,0,0.31); }
+.wow-tour-shadow-cyan-70 { box-shadow: 0 0 148px rgba(2,167,202,0.32); }
+.wow-tour-shadow-black-70 { box-shadow: 0 0 148px rgba(0,0,0,0.32); }
+.wow-tour-shadow-cyan-71 { box-shadow: 0 0 150px rgba(2,167,202,0.32); }
+.wow-tour-shadow-black-71 { box-shadow: 0 0 150px rgba(0,0,0,0.32); }
+.wow-tour-shadow-cyan-72 { box-shadow: 0 0 152px rgba(2,167,202,0.33); }
+.wow-tour-shadow-black-72 { box-shadow: 0 0 152px rgba(0,0,0,0.33); }
+.wow-tour-shadow-cyan-73 { box-shadow: 0 0 154px rgba(2,167,202,0.33); }
+.wow-tour-shadow-black-73 { box-shadow: 0 0 154px rgba(0,0,0,0.33); }
+.wow-tour-shadow-cyan-74 { box-shadow: 0 0 156px rgba(2,167,202,0.34); }
+.wow-tour-shadow-black-74 { box-shadow: 0 0 156px rgba(0,0,0,0.34); }
+.wow-tour-shadow-cyan-75 { box-shadow: 0 0 158px rgba(2,167,202,0.34); }
+.wow-tour-shadow-black-75 { box-shadow: 0 0 158px rgba(0,0,0,0.34); }
+.wow-tour-shadow-cyan-76 { box-shadow: 0 0 160px rgba(2,167,202,0.35); }
+.wow-tour-shadow-black-76 { box-shadow: 0 0 160px rgba(0,0,0,0.35); }
+.wow-tour-shadow-cyan-77 { box-shadow: 0 0 162px rgba(2,167,202,0.35); }
+.wow-tour-shadow-black-77 { box-shadow: 0 0 162px rgba(0,0,0,0.35); }
+.wow-tour-shadow-cyan-78 { box-shadow: 0 0 164px rgba(2,167,202,0.35); }
+.wow-tour-shadow-black-78 { box-shadow: 0 0 164px rgba(0,0,0,0.35); }
+.wow-tour-shadow-cyan-79 { box-shadow: 0 0 166px rgba(2,167,202,0.36); }
+.wow-tour-shadow-black-79 { box-shadow: 0 0 166px rgba(0,0,0,0.36); }
+.wow-tour-shadow-cyan-80 { box-shadow: 0 0 168px rgba(2,167,202,0.36); }
+.wow-tour-shadow-black-80 { box-shadow: 0 0 168px rgba(0,0,0,0.36); }
+.wow-tour-shadow-cyan-81 { box-shadow: 0 0 170px rgba(2,167,202,0.37); }
+.wow-tour-shadow-black-81 { box-shadow: 0 0 170px rgba(0,0,0,0.37); }
+.wow-tour-shadow-cyan-82 { box-shadow: 0 0 172px rgba(2,167,202,0.37); }
+.wow-tour-shadow-black-82 { box-shadow: 0 0 172px rgba(0,0,0,0.37); }
+.wow-tour-shadow-cyan-83 { box-shadow: 0 0 174px rgba(2,167,202,0.38); }
+.wow-tour-shadow-black-83 { box-shadow: 0 0 174px rgba(0,0,0,0.38); }
+.wow-tour-shadow-cyan-84 { box-shadow: 0 0 176px rgba(2,167,202,0.38); }
+.wow-tour-shadow-black-84 { box-shadow: 0 0 176px rgba(0,0,0,0.38); }
+.wow-tour-shadow-cyan-85 { box-shadow: 0 0 178px rgba(2,167,202,0.39); }
+.wow-tour-shadow-black-85 { box-shadow: 0 0 178px rgba(0,0,0,0.39); }
+.wow-tour-shadow-cyan-86 { box-shadow: 0 0 180px rgba(2,167,202,0.39); }
+.wow-tour-shadow-black-86 { box-shadow: 0 0 180px rgba(0,0,0,0.39); }
+.wow-tour-shadow-cyan-87 { box-shadow: 0 0 182px rgba(2,167,202,0.40); }
+.wow-tour-shadow-black-87 { box-shadow: 0 0 182px rgba(0,0,0,0.40); }
+.wow-tour-shadow-cyan-88 { box-shadow: 0 0 184px rgba(2,167,202,0.40); }
+.wow-tour-shadow-black-88 { box-shadow: 0 0 184px rgba(0,0,0,0.40); }
+.wow-tour-shadow-cyan-89 { box-shadow: 0 0 186px rgba(2,167,202,0.40); }
+.wow-tour-shadow-black-89 { box-shadow: 0 0 186px rgba(0,0,0,0.40); }
+.wow-tour-shadow-cyan-90 { box-shadow: 0 0 188px rgba(2,167,202,0.41); }
+.wow-tour-shadow-black-90 { box-shadow: 0 0 188px rgba(0,0,0,0.41); }
+.wow-tour-shadow-cyan-91 { box-shadow: 0 0 190px rgba(2,167,202,0.41); }
+.wow-tour-shadow-black-91 { box-shadow: 0 0 190px rgba(0,0,0,0.41); }
+.wow-tour-shadow-cyan-92 { box-shadow: 0 0 192px rgba(2,167,202,0.42); }
+.wow-tour-shadow-black-92 { box-shadow: 0 0 192px rgba(0,0,0,0.42); }
+.wow-tour-shadow-cyan-93 { box-shadow: 0 0 194px rgba(2,167,202,0.42); }
+.wow-tour-shadow-black-93 { box-shadow: 0 0 194px rgba(0,0,0,0.42); }
+.wow-tour-shadow-cyan-94 { box-shadow: 0 0 196px rgba(2,167,202,0.43); }
+.wow-tour-shadow-black-94 { box-shadow: 0 0 196px rgba(0,0,0,0.43); }
+.wow-tour-shadow-cyan-95 { box-shadow: 0 0 198px rgba(2,167,202,0.43); }
+.wow-tour-shadow-black-95 { box-shadow: 0 0 198px rgba(0,0,0,0.43); }
+.wow-tour-shadow-cyan-96 { box-shadow: 0 0 200px rgba(2,167,202,0.44); }
+.wow-tour-shadow-black-96 { box-shadow: 0 0 200px rgba(0,0,0,0.44); }
+.wow-tour-shadow-cyan-97 { box-shadow: 0 0 202px rgba(2,167,202,0.44); }
+.wow-tour-shadow-black-97 { box-shadow: 0 0 202px rgba(0,0,0,0.44); }
+.wow-tour-shadow-cyan-98 { box-shadow: 0 0 204px rgba(2,167,202,0.45); }
+.wow-tour-shadow-black-98 { box-shadow: 0 0 204px rgba(0,0,0,0.45); }
+.wow-tour-shadow-cyan-99 { box-shadow: 0 0 206px rgba(2,167,202,0.45); }
+.wow-tour-shadow-black-99 { box-shadow: 0 0 206px rgba(0,0,0,0.45); }
+.wow-tour-shadow-cyan-100 { box-shadow: 0 0 208px rgba(2,167,202,0.45); }
+.wow-tour-shadow-black-100 { box-shadow: 0 0 208px rgba(0,0,0,0.45); }
+.wow-tour-shadow-cyan-101 { box-shadow: 0 0 210px rgba(2,167,202,0.46); }
+.wow-tour-shadow-black-101 { box-shadow: 0 0 210px rgba(0,0,0,0.46); }
+.wow-tour-shadow-cyan-102 { box-shadow: 0 0 212px rgba(2,167,202,0.46); }
+.wow-tour-shadow-black-102 { box-shadow: 0 0 212px rgba(0,0,0,0.46); }
+.wow-tour-shadow-cyan-103 { box-shadow: 0 0 214px rgba(2,167,202,0.47); }
+.wow-tour-shadow-black-103 { box-shadow: 0 0 214px rgba(0,0,0,0.47); }
+.wow-tour-shadow-cyan-104 { box-shadow: 0 0 216px rgba(2,167,202,0.47); }
+.wow-tour-shadow-black-104 { box-shadow: 0 0 216px rgba(0,0,0,0.47); }
+.wow-tour-shadow-cyan-105 { box-shadow: 0 0 218px rgba(2,167,202,0.48); }
+.wow-tour-shadow-black-105 { box-shadow: 0 0 218px rgba(0,0,0,0.48); }
+.wow-tour-shadow-cyan-106 { box-shadow: 0 0 220px rgba(2,167,202,0.48); }
+.wow-tour-shadow-black-106 { box-shadow: 0 0 220px rgba(0,0,0,0.48); }
+.wow-tour-shadow-cyan-107 { box-shadow: 0 0 222px rgba(2,167,202,0.49); }
+.wow-tour-shadow-black-107 { box-shadow: 0 0 222px rgba(0,0,0,0.49); }
+.wow-tour-shadow-cyan-108 { box-shadow: 0 0 224px rgba(2,167,202,0.49); }
+.wow-tour-shadow-black-108 { box-shadow: 0 0 224px rgba(0,0,0,0.49); }
+.wow-tour-shadow-cyan-109 { box-shadow: 0 0 226px rgba(2,167,202,0.50); }
+.wow-tour-shadow-black-109 { box-shadow: 0 0 226px rgba(0,0,0,0.50); }
+.wow-tour-shadow-cyan-110 { box-shadow: 0 0 228px rgba(2,167,202,0.50); }
+.wow-tour-shadow-black-110 { box-shadow: 0 0 228px rgba(0,0,0,0.50); }
+.wow-tour-shadow-cyan-111 { box-shadow: 0 0 230px rgba(2,167,202,0.50); }
+.wow-tour-shadow-black-111 { box-shadow: 0 0 230px rgba(0,0,0,0.50); }
+.wow-tour-shadow-cyan-112 { box-shadow: 0 0 232px rgba(2,167,202,0.51); }
+.wow-tour-shadow-black-112 { box-shadow: 0 0 232px rgba(0,0,0,0.51); }
+.wow-tour-shadow-cyan-113 { box-shadow: 0 0 234px rgba(2,167,202,0.51); }
+.wow-tour-shadow-black-113 { box-shadow: 0 0 234px rgba(0,0,0,0.51); }
+.wow-tour-shadow-cyan-114 { box-shadow: 0 0 236px rgba(2,167,202,0.52); }
+.wow-tour-shadow-black-114 { box-shadow: 0 0 236px rgba(0,0,0,0.52); }
+.wow-tour-shadow-cyan-115 { box-shadow: 0 0 238px rgba(2,167,202,0.52); }
+.wow-tour-shadow-black-115 { box-shadow: 0 0 238px rgba(0,0,0,0.52); }
+.wow-tour-shadow-cyan-116 { box-shadow: 0 0 240px rgba(2,167,202,0.53); }
+.wow-tour-shadow-black-116 { box-shadow: 0 0 240px rgba(0,0,0,0.53); }
+.wow-tour-shadow-cyan-117 { box-shadow: 0 0 242px rgba(2,167,202,0.53); }
+.wow-tour-shadow-black-117 { box-shadow: 0 0 242px rgba(0,0,0,0.53); }
+.wow-tour-shadow-cyan-118 { box-shadow: 0 0 244px rgba(2,167,202,0.54); }
+.wow-tour-shadow-black-118 { box-shadow: 0 0 244px rgba(0,0,0,0.54); }
+.wow-tour-shadow-cyan-119 { box-shadow: 0 0 246px rgba(2,167,202,0.54); }
+.wow-tour-shadow-black-119 { box-shadow: 0 0 246px rgba(0,0,0,0.54); }
+.wow-tour-shadow-cyan-120 { box-shadow: 0 0 248px rgba(2,167,202,0.55); }
+.wow-tour-shadow-black-120 { box-shadow: 0 0 248px rgba(0,0,0,0.55); }
+.wow-tour-delay-100 { animation-delay: 100ms; transition-delay: 100ms; }
+.wow-tour-duration-100 { animation-duration: 100ms; transition-duration: 100ms; }
+.wow-tour-delay-140 { animation-delay: 140ms; transition-delay: 140ms; }
+.wow-tour-duration-140 { animation-duration: 140ms; transition-duration: 140ms; }
+.wow-tour-delay-180 { animation-delay: 180ms; transition-delay: 180ms; }
+.wow-tour-duration-180 { animation-duration: 180ms; transition-duration: 180ms; }
+.wow-tour-delay-220 { animation-delay: 220ms; transition-delay: 220ms; }
+.wow-tour-duration-220 { animation-duration: 220ms; transition-duration: 220ms; }
+.wow-tour-delay-260 { animation-delay: 260ms; transition-delay: 260ms; }
+.wow-tour-duration-260 { animation-duration: 260ms; transition-duration: 260ms; }
+.wow-tour-delay-300 { animation-delay: 300ms; transition-delay: 300ms; }
+.wow-tour-duration-300 { animation-duration: 300ms; transition-duration: 300ms; }
+.wow-tour-delay-340 { animation-delay: 340ms; transition-delay: 340ms; }
+.wow-tour-duration-340 { animation-duration: 340ms; transition-duration: 340ms; }
+.wow-tour-delay-380 { animation-delay: 380ms; transition-delay: 380ms; }
+.wow-tour-duration-380 { animation-duration: 380ms; transition-duration: 380ms; }
+.wow-tour-delay-420 { animation-delay: 420ms; transition-delay: 420ms; }
+.wow-tour-duration-420 { animation-duration: 420ms; transition-duration: 420ms; }
+.wow-tour-delay-460 { animation-delay: 460ms; transition-delay: 460ms; }
+.wow-tour-duration-460 { animation-duration: 460ms; transition-duration: 460ms; }
+.wow-tour-delay-500 { animation-delay: 500ms; transition-delay: 500ms; }
+.wow-tour-duration-500 { animation-duration: 500ms; transition-duration: 500ms; }
+.wow-tour-delay-540 { animation-delay: 540ms; transition-delay: 540ms; }
+.wow-tour-duration-540 { animation-duration: 540ms; transition-duration: 540ms; }
+.wow-tour-delay-580 { animation-delay: 580ms; transition-delay: 580ms; }
+.wow-tour-duration-580 { animation-duration: 580ms; transition-duration: 580ms; }
+.wow-tour-delay-620 { animation-delay: 620ms; transition-delay: 620ms; }
+.wow-tour-duration-620 { animation-duration: 620ms; transition-duration: 620ms; }
+.wow-tour-delay-660 { animation-delay: 660ms; transition-delay: 660ms; }
+.wow-tour-duration-660 { animation-duration: 660ms; transition-duration: 660ms; }
+.wow-tour-delay-700 { animation-delay: 700ms; transition-delay: 700ms; }
+.wow-tour-duration-700 { animation-duration: 700ms; transition-duration: 700ms; }
+.wow-tour-delay-740 { animation-delay: 740ms; transition-delay: 740ms; }
+.wow-tour-duration-740 { animation-duration: 740ms; transition-duration: 740ms; }
+.wow-tour-delay-780 { animation-delay: 780ms; transition-delay: 780ms; }
+.wow-tour-duration-780 { animation-duration: 780ms; transition-duration: 780ms; }
+.wow-tour-delay-820 { animation-delay: 820ms; transition-delay: 820ms; }
+.wow-tour-duration-820 { animation-duration: 820ms; transition-duration: 820ms; }
+.wow-tour-delay-860 { animation-delay: 860ms; transition-delay: 860ms; }
+.wow-tour-duration-860 { animation-duration: 860ms; transition-duration: 860ms; }
+.wow-tour-delay-900 { animation-delay: 900ms; transition-delay: 900ms; }
+.wow-tour-duration-900 { animation-duration: 900ms; transition-duration: 900ms; }
+.wow-tour-delay-940 { animation-delay: 940ms; transition-delay: 940ms; }
+.wow-tour-duration-940 { animation-duration: 940ms; transition-duration: 940ms; }
+.wow-tour-delay-980 { animation-delay: 980ms; transition-delay: 980ms; }
+.wow-tour-duration-980 { animation-duration: 980ms; transition-duration: 980ms; }
+.wow-tour-delay-1020 { animation-delay: 1020ms; transition-delay: 1020ms; }
+.wow-tour-duration-1020 { animation-duration: 1020ms; transition-duration: 1020ms; }
+.wow-tour-delay-1060 { animation-delay: 1060ms; transition-delay: 1060ms; }
+.wow-tour-duration-1060 { animation-duration: 1060ms; transition-duration: 1060ms; }
+.wow-tour-delay-1100 { animation-delay: 1100ms; transition-delay: 1100ms; }
+.wow-tour-duration-1100 { animation-duration: 1100ms; transition-duration: 1100ms; }
+.wow-tour-delay-1140 { animation-delay: 1140ms; transition-delay: 1140ms; }
+.wow-tour-duration-1140 { animation-duration: 1140ms; transition-duration: 1140ms; }
+.wow-tour-delay-1180 { animation-delay: 1180ms; transition-delay: 1180ms; }
+.wow-tour-duration-1180 { animation-duration: 1180ms; transition-duration: 1180ms; }
+.wow-tour-delay-1220 { animation-delay: 1220ms; transition-delay: 1220ms; }
+.wow-tour-duration-1220 { animation-duration: 1220ms; transition-duration: 1220ms; }
+.wow-tour-delay-1260 { animation-delay: 1260ms; transition-delay: 1260ms; }
+.wow-tour-duration-1260 { animation-duration: 1260ms; transition-duration: 1260ms; }
+.wow-tour-delay-1300 { animation-delay: 1300ms; transition-delay: 1300ms; }
+.wow-tour-duration-1300 { animation-duration: 1300ms; transition-duration: 1300ms; }
+.wow-tour-delay-1340 { animation-delay: 1340ms; transition-delay: 1340ms; }
+.wow-tour-duration-1340 { animation-duration: 1340ms; transition-duration: 1340ms; }
+.wow-tour-delay-1380 { animation-delay: 1380ms; transition-delay: 1380ms; }
+.wow-tour-duration-1380 { animation-duration: 1380ms; transition-duration: 1380ms; }
+.wow-tour-delay-1420 { animation-delay: 1420ms; transition-delay: 1420ms; }
+.wow-tour-duration-1420 { animation-duration: 1420ms; transition-duration: 1420ms; }
+.wow-tour-delay-1460 { animation-delay: 1460ms; transition-delay: 1460ms; }
+.wow-tour-duration-1460 { animation-duration: 1460ms; transition-duration: 1460ms; }
+.wow-tour-delay-1500 { animation-delay: 1500ms; transition-delay: 1500ms; }
+.wow-tour-duration-1500 { animation-duration: 1500ms; transition-duration: 1500ms; }
+.wow-tour-delay-1540 { animation-delay: 1540ms; transition-delay: 1540ms; }
+.wow-tour-duration-1540 { animation-duration: 1540ms; transition-duration: 1540ms; }
+.wow-tour-delay-1580 { animation-delay: 1580ms; transition-delay: 1580ms; }
+.wow-tour-duration-1580 { animation-duration: 1580ms; transition-duration: 1580ms; }
+.wow-tour-delay-1620 { animation-delay: 1620ms; transition-delay: 1620ms; }
+.wow-tour-duration-1620 { animation-duration: 1620ms; transition-duration: 1620ms; }
+.wow-tour-delay-1660 { animation-delay: 1660ms; transition-delay: 1660ms; }
+.wow-tour-duration-1660 { animation-duration: 1660ms; transition-duration: 1660ms; }
+.wow-tour-delay-1700 { animation-delay: 1700ms; transition-delay: 1700ms; }
+.wow-tour-duration-1700 { animation-duration: 1700ms; transition-duration: 1700ms; }
+.wow-tour-delay-1740 { animation-delay: 1740ms; transition-delay: 1740ms; }
+.wow-tour-duration-1740 { animation-duration: 1740ms; transition-duration: 1740ms; }
+.wow-tour-delay-1780 { animation-delay: 1780ms; transition-delay: 1780ms; }
+.wow-tour-duration-1780 { animation-duration: 1780ms; transition-duration: 1780ms; }
+.wow-tour-delay-1820 { animation-delay: 1820ms; transition-delay: 1820ms; }
+.wow-tour-duration-1820 { animation-duration: 1820ms; transition-duration: 1820ms; }
+.wow-tour-delay-1860 { animation-delay: 1860ms; transition-delay: 1860ms; }
+.wow-tour-duration-1860 { animation-duration: 1860ms; transition-duration: 1860ms; }
+.wow-tour-delay-1900 { animation-delay: 1900ms; transition-delay: 1900ms; }
+.wow-tour-duration-1900 { animation-duration: 1900ms; transition-duration: 1900ms; }
+.wow-tour-delay-1940 { animation-delay: 1940ms; transition-delay: 1940ms; }
+.wow-tour-duration-1940 { animation-duration: 1940ms; transition-duration: 1940ms; }
+.wow-tour-delay-1980 { animation-delay: 1980ms; transition-delay: 1980ms; }
+.wow-tour-duration-1980 { animation-duration: 1980ms; transition-duration: 1980ms; }
+.wow-tour-delay-2020 { animation-delay: 2020ms; transition-delay: 2020ms; }
+.wow-tour-duration-2020 { animation-duration: 2020ms; transition-duration: 2020ms; }
+.wow-tour-delay-2060 { animation-delay: 2060ms; transition-delay: 2060ms; }
+.wow-tour-duration-2060 { animation-duration: 2060ms; transition-duration: 2060ms; }
+.wow-tour-delay-2100 { animation-delay: 2100ms; transition-delay: 2100ms; }
+.wow-tour-duration-2100 { animation-duration: 2100ms; transition-duration: 2100ms; }
+.wow-tour-delay-2140 { animation-delay: 2140ms; transition-delay: 2140ms; }
+.wow-tour-duration-2140 { animation-duration: 2140ms; transition-duration: 2140ms; }
+.wow-tour-delay-2180 { animation-delay: 2180ms; transition-delay: 2180ms; }
+.wow-tour-duration-2180 { animation-duration: 2180ms; transition-duration: 2180ms; }
+.wow-tour-delay-2220 { animation-delay: 2220ms; transition-delay: 2220ms; }
+.wow-tour-duration-2220 { animation-duration: 2220ms; transition-duration: 2220ms; }
+.wow-tour-delay-2260 { animation-delay: 2260ms; transition-delay: 2260ms; }
+.wow-tour-duration-2260 { animation-duration: 2260ms; transition-duration: 2260ms; }
+.wow-tour-delay-2300 { animation-delay: 2300ms; transition-delay: 2300ms; }
+.wow-tour-duration-2300 { animation-duration: 2300ms; transition-duration: 2300ms; }
+.wow-tour-delay-2340 { animation-delay: 2340ms; transition-delay: 2340ms; }
+.wow-tour-duration-2340 { animation-duration: 2340ms; transition-duration: 2340ms; }
+.wow-tour-delay-2380 { animation-delay: 2380ms; transition-delay: 2380ms; }
+.wow-tour-duration-2380 { animation-duration: 2380ms; transition-duration: 2380ms; }
+.wow-tour-delay-2420 { animation-delay: 2420ms; transition-delay: 2420ms; }
+.wow-tour-duration-2420 { animation-duration: 2420ms; transition-duration: 2420ms; }
+.wow-tour-delay-2460 { animation-delay: 2460ms; transition-delay: 2460ms; }
+.wow-tour-duration-2460 { animation-duration: 2460ms; transition-duration: 2460ms; }
+.wow-tour-delay-2500 { animation-delay: 2500ms; transition-delay: 2500ms; }
+.wow-tour-duration-2500 { animation-duration: 2500ms; transition-duration: 2500ms; }
+.wow-tour-delay-2540 { animation-delay: 2540ms; transition-delay: 2540ms; }
+.wow-tour-duration-2540 { animation-duration: 2540ms; transition-duration: 2540ms; }
+.wow-tour-delay-2580 { animation-delay: 2580ms; transition-delay: 2580ms; }
+.wow-tour-duration-2580 { animation-duration: 2580ms; transition-duration: 2580ms; }
+.wow-tour-delay-2620 { animation-delay: 2620ms; transition-delay: 2620ms; }
+.wow-tour-duration-2620 { animation-duration: 2620ms; transition-duration: 2620ms; }
+.wow-tour-delay-2660 { animation-delay: 2660ms; transition-delay: 2660ms; }
+.wow-tour-duration-2660 { animation-duration: 2660ms; transition-duration: 2660ms; }
+.wow-tour-delay-2700 { animation-delay: 2700ms; transition-delay: 2700ms; }
+.wow-tour-duration-2700 { animation-duration: 2700ms; transition-duration: 2700ms; }
+.wow-tour-delay-2740 { animation-delay: 2740ms; transition-delay: 2740ms; }
+.wow-tour-duration-2740 { animation-duration: 2740ms; transition-duration: 2740ms; }
+.wow-tour-delay-2780 { animation-delay: 2780ms; transition-delay: 2780ms; }
+.wow-tour-duration-2780 { animation-duration: 2780ms; transition-duration: 2780ms; }
+.wow-tour-delay-2820 { animation-delay: 2820ms; transition-delay: 2820ms; }
+.wow-tour-duration-2820 { animation-duration: 2820ms; transition-duration: 2820ms; }
+.wow-tour-delay-2860 { animation-delay: 2860ms; transition-delay: 2860ms; }
+.wow-tour-duration-2860 { animation-duration: 2860ms; transition-duration: 2860ms; }
+.wow-tour-delay-2900 { animation-delay: 2900ms; transition-delay: 2900ms; }
+.wow-tour-duration-2900 { animation-duration: 2900ms; transition-duration: 2900ms; }
+.wow-tour-delay-2940 { animation-delay: 2940ms; transition-delay: 2940ms; }
+.wow-tour-duration-2940 { animation-duration: 2940ms; transition-duration: 2940ms; }
+.wow-tour-delay-2980 { animation-delay: 2980ms; transition-delay: 2980ms; }
+.wow-tour-duration-2980 { animation-duration: 2980ms; transition-duration: 2980ms; }
+.wow-tour-delay-3020 { animation-delay: 3020ms; transition-delay: 3020ms; }
+.wow-tour-duration-3020 { animation-duration: 3020ms; transition-duration: 3020ms; }
+.wow-tour-delay-3060 { animation-delay: 3060ms; transition-delay: 3060ms; }
+.wow-tour-duration-3060 { animation-duration: 3060ms; transition-duration: 3060ms; }
+.wow-tour-delay-3100 { animation-delay: 3100ms; transition-delay: 3100ms; }
+.wow-tour-duration-3100 { animation-duration: 3100ms; transition-duration: 3100ms; }
+.wow-tour-delay-3140 { animation-delay: 3140ms; transition-delay: 3140ms; }
+.wow-tour-duration-3140 { animation-duration: 3140ms; transition-duration: 3140ms; }
+.wow-tour-delay-3180 { animation-delay: 3180ms; transition-delay: 3180ms; }
+.wow-tour-duration-3180 { animation-duration: 3180ms; transition-duration: 3180ms; }
+.wow-tour-delay-3220 { animation-delay: 3220ms; transition-delay: 3220ms; }
+.wow-tour-duration-3220 { animation-duration: 3220ms; transition-duration: 3220ms; }
+.wow-tour-delay-3260 { animation-delay: 3260ms; transition-delay: 3260ms; }
+.wow-tour-duration-3260 { animation-duration: 3260ms; transition-duration: 3260ms; }
+.wow-tour-delay-3300 { animation-delay: 3300ms; transition-delay: 3300ms; }
+.wow-tour-duration-3300 { animation-duration: 3300ms; transition-duration: 3300ms; }
+.wow-tour-z-0 { z-index: 0; }
+.wow-tour-z-2 { z-index: 2; }
+.wow-tour-z-4 { z-index: 4; }
+.wow-tour-z-6 { z-index: 6; }
+.wow-tour-z-8 { z-index: 8; }
+.wow-tour-z-10 { z-index: 10; }
+.wow-tour-z-12 { z-index: 12; }
+.wow-tour-z-14 { z-index: 14; }
+.wow-tour-z-16 { z-index: 16; }
+.wow-tour-z-18 { z-index: 18; }
+.wow-tour-z-20 { z-index: 20; }
+.wow-tour-z-22 { z-index: 22; }
+.wow-tour-z-24 { z-index: 24; }
+.wow-tour-z-26 { z-index: 26; }
+.wow-tour-z-28 { z-index: 28; }
+.wow-tour-z-30 { z-index: 30; }
+.wow-tour-z-32 { z-index: 32; }
+.wow-tour-z-34 { z-index: 34; }
+.wow-tour-z-36 { z-index: 36; }
+.wow-tour-z-38 { z-index: 38; }
+.wow-tour-z-40 { z-index: 40; }
+.wow-tour-z-42 { z-index: 42; }
+.wow-tour-z-44 { z-index: 44; }
+.wow-tour-z-46 { z-index: 46; }
+.wow-tour-z-48 { z-index: 48; }
+.wow-tour-z-50 { z-index: 50; }
+.wow-tour-z-52 { z-index: 52; }
+.wow-tour-z-54 { z-index: 54; }
+.wow-tour-z-56 { z-index: 56; }
+.wow-tour-z-58 { z-index: 58; }
+.wow-tour-z-60 { z-index: 60; }
+.wow-tour-z-62 { z-index: 62; }
+.wow-tour-z-64 { z-index: 64; }
+.wow-tour-z-66 { z-index: 66; }
+.wow-tour-z-68 { z-index: 68; }
+.wow-tour-z-70 { z-index: 70; }
+.wow-tour-z-72 { z-index: 72; }
+.wow-tour-z-74 { z-index: 74; }
+.wow-tour-z-76 { z-index: 76; }
+.wow-tour-z-78 { z-index: 78; }
+.wow-tour-z-80 { z-index: 80; }
+.wow-tour-z-82 { z-index: 82; }
+.wow-tour-z-84 { z-index: 84; }
+.wow-tour-z-86 { z-index: 86; }
+.wow-tour-z-88 { z-index: 88; }
+.wow-tour-z-90 { z-index: 90; }
+.wow-tour-z-92 { z-index: 92; }
+.wow-tour-z-94 { z-index: 94; }
+.wow-tour-z-96 { z-index: 96; }
+.wow-tour-z-98 { z-index: 98; }
+.wow-tour-z-100 { z-index: 100; }
+.wow-tour-gap-0 { gap: 0px; }
+.wow-tour-gap-4 { gap: 4px; }
+.wow-tour-gap-8 { gap: 8px; }
+.wow-tour-gap-12 { gap: 12px; }
+.wow-tour-gap-16 { gap: 16px; }
+.wow-tour-gap-20 { gap: 20px; }
+.wow-tour-gap-24 { gap: 24px; }
+.wow-tour-gap-28 { gap: 28px; }
+.wow-tour-gap-32 { gap: 32px; }
+.wow-tour-gap-36 { gap: 36px; }
+.wow-tour-gap-40 { gap: 40px; }
+.wow-tour-gap-44 { gap: 44px; }
+.wow-tour-gap-48 { gap: 48px; }
+.wow-tour-gap-52 { gap: 52px; }
+.wow-tour-gap-56 { gap: 56px; }
+.wow-tour-gap-60 { gap: 60px; }
+.wow-tour-gap-64 { gap: 64px; }
+.wow-tour-gap-68 { gap: 68px; }
+.wow-tour-gap-72 { gap: 72px; }
+.wow-tour-gap-76 { gap: 76px; }
+.wow-tour-gap-80 { gap: 80px; }
+.wow-tour-gap-84 { gap: 84px; }
+.wow-tour-gap-88 { gap: 88px; }
+.wow-tour-gap-92 { gap: 92px; }
+.wow-tour-gap-96 { gap: 96px; }
+.wow-tour-gap-100 { gap: 100px; }
+.wow-tour-gap-104 { gap: 104px; }
+.wow-tour-gap-108 { gap: 108px; }
+.wow-tour-gap-112 { gap: 112px; }
+.wow-tour-gap-116 { gap: 116px; }
+.wow-tour-gap-120 { gap: 120px; }
+.wow-tour-gap-124 { gap: 124px; }
+.wow-tour-gap-128 { gap: 128px; }
+.wow-tour-gap-132 { gap: 132px; }
+.wow-tour-gap-136 { gap: 136px; }
+.wow-tour-gap-140 { gap: 140px; }
+.wow-tour-gap-144 { gap: 144px; }
+.wow-tour-gap-148 { gap: 148px; }
+.wow-tour-gap-152 { gap: 152px; }
+.wow-tour-gap-156 { gap: 156px; }
+.wow-tour-gap-160 { gap: 160px; }
+.wow-tour-gap-164 { gap: 164px; }
+.wow-tour-gap-168 { gap: 168px; }
+.wow-tour-gap-172 { gap: 172px; }
+.wow-tour-gap-176 { gap: 176px; }
+.wow-tour-gap-180 { gap: 180px; }
+.wow-tour-gap-184 { gap: 184px; }
+.wow-tour-gap-188 { gap: 188px; }
+.wow-tour-gap-192 { gap: 192px; }
+.wow-tour-gap-196 { gap: 196px; }
+.wow-tour-gap-200 { gap: 200px; }
+.wow-tour-gap-204 { gap: 204px; }
+.wow-tour-gap-208 { gap: 208px; }
+.wow-tour-gap-212 { gap: 212px; }
+.wow-tour-gap-216 { gap: 216px; }
+.wow-tour-gap-220 { gap: 220px; }
+.wow-tour-gap-224 { gap: 224px; }
+.wow-tour-gap-228 { gap: 228px; }
+.wow-tour-gap-232 { gap: 232px; }
+.wow-tour-gap-236 { gap: 236px; }
+.wow-tour-gap-240 { gap: 240px; }
+.wow-tour-gap-244 { gap: 244px; }
+.wow-tour-gap-248 { gap: 248px; }
+.wow-tour-gap-252 { gap: 252px; }
+.wow-tour-gap-256 { gap: 256px; }
+.wow-tour-gap-260 { gap: 260px; }
+.wow-tour-gap-264 { gap: 264px; }
+.wow-tour-gap-268 { gap: 268px; }
+.wow-tour-gap-272 { gap: 272px; }
+.wow-tour-gap-276 { gap: 276px; }
+.wow-tour-gap-280 { gap: 280px; }
+.wow-tour-gap-284 { gap: 284px; }
+.wow-tour-gap-288 { gap: 288px; }
+.wow-tour-gap-292 { gap: 292px; }
+.wow-tour-gap-296 { gap: 296px; }
+.wow-tour-gap-300 { gap: 300px; }
+.wow-tour-gap-304 { gap: 304px; }
+.wow-tour-gap-308 { gap: 308px; }
+.wow-tour-gap-312 { gap: 312px; }
+.wow-tour-gap-316 { gap: 316px; }
+.wow-tour-gap-320 { gap: 320px; }
+.wow-tour-gap-324 { gap: 324px; }
+.wow-tour-gap-328 { gap: 328px; }
+.wow-tour-gap-332 { gap: 332px; }
+.wow-tour-gap-336 { gap: 336px; }
+.wow-tour-gap-340 { gap: 340px; }
+.wow-tour-gap-344 { gap: 344px; }
+.wow-tour-gap-348 { gap: 348px; }
+.wow-tour-gap-352 { gap: 352px; }
+.wow-tour-gap-356 { gap: 356px; }
+.wow-tour-gap-360 { gap: 360px; }
+.wow-tour-gap-364 { gap: 364px; }
+.wow-tour-gap-368 { gap: 368px; }
+.wow-tour-gap-372 { gap: 372px; }
+.wow-tour-gap-376 { gap: 376px; }
+.wow-tour-gap-380 { gap: 380px; }
+.wow-tour-gap-384 { gap: 384px; }
+.wow-tour-gap-388 { gap: 388px; }
+.wow-tour-gap-392 { gap: 392px; }
+.wow-tour-gap-396 { gap: 396px; }
+.wow-tour-gap-400 { gap: 400px; }
+.wow-tour-f-8 { font-size: 8px; }
+.wow-tour-f-10 { font-size: 10px; }
+.wow-tour-f-12 { font-size: 12px; }
+.wow-tour-f-14 { font-size: 14px; }
+.wow-tour-f-16 { font-size: 16px; }
+.wow-tour-f-18 { font-size: 18px; }
+.wow-tour-f-20 { font-size: 20px; }
+.wow-tour-f-22 { font-size: 22px; }
+.wow-tour-f-24 { font-size: 24px; }
+.wow-tour-f-26 { font-size: 26px; }
+.wow-tour-f-28 { font-size: 28px; }
+.wow-tour-f-30 { font-size: 30px; }
+.wow-tour-f-32 { font-size: 32px; }
+.wow-tour-f-34 { font-size: 34px; }
+.wow-tour-f-36 { font-size: 36px; }
+.wow-tour-f-38 { font-size: 38px; }
+.wow-tour-f-40 { font-size: 40px; }
+.wow-tour-f-42 { font-size: 42px; }
+.wow-tour-f-44 { font-size: 44px; }
+.wow-tour-f-46 { font-size: 46px; }
+.wow-tour-f-48 { font-size: 48px; }
+.wow-tour-f-50 { font-size: 50px; }
+.wow-tour-f-52 { font-size: 52px; }
+.wow-tour-f-54 { font-size: 54px; }
+.wow-tour-f-56 { font-size: 56px; }
+.wow-tour-f-58 { font-size: 58px; }
+.wow-tour-f-60 { font-size: 60px; }
+.wow-tour-f-62 { font-size: 62px; }
+.wow-tour-f-64 { font-size: 64px; }
+.wow-tour-f-66 { font-size: 66px; }
+.wow-tour-f-68 { font-size: 68px; }
+.wow-tour-f-70 { font-size: 70px; }
+.wow-tour-f-72 { font-size: 72px; }
+.wow-tour-f-74 { font-size: 74px; }
+.wow-tour-f-76 { font-size: 76px; }
+.wow-tour-f-78 { font-size: 78px; }
+.wow-tour-f-80 { font-size: 80px; }
+.wow-tour-f-82 { font-size: 82px; }
+.wow-tour-f-84 { font-size: 84px; }
+.wow-tour-f-86 { font-size: 86px; }
+.wow-tour-f-88 { font-size: 88px; }
+.wow-tour-f-90 { font-size: 90px; }
+.wow-tour-f-92 { font-size: 92px; }
+.wow-tour-f-94 { font-size: 94px; }
+.wow-tour-f-96 { font-size: 96px; }
+.wow-tour-f-98 { font-size: 98px; }
+.wow-tour-f-100 { font-size: 100px; }
+.wow-tour-f-102 { font-size: 102px; }
+.wow-tour-f-104 { font-size: 104px; }
+.wow-tour-f-106 { font-size: 106px; }
+.wow-tour-f-108 { font-size: 108px; }
+.wow-tour-f-110 { font-size: 110px; }
+.wow-tour-f-112 { font-size: 112px; }
+.wow-tour-f-114 { font-size: 114px; }
+.wow-tour-f-116 { font-size: 116px; }
+.wow-tour-f-118 { font-size: 118px; }
+.wow-tour-f-120 { font-size: 120px; }
+.wow-tour-f-122 { font-size: 122px; }
+.wow-tour-f-124 { font-size: 124px; }
+.wow-tour-f-126 { font-size: 126px; }
+.wow-tour-f-128 { font-size: 128px; }
+.wow-tour-f-130 { font-size: 130px; }
+.wow-tour-f-132 { font-size: 132px; }
+.wow-tour-f-134 { font-size: 134px; }
+.wow-tour-f-136 { font-size: 136px; }
+.wow-tour-f-138 { font-size: 138px; }
+.wow-tour-f-140 { font-size: 140px; }
+.wow-tour-f-142 { font-size: 142px; }
+.wow-tour-f-144 { font-size: 144px; }
+.wow-tour-f-146 { font-size: 146px; }
+.wow-tour-f-148 { font-size: 148px; }
+.wow-tour-f-150 { font-size: 150px; }
+.wow-tour-f-152 { font-size: 152px; }
+.wow-tour-f-154 { font-size: 154px; }
+.wow-tour-f-156 { font-size: 156px; }
+.wow-tour-f-158 { font-size: 158px; }
+.wow-tour-f-160 { font-size: 160px; }
+.wow-tour-f-162 { font-size: 162px; }
+.wow-tour-f-164 { font-size: 164px; }
+.wow-tour-f-166 { font-size: 166px; }
+.wow-tour-f-168 { font-size: 168px; }
+.wow-tour-track-0 { letter-spacing: 0.00em; }
+.wow-tour-track-1 { letter-spacing: 0.01em; }
+.wow-tour-track-2 { letter-spacing: 0.02em; }
+.wow-tour-track-3 { letter-spacing: 0.03em; }
+.wow-tour-track-4 { letter-spacing: 0.04em; }
+.wow-tour-track-5 { letter-spacing: 0.05em; }
+.wow-tour-track-6 { letter-spacing: 0.06em; }
+.wow-tour-track-7 { letter-spacing: 0.07em; }
+.wow-tour-track-8 { letter-spacing: 0.08em; }
+.wow-tour-track-9 { letter-spacing: 0.09em; }
+.wow-tour-track-10 { letter-spacing: 0.10em; }
+.wow-tour-track-11 { letter-spacing: 0.11em; }
+.wow-tour-track-12 { letter-spacing: 0.12em; }
+.wow-tour-track-13 { letter-spacing: 0.13em; }
+.wow-tour-track-14 { letter-spacing: 0.14em; }
+.wow-tour-track-15 { letter-spacing: 0.15em; }
+.wow-tour-track-16 { letter-spacing: 0.16em; }
+.wow-tour-track-17 { letter-spacing: 0.17em; }
+.wow-tour-track-18 { letter-spacing: 0.18em; }
+.wow-tour-track-19 { letter-spacing: 0.19em; }
+.wow-tour-track-20 { letter-spacing: 0.20em; }
+.wow-tour-track-21 { letter-spacing: 0.21em; }
+.wow-tour-track-22 { letter-spacing: 0.22em; }
+.wow-tour-track-23 { letter-spacing: 0.23em; }
+.wow-tour-track-24 { letter-spacing: 0.24em; }
+.wow-tour-track-25 { letter-spacing: 0.25em; }
+.wow-tour-track-26 { letter-spacing: 0.26em; }
+.wow-tour-track-27 { letter-spacing: 0.27em; }
+.wow-tour-track-28 { letter-spacing: 0.28em; }
+.wow-tour-track-29 { letter-spacing: 0.29em; }
+.wow-tour-track-30 { letter-spacing: 0.30em; }
+.wow-tour-track-31 { letter-spacing: 0.31em; }
+.wow-tour-track-32 { letter-spacing: 0.32em; }
+.wow-tour-track-33 { letter-spacing: 0.33em; }
+.wow-tour-track-34 { letter-spacing: 0.34em; }
+.wow-tour-track-35 { letter-spacing: 0.35em; }
+.wow-tour-track-36 { letter-spacing: 0.36em; }
+.wow-tour-track-37 { letter-spacing: 0.37em; }
+.wow-tour-track-38 { letter-spacing: 0.38em; }
+.wow-tour-track-39 { letter-spacing: 0.39em; }
+.wow-tour-track-40 { letter-spacing: 0.40em; }
+.wow-tour-track-41 { letter-spacing: 0.41em; }
+.wow-tour-track-42 { letter-spacing: 0.42em; }
+.wow-tour-track-43 { letter-spacing: 0.43em; }
+.wow-tour-track-44 { letter-spacing: 0.44em; }
+.wow-tour-track-45 { letter-spacing: 0.45em; }
+.wow-tour-track-46 { letter-spacing: 0.46em; }
+.wow-tour-track-47 { letter-spacing: 0.47em; }
+.wow-tour-track-48 { letter-spacing: 0.48em; }
+.wow-tour-track-49 { letter-spacing: 0.49em; }
+.wow-tour-track-50 { letter-spacing: 0.50em; }
+.wow-tour-track-51 { letter-spacing: 0.51em; }
+.wow-tour-track-52 { letter-spacing: 0.52em; }
+.wow-tour-track-53 { letter-spacing: 0.53em; }
+.wow-tour-track-54 { letter-spacing: 0.54em; }
+.wow-tour-track-55 { letter-spacing: 0.55em; }
+.wow-tour-track-56 { letter-spacing: 0.56em; }
+.wow-tour-track-57 { letter-spacing: 0.57em; }
+.wow-tour-track-58 { letter-spacing: 0.58em; }
+.wow-tour-track-59 { letter-spacing: 0.59em; }
+.wow-tour-track-60 { letter-spacing: 0.60em; }
+.wow-tour-track-61 { letter-spacing: 0.61em; }
+.wow-tour-track-62 { letter-spacing: 0.62em; }
+.wow-tour-track-63 { letter-spacing: 0.63em; }
+.wow-tour-track-64 { letter-spacing: 0.64em; }
+.wow-tour-track-65 { letter-spacing: 0.65em; }
+.wow-tour-track-66 { letter-spacing: 0.66em; }
+.wow-tour-track-67 { letter-spacing: 0.67em; }
+.wow-tour-track-68 { letter-spacing: 0.68em; }
+.wow-tour-track-69 { letter-spacing: 0.69em; }
+.wow-tour-track-70 { letter-spacing: 0.70em; }
+.wow-tour-track-71 { letter-spacing: 0.71em; }
+.wow-tour-track-72 { letter-spacing: 0.72em; }
+.wow-tour-track-73 { letter-spacing: 0.73em; }
+.wow-tour-track-74 { letter-spacing: 0.74em; }
+.wow-tour-track-75 { letter-spacing: 0.75em; }
+.wow-tour-track-76 { letter-spacing: 0.76em; }
+.wow-tour-track-77 { letter-spacing: 0.77em; }
+.wow-tour-track-78 { letter-spacing: 0.78em; }
+.wow-tour-track-79 { letter-spacing: 0.79em; }
+.wow-tour-track-80 { letter-spacing: 0.80em; }
+.wow-tour-lh-0 { line-height: 1.00; }
+.wow-tour-lh-1 { line-height: 1.01; }
+.wow-tour-lh-2 { line-height: 1.02; }
+.wow-tour-lh-3 { line-height: 1.03; }
+.wow-tour-lh-4 { line-height: 1.04; }
+.wow-tour-lh-5 { line-height: 1.05; }
+.wow-tour-lh-6 { line-height: 1.06; }
+.wow-tour-lh-7 { line-height: 1.07; }
+.wow-tour-lh-8 { line-height: 1.08; }
+.wow-tour-lh-9 { line-height: 1.09; }
+.wow-tour-lh-10 { line-height: 1.10; }
+.wow-tour-lh-11 { line-height: 1.11; }
+.wow-tour-lh-12 { line-height: 1.12; }
+.wow-tour-lh-13 { line-height: 1.13; }
+.wow-tour-lh-14 { line-height: 1.14; }
+.wow-tour-lh-15 { line-height: 1.15; }
+.wow-tour-lh-16 { line-height: 1.16; }
+.wow-tour-lh-17 { line-height: 1.17; }
+.wow-tour-lh-18 { line-height: 1.18; }
+.wow-tour-lh-19 { line-height: 1.19; }
+.wow-tour-lh-20 { line-height: 1.20; }
+.wow-tour-lh-21 { line-height: 1.21; }
+.wow-tour-lh-22 { line-height: 1.22; }
+.wow-tour-lh-23 { line-height: 1.23; }
+.wow-tour-lh-24 { line-height: 1.24; }
+.wow-tour-lh-25 { line-height: 1.25; }
+.wow-tour-lh-26 { line-height: 1.26; }
+.wow-tour-lh-27 { line-height: 1.27; }
+.wow-tour-lh-28 { line-height: 1.28; }
+.wow-tour-lh-29 { line-height: 1.29; }
+.wow-tour-lh-30 { line-height: 1.30; }
+.wow-tour-lh-31 { line-height: 1.31; }
+.wow-tour-lh-32 { line-height: 1.32; }
+.wow-tour-lh-33 { line-height: 1.33; }
+.wow-tour-lh-34 { line-height: 1.34; }
+.wow-tour-lh-35 { line-height: 1.35; }
+.wow-tour-lh-36 { line-height: 1.36; }
+.wow-tour-lh-37 { line-height: 1.37; }
+.wow-tour-lh-38 { line-height: 1.38; }
+.wow-tour-lh-39 { line-height: 1.39; }
+.wow-tour-lh-40 { line-height: 1.40; }
+.wow-tour-lh-41 { line-height: 1.41; }
+.wow-tour-lh-42 { line-height: 1.42; }
+.wow-tour-lh-43 { line-height: 1.43; }
+.wow-tour-lh-44 { line-height: 1.44; }
+.wow-tour-lh-45 { line-height: 1.45; }
+.wow-tour-lh-46 { line-height: 1.46; }
+.wow-tour-lh-47 { line-height: 1.47; }
+.wow-tour-lh-48 { line-height: 1.48; }
+.wow-tour-lh-49 { line-height: 1.49; }
+.wow-tour-lh-50 { line-height: 1.50; }
+.wow-tour-lh-51 { line-height: 1.51; }
+.wow-tour-lh-52 { line-height: 1.52; }
+.wow-tour-lh-53 { line-height: 1.53; }
+.wow-tour-lh-54 { line-height: 1.54; }
+.wow-tour-lh-55 { line-height: 1.55; }
+.wow-tour-lh-56 { line-height: 1.56; }
+.wow-tour-lh-57 { line-height: 1.57; }
+.wow-tour-lh-58 { line-height: 1.58; }
+.wow-tour-lh-59 { line-height: 1.59; }
+.wow-tour-lh-60 { line-height: 1.60; }
+@media (max-width: 1024px) {
+  .wow-tour__coach { width: min(320px, 84vw); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wow-tour__ring, .wow-tour__coach, .wow-tour__spotlight { animation: none !important; transition: none !important; }
+}

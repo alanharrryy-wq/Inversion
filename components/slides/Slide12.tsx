@@ -14,6 +14,8 @@
 
 import React, { ReactNode, useEffect, useId, useMemo, useState } from "react";
 import { SlideContainer, Header, NavArea } from "../SlideRenderer";
+import { WOW_CORE_MODULES, WOW_DEMO, WOW_MODEL_IMPACT } from "../../config/wow";
+import { emitTourEvent } from "../../wow/tour";
 
 export interface Slide12Props {
   nextSlide: () => void;
@@ -261,6 +263,11 @@ function EmbeddedStyles({ brand, reducedMotion }: { brand: BrandTokens; reducedM
         100% { transform: translateY(125%); opacity: 0; }
       }
 
+      @keyframes s12_signalBar {
+        0%, 100% { transform: scaleY(0.35); opacity: 0.35; }
+        50% { transform: scaleY(1); opacity: 1; }
+      }
+
       [data-s12] .s12_fadeUp { animation: s12_fadeUp 700ms ease-out both; }
       [data-s12] .s12_delay_1 { animation-delay: 90ms; }
       [data-s12] .s12_delay_2 { animation-delay: 180ms; }
@@ -311,6 +318,11 @@ function EmbeddedStyles({ brand, reducedMotion }: { brand: BrandTokens; reducedM
         mix-blend-mode: screen;
       }
 
+      [data-s12] .s12_signalBar {
+        animation: s12_signalBar 1.6s ease-in-out infinite;
+        transform-origin: bottom;
+      }
+
       ${cardHoverGlow}
 
       ${reducedMotion ? `
@@ -323,7 +335,7 @@ function EmbeddedStyles({ brand, reducedMotion }: { brand: BrandTokens; reducedM
     `;
   }, [brand, reducedMotion]);
 
-  return <style dangerouslySetInnerHTML={{ __html: css }} />;
+  return <style>{css}</style>;
 }
 
 /* =====================================================================================
@@ -549,6 +561,8 @@ function TraditionalPanel({ brand, items }: { brand: BrandTokens; items: Traditi
 }
 
 function CoreGrid({ brand, modules, reducedMotion }: { brand: BrandTokens; modules: CoreModule[]; reducedMotion: boolean }) {
+  const wowCoreModules = WOW_DEMO && WOW_CORE_MODULES;
+
   return (
     <div
       className={cx("relative rounded-2xl border p-8", "s12_fadeUp s12_delay_3")}
@@ -583,8 +597,8 @@ function CoreGrid({ brand, modules, reducedMotion }: { brand: BrandTokens; modul
       />
 
       <div className="mt-6 grid grid-cols-2 gap-5">
-        {modules.map((m) => (
-          <CoreCard key={m.key} module={m} brand={brand} reducedMotion={reducedMotion} />
+        {modules.map((m, index) => (
+          <CoreCard key={m.key} module={m} index={index} brand={brand} reducedMotion={reducedMotion} wowCoreModules={wowCoreModules} />
         ))}
       </div>
 
@@ -609,8 +623,21 @@ function CoreGrid({ brand, modules, reducedMotion }: { brand: BrandTokens; modul
   );
 }
 
-function CoreCard({ module, brand, reducedMotion }: { module: CoreModule; brand: BrandTokens; reducedMotion: boolean }) {
+function CoreCard({
+  module,
+  index,
+  brand,
+  reducedMotion,
+  wowCoreModules,
+}: {
+  module: CoreModule;
+  index: number;
+  brand: BrandTokens;
+  reducedMotion: boolean;
+  wowCoreModules: boolean;
+}) {
   const [open, setOpen] = useState(false);
+  const wowModel = WOW_DEMO && (WOW_MODEL_IMPACT || WOW_CORE_MODULES);
 
   const accentColor = module.accent === "gold" ? brand.gold : module.accent === "cyan" ? brand.energyCyan : brand.deepBlue;
   const ringClass = module.accent === "gold" ? "s12_ringGold" : module.accent === "cyan" ? "s12_ringCyan" : "";
@@ -618,15 +645,27 @@ function CoreCard({ module, brand, reducedMotion }: { module: CoreModule; brand:
   return (
     <button
       type="button"
-      onClick={() => setOpen((v) => !v)}
+      data-s12-module={module.key}
+      onClick={() =>
+        setOpen((v) => {
+          const next = !v;
+          if (next) emitTourEvent("module:opened", { key: module.key });
+          return next;
+        })
+      }
+      onMouseEnter={() => emitTourEvent("module:hover", { key: module.key })}
       className={cx(
-        "s12_card relative text-left rounded-2xl border p-5 transition-all duration-300",
-        "hover:-translate-y-[2px] focus:outline-none focus:ring-1 focus:ring-white/20"
+        "s12_card group relative text-left rounded-2xl border p-5 transition-all duration-300",
+        "hover:-translate-y-[2px] focus:outline-none focus:ring-1 focus:ring-white/20",
+        wowCoreModules && "bg-white/[0.045] border-white/15 shadow-[0_14px_34px_rgba(0,0,0,0.44)]",
+        wowModel && "s12_fadeUp",
+        wowModel && !reducedMotion && `s12_delay_${Math.min(4, index + 1)}`
       )}
       style={{
         borderColor: "rgba(255,255,255,0.08)",
         background: "rgba(255,255,255,0.03)",
         backdropFilter: "blur(4px)",
+        boxShadow: wowModel && open ? "0 18px 36px rgba(0,0,0,0.45), 0 0 30px rgba(2,167,202,0.13)" : undefined,
       }}
     >
       <span className="absolute inset-0 rounded-2xl pointer-events-none" style={{ boxShadow: `0 0 0 1px ${rgba(accentColor, 0.0)}` }} />
@@ -677,6 +716,35 @@ function CoreCard({ module, brand, reducedMotion }: { module: CoreModule; brand:
         </div>
       </div>
 
+      {wowModel && (
+        <div className="mt-4">
+          <div className="mb-1 flex items-center justify-between text-[10px] font-mono tracking-[0.2em] uppercase" style={{ color: brand.slate }}>
+            <span>Signal strength</span>
+            <span>{open ? "active" : "standby"}</span>
+          </div>
+          <div className="relative h-[5px] w-full overflow-hidden rounded-full bg-white/10">
+            <div
+              className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
+              style={{
+                width: open ? "84%" : "42%",
+                background: `linear-gradient(90deg, ${accentColor}, rgba(255,255,255,0.7))`,
+                boxShadow: `0 0 16px ${rgba(accentColor, 0.35)}`,
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {wowCoreModules && (
+        <div className="mt-3 grid grid-cols-3 gap-2 text-[10px] font-mono uppercase tracking-[0.14em]">
+          {["latency", "trace", "ops"].map((k) => (
+            <div key={k} className="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-white/55 transition-all duration-300 group-hover:text-white/80">
+              {k}
+            </div>
+          ))}
+        </div>
+      )}
+
       <div
         className="mt-4 transition-all duration-300 overflow-hidden"
         style={{
@@ -713,6 +781,22 @@ function CoreCard({ module, brand, reducedMotion }: { module: CoreModule; brand:
             <div className="text-[10px] font-mono tracking-[0.22em] uppercase" style={{ color: brand.slate }}>
               CORE_SIGNAL // OK
             </div>
+          </div>
+        )}
+        {wowCoreModules && (
+          <div className="mt-3 flex items-end gap-1.5" aria-hidden="true">
+            {[0, 1, 2, 3].map((i) => (
+              <span
+                key={i}
+                className={cx("s12_signalBar inline-block w-1.5 rounded-sm", reducedMotion && "opacity-60")}
+                style={{
+                  height: `${8 + i * 3}px`,
+                  background: accentColor,
+                  animationDelay: `${i * 140}ms`,
+                  animationPlayState: reducedMotion ? "paused" : "running",
+                }}
+              />
+            ))}
           </div>
         )}
       </div>
