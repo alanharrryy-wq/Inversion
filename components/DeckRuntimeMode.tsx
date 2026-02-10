@@ -1,5 +1,5 @@
 // components/DeckRuntimeMode.tsx
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 // =========================================================
 // [B1] Types (compat con App.tsx)
@@ -15,10 +15,15 @@ export type DeckModeState = {
 export type DeckModeComputed = DeckModeState & {
   heavyFx: boolean;
 };
+const isModeHotkey = (key: string) => key === "F1" || key === "F2" || key === "F3" || key === "F4";
 
 type DeckModeCtx = {
   mode: DeckModeComputed;
-  setMode: React.Dispatch<React.SetStateAction<DeckModeState>>;
+  setMode: (next: Partial<DeckModeState> | ((prev: DeckModeState) => Partial<DeckModeState> | DeckModeState)) => void;
+  setStealth: (value?: boolean) => void;
+  setTrack: (value?: boolean) => void;
+  toggleInvestorLock: () => void;
+  toggleAutoplay: () => void;
 };
 
 const Ctx = createContext<DeckModeCtx | null>(null);
@@ -50,6 +55,81 @@ export function DeckModeProvider(props: {
     autoplayMs: 6500,
   });
 
+  const updateMode = useCallback(
+    (next: Partial<DeckModeState> | ((prev: DeckModeState) => Partial<DeckModeState> | DeckModeState)) => {
+      setMode((prev) => {
+        const patch = typeof next === "function" ? next(prev) : next;
+        const resolved = { ...prev, ...patch };
+        if (!resolved.investorLock && resolved.autoplay) {
+          resolved.autoplay = false;
+        }
+        if (!Number.isFinite(resolved.autoplayMs)) {
+          resolved.autoplayMs = prev.autoplayMs;
+        }
+        resolved.autoplayMs = Math.max(1500, Math.min(30000, Math.round(resolved.autoplayMs)));
+        return resolved;
+      });
+    },
+    []
+  );
+
+  const setStealth = useCallback((value?: boolean) => {
+    updateMode((prev) => ({ stealth: value ?? !prev.stealth }));
+  }, [updateMode]);
+
+  const setTrack = useCallback((value?: boolean) => {
+    updateMode((prev) => ({ track: value ?? !prev.track }));
+  }, [updateMode]);
+
+  const toggleInvestorLock = useCallback(() => {
+    updateMode((prev) => {
+      const investorLock = !prev.investorLock;
+      return { investorLock, autoplay: investorLock ? prev.autoplay : false };
+    });
+  }, [updateMode]);
+
+  const toggleAutoplay = useCallback(() => {
+    updateMode((prev) => (prev.investorLock ? { autoplay: !prev.autoplay } : {}));
+  }, [updateMode]);
+
+  useEffect(() => {
+    // Global keyboard authority:
+    // This layer exclusively owns F1-F4 mode hotkeys. Other components should not handle these keys.
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "l") {
+        updateMode({ investorLock: false, autoplay: false });
+        return;
+      }
+
+      if (isModeHotkey(e.key)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      if (e.key === "F1") {
+        setStealth();
+        return;
+      }
+      if (e.key === "F2") {
+        e.preventDefault();
+        setTrack();
+        return;
+      }
+      if (e.key === "F3") {
+        e.preventDefault();
+        toggleInvestorLock();
+        return;
+      }
+      if (e.key === "F4") {
+        e.preventDefault();
+        toggleAutoplay();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown, { capture: true });
+    return () => window.removeEventListener("keydown", onKeyDown, { capture: true } as AddEventListenerOptions);
+  }, [setStealth, setTrack, toggleAutoplay, toggleInvestorLock, updateMode]);
+
   const mode = useMemo<DeckModeComputed>(() => {
     // Track ON => heavyFx solo si slide está whitelisted
     const whitelisted = heavyFxWhitelist.includes(slideIndex);
@@ -62,7 +142,19 @@ export function DeckModeProvider(props: {
     return { ...base, heavyFx };
   }, [base, slideIndex, heavyFxWhitelist]);
 
-  return <Ctx.Provider value={{ mode, setMode }}>{children}</Ctx.Provider>;
+  const ctxValue = useMemo(
+    () => ({
+      mode,
+      setMode: updateMode,
+      setStealth,
+      setTrack,
+      toggleInvestorLock,
+      toggleAutoplay,
+    }),
+    [mode, setStealth, setTrack, toggleAutoplay, toggleInvestorLock, updateMode]
+  );
+
+  return <Ctx.Provider value={ctxValue}>{children}</Ctx.Provider>;
 }
 
 // =========================================================

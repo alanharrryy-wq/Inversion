@@ -38,6 +38,7 @@ interface SlideProps {
   prevSlide: () => void;
   goToSlide: (idx: number) => void;
   openModal: (images: string[], title: string) => void;
+  wowDemo?: boolean;
 }
 
 type SlideFC = React.FC<any>;
@@ -78,6 +79,29 @@ const SLIDES: SlideFC[] = [
   Slide19,           // 19 (requiere goToSlide)
 ];
 
+export const SLIDE_LABELS = [
+  "Slide00",
+  "Slide01",
+  "Slide02",
+  "Slide03",
+  "Slide04",
+  "Slide05",
+  "Slide06",
+  "Slide07",
+  "Slide08",
+  "Slide09",
+  "Slide10",
+  "Slide11",
+  "Slide12",
+  "Slide13",
+  "Slide14",
+  "Slide15",
+  "Slide16",
+  "Slide17",
+  "Slide18",
+  "Slide19",
+] as const;
+
 const SlideRenderer: React.FC<SlideProps> = (props) => {
   const { index } = props;
 
@@ -89,16 +113,32 @@ const SlideRenderer: React.FC<SlideProps> = (props) => {
   const common = { nextSlide: props.nextSlide, prevSlide: props.prevSlide };
 
   if (index === 6) {
-    return <Comp {...common} goToSlide={props.goToSlide} openModal={props.openModal} />;
+    return (
+      <div key={index} className={props.wowDemo ? "wow-slide-transition" : undefined}>
+        <Comp {...common} goToSlide={props.goToSlide} openModal={props.openModal} />
+      </div>
+    );
   }
   if (index === 17) {
-    return <Comp {...common} openModal={props.openModal} />;
+    return (
+      <div key={index} className={props.wowDemo ? "wow-slide-transition" : undefined}>
+        <Comp {...common} openModal={props.openModal} />
+      </div>
+    );
   }
   if (index === 19) {
-    return <Comp prevSlide={props.prevSlide} goToSlide={props.goToSlide} />;
+    return (
+      <div key={index} className={props.wowDemo ? "wow-slide-transition" : undefined}>
+        <Comp prevSlide={props.prevSlide} goToSlide={props.goToSlide} />
+      </div>
+    );
   }
 
-  return <Comp {...common} />;
+  return (
+    <div key={index} className={props.wowDemo ? "wow-slide-transition" : undefined}>
+      <Comp {...common} />
+    </div>
+  );
 };
 
 export default SlideRenderer;

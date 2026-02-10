@@ -82,6 +82,7 @@ export function useKpiController(items: KpiItem[]): KpiController {
   // ESC → unlock (solo si locked)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === "F1" || e.key === "F2" || e.key === "F3" || e.key === "F4") return;
       if (!selectedId) return;
       if (e.key === "Escape") {
         e.preventDefault();
@@ -96,6 +97,7 @@ export function useKpiController(items: KpiItem[]): KpiController {
   // ✅ Keyboard nav (solo cuando LOCKED)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === "F1" || e.key === "F2" || e.key === "F3" || e.key === "F4") return;
       if (!selectedId) return;
 
       const curIdx = idxOf(items, selectedId);

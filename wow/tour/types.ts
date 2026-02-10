@@ -4,6 +4,13 @@ export type TourEvent = {
   ts: number;
 };
 
+export type StepAction =
+  | { type: 'click'; selector: string }
+  | { type: 'state'; text: string }
+  | { type: 'navigate'; text: string }
+  | { type: 'chat'; text: string }
+  | { type: 'open'; text: string };
+
 export type CompletionRule =
   | { type: 'manual' }
   | { type: 'slide'; slide: number }
@@ -14,8 +21,21 @@ export type CompletionRule =
 export type TourStep = {
   id: string;
   title: string;
-  instruction: string;
+  body: string;
+  footnote?: string;
+  nextTease?: string;
+  directorNotes?: string[];
+  readAloudText?: string;
+  successLabel?: string;
+  action: StepAction;
+  successText: string;
   targetSelector?: string;
+  missingTargetWarning?: string;
+  fallbackAllowNext?: boolean;
+  spotlightPadding?: number;
+  spotlightRadius?: number;
+  pulseTarget?: boolean;
+  connector?: boolean;
   placement?: 'top' | 'right' | 'bottom' | 'left' | 'center';
   completion: CompletionRule;
   pasteQuestion?: string;
@@ -49,3 +69,12 @@ export type TourApi = {
   stop: () => void;
   emit: (eventName: string, payload?: Record<string, unknown>) => void;
 };
+
+export type TourAutostartStatus = {
+  attempts: number;
+  started: boolean;
+  reason: string;
+  lastMissingSelector?: string;
+};
+
+export type TourOverlayPhase = 'intro' | 'guide' | 'success' | 'tease';

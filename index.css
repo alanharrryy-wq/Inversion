@@ -1,5 +1,9 @@
 @import "./wow/animations.css";
 @import "./wow/effects.css";
+@import "./wow/tour/tokens.css";
+@import "./wow/tour/motion.tokens.css";
+@import "./wow/tour/ui/wow.ui.css";
+@import "./wow/tour/guide/ui/guide-ui.css";
 @import "./wow/tour/tour.css";
 
 :root {

@@ -4,21 +4,50 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "concurrently -k \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:client": "vite",
+    "dev:server": "tsx watch server/index.ts",
+    "dev:test": "cross-env DEMO_TEST_MODE=true VITE_ENABLE_VOICE=false concurrently -k \"tsx watch server/index.ts\" \"vite --port 3200 --host 127.0.0.1\"",
+    "verify": "npm run typecheck && npm run build && npm run security:check && npm run demo:smoke && npm run test",
+    "build": "node scripts/client-boundary-guard.mjs --strict && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.verify.json --noEmit",
+    "security:check": "node scripts/security-check.mjs",
+    "demo:smoke": "node scripts/demo-smoke.mjs",
+    "test": "playwright test",
+    "verify:demo": "node scripts/verify-demo.mjs",
+    "verify:ai": "node scripts/verify-ai.mjs",
+    "verify:smoke": "npm run typecheck && npm run build && npm run verify:demo",
+    "client:guard": "node scripts/client-boundary-guard.mjs",
+    "client:guard:strict": "node scripts/client-boundary-guard.mjs --strict",
+    "gemini:audit": "cmd.exe /c powershell -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\gemini-audit.ps1",
+    "gemini:audit:strict": "cmd.exe /c powershell -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\gemini-audit.ps1 -Strict",
+    "gemini:audit:test": "node scripts/gemini-audit-fixture.mjs",
+    "operator": "powershell -ExecutionPolicy Bypass -File .\\scripts\\demo-operator.ps1 -Mode stub",
+    "wow:validate": "powershell -ExecutionPolicy Bypass -File .\\scripts\\wow-validate.ps1",
+    "wow:guide:smoke": "powershell -ExecutionPolicy Bypass -File .\\scripts\\wow-guide-smoke.ps1",
+    "wow:audit": "powershell -ExecutionPolicy Bypass -File .\\scripts\\wow-audit.ps1"
   },
   "dependencies": {
     "react-dom": "^19.2.1",
     "react": "^19.2.1",
     "three": "^0.181.2",
     "@google/genai": "^1.32.0",
-    "framer-motion": "^12.23.26"
+    "dotenv": "^17.2.3",
+    "framer-motion": "^12.23.26",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/express": "^5.0.3",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "concurrently": "^9.2.1",
+    "cross-env": "^7.0.3",
     "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "tsx": "^4.20.6",
+    "vite": "^6.2.0",
+    "wait-on": "^8.0.5"
   }
 }

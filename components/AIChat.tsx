@@ -13,7 +13,7 @@ type Message = {
 
 type Mode = 'chat' | 'fast' | 'think' | 'search' | 'voice';
 
-type GeminiPayload = {
+type AiPayload = {
   text?: unknown;
   sources?: unknown;
   error?: unknown;
@@ -171,6 +171,7 @@ export default function AIChat() {
   const [expandedMessages, setExpandedMessages] = useState<Record<number, boolean>>({});
   const [tourPasteQuestion, setTourPasteQuestion] = useState('');
   const [tourStepRunning, setTourStepRunning] = useState(false);
+  const [tourReadAloud, setTourReadAloud] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const voiceEnabled = useMemo(() => isVoiceEnabled(), []);
   const reducedMotion = usePrefersReducedMotion();
@@ -199,16 +200,26 @@ export default function AIChat() {
       setInput(text);
     };
     const onStep = (event: Event) => {
-      const custom = event as CustomEvent<{ pasteQuestion?: string; running?: boolean }>;
+      const custom = event as CustomEvent<{ pasteQuestion?: string; readAloudText?: string; running?: boolean }>;
       setTourPasteQuestion(sanitizeText(custom.detail?.pasteQuestion, ''));
+      setTourReadAloud(sanitizeText(custom.detail?.readAloudText, ''));
       setTourStepRunning(!!custom.detail?.running);
+    };
+    const onCommand = (event: Event) => {
+      const custom = event as CustomEvent<{ cmd?: string }>;
+      const cmd = sanitizeText(custom.detail?.cmd, '').toLowerCase();
+      if (cmd === 'open-chat') {
+        setIsOpen(true);
+      }
     };
 
     window.addEventListener('wow:tour-paste', onPaste as EventListener);
     window.addEventListener('wow:tour-step', onStep as EventListener);
+    window.addEventListener('wow:tour-command', onCommand as EventListener);
     return () => {
       window.removeEventListener('wow:tour-paste', onPaste as EventListener);
       window.removeEventListener('wow:tour-step', onStep as EventListener);
+      window.removeEventListener('wow:tour-command', onCommand as EventListener);
     };
   }, []);
 
@@ -235,16 +246,16 @@ export default function AIChat() {
     const timeoutId = window.setTimeout(() => ctrl.abort(), REQUEST_TIMEOUT_MS);
 
     try {
-      const resp = await fetch('/api/gemini', {
+      const resp = await fetch('/api/ai', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mode, message: userMsg }),
         signal: ctrl.signal,
       });
 
-      let payload: GeminiPayload = {};
+      let payload: AiPayload = {};
       try {
-        payload = (await resp.json()) as GeminiPayload;
+        payload = (await resp.json()) as AiPayload;
       } catch {
         payload = {};
       }
@@ -295,13 +306,30 @@ export default function AIChat() {
       { role: 'user', text: prompt },
       { role: 'model', text: response },
     ]);
+    emitTourEvent('ai:fixture-loaded', { id: fixture.id });
+    emitTourEvent('ai:response', { fixture: fixture.id, len: response.length });
+  };
+
+  const copyModelText = async (text: string) => {
+    const safe = sanitizeText(text, '');
+    if (!safe) return;
+    try {
+      await navigator.clipboard.writeText(safe);
+      emitTourEvent('ai:copied', { len: safe.length });
+    } catch {
+      // Clipboard failure is non-fatal for demo flow.
+    }
   };
 
   return (
     <>
       <button
         data-testid="chat-toggle"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          const next = !isOpen;
+          setIsOpen(next);
+          if (next) emitTourEvent('ai:opened');
+        }}
         className="fixed bottom-8 right-8 w-16 h-16 bg-cyan/10 border-2 border-cyan/80 rounded-full flex items-center justify-center text-3xl shadow-[0_0_24px_rgba(0,240,255,0.45)] hover:bg-cyan hover:text-black transition-all duration-300 z-50 group"
         aria-label={isOpen ? 'Close AI chat' : 'Open AI chat'}
       >
@@ -310,7 +338,7 @@ export default function AIChat() {
 
       {isOpen && (
         <div data-testid="chat-window" className="wow-chat-window fixed bottom-28 right-8 w-[400px] h-[600px] bg-panel border border-cyan/45 rounded-xl flex flex-col shadow-[0_20px_60px_rgba(0,0,0,0.7)] z-50 animate-fade-up">
-          <div className="p-4 border-b border-white/10 flex justify-between items-center bg-black/50 rounded-t-lg">
+          <div className={`p-4 border-b border-white/10 flex justify-between items-center bg-black/50 rounded-t-lg ${tourStepRunning && tourReadAloud ? 'wow-tour-readaloud' : ''}`}>
             <h3 className="font-display font-bold text-white tracking-wider">HITECH AI</h3>
             <div className="flex gap-2">
               <select
@@ -328,11 +356,26 @@ export default function AIChat() {
               </select>
             </div>
           </div>
+          {WOW_DEMO && WOW_TOUR && tourStepRunning && tourReadAloud && (
+            <div className="mx-4 mt-2 rounded border border-cyan/35 bg-cyan/14 px-3 py-2 text-[11px] leading-relaxed text-cyan-50">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-cyan-200/85">Read this line aloud</div>
+              <p className="mt-1 wow-tour-readaloud__line">{tourReadAloud}</p>
+            </div>
+          )}
 
           <div className="flex-1 overflow-y-auto p-4 space-y-4 font-main">
             {WOW_DEMO && (
               <div className="rounded-lg border border-cyan/25 bg-cyan/10 p-2">
                 <div className="text-[10px] uppercase tracking-[0.2em] text-cyan/80">QA fixtures</div>
+                <button
+                  data-testid="chat-load-fixture"
+                  type="button"
+                  onClick={() => applyFixture(AI_CHAT_FIXTURES[0]?.id ?? '')}
+                  disabled={isLoading || AI_CHAT_FIXTURES.length === 0}
+                  className="mt-2 w-full rounded border border-cyan/35 bg-cyan/16 px-2 py-2 text-[10px] uppercase tracking-[0.14em] text-cyan/95 hover:bg-cyan/24 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Load Fixture
+                </button>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {AI_CHAT_FIXTURES.map((fixture) => (
                     <button
@@ -399,6 +442,16 @@ export default function AIChat() {
                     <RevealText text={m.text} enabled={WOW_DEMO && WOW_REVEAL && !reducedMotion} />
                   ) : (
                     <p className="whitespace-pre-wrap break-words">{m.text}</p>
+                  )}
+                  {WOW_DEMO && m.role === 'model' && (
+                    <button
+                      data-testid="chat-copy-answer"
+                      type="button"
+                      onClick={() => copyModelText(m.text)}
+                      className="mt-2 rounded border border-white/20 bg-black/25 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-white/80 hover:border-cyan/40 hover:text-cyan"
+                    >
+                      Copy Answer
+                    </button>
                   )}
                 </div>
                 {m.sources && m.sources.length > 0 && (

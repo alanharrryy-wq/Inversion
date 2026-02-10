@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node", "vite/client"],
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "server/**/*.ts",
+    "scripts/**/*.mjs",
+    "playwright.config.ts",
+    "tests/**/*.ts"
+  ]
+}

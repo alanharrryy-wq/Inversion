@@ -69,6 +69,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, images, title }) => {
     if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "F1" || e.key === "F2" || e.key === "F3" || e.key === "F4") return;
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowRight') nextImage();
       if (e.key === 'ArrowLeft') prevImage();

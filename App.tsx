@@ -6,8 +6,11 @@ import Modal from "./components/Modal";
 import AIChat from "./components/AIChat";
 import { DeckModeProvider, useDeckMode } from "./components/DeckRuntimeMode";
 import { SLIDE_LABELS } from "./components/SlideRenderer";
-import { WOW_DEMO, WOW_DEMO_SCRIPT, WOW_FLAGS, WOW_MIRROR, WOW_OVERLAY, WOW_TOUR, WOW_TOUR_SCRIPT } from "./config/wow";
-import { TourOverlay, useTourEngine } from "./wow/tour";
+import { WOW_DEMO, WOW_DEMO_SCRIPT, WOW_DIAGNOSTICS, WOW_FLAGS, WOW_GUIDE_ENGINE, WOW_MIRROR, WOW_OVERLAY, WOW_TOUR, WOW_TOUR_AUTOSTART, WOW_TOUR_SCRIPT } from "./config/wow";
+import { emitGuideEvent } from "./wow/guide/events";
+import { emitGuideEvidence, TourOverlay, useTourEngine } from "./wow/tour";
+import { hasTourTarget } from "./wow/tour/events";
+import { TourAutostartStatus } from "./wow/tour/types";
 
 /* ==========================================
    B9 — ControlBar HUD Pro (v1.4.0)
@@ -249,11 +252,23 @@ const AppInner: React.FC<{
   const { mode } = useDeckMode();
   const [mirrorActive, setMirrorActive] = useState(WOW_DEMO && WOW_MIRROR && currentSlide === 0);
   const tourEnabled = WOW_DEMO && WOW_TOUR;
-  const { state: tourState, activeStep: tourStep, stepComplete, api: tourApi } = useTourEngine({
+  const [autostartStatus, setAutostartStatus] = useState<TourAutostartStatus>({
+    attempts: 0,
+    started: false,
+    reason: "not-requested",
+  });
+  const {
+    state: tourState,
+    activeStep: tourStep,
+    stepComplete,
+    api: tourApi,
+    guideOverlayModel,
+  } = useTourEngine({
     enabled: tourEnabled,
     currentSlide: normalizeSlideIndex(currentSlide),
     scriptId: WOW_TOUR_SCRIPT || "enterprise",
   });
+  const tourStepTargetExists = useMemo(() => hasTourTarget(tourStep?.targetSelector), [tourStep?.targetSelector, tourState.stepIndex, currentSlide]);
 
   const cancelMirror = useCallback(() => {
     setMirrorActive(false);
@@ -288,6 +303,12 @@ const AppInner: React.FC<{
         detail: { name: "slide:changed", payload: { to: normalizeSlideIndex(currentSlide) }, ts: Date.now() },
       })
     );
+    if (WOW_GUIDE_ENGINE) {
+      emitGuideEvent("slide:changed", { to: normalizeSlideIndex(currentSlide) });
+      emitGuideEvent("slide:entered", { slide: normalizeSlideIndex(currentSlide) });
+      emitGuideEvidence("slide:changed", { to: normalizeSlideIndex(currentSlide) });
+      emitGuideEvidence("slide:entered", { slide: normalizeSlideIndex(currentSlide) });
+    }
   }, [currentSlide, tourEnabled]);
 
   useEffect(() => {
@@ -297,11 +318,63 @@ const AppInner: React.FC<{
         detail: {
           stepId: tourStep?.id ?? "",
           pasteQuestion: tourStep?.pasteQuestion ?? "",
+          readAloudText: tourStep?.readAloudText ?? "",
           running: tourState.status === "running",
         },
       })
     );
   }, [tourEnabled, tourStep, tourState.status]);
+
+  useEffect(() => {
+    if (!tourEnabled || tourState.status !== "running") return;
+    if (!tourStep?.id) return;
+    if (tourStep.id === "open-aichat" || tourStep.id === "fixture-load" || tourStep.id === "ask-killer-question") {
+      window.dispatchEvent(new CustomEvent("wow:tour-command", { detail: { cmd: "open-chat" } }));
+    }
+  }, [tourEnabled, tourState.status, tourStep?.id]);
+
+  useEffect(() => {
+    if (!tourEnabled || !WOW_TOUR_AUTOSTART) {
+      setAutostartStatus((prev) => ({ ...prev, reason: WOW_TOUR_AUTOSTART ? "tour-disabled" : "not-requested" }));
+      return;
+    }
+    if (tourState.status === "running" || tourState.status === "completed") {
+      setAutostartStatus((prev) => ({ ...prev, started: true, reason: "already-running" }));
+      return;
+    }
+
+    let cancelled = false;
+    const maxAttempts = 12;
+    const delayMs = 300;
+
+    const tryStart = (attempt: number) => {
+      if (cancelled) return;
+      const scriptId = WOW_TOUR_SCRIPT || "enterprise";
+      const firstTarget = '[data-testid="deck-root"]';
+      const targetMounted = hasTourTarget(firstTarget);
+      if (targetMounted) {
+        tourApi.start(scriptId);
+        setAutostartStatus({ attempts: attempt, started: true, reason: "started" });
+        return;
+      }
+      if (attempt >= maxAttempts) {
+        setAutostartStatus({
+          attempts: attempt,
+          started: false,
+          reason: "target-not-mounted",
+          lastMissingSelector: firstTarget,
+        });
+        return;
+      }
+      setAutostartStatus({ attempts: attempt, started: false, reason: "retrying", lastMissingSelector: firstTarget });
+      window.setTimeout(() => tryStart(attempt + 1), delayMs);
+    };
+
+    window.setTimeout(() => tryStart(1), 220);
+    return () => {
+      cancelled = true;
+    };
+  }, [tourApi, tourEnabled, tourState.status]);
 
   // Keyboard authority:
   // - DeckModeProvider exclusively owns F1-F4 (global mode control).
@@ -347,18 +420,33 @@ const AppInner: React.FC<{
       <DemoScriptOverlay currentSlide={normalizeSlideIndex(currentSlide)} />
       {tourEnabled && (
         <TourOverlay
-          active={tourState.status === "running"}
+          active={tourState.status === "running" || tourState.status === "completed"}
           scriptTitle={tourState.scriptTitle || "Enterprise Investor Demo"}
           stepIndex={tourState.stepIndex}
           totalSteps={tourState.steps.length || 1}
           step={tourStep}
+          status={tourState.status}
           canNext={stepComplete || !!tourStep?.allowNextBeforeComplete}
+          targetExists={tourStepTargetExists}
+          autostartStatus={autostartStatus}
+          stepComplete={stepComplete}
+          completedStepIds={tourState.completedStepIds}
+          guideOverlayModel={guideOverlayModel}
           onBack={tourApi.back}
           onNext={tourApi.next}
           onSkip={tourApi.skip}
+          onRestart={() => {
+            tourApi.stop();
+            window.setTimeout(() => tourApi.start(WOW_TOUR_SCRIPT || "enterprise"), 20);
+          }}
           onStart={() => tourApi.start(WOW_TOUR_SCRIPT || "enterprise")}
           onPasteQuestion={(text) => window.dispatchEvent(new CustomEvent("wow:tour-paste", { detail: { text } }))}
         />
+      )}
+      {WOW_DIAGNOSTICS && !tourEnabled && WOW_DEMO && (
+        <div className="fixed bottom-4 left-4 z-[2147483002] rounded border border-white/25 bg-black/80 px-3 py-2 text-[11px] text-white/80">
+          WOW diagnostics: tour disabled because `VITE_WOW_TOUR` is off.
+        </div>
       )}
       <div data-testid="global-mode-state" style={{ display: "none" }}>
         {mode.stealth ? "stealth:on" : "stealth:off"}|{mode.track ? "track:on" : "track:off"}|{mode.investorLock ? "lock:on" : "lock:off"}|{mode.autoplay ? "autoplay:on" : "autoplay:off"}

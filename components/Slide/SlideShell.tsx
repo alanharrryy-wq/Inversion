@@ -5,6 +5,7 @@ import { useDeckMode, useDeckModeForSlide } from "../DeckRuntimeMode";
 type SlideContainerProps = {
   children: React.ReactNode;
   className?: string;
+  extraHeight?: boolean;
 };
 
 /**
@@ -35,9 +36,9 @@ function InvisibleButTakesSpace({
 // =========================================================
 // [B2] Safe-area wrapper (móvil/tablet)
 // =========================================================
-export function SlideContainer({ children, className = "" }: SlideContainerProps) {
+export function SlideContainer({ children, className = "", extraHeight = false }: SlideContainerProps) {
   return (
-    <div className={`relative w-full h-full ${className}`}>
+    <div className={`relative w-full h-full ${extraHeight ? "min-h-[108%]" : ""} ${className}`}>
       {/* Fondo */}
       <div className="absolute inset-0 bg-black" />
       <div className="absolute inset-0 pointer-events-none opacity-[0.08] bg-[radial-gradient(circle_at_top,_rgba(0,240,255,0.22),transparent_55%)]" />
@@ -79,10 +80,10 @@ export function Header(props: {
 
   return (
     <InvisibleButTakesSpace hidden={mode.stealth}>
-      <div className="w-full px-12 pt-10 pb-6 relative z-20">
+      <div className="w-full px-14 pt-11 pb-7 relative z-20">
         <div className="flex items-start justify-between gap-6">
           <div className="min-w-0">
-            <div className="font-code text-xs tracking-[0.32em] text-white/45 uppercase">
+            <div className="font-code text-xs tracking-[0.34em] text-white/50 uppercase">
               {breadcrumb ?? "HITECH"}
               {typeof slideNum === "number" ? (
                 <span className="ml-3 text-white/30">
@@ -91,9 +92,9 @@ export function Header(props: {
               ) : null}
             </div>
 
-            <div className="mt-2 text-4xl font-black text-white leading-tight">{title}</div>
+            <div className="mt-3 text-4xl font-black text-white leading-[1.08] drop-shadow-[0_8px_28px_rgba(0,0,0,0.45)]">{title}</div>
 
-            <div className="mt-4 h-[2px] w-[420px] max-w-full bg-gradient-to-r from-cyan/60 via-white/10 to-transparent opacity-70" />
+            <div className="mt-5 h-[2px] w-[440px] max-w-full bg-gradient-to-r from-cyan/65 via-white/20 to-transparent opacity-80" />
           </div>
 
           <div className="shrink-0 flex items-center gap-3">

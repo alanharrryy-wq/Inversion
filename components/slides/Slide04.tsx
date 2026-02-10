@@ -1258,6 +1258,7 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
                     </div>
                     <button
                       type="button"
+                      data-testid="s04-copy-token"
                       className="a11y-focus rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-code tracking-[0.26em] text-white/70 hover:text-white"
                       onClick={onEvidenceTokenClick}
                     >

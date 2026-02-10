@@ -137,4 +137,4 @@
 
 ## Global AI Interaction Surface
 - AI is not slide-local. It is global in `components/AIChat.tsx` and rendered from `App.tsx`.
-- AI is a persistent overlay chat window with mode switching and backend request to `/api/gemini`.
+- AI is a persistent overlay chat window with mode switching and backend request to `/api/ai`.

@@ -1,15 +1,20 @@
 # DEMO_RUNBOOK
 
-## Run the deck
-1. Install deps (if needed):
-   - `npm install`
-2. Run local demo stack:
-   - `npm run dev`
-3. Open client URL shown by Vite.
+## WOW Tour enablement
+Use `.env.local` flags (all default OFF unless set):
 
-## WOW mode flags (.env.local)
 ```env
 VITE_WOW_DEMO=1
+VITE_WOW_TOUR=1
+VITE_WOW_TOUR_SCRIPT=enterprise
+VITE_WOW_TOUR_AUTOSTART=1
+VITE_WOW_DIAGNOSTICS=0
+VITE_WOW_SPOTLIGHT_V2=0
+VITE_WOW_TOUR_CHOREO=0
+VITE_WOW_TARGET_MAGNET=0
+VITE_WOW_DIRECTOR_MODE=0
+
+VITE_WOW_DEMO_SCRIPT=1
 VITE_WOW_OPENING_IMPACT=1
 VITE_WOW_EVIDENCE_IMPACT=1
 VITE_WOW_MODEL_IMPACT=1
@@ -18,85 +23,73 @@ VITE_WOW_PROOF_LOCK=1
 VITE_WOW_CORE_MODULES=1
 VITE_WOW_AI_MOMENT=1
 VITE_WOW_CASE_REVEAL=1
-VITE_WOW_DEMO_SCRIPT=1
-VITE_WOW_TOUR=1
-VITE_WOW_TOUR_SCRIPT=enterprise
-
-# Optional existing WOW controls
-VITE_WOW_MIRROR=1
-VITE_WOW_REVEAL=1
-VITE_WOW_XRAY=1
-VITE_WOW_OVERLAY=1
 ```
 
-## WOW ON Playbook
-1. Preflight checklist
-   - Confirm `VITE_WOW_DEMO=1` and all desired feature flags enabled.
-   - Confirm AI backend is running locally (`npm run dev` starts both server and client).
-   - Confirm motion safety by toggling OS reduced-motion once before the demo.
-2. Narrative choreography
-   - Slide 00: pause for 3-beat cinema reveal, then state investment thesis in one sentence.
-   - Slide 04: trigger proof lock visuals; then open AIChat and ask one defensibility question.
-   - Slide 17: activate case reveal framing, then open evidence modal and summarize measurable outcomes.
-   - Closing: use operator script overlay questions to convert technical signal into investor language.
-3. Determinism rules during live run
-   - Do not use random external prompts for first pass; use fixture-backed prompts in AIChat.
-   - Keep mode selector stable (chat/think) for reproducible response shape.
-   - Avoid ad-hoc keyboard shortcuts outside existing authority (`F1-F4` + slide nav).
+## One-shot operator start
+Run from repo root:
 
-## WOW Checklist (operator)
-- `WOW_DEMO` on/off kill switch verified.
-- `WOW_DEMO_SCRIPT` overlay visible and non-interactive.
-- `WOW_CASE_REVEAL` active only when `WOW_DEMO=1`.
-- AIChat fixture buttons visible only in WOW demo mode.
-- Slide navigation still controlled only in `App.tsx` key handler.
-- No rendering of raw HTML in AI responses.
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\wow-tour-demo.ps1
+```
 
-## Investor Tour Mode (WOW Wave 2)
-1. Enable:
+What it does:
+1. Writes `.env.local` with WOW tour flags ON.
+2. Starts `npm run dev`.
+3. Probes `http://127.0.0.1:3000-3010`.
+4. Opens browser automatically.
+5. Cleans dev process on exit.
+
+## Tour usage
+1. If autostart is enabled and targets are mounted, the tour starts automatically.
+2. If autostart fails, use the `Start Tour` button in the launch card.
+3. Use click UI only: `Prev`, `Next`, `Skip`, `Restart`.
+4. Optional premium path:
+   - `VITE_WOW_SPOTLIGHT_V2=1`
+   - `VITE_WOW_TOUR_CHOREO=1`
+   - `VITE_WOW_TARGET_MAGNET=1`
+   - `VITE_WOW_DIRECTOR_MODE=1`
+
+## Troubleshoot: tour not visible
+1. Confirm flags are resolved:
    - `VITE_WOW_DEMO=1`
    - `VITE_WOW_TOUR=1`
-   - `VITE_WOW_TOUR_SCRIPT=enterprise`
-2. Start tour:
-   - Click `Start Tour` in the launch chip (bottom-right).
-3. Tour controls:
-   - Click-only `Back / Next / Skip`.
-   - `Next` unlocks when deterministic completion rules are met.
-4. Recommended presentation style:
-   - Read each coach instruction briefly, perform the exact interaction, then continue.
-   - For AI moments, use `Paste question` to keep language consistent across demos.
-5. Determinism notes:
-   - Tour completion is event/slide-driven (`evidence:*`, `module:*`, `ai:*`, `slide:changed`).
-   - No additional keyboard shortcuts are introduced in tour mode.
+2. Enable diagnostics:
+   - `VITE_WOW_DIAGNOSTICS=1`
+3. Check diagnostics panel values:
+   - `overlayZ` should be a very high z-index.
+   - `targetExists` must be `true` for the active step.
+   - `autostart` shows `started`, `retrying`, or failure reason.
+4. If still hidden, inspect in devtools:
+   - `.wow-tour` computed `z-index`, `opacity`, and `display`.
 
-## Kill switch
-```env
-VITE_WOW_DEMO=0
+## Safety constraints
+- Tour adds no new global keybinds.
+- F1-F4 authority remains in `DeckRuntimeMode`.
+- Slide navigation keyboard logic stays in `App.tsx`.
+- AI chat rendering remains plain text only (no raw HTML injection).
+
+## Validation
+```bash
+npm run typecheck
+npm run build
 ```
 
-## Suggested 3-minute investor flow
-1. **Slide00 (0:00–0:35)**
-   - Let opening settle for 3–4 seconds.
-   - Speak to “evidence-first operations, not consulting vapor”.
-2. **Slide04 (0:35–1:45)**
-   - Hover Act II then Act III.
-   - Lock a badge tooltip and copy evidence token to show defensibility.
-   - Toggle Evidence Overlay once.
-3. **Slide11 / Slide12 component (1:45–2:30)**
-   - Open 2 core cards (e.g., ConditionScore + HealthRadar).
-   - Show signal bars moving from standby to active.
-4. **AI close (2:30–3:00)**
-   - Open AI chat and ask two prompts below.
+## Interactive Guide Engine (Default OFF)
+Enable only when demoing interactive guidance:
 
-## AI prompts for live demo
-1. `Given this deck, what is the fastest path to measurable risk reduction in 60 days?`
-2. `What evidence would an industrial auditor ask for first, and how does HITECH provide it?`
+```powershell
+$env:VITE_WOW_DEMO='1'
+$env:VITE_WOW_GUIDE_ENGINE='1'
+$env:VITE_WOW_TOUR='1'
+$env:VITE_WOW_TOUR_POLISH='1'
+$env:VITE_WOW_DIRECTOR_OVERLAY='1'
+$env:VITE_WOW_SLIDE05_INTERACTIVE='1'
+npm run dev
+```
 
-## Validation commands
-- `npm run typecheck`
-- `npm run build`
+Validation:
 
-## Artifacts generated in this block
-- Slide intel JSON: `.run/slide-intel.json`
-- Slide screenshots: `screenshots/*.png`
-- Full intel report: `SLIDE_INTEL_REPORT.md`
+```powershell
+npm run wow:validate
+npm run wow:audit
+```

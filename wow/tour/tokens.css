@@ -1,0 +1,197 @@
+:root {
+  --wow-tour-z-shell: 2147483000;
+  --wow-tour-z-launch: 2147483001;
+  --wow-tour-z-director: 2147483004;
+  --wow-tour-z-diagnostics: 2147483003;
+
+  --wow-tour-radius-xs: 8px;
+  --wow-tour-radius-sm: 10px;
+  --wow-tour-radius-md: 14px;
+  --wow-tour-radius-lg: 18px;
+  --wow-tour-radius-xl: 24px;
+  --wow-tour-radius-pill: 999px;
+
+  --wow-tour-space-1: 4px;
+  --wow-tour-space-2: 8px;
+  --wow-tour-space-3: 12px;
+  --wow-tour-space-4: 16px;
+  --wow-tour-space-5: 20px;
+  --wow-tour-space-6: 24px;
+  --wow-tour-space-7: 28px;
+
+  --wow-tour-blur-soft: 8px;
+  --wow-tour-blur-md: 12px;
+  --wow-tour-blur-strong: 16px;
+
+  --wow-tour-fs-xxs: 10px;
+  --wow-tour-fs-xs: 11px;
+  --wow-tour-fs-sm: 12px;
+  --wow-tour-fs-md: 13px;
+  --wow-tour-fs-lg: 16px;
+
+  --wow-tour-lh-tight: 1.3;
+  --wow-tour-lh-base: 1.45;
+
+  --wow-tour-track-title: 0.18em;
+  --wow-tour-track-micro: 0.14em;
+
+  --wow-tour-ease-standard: cubic-bezier(0.2, 0.66, 0.16, 1);
+  --wow-tour-ease-out: cubic-bezier(0.22, 0.82, 0.28, 1);
+  --wow-tour-ease-soft: cubic-bezier(0.28, 0.74, 0.24, 1);
+
+  --wow-tour-dur-fast: 180ms;
+  --wow-tour-dur-base: 320ms;
+  --wow-tour-dur-slow: 620ms;
+
+  --wow-tour-c-bg: rgba(3, 9, 18, 0.78);
+  --wow-tour-c-panel: rgba(9, 17, 30, 0.94);
+  --wow-tour-c-panel-alt: rgba(9, 19, 32, 0.86);
+  --wow-tour-c-line: rgba(95, 182, 201, 0.34);
+  --wow-tour-c-line-soft: rgba(255, 255, 255, 0.2);
+  --wow-tour-c-text: #edf7ff;
+  --wow-tour-c-text-muted: rgba(237, 247, 255, 0.72);
+  --wow-tour-c-accent: #4fd5ef;
+  --wow-tour-c-accent-strong: #66e2ff;
+  --wow-tour-c-success: #98f2c7;
+  --wow-tour-c-warn: #ffca76;
+
+  --wow-tour-shadow-panel: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --wow-tour-shadow-soft: 0 14px 40px rgba(0, 0, 0, 0.45);
+  --wow-tour-shadow-accent: 0 0 36px rgba(79, 213, 239, 0.25);
+  --wow-tour-shadow-success: 0 0 24px rgba(152, 242, 199, 0.24);
+  --wow-tour-shadow-evidence: 0 0 28px rgba(102, 226, 255, 0.24);
+}
+
+.wow-tour-surface-glass {
+  border: 1px solid var(--wow-tour-c-line);
+  background: linear-gradient(180deg, var(--wow-tour-c-panel), var(--wow-tour-c-panel-alt));
+  backdrop-filter: blur(var(--wow-tour-blur-md)) saturate(1.15);
+  -webkit-backdrop-filter: blur(var(--wow-tour-blur-md)) saturate(1.15);
+}
+
+.wow-tour-btn {
+  border: 1px solid var(--wow-tour-c-line-soft);
+  border-radius: var(--wow-tour-radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--wow-tour-c-text);
+  letter-spacing: var(--wow-tour-track-micro);
+  text-transform: uppercase;
+  font-size: var(--wow-tour-fs-xxs);
+  transition: background var(--wow-tour-dur-fast) var(--wow-tour-ease-standard),
+    transform var(--wow-tour-dur-fast) var(--wow-tour-ease-out),
+    box-shadow var(--wow-tour-dur-fast) var(--wow-tour-ease-out);
+}
+
+.wow-tour-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.wow-tour-btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.wow-tour-text-muted {
+  color: var(--wow-tour-c-text-muted);
+}
+
+@keyframes wow-tour-token-fade-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+@keyframes wow-tour-token-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes wow-tour-token-glow {
+  0%,
+  100% {
+    box-shadow: var(--wow-tour-shadow-evidence);
+  }
+  50% {
+    box-shadow: 0 0 44px rgba(102, 226, 255, 0.34);
+  }
+}
+
+@keyframes wow-tour-token-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.015);
+  }
+}
+
+@keyframes wow-tour-token-line {
+  from {
+    stroke-dashoffset: 52;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes wow-tour-token-pop {
+  0% {
+    transform: scale(0.97);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes wow-tour-token-success {
+  0% {
+    box-shadow: 0 0 0 0 rgba(152, 242, 199, 0.18);
+  }
+  100% {
+    box-shadow: 0 0 0 14px rgba(152, 242, 199, 0);
+  }
+}
+
+.wow-tour-motion-enter {
+  animation: wow-tour-token-fade-in var(--wow-tour-dur-slow) var(--wow-tour-ease-standard) both;
+}
+
+.wow-tour-motion-pop {
+  animation: wow-tour-token-pop 420ms var(--wow-tour-ease-out) both;
+}
+
+.wow-tour-motion-pulse {
+  animation: wow-tour-token-pulse 1.6s var(--wow-tour-ease-soft) infinite;
+}
+
+.wow-tour-motion-success {
+  animation: wow-tour-token-success 520ms var(--wow-tour-ease-soft) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wow-tour-motion-enter,
+  .wow-tour-motion-pop,
+  .wow-tour-motion-pulse,
+  .wow-tour-motion-success {
+    animation: none !important;
+  }
+}

@@ -636,6 +636,7 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'F1' || e.key === 'F2' || e.key === 'F3' || e.key === 'F4') return;
       if (e.key === 'Escape') setMenuOpen(false);
     };
     document.addEventListener('keydown', onKey);
@@ -644,9 +645,7 @@ const DecisionCard = ({ activeInput }: { activeInput: InputId | null }) => {
 
   const runAction = (a: ReportAction) => {
     setMenuOpen(false);
-    // Hook your real actions here:
-    // eslint-disable-next-line no-console
-    console.log('[SmartService] report action:', a);
+    void a;
   };
 
   const menuItems: Array<{

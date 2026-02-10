@@ -1,0 +1,54 @@
+/* WOW Tour Motion Tokens
+   Purpose: centralize polish-pass timing/blur/glow/shadow primitives.
+   Keep all variables deterministic and env-gated via feature flags in TS. */
+:root {
+  --wow-ease-standard: cubic-bezier(0.2, 0.66, 0.16, 1);
+  --wow-ease-out: cubic-bezier(0.22, 0.82, 0.28, 1);
+  --wow-ease-soft: cubic-bezier(0.28, 0.74, 0.24, 1);
+
+  --wow-dur-xxs: 120ms;
+  --wow-dur-xs: 180ms;
+  --wow-dur-sm: 280ms;
+  --wow-dur-md: 420ms;
+  --wow-dur-lg: 620ms;
+
+  --wow-blur-soft: 6px;
+  --wow-blur-medium: 12px;
+  --wow-blur-strong: 18px;
+
+  --wow-shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.34);
+  --wow-shadow-medium: 0 18px 44px rgba(0, 0, 0, 0.42);
+  --wow-shadow-strong: 0 30px 64px rgba(0, 0, 0, 0.54);
+
+  --wow-glow-cyan: 0 0 32px rgba(79, 213, 239, 0.26);
+  --wow-glow-success: 0 0 28px rgba(152, 242, 199, 0.24);
+}
+
+.wow-motion-enter {
+  animation: wow-tour-token-fade-in var(--wow-dur-md) var(--wow-ease-standard) both;
+}
+
+.wow-motion-pop {
+  animation: wow-tour-token-pop var(--wow-dur-sm) var(--wow-ease-out) both;
+}
+
+.wow-motion-glow {
+  box-shadow: var(--wow-glow-cyan);
+}
+
+.wow-phase-intro {
+  animation: wow-tour-token-fade-in var(--wow-dur-lg) var(--wow-ease-standard) both;
+}
+
+.wow-phase-success {
+  animation: wow-tour-token-success var(--wow-dur-sm) var(--wow-ease-soft) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wow-motion-enter,
+  .wow-motion-pop,
+  .wow-phase-intro,
+  .wow-phase-success {
+    animation: none !important;
+  }
+}

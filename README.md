@@ -15,9 +15,12 @@ View your app in AI Studio: https://ai.studio/apps/drive/11ne8oK46eR-l_DiotWRBlS
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+2. Optional real AI backend:
+   - Set `ENABLE_AI_BACKEND=true` in `.env.local`
+   - Set `AI_BACKEND_API_KEY=<provider key>` in `.env.local`
+   - If omitted, backend stays offline and deterministic by default
 3. Optional: set `VITE_ENABLE_VOICE=true` in `.env.local` to expose voice UI state (default is disabled)
-4. Optional: set `DEMO_TEST_MODE=true` in `.env.local` to force deterministic stub responses from `/api/gemini` (default is disabled)
+4. Optional: set `DEMO_TEST_MODE=true` in `.env.local` to force deterministic stub responses from `/api/ai` (default is disabled)
 5. Run the app:
    `npm run dev`
 6. Open `http://localhost:3000`
@@ -35,7 +38,8 @@ View your app in AI Studio: https://ai.studio/apps/drive/11ne8oK46eR-l_DiotWRBlS
   - Or run `.\scripts\demo-operator.ps1 -Mode stub -Start` to start + verify
   - Run `npm run verify:demo`
 - Real AI validation:
-  - Set valid `GEMINI_API_KEY`
+  - Set `ENABLE_AI_BACKEND=true`
+  - Set valid `AI_BACKEND_API_KEY`
   - Set `DEMO_TEST_MODE=false` (or remove it)
   - Run `npm run verify:ai` or `.\scripts\demo-operator.ps1 -Mode real -Start`
 
@@ -43,6 +47,7 @@ Safety notes:
 - Stub mode (`DEMO_TEST_MODE=true`) never calls external services.
 - Backend logs only key presence/length, never key value.
 - Frontend does not receive API secrets.
+- AI backend is feature-flagged (`ENABLE_AI_BACKEND`) and defaults to **OFF**.
 - Operator is verify-only by default.
 - `-Start` starts dev servers and tracks PIDs in `.run/demo-operator.pids.json`.
 - Cleanup is automatic unless `-KeepAlive` is explicitly set.
@@ -51,7 +56,11 @@ Safety notes:
 
 - Client: Vite on `:3000`
 - Server: Express on `:8787`
-- Frontend calls `/api/gemini` (proxied by Vite to `:8787`)
-- Gemini API key is read server-side only from `GEMINI_API_KEY` in `.env.local`
+- Frontend calls `/api/ai` (proxied by Vite to `:8787`)
+- Provider API key is read server-side only from `AI_BACKEND_API_KEY` in `.env.local`
 - Voice mode is feature-flagged (`VITE_ENABLE_VOICE`) and defaults to disabled
 - Demo stub mode is feature-flagged (`DEMO_TEST_MODE`) and defaults to disabled
+- Exposure guard rails:
+  - `npm run gemini:audit` writes `GEMINI_EXPOSURE_AUDIT.md` and exits `0`
+  - `npm run gemini:audit:strict` exits `2` only on true client P0 exposure
+  - Full boundary policy: [`docs/AI_CLIENT_EXPOSURE_GUARDRAILS.md`](docs/AI_CLIENT_EXPOSURE_GUARDRAILS.md)
