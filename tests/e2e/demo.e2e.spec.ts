@@ -1,5 +1,97 @@
 import { expect, test } from '@playwright/test';
 
+function collectDomainFiles(rootDir: string): string[] {
+  const stack = [rootDir];
+  const files: string[] = [];
+
+  while (stack.length > 0) {
+    const current = stack.pop() as string;
+    for (const entry of readdirSync(current)) {
+      const fullPath = path.join(current, entry);
+      const stats = statSync(fullPath);
+      if (stats.isDirectory()) {
+        stack.push(fullPath);
+        continue;
+      }
+      if (!/\.(ts|tsx|css)$/.test(entry)) continue;
+      files.push(fullPath);
+    }
+  }
+
+  files.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
+  return files;
+}
+
+function assertSlide13NoTimers() {
+  const domainRoot = path.join(
+    process.cwd(),
+    'components',
+    'slides',
+    'slide13-ui',
+    'routeb'
+  );
+  const files = collectDomainFiles(domainRoot);
+  expect(files.length).toBeGreaterThan(0);
+  for (const filePath of files) {
+    const content = readFileSync(filePath, 'utf8');
+    expect(content).not.toMatch(/\bsetTimeout\s*\(/);
+    expect(content).not.toMatch(/\bsetInterval\s*\(/);
+  }
+}
+
+async function goToSlide13(page: import('@playwright/test').Page) {
+  await page.goto('/');
+  await expect(page.getByTestId('deck-root')).toBeVisible();
+  for (let index = 0; index < 12; index += 1) {
+    await page.keyboard.press('ArrowRight');
+  }
+  await expect(page.getByTestId('slide13-root')).toBeVisible();
+}
+import { readdirSync, readFileSync, statSync } from 'node:fs';
+import path from 'node:path';
+import { SLIDE07_REPLAY_FIXTURES, SLIDE07_SMOKE_FIXTURES } from '../../components/slides/slide07-ui/routeb/slide07.fixtures';
+import {
+  assertSlide07ReplayDeterminism,
+  runSlide07FixtureReplay,
+} from '../../components/slides/slide07-ui/routeb/slide07.replay';
+
+function collectSlide07DomainFiles(rootDir: string): string[] {
+  const stack = [rootDir];
+  const files: string[] = [];
+
+  while (stack.length > 0) {
+    const current = stack.pop() as string;
+    for (const entry of readdirSync(current)) {
+      const fullPath = path.join(current, entry);
+      const stats = statSync(fullPath);
+      if (stats.isDirectory()) {
+        stack.push(fullPath);
+        continue;
+      }
+      if (!/\.(ts|tsx)$/.test(entry)) {
+        continue;
+      }
+      files.push(fullPath);
+    }
+  }
+
+  files.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
+  return files;
+}
+
+function assertNoTimersInSlide07Domain() {
+  const domainRoot = path.join(process.cwd(), 'components', 'slides', 'slide07-ui', 'routeb');
+  const files = collectSlide07DomainFiles(domainRoot);
+
+  expect(files.length).toBeGreaterThan(0);
+
+  for (const filePath of files) {
+    const content = readFileSync(filePath, 'utf8');
+    expect(content).not.toMatch(/\bsetTimeout\s*\(/);
+    expect(content).not.toMatch(/\bsetInterval\s*\(/);
+  }
+}
+
 test('app loads and core layout exists without severe console errors', async ({ page }) => {
   const severe = [];
 
@@ -81,4 +173,97 @@ test('tour remains manual-only until operator starts it', async ({ page }) => {
   await page.getByTestId('tour-launch').getByRole('button', { name: 'Start Tour' }).click();
   await expect(page.getByTestId('tour-overlay')).toBeVisible();
   await expect(page.getByText('Step 1 - Frame the decision lens')).toBeVisible();
+});
+
+test('Slide13 Route B seals by drag hold release', async ({ page }) => {
+  await goToSlide13(page);
+
+  await expect(page.getByTestId('slide13-rail')).toBeVisible();
+  await expect(page.getByTestId('slide13-rail-step-drag')).toBeVisible();
+  await expect(page.getByTestId('slide13-rail-step-hold')).toBeVisible();
+  await expect(page.getByTestId('slide13-rail-step-release')).toBeVisible();
+  await expect(page.getByTestId('slide13-seal')).toHaveAttribute('data-sealed', 'false');
+
+  const dragSurface = page.getByTestId('slide13-gesture-drag');
+  await expect(dragSurface).toBeVisible();
+
+  const box = await dragSurface.boundingBox();
+  expect(box).not.toBeNull();
+  if (!box) return;
+
+  const startX = box.x + 64;
+  const startY = box.y + box.height * 0.64;
+
+  await page.mouse.move(startX, startY);
+  await page.mouse.down();
+  await page.mouse.move(startX + 240, startY, { steps: 18 });
+  await page.mouse.move(startX + 240, startY + 92, { steps: 10 });
+  await page.mouse.move(startX + 178, startY + 92, { steps: 8 });
+  await page.mouse.move(startX + 240, startY - 86, { steps: 10 });
+  await page.mouse.move(startX + 170, startY - 86, { steps: 8 });
+  await page.mouse.move(startX + 240, startY + 88, { steps: 10 });
+  await page.mouse.move(startX + 176, startY + 88, { steps: 8 });
+  await page.mouse.move(startX + 240, startY - 84, { steps: 10 });
+  await page.mouse.up();
+
+  await expect(page.getByTestId('slide13-seal')).toHaveAttribute('data-sealed', 'true');
+  await expect(page.getByTestId('slide13-seal-state')).toContainText('RightSeal colapsado');
+  await expect(page.getByTestId('slide13-gesture-hold')).toContainText('freeze on');
+  await expect(page.getByTestId('slide13-gesture-release')).toContainText('release 100%');
+
+  assertSlide13NoTimers();
+});
+
+test('Slide07 Route B fixtures stay deterministic and timer-free', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByTestId('deck-root')).toBeVisible();
+
+  expect(SLIDE07_REPLAY_FIXTURES.length).toBeGreaterThanOrEqual(200);
+
+  for (const fixture of SLIDE07_SMOKE_FIXTURES) {
+    const assertion = runSlide07FixtureReplay(fixture);
+    expect(assertion.passedStage, fixture.id + ' stage').toBeTruthy();
+    expect(assertion.passedEvidence, fixture.id + ' evidence').toBeTruthy();
+    expect(assertion.passedEvents, fixture.id + ' events').toBeTruthy();
+
+    const deterministic = assertSlide07ReplayDeterminism(fixture, 3);
+    expect(deterministic.deterministic, fixture.id + ' deterministic').toBeTruthy();
+  }
+
+  assertNoTimersInSlide07Domain();
+});
+
+test('Slide07 smoke interacts with Route B gesture contract when mounted', async ({ page }) => {
+  await page.goto('/');
+
+  for (let index = 0; index < 7; index += 1) {
+    await page.keyboard.press('ArrowRight');
+  }
+
+  const ritualRoot = page.getByTestId('slide07-root');
+  const mounted = (await ritualRoot.count()) > 0;
+
+  if (!mounted) {
+    return;
+  }
+
+  const dragSurface = page.getByTestId('slide07-gesture-drag');
+  await expect(dragSurface).toBeVisible();
+
+  const box = await dragSurface.boundingBox();
+  expect(box).not.toBeNull();
+  if (!box) {
+    return;
+  }
+
+  const startX = box.x + 44;
+  const startY = box.y + box.height * 0.46;
+
+  await page.mouse.move(startX, startY);
+  await page.mouse.down();
+  await page.mouse.move(startX + 210, startY - 2, { steps: 16 });
+  await page.mouse.move(startX + 216, startY + 6, { steps: 10 });
+  await page.mouse.up();
+
+  await expect(page.getByTestId('slide07-seal-state')).toContainText(/Graph sealed/i);
 });
