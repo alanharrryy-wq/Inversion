@@ -3,6 +3,11 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 
 const repoRoot = process.cwd();
+const allowedE2eSpecs = [
+  'tests/e2e/demo.e2e.spec.ts',
+  'tests/e2e/gemini-boundary.e2e.spec.ts',
+  'tests/e2e/slide00-boot-gate.e2e.spec.ts',
+] as const;
 
 function normalize(relPath: string): string {
   return relPath.replace(/\\/g, '/');
@@ -19,7 +24,7 @@ function walk(dir: string): string[] {
       const full = path.join(current, entry);
       const st = statSync(full);
       if (st.isDirectory()) {
-        if (!excluded.has(entry)) stack.push(full);
+        if (!excluded.has(entry) && !entry.startsWith('INVERSION_')) stack.push(full);
         continue;
       }
       files.push(normalize(path.relative(repoRoot, full)));
@@ -37,12 +42,17 @@ function test_playwright_config_scope() {
 
 function test_e2e_specs_are_confined() {
   const files = walk(repoRoot);
-  const e2eSpecs = files.filter((rel) => rel.endsWith('.e2e.spec.ts'));
-  assert.ok(e2eSpecs.length > 0);
-  assert.equal(e2eSpecs.every((rel) => rel.startsWith('tests/e2e/')), true);
+  const e2eSpecs = files
+    .filter((rel) => rel.endsWith('.e2e.spec.ts'))
+    .sort((a, b) => a.localeCompare(b));
+  const expectedSpecs = [...allowedE2eSpecs].sort((a, b) => a.localeCompare(b));
+
+  assert.equal(allowedE2eSpecs.includes('tests/e2e/slide00-boot-gate.e2e.spec.ts'), true);
+  assert.deepEqual(e2eSpecs, expectedSpecs);
 }
 
 export function runPlaywrightHarnessSpecs(): void {
   test_playwright_config_scope();
   test_e2e_specs_are_confined();
 }
+

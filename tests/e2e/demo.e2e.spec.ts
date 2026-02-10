@@ -20,6 +20,8 @@ test('app loads and core layout exists without severe console errors', async ({ 
 
 test('F1-F4 hotkeys update visible mode state', async ({ page }) => {
   await page.goto('/');
+  await expect(page.getByTestId('controlbar')).toHaveCount(0);
+  await page.getByTestId('view-toggle-top-hud').check();
   await expect(page.getByTestId('controlbar')).toBeVisible();
 
   const modeState = page.getByTestId('global-mode-state');
@@ -61,8 +63,22 @@ test('AI chat roundtrip uses deterministic stub and voice defaults off', async (
   await expect(page.getByTestId('chat-voice-btn')).toContainText('VOICE MODE UNAVAILABLE');
 });
 
-test('tour overlay autostarts and renders first enterprise step', async ({ page }) => {
+test('tour remains manual-only until operator starts it', async ({ page }) => {
   await page.goto('/');
+  await expect(page.getByTestId('slide00-boot-console')).toBeVisible();
+  await expect(page.getByTestId('tour-overlay')).toHaveCount(0);
+  await expect(page.getByTestId('boot-gate-state')).toContainText('gateLocked:true');
+
+  await page.getByTestId('boot-arm-button').click();
+  await expect(page.getByTestId('boot-state-label')).toHaveText('ARMED_PENDING_CONFIRM');
+  await page.getByTestId('boot-confirm-button').click();
+
+  await expect(page.getByTestId('boot-status-badge')).toContainText('SYSTEM: ARMED');
+  await expect(page.getByTestId('boot-toast')).toContainText('sistema listo');
+  await expect(page.getByTestId('tour-launch')).toBeVisible();
+  await expect(page.getByTestId('tour-overlay')).toHaveCount(0);
+
+  await page.getByTestId('tour-launch').getByRole('button', { name: 'Start Tour' }).click();
   await expect(page.getByTestId('tour-overlay')).toBeVisible();
   await expect(page.getByText('Step 1 - Frame the decision lens')).toBeVisible();
 });

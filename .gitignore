@@ -26,3 +26,18 @@ dist-ssr
 node_modules/
 .run/
 screenshots/
+# --- generated audit artifacts (DO NOT COMMIT) ---
+INVERSION_AUDIT_*/
+INVERSION_AUDIT_*.zip
+INVERSION_SUPER_AUDIT_*/
+INVERSION_SUPER_AUDIT_*.zip
+INVERSION_*_REPORT_*.txt
+INVERSION_NUMSTAT_*.txt
+INVERSION_FULL_CHANGE_*.txt
+INVERSION_DIFF_SNIPPETS_*.txt
+audit/
+*_AUDIT_*/
+*_AUDIT_*.zip
+*_NUMSTAT_*.txt
+*_FULL_CHANGE_*.txt
+*_DIFF_SNIPPETS_*.txt

@@ -6,63 +6,50 @@ import Modal from "./components/Modal";
 import AIChat from "./components/AIChat";
 import { DeckModeProvider, useDeckMode } from "./components/DeckRuntimeMode";
 import { SLIDE_LABELS } from "./components/SlideRenderer";
-import { WOW_DEMO, WOW_DEMO_SCRIPT, WOW_DIAGNOSTICS, WOW_FLAGS, WOW_GUIDE_ENGINE, WOW_MIRROR, WOW_OVERLAY, WOW_TOUR, WOW_TOUR_AUTOSTART, WOW_TOUR_SCRIPT } from "./config/wow";
+import {
+  OPERATOR_VIEW_DEFAULT_ON,
+  WOW_DEMO,
+  WOW_DEMO_SCRIPT,
+  WOW_DIAGNOSTICS,
+  WOW_FLAGS,
+  WOW_GUIDE_ENGINE,
+  WOW_MIRROR,
+  WOW_OVERLAY,
+  WOW_TOUR,
+  WOW_TOUR_SCRIPT,
+} from "./config/wow";
 import { emitGuideEvidence, TourOverlay, useTourEngine } from "./wow/tour";
 import { hasTourTarget } from "./wow/tour/events";
 import { TourAutostartStatus } from "./wow/tour/types";
+import {
+  Slide00ViewVisibilityProvider,
+  TopHudRow,
+  TopRibbon,
+  useSlide00ViewVisibility,
+} from "./components/slides/slide00-ui";
+import {
+  BootRuntimeProvider,
+  canShowDemoScript,
+  canShowMirrorIntro,
+  canStartTourManually,
+  createWowFlagSnapshot,
+  isTourAutostartBlocked,
+  useBootRuntime,
+  useSlideEntryEvidence,
+} from "./runtime/boot";
 
 /* ==========================================
-   B9 — ControlBar HUD Pro (v1.4.0)
+   B9 - ControlBar HUD Pro (v1.4.0)
    ========================================== */
 
 const ControlBar = () => {
   const { mode, setStealth, setTrack, toggleInvestorLock, toggleAutoplay } = useDeckMode();
-  const [visible, setVisible] = React.useState(true);
-  const [locked, setLocked] = React.useState(false);
-  const hideTimer = React.useRef<number | null>(null);
-
-  const kickHideTimer = () => {
-    if (locked) return;
-    setVisible(true);
-    if (hideTimer.current) window.clearTimeout(hideTimer.current);
-    hideTimer.current = window.setTimeout(
-      () => setVisible(false),
-      2200
-    );
-  };
-
-  React.useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "l") {
-        setLocked((v) => !v);
-        setVisible(true);
-      }
-    };
-
-    window.addEventListener("keydown", onKey, { capture: true });
-    return () =>
-      window.removeEventListener(
-        "keydown",
-        onKey,
-        { capture: true } as any
-      );
-  }, []);
-
-  React.useEffect(() => {
-    kickHideTimer();
-    window.addEventListener("mousemove", kickHideTimer, { passive: true });
-    return () =>
-      window.removeEventListener("mousemove", kickHideTimer);
-  }, [locked]);
 
   const btn = (active: boolean, onClick: () => void, label: string, glow: string, testId: string) => (
     <button
       data-testid={testId}
       aria-pressed={active}
-      onClick={() => {
-        onClick();
-        kickHideTimer();
-      }}
+      onClick={onClick}
       style={{
         padding: "6px 14px",
         borderRadius: 10,
@@ -104,14 +91,9 @@ const ControlBar = () => {
         backdropFilter: "blur(12px)",
         border: "1px solid rgba(255,255,255,.08)",
         boxShadow: "0 12px 30px rgba(0,0,0,.55)",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(-6px)",
-        transition: "opacity .35s ease, transform .35s ease",
-        pointerEvents: visible ? "auto" : "none",
         zIndex: 9999,
       }}
     >
-      {/* LEFT — MODES */}
       <div style={{ display: "flex", gap: 10 }}>
         {btn(mode.stealth, () => setStealth(), "Stealth", "rgba(120,120,120,.6)", "mode-stealth")}
         {btn(mode.track, () => setTrack(), "Track", "rgba(0,180,200,.9)", "mode-track")}
@@ -119,7 +101,6 @@ const ControlBar = () => {
         {btn(mode.autoplay && mode.investorLock, () => toggleAutoplay(), "Autoplay", "rgba(180,140,40,.9)", "mode-autoplay")}
       </div>
 
-      {/* RIGHT — STATUS */}
       <div
         data-testid="mode-hint"
         style={{
@@ -129,8 +110,7 @@ const ControlBar = () => {
           whiteSpace: "nowrap",
         }}
       >
-        F1 STEALTH · F2 TRACK · F3 LOCK · F4 AUTOPLAY · CTRL+SHIFT+L{" "}
-        {locked ? "UNLOCK" : "LOCK"}
+        F1 STEALTH · F2 TRACK · F3 LOCK · F4 AUTOPLAY
       </div>
       <div data-testid="mode-state" style={{ display: "none" }}>
         {mode.stealth ? "stealth:on" : "stealth:off"}|{mode.track ? "track:on" : "track:off"}|{mode.investorLock ? "lock:on" : "lock:off"}|{mode.autoplay ? "autoplay:on" : "autoplay:off"}
@@ -139,10 +119,8 @@ const ControlBar = () => {
   );
 };
 
-
 const TOTAL_SLIDES = 20;
 
-// wrap matemático correcto (incluye negativos)
 const normalizeSlideIndex = (idx: number) => {
   const n = TOTAL_SLIDES;
   if (!Number.isFinite(idx)) return 0;
@@ -175,6 +153,7 @@ const MirrorIntro: React.FC<{ active: boolean }> = ({ active }) => {
 
 const OperatorOverlay: React.FC<{ currentSlide: number }> = ({ currentSlide }) => {
   const { mode } = useDeckMode();
+  const boot = useBootRuntime();
   const [aiMode, setAiMode] = React.useState("chat");
 
   React.useEffect(() => {
@@ -199,17 +178,21 @@ const OperatorOverlay: React.FC<{ currentSlide: number }> = ({ currentSlide }) =
     .join(" · ");
 
   return (
-    <aside className="pointer-events-none absolute right-5 top-5 z-[130] min-w-[210px] rounded-xl border border-white/15 bg-black/55 px-3 py-2 text-[10px] font-code tracking-[0.2em] text-white/70 backdrop-blur-sm">
+    <aside className="pointer-events-none absolute right-5 top-5 z-[130] min-w-[240px] rounded-xl border border-white/15 bg-black/55 px-3 py-2 text-[10px] font-code tracking-[0.2em] text-white/70 backdrop-blur-sm" data-testid="top-ribbon-operator-overlay">
       <div>SLIDE {String(currentSlide + 1).padStart(2, "0")} · {slideName}</div>
       <div className="mt-1">AI MODE · {aiMode.toUpperCase()}</div>
       <div className="mt-1">FLAGS · {onFlags || "none"}</div>
       <div className="mt-1">RUNTIME · {mode.track ? "TRACK" : "STD"}/{mode.stealth ? "STEALTH" : "OPEN"}</div>
+      <div className="mt-1">BOOT · {boot.state.boot.status}</div>
+      <div className="mt-1">GATE · {boot.gateLocked ? "LOCKED" : "OPEN"}</div>
+      <div className="mt-1">ARMED · {String(boot.isArmed)}</div>
+      <div className="mt-1">ASSISTED · {String(boot.isOperatorAssisted)}</div>
     </aside>
   );
 };
 
-const DemoScriptOverlay: React.FC<{ currentSlide: number }> = ({ currentSlide }) => {
-  if (!(WOW_DEMO && WOW_DEMO_SCRIPT)) return null;
+const DemoScriptOverlay: React.FC<{ currentSlide: number; enabled: boolean }> = ({ currentSlide, enabled }) => {
+  if (!enabled) return null;
 
   const slide = currentSlide + 1;
   const moment =
@@ -222,7 +205,7 @@ const DemoScriptOverlay: React.FC<{ currentSlide: number }> = ({ currentSlide })
       : "Close with outcome + next 30/60 day metric.";
 
   return (
-    <aside className="wow-demo-script-overlay">
+    <aside className="wow-demo-script-overlay" data-testid="demo-script-overlay">
       <h4>DEMO SCRIPT</h4>
       <p>Slide {String(slide).padStart(2, "0")} moment: {moment}</p>
       <p className="wow-killer-q">Q1: What evidence appears first under audit pressure?</p>
@@ -249,13 +232,23 @@ const AppInner: React.FC<{
   modalTitle,
 }) => {
   const { mode } = useDeckMode();
-  const [mirrorActive, setMirrorActive] = useState(WOW_DEMO && WOW_MIRROR && currentSlide === 0);
-  const tourEnabled = WOW_DEMO && WOW_TOUR;
+  const boot = useBootRuntime();
+  const viewVisibility = useSlide00ViewVisibility();
+  const normalizedSlide = normalizeSlideIndex(currentSlide);
+  useSlideEntryEvidence(normalizedSlide);
+
+  const tourEnabled = canStartTourManually(boot.gates);
+  const demoScriptAvailable = canShowDemoScript(boot.gates);
+  const mirrorAvailable = canShowMirrorIntro(boot.gates);
+  const [demoScriptActive, setDemoScriptActive] = useState(false);
+  const [mirrorActive, setMirrorActive] = useState(false);
+
   const [autostartStatus, setAutostartStatus] = useState<TourAutostartStatus>({
     attempts: 0,
     started: false,
     reason: "not-requested",
   });
+
   const {
     state: tourState,
     activeStep: tourStep,
@@ -264,10 +257,10 @@ const AppInner: React.FC<{
     guideOverlayModel,
   } = useTourEngine({
     enabled: tourEnabled,
-    currentSlide: normalizeSlideIndex(currentSlide),
+    currentSlide: normalizedSlide,
     scriptId: WOW_TOUR_SCRIPT || "enterprise",
   });
-  const tourStepTargetExists = useMemo(() => hasTourTarget(tourStep?.targetSelector), [tourStep?.targetSelector, tourState.stepIndex, currentSlide]);
+  const tourStepTargetExists = useMemo(() => hasTourTarget(tourStep?.targetSelector), [tourStep?.targetSelector, tourState.stepIndex, normalizedSlide]);
 
   const cancelMirror = useCallback(() => {
     setMirrorActive(false);
@@ -287,26 +280,81 @@ const AppInner: React.FC<{
   }, [cancelMirror, setCurrentSlide]);
 
   useEffect(() => {
-    if (!WOW_DEMO || !WOW_MIRROR) return;
-    if (currentSlide !== 0) {
+    if (!WOW_DEMO || !WOW_MIRROR || !mirrorAvailable) {
       setMirrorActive(false);
       return;
     }
+
+    if (normalizedSlide !== 0) {
+      setMirrorActive(false);
+      return;
+    }
+
+    if (!mirrorActive) return;
     setMirrorActive(true);
-  }, [currentSlide]);
+  }, [normalizedSlide, mirrorAvailable, mirrorActive]);
 
   useEffect(() => {
-    if (!tourEnabled) return;
+    if (!demoScriptAvailable && demoScriptActive) {
+      setDemoScriptActive(false);
+    }
+  }, [demoScriptAvailable, demoScriptActive]);
+
+  useEffect(() => {
+    if (!mirrorAvailable && mirrorActive) {
+      setMirrorActive(false);
+    }
+  }, [mirrorAvailable, mirrorActive]);
+
+  useEffect(() => {
+    const onDemoScriptToggle = (event: Event) => {
+      const custom = event as CustomEvent<{ enabled?: boolean }>;
+      if (!demoScriptAvailable) {
+        setDemoScriptActive(false);
+        return;
+      }
+      if (typeof custom.detail?.enabled === "boolean") {
+        setDemoScriptActive(custom.detail.enabled);
+        return;
+      }
+      setDemoScriptActive((prev) => !prev);
+    };
+
+    const onMirrorToggle = (event: Event) => {
+      const custom = event as CustomEvent<{ enabled?: boolean }>;
+      if (!mirrorAvailable) {
+        setMirrorActive(false);
+        return;
+      }
+      if (typeof custom.detail?.enabled === "boolean") {
+        setMirrorActive(custom.detail.enabled);
+        return;
+      }
+      setMirrorActive((prev) => !prev);
+    };
+
+    window.addEventListener("wow:demo-script-toggle", onDemoScriptToggle as EventListener);
+    window.addEventListener("wow:mirror-toggle", onMirrorToggle as EventListener);
+    return () => {
+      window.removeEventListener("wow:demo-script-toggle", onDemoScriptToggle as EventListener);
+      window.removeEventListener("wow:mirror-toggle", onMirrorToggle as EventListener);
+    };
+  }, [demoScriptAvailable, mirrorAvailable]);
+
+  useEffect(() => {
+    if (!WOW_DEMO) return;
+
     window.dispatchEvent(
       new CustomEvent("wow:tour-event", {
-        detail: { name: "slide:changed", payload: { to: normalizeSlideIndex(currentSlide) }, ts: Date.now() },
+        detail: { name: "slide:changed", payload: { to: normalizedSlide }, ts: Date.now() },
       })
     );
+
     if (WOW_GUIDE_ENGINE) {
-      emitGuideEvidence("slide:changed", { to: normalizeSlideIndex(currentSlide) });
-      emitGuideEvidence("slide:entered", { slide: normalizeSlideIndex(currentSlide) });
+      emitGuideEvidence("slide:changed", { to: normalizedSlide });
+      emitGuideEvidence("slide:entered", { slide: normalizedSlide });
     }
-  }, [currentSlide, tourEnabled]);
+  }, [normalizedSlide]);
 
   useEffect(() => {
     if (!tourEnabled) return;
@@ -331,61 +379,34 @@ const AppInner: React.FC<{
   }, [tourEnabled, tourState.status, tourStep?.id]);
 
   useEffect(() => {
-    if (!tourEnabled || !WOW_TOUR_AUTOSTART) {
-      setAutostartStatus((prev) => ({ ...prev, reason: WOW_TOUR_AUTOSTART ? "tour-disabled" : "not-requested" }));
-      return;
-    }
-    if (tourState.status === "running" || tourState.status === "completed") {
-      setAutostartStatus((prev) => ({ ...prev, started: true, reason: "already-running" }));
+    if (!WOW_DEMO || !WOW_TOUR) {
+      setAutostartStatus({ attempts: 0, started: false, reason: "tour-disabled" });
       return;
     }
 
-    let cancelled = false;
-    const maxAttempts = 12;
-    const delayMs = 300;
+    if (!tourEnabled) {
+      setAutostartStatus({ attempts: 0, started: false, reason: boot.gates.tour.reason });
+      return;
+    }
 
-    const tryStart = (attempt: number) => {
-      if (cancelled) return;
-      const scriptId = WOW_TOUR_SCRIPT || "enterprise";
-      const firstTarget = '[data-testid="deck-root"]';
-      const targetMounted = hasTourTarget(firstTarget);
-      if (targetMounted) {
-        tourApi.start(scriptId);
-        setAutostartStatus({ attempts: attempt, started: true, reason: "started" });
-        return;
-      }
-      if (attempt >= maxAttempts) {
-        setAutostartStatus({
-          attempts: attempt,
-          started: false,
-          reason: "target-not-mounted",
-          lastMissingSelector: firstTarget,
-        });
-        return;
-      }
-      setAutostartStatus({ attempts: attempt, started: false, reason: "retrying", lastMissingSelector: firstTarget });
-      window.setTimeout(() => tryStart(attempt + 1), delayMs);
-    };
+    if (isTourAutostartBlocked(boot.gates)) {
+      setAutostartStatus({
+        attempts: 0,
+        started: false,
+        reason: boot.gates.tourAutostart.reason,
+      });
+      return;
+    }
 
-    window.setTimeout(() => tryStart(1), 220);
-    return () => {
-      cancelled = true;
-    };
-  }, [tourApi, tourEnabled, tourState.status]);
+    setAutostartStatus({ attempts: 0, started: false, reason: "manual-start-only" });
+  }, [tourEnabled, boot.gates]);
 
-  // Keyboard authority:
-  // - DeckModeProvider exclusively owns F1-F4 (global mode control).
-  // - App layer only handles slide navigation keys.
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "F1" || e.key === "F2" || e.key === "F3" || e.key === "F4") return;
-      // Si hay modal abierto, no navegues slides
       if (modalOpen) return;
-
-      // Investor lock: bloquea navegación normal
       if (mode.investorLock) return;
 
-      // navegación normal
       if (e.key === "ArrowRight" || e.key === " ") {
         nextSlide();
       } else if (e.key === "ArrowLeft") {
@@ -397,7 +418,6 @@ const AppInner: React.FC<{
     return () => window.removeEventListener("keydown", onKeyDown, true);
   }, [modalOpen, mode.investorLock, nextSlide, prevSlide]);
 
-  // ▶ Autoplay (solo si investorLock)
   useEffect(() => {
     if (!mode.investorLock) return;
     if (!mode.autoplay) return;
@@ -413,8 +433,13 @@ const AppInner: React.FC<{
     <div data-testid="deck-root" className="deck-stage-root relative w-screen h-screen overflow-hidden bg-black text-white font-main">
       <Background />
       <MirrorIntro active={mirrorActive} />
-      <OperatorOverlay currentSlide={normalizeSlideIndex(currentSlide)} />
-      <DemoScriptOverlay currentSlide={normalizeSlideIndex(currentSlide)} />
+      <TopRibbon visible={viewVisibility.showTopRibbon}>
+        <OperatorOverlay currentSlide={normalizedSlide} />
+      </TopRibbon>
+      <DemoScriptOverlay
+        currentSlide={normalizedSlide}
+        enabled={WOW_DEMO && WOW_DEMO_SCRIPT && demoScriptAvailable && demoScriptActive}
+      />
       {tourEnabled && (
         <TourOverlay
           active={tourState.status === "running" || tourState.status === "completed"}
@@ -434,27 +459,38 @@ const AppInner: React.FC<{
           onSkip={tourApi.skip}
           onRestart={() => {
             tourApi.stop();
-            window.setTimeout(() => tourApi.start(WOW_TOUR_SCRIPT || "enterprise"), 20);
+            tourApi.start(WOW_TOUR_SCRIPT || "enterprise");
           }}
           onStart={() => tourApi.start(WOW_TOUR_SCRIPT || "enterprise")}
           onPasteQuestion={(text) => window.dispatchEvent(new CustomEvent("wow:tour-paste", { detail: { text } }))}
         />
       )}
-      {WOW_DIAGNOSTICS && !tourEnabled && WOW_DEMO && (
-        <div className="fixed bottom-4 left-4 z-[2147483002] rounded border border-white/25 bg-black/80 px-3 py-2 text-[11px] text-white/80">
-          WOW diagnostics: tour disabled because `VITE_WOW_TOUR` is off.
+      {viewVisibility.showDiagnostics && WOW_DIAGNOSTICS && !tourEnabled && WOW_DEMO && (
+        <div className="fixed bottom-4 left-4 z-[2147483002] rounded border border-white/25 bg-black/80 px-3 py-2 text-[11px] text-white/80" data-testid="wow-diagnostics">
+          WOW diagnostics: gate locked ({boot.gates.tour.reason}).
         </div>
       )}
       <div data-testid="global-mode-state" style={{ display: "none" }}>
         {mode.stealth ? "stealth:on" : "stealth:off"}|{mode.track ? "track:on" : "track:off"}|{mode.investorLock ? "lock:on" : "lock:off"}|{mode.autoplay ? "autoplay:on" : "autoplay:off"}
       </div>
+      <div data-testid="boot-gate-state" style={{ display: "none" }}>
+        status:{boot.state.boot.status}|gateLocked:{String(boot.gateLocked)}|armed:{String(boot.isArmed)}|operatorAssisted:{String(boot.isOperatorAssisted)}|tourReady:{String(canStartTourManually(boot.gates))}|tourAutostart:{boot.gates.tourAutostart.reason}
+      </div>
+      <div data-testid="boot-evidence-system-armed" style={{ display: "none" }}>
+        {boot.state.evidence.entries["evidence:system:armed"].satisfied ? "satisfied" : "missing"}
+      </div>
+      <div data-testid="boot-feature-state" style={{ display: "none" }}>
+        demoScriptAvailable:{String(demoScriptAvailable)}|demoScriptActive:{String(demoScriptActive)}|mirrorAvailable:{String(mirrorAvailable)}|mirrorActive:{String(mirrorActive)}
+      </div>
 
-      <ModePill />
+      <TopHudRow visible={viewVisibility.showTopHudRow}>
+        <ModePill />
+      </TopHudRow>
 
-      <Scaler slideIndex={normalizeSlideIndex(currentSlide)}>
+      <Scaler slideIndex={normalizedSlide}>
         <div className="deck-stage-frame w-full h-full relative [perspective:1400px]">
           <SlideRenderer
-            index={normalizeSlideIndex(currentSlide)}
+            index={normalizedSlide}
             totalSlides={TOTAL_SLIDES}
             nextSlide={nextSlide}
             prevSlide={prevSlide}
@@ -465,7 +501,6 @@ const AppInner: React.FC<{
         </div>
       </Scaler>
 
-
       {modalOpen && (
         <Modal
           isOpen={modalOpen}
@@ -475,11 +510,12 @@ const AppInner: React.FC<{
         />
       )}
 
-      {/* En stealth, normalmente quitas chat para demo fina */}
       {!mode.stealth && <AIChat />}
     </div>
   );
 };
+
+const WOW_FLAG_SNAPSHOT = createWowFlagSnapshot();
 
 export default function App() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -495,20 +531,23 @@ export default function App() {
   };
   const closeModal = () => setModalOpen(false);
 
-  // whitelist default: Slide04 + Slide13 (FX pesados permitidos en Track Mode)
   const whitelist = useMemo(() => [4, 13], []);
 
   return (
-    <DeckModeProvider slideIndex={normalizeSlideIndex(currentSlide)} heavyFxWhitelist={whitelist}>
-      <AppInner
-        currentSlide={currentSlide}
-        setCurrentSlide={setCurrentSlide}
-        modalOpen={modalOpen}
-        openModal={openModal}
-        closeModal={closeModal}
-        modalImages={modalImages}
-        modalTitle={modalTitle}
-      />
-    </DeckModeProvider>
+    <BootRuntimeProvider wowFlags={WOW_FLAG_SNAPSHOT}>
+      <Slide00ViewVisibilityProvider defaultOn={OPERATOR_VIEW_DEFAULT_ON}>
+        <DeckModeProvider slideIndex={normalizeSlideIndex(currentSlide)} heavyFxWhitelist={whitelist}>
+          <AppInner
+            currentSlide={currentSlide}
+            setCurrentSlide={setCurrentSlide}
+            modalOpen={modalOpen}
+            openModal={openModal}
+            closeModal={closeModal}
+            modalImages={modalImages}
+            modalTitle={modalTitle}
+          />
+        </DeckModeProvider>
+      </Slide00ViewVisibilityProvider>
+    </BootRuntimeProvider>
   );
 }
