@@ -49,3 +49,4 @@ INVERSION_*_AUDIT_*.zip
 test-results/
 playwright-report/
 .run/*.json
+# --- generated runtime artifacts ---
