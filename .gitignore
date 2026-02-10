@@ -41,3 +41,11 @@ audit/
 *_NUMSTAT_*.txt
 *_FULL_CHANGE_*.txt
 *_DIFF_SNIPPETS_*.txt
+# --- generated artifacts (DO NOT COMMIT) ---
+INVERSION_DIFF_AUDIT_*.txt
+INVERSION_*_AUDIT_*.txt
+INVERSION_*_AUDIT_*/
+INVERSION_*_AUDIT_*.zip
+test-results/
+playwright-report/
+.run/*.json
