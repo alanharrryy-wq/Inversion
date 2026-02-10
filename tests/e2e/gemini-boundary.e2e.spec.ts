@@ -7,13 +7,14 @@ const repoRoot = process.cwd();
 const forbiddenClientPatterns: Array<{ id: string; pattern: RegExp }> = [
   { id: "forbidden_provider_sdk", pattern: /@google\/genai/gi },
   { id: "legacy_route", pattern: /\/api\/gemini\b/gi },
+  { id: "deprecated_guide_path", pattern: /wow\/guide(?:\/|['"])/gi },
   { id: "forbidden_vite_env", pattern: /\bVITE_(?:GEMINI|GENAI|GOOGLE(?:_AI)?)(?:_[A-Z0-9_]+)?\b/g },
   { id: "forbidden_import_meta", pattern: /import\.meta\.env\.[A-Za-z0-9_]*(?:GEMINI|GENAI|GOOGLE)/gi },
   { id: "forbidden_brand_literal", pattern: /["'`][^"'`\n\r]*gemini[^"'`\n\r]*["'`]/gi },
 ];
 
 const allowedClientFiles = new Set<string>([
-  "tests/gemini-boundary.spec.ts",
+  "tests/e2e/gemini-boundary.e2e.spec.ts",
 ]);
 
 type ScanIssue = {

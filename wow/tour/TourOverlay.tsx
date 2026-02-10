@@ -13,7 +13,7 @@ import {
   WOW_TOUR_CHOREO,
   WOW_TOUR_POLISH,
 } from '../../config/wow';
-import { createGuidanceSuggestions } from '../guide/aiGuidance.stub';
+import { createGuidanceSuggestions } from './guide/aiGuidance.stub';
 import { hasTourTarget, setTargetPulse } from './events';
 import { TourAutostartStatus, TourStep } from './types';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
@@ -207,7 +207,7 @@ export function TourOverlay(props: {
           title: step.title,
           body: step.body,
           completion: { type: 'manual' },
-          tease: step.nextTease,
+          nextTease: step.nextTease,
           notes: step.directorNotes,
         }
       : null,

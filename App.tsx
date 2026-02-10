@@ -7,7 +7,6 @@ import AIChat from "./components/AIChat";
 import { DeckModeProvider, useDeckMode } from "./components/DeckRuntimeMode";
 import { SLIDE_LABELS } from "./components/SlideRenderer";
 import { WOW_DEMO, WOW_DEMO_SCRIPT, WOW_DIAGNOSTICS, WOW_FLAGS, WOW_GUIDE_ENGINE, WOW_MIRROR, WOW_OVERLAY, WOW_TOUR, WOW_TOUR_AUTOSTART, WOW_TOUR_SCRIPT } from "./config/wow";
-import { emitGuideEvent } from "./wow/guide/events";
 import { emitGuideEvidence, TourOverlay, useTourEngine } from "./wow/tour";
 import { hasTourTarget } from "./wow/tour/events";
 import { TourAutostartStatus } from "./wow/tour/types";
@@ -304,8 +303,6 @@ const AppInner: React.FC<{
       })
     );
     if (WOW_GUIDE_ENGINE) {
-      emitGuideEvent("slide:changed", { to: normalizeSlideIndex(currentSlide) });
-      emitGuideEvent("slide:entered", { slide: normalizeSlideIndex(currentSlide) });
       emitGuideEvidence("slide:changed", { to: normalizeSlideIndex(currentSlide) });
       emitGuideEvidence("slide:entered", { slide: normalizeSlideIndex(currentSlide) });
     }

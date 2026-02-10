@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { WOW_GUIDE_ENGINE } from '../../config/wow';
-import { onGuideEvent } from '../guide/events';
 import {
   DEFAULT_GUIDE_SCRIPT_ID,
   GuideOverlayModel,
@@ -352,13 +351,6 @@ export function useTourEngine(params: {
 
   useEffect(() => {
     if (!enabled) return;
-    return onGuideEvent((event) => {
-      api.emit(event.name, event.payload);
-    });
-  }, [api, enabled]);
-
-  useEffect(() => {
-    if (!enabled || !WOW_GUIDE_ENGINE) return;
     return onGuideEvidence((event) => {
       api.emit(event.name, event.payload);
     });

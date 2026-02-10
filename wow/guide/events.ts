@@ -1,6 +1,5 @@
-import { GuideEvidenceEvent } from './script.types';
-
-const GUIDE_EVENT_CHANNEL = 'wow:guide-event';
+import { emitGuideEvidence, GUIDE_EVIDENCE_CHANNEL, onGuideEvidence } from '../tour/guide/events';
+import { GuideEvidenceEvent } from '../tour/guide/types';
 
 export type GuideEventDetail = {
   name: string;
@@ -8,20 +7,18 @@ export type GuideEventDetail = {
   ts: number;
 };
 
+/**
+ * @deprecated Use `emitGuideEvidence` from `wow/tour/guide/events`.
+ */
 export function emitGuideEvent(name: string, payload: Record<string, unknown> = {}): void {
-  const detail: GuideEventDetail = { name, payload, ts: Date.now() };
-  window.dispatchEvent(new CustomEvent(GUIDE_EVENT_CHANNEL, { detail }));
+  emitGuideEvidence(name, payload);
 }
 
+/**
+ * @deprecated Use `onGuideEvidence` from `wow/tour/guide/events`.
+ */
 export function onGuideEvent(listener: (event: GuideEvidenceEvent) => void): () => void {
-  const handler = (event: Event) => {
-    const custom = event as CustomEvent<GuideEventDetail>;
-    if (!custom.detail?.name) return;
-    listener({ name: custom.detail.name, payload: custom.detail.payload, ts: custom.detail.ts ?? Date.now() });
-  };
-
-  window.addEventListener(GUIDE_EVENT_CHANNEL, handler as EventListener);
-  return () => window.removeEventListener(GUIDE_EVENT_CHANNEL, handler as EventListener);
+  return onGuideEvidence(listener);
 }
 
-export { GUIDE_EVENT_CHANNEL };
+export const GUIDE_EVENT_CHANNEL = GUIDE_EVIDENCE_CHANNEL;

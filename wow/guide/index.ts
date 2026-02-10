@@ -1,7 +1,7 @@
-export * from './script.types';
-export * from './selectors';
+/**
+ * @deprecated Import from `wow/tour/guide` directly for new code.
+ * Compatibility surface remains temporarily to avoid breaking downstream imports.
+ */
+export * from '../tour/guide';
 export * from './events';
-export * from './engine';
-export * from './reducer';
-export * from './script.sample';
 export * from './aiGuidance.stub';

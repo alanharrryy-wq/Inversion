@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { TourOverlayPhase } from '../types';
 import { useStepChoreo } from './useStepChoreo';
-import { ChoreoContract, ChoreoParams, ChoreoState, PHASE_ORDER } from './choreo.types';
+import { ChoreoContract, ChoreoParams, ChoreoState, PHASE_ORDER } from './types';
 import { getPhaseClassName, getPhaseTimeline, resolveChoreoContract } from './choreo.utils';
 
 export function useChoreoPhases(params: ChoreoParams): ChoreoState {

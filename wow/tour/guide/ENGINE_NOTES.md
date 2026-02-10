@@ -110,8 +110,8 @@ This supports presenter recovery in live sessions.
 
 ## Testing notes
 Two deterministic spec modules are provided:
-- `tests/wow-guide-engine.spec.ts`
-- `tests/wow-guide-schema.spec.ts`
+- `tests/unit/wow-guide-engine.unit.ts`
+- `tests/unit/wow-guide-schema.unit.ts`
 
 These modules avoid test-framework globals so typecheck remains simple.
 
@@ -165,7 +165,7 @@ When a step does not advance:
 6. Verify slide index matches script expectation.
 
 ## Compatibility note
-Legacy `wow/guide` modules are still present for compatibility.
+Legacy `wow/guide` remains only as a compatibility wrapper surface.
 New primary architecture for guided runtime is `wow/tour/guide`.
 
 ## Doc maintenance rule

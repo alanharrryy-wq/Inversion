@@ -64,5 +64,5 @@ test('AI chat roundtrip uses deterministic stub and voice defaults off', async (
 test('tour overlay autostarts and renders first enterprise step', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByTestId('tour-overlay')).toBeVisible();
-  await expect(page.getByText('Step 1 - Anchor the operating thesis')).toBeVisible();
+  await expect(page.getByText('Step 1 - Frame the decision lens')).toBeVisible();
 });

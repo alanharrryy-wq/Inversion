@@ -1,4 +1,4 @@
-import { ChoreoContract, ChoreoPhase, ChoreoTimelineEntry, DEFAULT_CHOREO_CONTRACT, PHASE_ORDER, REDUCED_CHOREO_CONTRACT } from './choreo.types';
+import { ChoreoContract, ChoreoPhase, ChoreoTimelineEntry, DEFAULT_CHOREO_CONTRACT, PHASE_ORDER, REDUCED_CHOREO_CONTRACT } from './types';
 
 export function resolveChoreoContract(contract: Partial<ChoreoContract> | undefined, reducedMotion: boolean): ChoreoContract {
   const base = reducedMotion ? REDUCED_CHOREO_CONTRACT : DEFAULT_CHOREO_CONTRACT;

@@ -7,7 +7,7 @@ import {
   eventEvidence,
   evidenceRef,
   validateGuideScript,
-} from '../wow/tour/guide';
+} from '../../wow/tour/guide';
 
 function baseScript(): GuideScript {
   return createScript({
@@ -204,5 +204,3 @@ export function runGuideSchemaSpecs(): void {
   test_empty_evidence_id_fails();
   test_empty_step_id_fails();
 }
-
-runGuideSchemaSpecs();

@@ -3,12 +3,13 @@ import {
   GuideEvidencePayload,
   GuideRuntimeAction,
   GuideRuntimeContext,
+  GuideRuntimeState,
   initialGuideRuntimeState,
   reduceGuideRuntimeState,
   resolveGuideScript,
   selectOverlayModel,
   selectStepResolution,
-} from '../wow/tour/guide';
+} from '../../wow/tour/guide';
 
 function ctx(overrides?: Partial<GuideRuntimeContext>): GuideRuntimeContext {
   return {
@@ -22,12 +23,12 @@ function ctx(overrides?: Partial<GuideRuntimeContext>): GuideRuntimeContext {
   };
 }
 
-function applyActions(scriptId: string, actions: GuideRuntimeAction[]) {
+function applyActions(scriptId: string, actions: GuideRuntimeAction[], initialSlide = 0) {
   const script = resolveGuideScript(scriptId);
   let state = {
     ...initialGuideRuntimeState(script.id),
     scriptId: script.id,
-    currentSlide: 0,
+    currentSlide: initialSlide,
   };
 
   for (const action of actions) {
@@ -49,7 +50,7 @@ function eventAction(name: string, ts: number, payload?: GuideEvidencePayload): 
 }
 
 function test_start_sets_running() {
-  const { script, state } = applyActions('enterprise', [{ type: 'START', scriptId: 'enterprise', ts: 100 }]);
+  const { script, state } = applyActions('enterprise', [{ type: 'START', scriptId: 'enterprise', ts: 100 }], -1);
 
   assert.equal(script.id, 'enterprise');
   assert.equal(state.status, 'running');
@@ -91,13 +92,17 @@ function test_event_evidence_resolves_completion() {
 
 function test_next_without_evidence_does_not_advance_by_default() {
   const script = resolveGuideScript('guided-demo');
-  let state = {
+  const strictStepIndex = 3;
+  let state: GuideRuntimeState = {
     ...initialGuideRuntimeState(script.id),
+    status: 'running',
     scriptId: script.id,
-    currentSlide: 0,
+    stepIndex: strictStepIndex,
+    currentSlide: 4,
+    completedStepIds: script.steps.slice(0, strictStepIndex).map((step) => step.id),
+    eventLog: [{ name: 'guide:started', payload: { scriptId: script.id }, ts: 10 }],
   };
 
-  state = reduceGuideRuntimeState(script, state, { type: 'START', scriptId: script.id, ts: 10 }, ctx());
   const beforeIndex = state.stepIndex;
 
   state = reduceGuideRuntimeState(script, state, { type: 'NEXT', ts: 11, allowIncomplete: false }, ctx());
@@ -107,13 +112,17 @@ function test_next_without_evidence_does_not_advance_by_default() {
 
 function test_next_with_allow_incomplete_advances() {
   const script = resolveGuideScript('guided-demo');
-  let state = {
+  const strictStepIndex = 3;
+  let state: GuideRuntimeState = {
     ...initialGuideRuntimeState(script.id),
+    status: 'running',
     scriptId: script.id,
-    currentSlide: 0,
+    stepIndex: strictStepIndex,
+    currentSlide: 4,
+    completedStepIds: script.steps.slice(0, strictStepIndex).map((step) => step.id),
+    eventLog: [{ name: 'guide:started', payload: { scriptId: script.id }, ts: 20 }],
   };
 
-  state = reduceGuideRuntimeState(script, state, { type: 'START', scriptId: script.id, ts: 20 }, ctx());
   const beforeIndex = state.stepIndex;
 
   state = reduceGuideRuntimeState(script, state, { type: 'NEXT', ts: 21, allowIncomplete: true }, ctx());
@@ -241,5 +250,3 @@ export function runGuideEngineSpecs(): void {
   test_selector_evidence_uses_context();
   test_overlay_model_shape();
 }
-
-runGuideEngineSpecs();

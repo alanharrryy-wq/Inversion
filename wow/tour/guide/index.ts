@@ -1,5 +1,6 @@
 export * from './types';
 export * from './events';
+export * from './aiGuidance.stub';
 export * from './schema';
 export * from './authoring';
 export * from './checklists';
