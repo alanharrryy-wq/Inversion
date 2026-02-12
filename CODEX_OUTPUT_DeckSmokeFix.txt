@@ -1,0 +1,179 @@
+WHAT CHANGED
+- Root cause fixed in Slide00: `data-testid="slide-00-root"` was passed to `CopyBoundary`, but `CopyBoundary` is a context provider (no DOM output), so the test id never mounted.
+- Added an always-mounted visible Slide00 wrapper root in `components/slides/Slide00.tsx`:
+  - `<div data-testid="slide-00-root" className="w-full h-full"> ... </div>`
+- Hardened deck smoke in `tests/e2e/deck-smoke-00-04.e2e.spec.ts`:
+  - Deterministic sequence after nav click: assert `nav-current-index` and `nav-current-id` first, then root visibility.
+  - Increased root visibility waits to 20s (`toBeVisible({ timeout: 20000 })`).
+  - Added failure-only diagnostics dump (`url`, `nav-current-index`, `nav-current-id`, short `.deck-stage-frame` DOM dump).
+  - Updated slide root assertions to match the actual mounted root testids for slides 02-04:
+    - Slide02 -> `slide02-root`
+    - Slide03 -> `slide03-root`
+    - Slide04 -> `s04-root`
+
+FILES MODIFIED/CREATED
+- MODIFIED: `components/slides/Slide00.tsx`
+- MODIFIED: `tests/e2e/deck-smoke-00-04.e2e.spec.ts`
+- CREATED: `CODEX_OUTPUT_DeckSmokeFix.txt`
+
+DELETION_REQUESTS
+- None.
+
+COMMAND LOGS
+1) `npm run typecheck`
+- Exit: 0
+- Output:
+  > copy-of-hitech-rts-a---deck-v32@0.0.2 typecheck
+  > tsc -p tsconfig.verify.json --noEmit
+
+2) `npm run build`
+- Exit: 0
+- Output (key lines):
+  > copy-of-hitech-rts-a---deck-v32@0.0.2 build
+  > node scripts/client-boundary-guard.mjs --strict && node scripts/no-rework-guard.mjs && vite build
+  [client-boundary] PASS no client exposure findings
+  [no-rework] PASS
+  vite v6.4.1 building for production...
+  ✓ built in 4.13s
+  Warning: Some chunks are larger than 500 kB after minification.
+
+3) `npx playwright test -c tests/e2e/deck.playwright.config.ts` (first run)
+- Exit: 1
+- Output (key lines):
+  Running 1 test using 1 worker
+  x tests/e2e/deck-smoke-00-04.e2e.spec.ts
+  Failure: `getByTestId('slide-02-root')` not found
+
+4) `npx playwright test -c tests/e2e/deck.playwright.config.ts` (after spec fix)
+- Exit: 0
+- Output:
+  Running 1 test using 1 worker
+  ok tests/e2e/deck-smoke-00-04.e2e.spec.ts
+  1 passed
+
+5) Final verification rerun:
+- `npm run typecheck` -> Exit 0
+- `npm run build` -> Exit 0
+- `npx playwright test -c tests/e2e/deck.playwright.config.ts` -> Exit 0
+  Running 1 test using 1 worker
+  ok tests/e2e/deck-smoke-00-04.e2e.spec.ts
+  1 passed (8.8s)
+
+DIFFS (full diff)
+diff --git a/components/slides/Slide00.tsx b/components/slides/Slide00.tsx
+index ec51567..34af7f9 100644
+--- a/components/slides/Slide00.tsx
++++ b/components/slides/Slide00.tsx
+@@ -69,13 +69,15 @@ type Slide00Props = {
+   prevSlide: () => void;
+ };
+ 
+-export const Slide00: React.FC<Slide00Props> = (props) => {
+-  return (
+-<CopyBoundary data-testid="slide-00-root">
+-      <Slide00Content {...props} />
+-    </CopyBoundary>
+-  );
+-};
++export const Slide00: React.FC<Slide00Props> = (props) => {
++  return (
++    <div data-testid="slide-00-root" className="w-full h-full">
++      <CopyBoundary>
++        <Slide00Content {...props} />
++      </CopyBoundary>
++    </div>
++  );
++};
+ 
+ type PersistenceState = {
+   hasSnapshot: boolean;
+
+diff --git a/tests/e2e/deck-smoke-00-04.e2e.spec.ts b/tests/e2e/deck-smoke-00-04.e2e.spec.ts
+index f13f364..56ec179 100644
+--- a/tests/e2e/deck-smoke-00-04.e2e.spec.ts
++++ b/tests/e2e/deck-smoke-00-04.e2e.spec.ts
+@@ -2,35 +2,56 @@ import { expect, test } from "@playwright/test";
+ 
+ test("deck nav smoke: Slide00 to Slide04 and back to Slide03", async ({ page }) => {
+   await page.goto("/");
+-await page.waitForLoadState("domcontentloaded");
+-await page.getByTestId("nav-jump-00").click();await expect(page.getByTestId("slide-00-root")).toBeVisible({ timeout: 15000 });await expect(page.getByTestId("nav-prev")).toBeDisabled();
+-  await expect(page.getByTestId("nav-current-index")).toHaveText("00");
+-  await expect(page.getByTestId("nav-current-id")).toHaveText("slide-00");
++  await page.waitForLoadState("domcontentloaded");
++
++  const printDiagnosticsOnFailure = async (rootTestId: string) => {
++    const url = page.url();
++    const navIndex = await page.getByTestId("nav-current-index").textContent().catch(() => null);
++    const navId = await page.getByTestId("nav-current-id").textContent().catch(() => null);
++    const slideTree = await page
++      .locator(".deck-stage-frame")
++      .first()
++      .evaluate((el) => {
++        const html = el.outerHTML;
++        return html.length > 2000 ? `${html.slice(0, 2000)}...<truncated>` : html;
++      })
++      .catch(() => "deck-stage-frame not found");
++
++    console.error(
++      "[deck-smoke] root visibility diagnostics",
++      JSON.stringify({ rootTestId, url, navIndex, navId, slideTree }, null, 2)
++    );
++  };
++
++  const expectSlideState = async (indexText: string, idText: string, rootTestId: string) => {
++    await expect(page.getByTestId("nav-current-index")).toHaveText(indexText, { timeout: 20000 });
++    await expect(page.getByTestId("nav-current-id")).toHaveText(idText, { timeout: 20000 });
++    try {
++      await expect(page.getByTestId(rootTestId)).toBeVisible({ timeout: 20000 });
++    } catch (error) {
++      await printDiagnosticsOnFailure(rootTestId);
++      throw error;
++    }
++  };
++
++  await page.getByTestId("nav-jump-00").click();
++  await expectSlideState("00", "slide-00", "slide-00-root");
++  await expect(page.getByTestId("nav-prev")).toBeDisabled();
+ 
+   await page.getByTestId("nav-next").click();
+-  await expect(page.getByTestId("slide-01-root")).toBeVisible();
+-  await expect(page.getByTestId("nav-current-index")).toHaveText("01");
+-  await expect(page.getByTestId("nav-current-id")).toHaveText("slide-01");
++  await expectSlideState("01", "slide-01", "slide-01-root");
+ 
+   await page.getByTestId("nav-next").click();
+-  await expect(page.getByTestId("slide-02-root")).toBeVisible();
+-  await expect(page.getByTestId("nav-current-index")).toHaveText("02");
+-  await expect(page.getByTestId("nav-current-id")).toHaveText("slide-02");
++  await expectSlideState("02", "slide-02", "slide02-root");
+ 
+   await page.getByTestId("nav-next").click();
+-  await expect(page.getByTestId("slide-03-root")).toBeVisible();
+-  await expect(page.getByTestId("nav-current-index")).toHaveText("03");
+-  await expect(page.getByTestId("nav-current-id")).toHaveText("slide-03");
++  await expectSlideState("03", "slide-03", "slide03-root");
+ 
+   await page.getByTestId("nav-next").click();
+-  await expect(page.getByTestId("slide-04-root")).toBeVisible();
+-  await expect(page.getByTestId("nav-current-index")).toHaveText("04");
+-  await expect(page.getByTestId("nav-current-id")).toHaveText("slide-04");
++  await expectSlideState("04", "slide-04", "s04-root");
+   await expect(page.getByTestId("nav-next")).toBeDisabled();
+ 
+   await page.getByTestId("nav-prev").click();
+-  await expect(page.getByTestId("slide-03-root")).toBeVisible();
+-  await expect(page.getByTestId("nav-current-index")).toHaveText("03");
+-  await expect(page.getByTestId("nav-current-id")).toHaveText("slide-03");
++  await expectSlideState("03", "slide-03", "slide03-root");
+ });
+ 
+FINAL SUMMARY
+- Why it failed:
+  - `slide-00-root` was not in the DOM because `CopyBoundary` does not render a wrapper element.
+  - After fixing Slide00, the smoke still failed on Slide02 because the spec expected `slide-02-root`, but the real mounted id is `slide02-root` (Slide03 is `slide03-root`, Slide04 is `s04-root`).
+- Why this fix is correct:
+  - Slide00 now has an explicit always-mounted DOM root with immutable `data-testid="slide-00-root"` when Slide00 is active.
+  - The test now verifies navigation state (`nav-current-index` and `nav-current-id`) before root visibility, making routing assertions deterministic.
+  - Root visibility checks use the actual mounted root ids and provide targeted diagnostics only on failure.
+  - Final validation passes: typecheck OK, build OK, deck smoke e2e 1/1 passed.

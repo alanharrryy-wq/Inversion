@@ -71,9 +71,11 @@ type Slide00Props = {
 
 export const Slide00: React.FC<Slide00Props> = (props) => {
   return (
-<CopyBoundary data-testid="slide-00-root">
-      <Slide00Content {...props} />
-    </CopyBoundary>
+    <div data-testid="slide-00-root" className="w-full h-full">
+      <CopyBoundary>
+        <Slide00Content {...props} />
+      </CopyBoundary>
+    </div>
   );
 };
 
