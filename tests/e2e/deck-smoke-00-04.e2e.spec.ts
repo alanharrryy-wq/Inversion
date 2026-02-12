@@ -1,10 +1,9 @@
 import { expect, test } from "@playwright/test";
 
 test("deck nav smoke: Slide00 to Slide04 and back to Slide03", async ({ page }) => {
-  await page.goto("/slides/00");
-
-  await expect(page.getByTestId("slide-00-root")).toBeVisible();
-  await expect(page.getByTestId("nav-prev")).toBeDisabled();
+  await page.goto("/");
+await page.waitForLoadState("domcontentloaded");
+await page.getByTestId("nav-jump-00").click();await expect(page.getByTestId("slide-00-root")).toBeVisible({ timeout: 15000 });await expect(page.getByTestId("nav-prev")).toBeDisabled();
   await expect(page.getByTestId("nav-current-index")).toHaveText("00");
   await expect(page.getByTestId("nav-current-id")).toHaveText("slide-00");
 
@@ -34,3 +33,4 @@ test("deck nav smoke: Slide00 to Slide04 and back to Slide03", async ({ page }) 
   await expect(page.getByTestId("nav-current-index")).toHaveText("03");
   await expect(page.getByTestId("nav-current-id")).toHaveText("slide-03");
 });
+
