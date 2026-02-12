@@ -6,9 +6,11 @@ export const Slide03: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
   nextSlide,
   prevSlide,
 }) => (
-  <SlideContainer>
-    <Header title="TRACCIÓN" breadcrumb="EVIDENCIA" slideNum={4} />
-    <TractionVault />
-    <NavArea prev={prevSlide} next={nextSlide} />
-  </SlideContainer>
+  <div data-testid="slide-03-root" className="w-full h-full">
+    <SlideContainer>
+      <Header title="TRACCIÓN" breadcrumb="EVIDENCIA" slideNum={4} />
+      <TractionVault />
+      <NavArea prev={prevSlide} next={nextSlide} />
+    </SlideContainer>
+  </div>
 );

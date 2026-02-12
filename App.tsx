@@ -120,12 +120,52 @@ const ControlBar = () => {
 };
 
 const TOTAL_SLIDES = 20;
+const DECK_NAV_START = 0;
+const DECK_NAV_END = 4;
+const DECK_NAV_INDICES = [0, 1, 2, 3, 4] as const;
 
 const normalizeSlideIndex = (idx: number) => {
   const n = TOTAL_SLIDES;
   if (!Number.isFinite(idx)) return 0;
   return ((Math.trunc(idx) % n) + n) % n;
 };
+
+const clampDeckNavIndex = (idx: number) => {
+  const normalized = normalizeSlideIndex(idx);
+  if (normalized < DECK_NAV_START) return DECK_NAV_START;
+  if (normalized > DECK_NAV_END) return DECK_NAV_END;
+  return normalized;
+};
+
+const formatSlideId = (idx: number) => String(normalizeSlideIndex(idx)).padStart(2, "0");
+
+const parseSlideIndexFromLocation = (locationLike: Pick<Location, "pathname" | "hash" | "search">): number => {
+  const pathMatch = locationLike.pathname.match(/^\/slides\/(\d{1,2})\/?$/i);
+  if (pathMatch) {
+    return normalizeSlideIndex(Number(pathMatch[1]));
+  }
+
+  const hashRaw = locationLike.hash.startsWith("#")
+    ? locationLike.hash.slice(1)
+    : locationLike.hash;
+  const hashMatch = hashRaw.match(/^(?:slides\/|slide\/|slide-)?(\d{1,2})$/i);
+  if (hashMatch) {
+    return normalizeSlideIndex(Number(hashMatch[1]));
+  }
+
+  const query = new URLSearchParams(locationLike.search);
+  const querySlide = query.get("slide");
+  if (querySlide != null && querySlide.trim() !== "") {
+    const parsed = Number(querySlide);
+    if (Number.isFinite(parsed)) {
+      return normalizeSlideIndex(parsed);
+    }
+  }
+
+  return 0;
+};
+
+const slidePathFromIndex = (idx: number) => `/slides/${formatSlideId(idx)}`;
 
 const ModePill: React.FC = () => {
   const { mode } = useDeckMode();
@@ -214,6 +254,64 @@ const DemoScriptOverlay: React.FC<{ currentSlide: number; enabled: boolean }> = 
   );
 };
 
+const DeckSlideNav: React.FC<{
+  currentSlide: number;
+  canPrev: boolean;
+  canNext: boolean;
+  onPrev: () => void;
+  onNext: () => void;
+  onJump: (index: number) => void;
+}> = ({ currentSlide, canPrev, canNext, onPrev, onNext, onJump }) => {
+  const currentSlideId = formatSlideId(currentSlide);
+
+  return (
+    <aside className="pointer-events-auto fixed bottom-4 right-4 z-[2147483004] rounded-xl border border-white/25 bg-black/70 px-3 py-3 backdrop-blur-md">
+      <div className="mb-2 flex items-center gap-2">
+        <button
+          type="button"
+          data-testid="nav-prev"
+          onClick={onPrev}
+          disabled={!canPrev}
+          className="rounded border border-white/25 px-3 py-1 text-xs font-code tracking-[0.2em] text-white disabled:cursor-not-allowed disabled:opacity-45"
+        >
+          PREV
+        </button>
+        <button
+          type="button"
+          data-testid="nav-next"
+          onClick={onNext}
+          disabled={!canNext}
+          className="rounded border border-white/25 px-3 py-1 text-xs font-code tracking-[0.2em] text-white disabled:cursor-not-allowed disabled:opacity-45"
+        >
+          NEXT
+        </button>
+      </div>
+      <div className="mb-2 flex items-center gap-1">
+        {DECK_NAV_INDICES.map((index) => {
+          const id = formatSlideId(index);
+          return (
+            <button
+              key={id}
+              type="button"
+              data-testid={`nav-jump-${id}`}
+              onClick={() => onJump(index)}
+              className="rounded border border-white/20 px-2 py-1 text-[10px] font-code tracking-[0.2em] text-white/90"
+            >
+              {id}
+            </button>
+          );
+        })}
+      </div>
+      <div data-testid="nav-current-index" className="text-[10px] font-code tracking-[0.18em] text-white/70">
+        {formatSlideId(currentSlide)}
+      </div>
+      <div data-testid="nav-current-id" className="text-[10px] font-code tracking-[0.18em] text-white/55">
+        slide-{currentSlideId}
+      </div>
+    </aside>
+  );
+};
+
 const AppInner: React.FC<{
   currentSlide: number;
   setCurrentSlide: React.Dispatch<React.SetStateAction<number>>;
@@ -278,6 +376,21 @@ const AppInner: React.FC<{
     cancelMirror();
     setCurrentSlide(normalizeSlideIndex(index));
   }, [cancelMirror, setCurrentSlide]);
+  const deckNavIndex = clampDeckNavIndex(normalizedSlide);
+  const deckCanPrev = deckNavIndex > DECK_NAV_START;
+  const deckCanNext = deckNavIndex < DECK_NAV_END;
+  const goToDeckSlide = useCallback((index: number) => {
+    cancelMirror();
+    setCurrentSlide(clampDeckNavIndex(index));
+  }, [cancelMirror, setCurrentSlide]);
+  const deckPrev = useCallback(() => {
+    if (!deckCanPrev) return;
+    goToDeckSlide(deckNavIndex - 1);
+  }, [deckCanPrev, deckNavIndex, goToDeckSlide]);
+  const deckNext = useCallback(() => {
+    if (!deckCanNext) return;
+    goToDeckSlide(deckNavIndex + 1);
+  }, [deckCanNext, deckNavIndex, goToDeckSlide]);
 
   useEffect(() => {
     if (!WOW_DEMO || !WOW_MIRROR || !mirrorAvailable) {
@@ -482,6 +595,14 @@ const AppInner: React.FC<{
       <div data-testid="boot-feature-state" style={{ display: "none" }}>
         demoScriptAvailable:{String(demoScriptAvailable)}|demoScriptActive:{String(demoScriptActive)}|mirrorAvailable:{String(mirrorAvailable)}|mirrorActive:{String(mirrorActive)}
       </div>
+      <DeckSlideNav
+        currentSlide={deckNavIndex}
+        canPrev={deckCanPrev}
+        canNext={deckCanNext}
+        onPrev={deckPrev}
+        onNext={deckNext}
+        onJump={goToDeckSlide}
+      />
 
       <TopHudRow visible={viewVisibility.showTopHudRow}>
         <ModePill />
@@ -518,7 +639,12 @@ const AppInner: React.FC<{
 const WOW_FLAG_SNAPSHOT = createWowFlagSnapshot();
 
 export default function App() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(() => {
+    if (typeof window === "undefined") {
+      return 0;
+    }
+    return parseSlideIndexFromLocation(window.location);
+  });
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImages, setModalImages] = useState<string[]>([]);
@@ -532,6 +658,30 @@ export default function App() {
   const closeModal = () => setModalOpen(false);
 
   const whitelist = useMemo(() => [4, 13], []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const syncFromUrl = () => {
+      setCurrentSlide(parseSlideIndexFromLocation(window.location));
+    };
+
+    window.addEventListener("popstate", syncFromUrl);
+    window.addEventListener("hashchange", syncFromUrl);
+    return () => {
+      window.removeEventListener("popstate", syncFromUrl);
+      window.removeEventListener("hashchange", syncFromUrl);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const nextPath = slidePathFromIndex(currentSlide);
+    if (window.location.pathname !== nextPath) {
+      window.history.replaceState(window.history.state, "", nextPath);
+    }
+  }, [currentSlide]);
 
   return (
     <BootRuntimeProvider wowFlags={WOW_FLAG_SNAPSHOT}>

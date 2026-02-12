@@ -383,149 +383,151 @@ export const Slide00: React.FC<Slide00Props> = ({ nextSlide, prevSlide }) => {
   const diagnosticsSurfaceVisible = viewVisibility.showDiagnostics && OPERATOR_DIAGNOSTICS;
 
   return (
-    <SlideContainer>
-      <Slide00Shell
-        nav={<NavArea prev={prevSlide} next={nextSlide} />}
-        toast={<BootToast open={showToast} detail={toastDetail} onDismiss={() => setShowToast(false)} />}
-        diagnostics={
-          diagnosticsSurfaceVisible ? (
-            <>
-              <DiagnosticsDockToggle
-                open={diagnosticsOpen}
-                onClick={() => setDiagnosticsOpen((prev) => !prev)}
-              />
-              <DiagnosticsDock
-                open={diagnosticsOpen}
-                compact={diagnosticsCompact}
-                onBack={() => setDiagnosticsOpen(false)}
-                onToggleMode={() => setDiagnosticsCompact((prev) => !prev)}
-                metaItems={diagnosticsMeta}
-                controlRows={diagnosticsControls}
-                satisfiedRows={boot.diagnostics.satisfiedEvidence}
-                missingRows={boot.diagnostics.missingBlockers}
-                logRows={diagnosticsLogRows}
-                footerCopy="local diagnostics only · does not alter evidence semantics"
-                footerTime={new Date().toLocaleString()}
-              />
-            </>
-          ) : null
-        }
-      >
-        <BootTopline
-          brandTitle="HITECH RTS"
-          brandSubtitle="boot / deterministic gate"
-          slideLabel="slide 00 · boot gate"
-        />
-
-        <Header
-          title="BOOT CONSOLE"
-          breadcrumb="ACTION / WHY / CONFIRM"
-          slideNum={1}
-          rightBadge={`STATE ${status}`}
-        />
-
-        <BootCenterLayout
-          main={
-            <BootPanel
-              header={
-                <BootPanelHeader
-                  title="Operator arming required"
-                  subtitle={
-                    <>
-                      This deck starts in manual mode. Scripted systems remain blocked until
-                      <strong> evidence:system:armed </strong>
-                      is satisfied by explicit operator action.
-                    </>
-                  }
-                  whyLabel="why: register verifiable activity"
+    <div data-testid="slide-00-root" className="w-full h-full">
+      <SlideContainer>
+        <Slide00Shell
+          nav={<NavArea prev={prevSlide} next={nextSlide} />}
+          toast={<BootToast open={showToast} detail={toastDetail} onDismiss={() => setShowToast(false)} />}
+          diagnostics={
+            diagnosticsSurfaceVisible ? (
+              <>
+                <DiagnosticsDockToggle
+                  open={diagnosticsOpen}
+                  onClick={() => setDiagnosticsOpen((prev) => !prev)}
                 />
-              }
-              body={
-                <BootPanelBody
-                  status={boot.state.boot.status}
-                  canArm={boot.canArm}
-                  canConfirm={canConfirm}
-                  showConfirm={showConfirmButton}
-                  confirmLabel={confirmLabel}
-                  onArm={armNow}
-                  onConfirm={confirmArm}
-                  confirmState={confirmSlot.state}
-                  confirmText={confirmSlot.text}
-                  confirmStrongText={confirmSlot.strongText}
-                  cards={kpiCards}
+                <DiagnosticsDock
+                  open={diagnosticsOpen}
+                  compact={diagnosticsCompact}
+                  onBack={() => setDiagnosticsOpen(false)}
+                  onToggleMode={() => setDiagnosticsCompact((prev) => !prev)}
+                  metaItems={diagnosticsMeta}
+                  controlRows={diagnosticsControls}
+                  satisfiedRows={boot.diagnostics.satisfiedEvidence}
+                  missingRows={boot.diagnostics.missingBlockers}
+                  logRows={diagnosticsLogRows}
+                  footerCopy="local diagnostics only · does not alter evidence semantics"
+                  footerTime={new Date().toLocaleString()}
                 />
-              }
-              footer={
-                <BootPanelFooter>
-                  <p className="slide00-arm-emphasis-copy">
-                    arm lane reserved for glow, glass and directional emphasis modules.
-                  </p>
-                </BootPanelFooter>
-              }
-            />
+              </>
+            ) : null
           }
-          side={
-            <BootSideColumn>
-              <BootStatusBadge
-                isArmed={boot.isArmed}
-                isOperatorAssisted={boot.isOperatorAssisted}
-                narrative={statusNarrative(boot.state.boot.status)}
-                lastEventLabel={lastEventLabel}
+        >
+          <BootTopline
+            brandTitle="HITECH RTS"
+            brandSubtitle="boot / deterministic gate"
+            slideLabel="slide 00 · boot gate"
+          />
+
+          <Header
+            title="BOOT CONSOLE"
+            breadcrumb="ACTION / WHY / CONFIRM"
+            slideNum={1}
+            rightBadge={`STATE ${status}`}
+          />
+
+          <BootCenterLayout
+            main={
+              <BootPanel
+                header={
+                  <BootPanelHeader
+                    title="Operator arming required"
+                    subtitle={
+                      <>
+                        This deck starts in manual mode. Scripted systems remain blocked until
+                        <strong> evidence:system:armed </strong>
+                        is satisfied by explicit operator action.
+                      </>
+                    }
+                    whyLabel="why: register verifiable activity"
+                  />
+                }
+                body={
+                  <BootPanelBody
+                    status={boot.state.boot.status}
+                    canArm={boot.canArm}
+                    canConfirm={canConfirm}
+                    showConfirm={showConfirmButton}
+                    confirmLabel={confirmLabel}
+                    onArm={armNow}
+                    onConfirm={confirmArm}
+                    confirmState={confirmSlot.state}
+                    confirmText={confirmSlot.text}
+                    confirmStrongText={confirmSlot.strongText}
+                    cards={kpiCards}
+                  />
+                }
+                footer={
+                  <BootPanelFooter>
+                    <p className="slide00-arm-emphasis-copy">
+                      arm lane reserved for glow, glass and directional emphasis modules.
+                    </p>
+                  </BootPanelFooter>
+                }
               />
+            }
+            side={
+              <BootSideColumn>
+                <BootStatusBadge
+                  isArmed={boot.isArmed}
+                  isOperatorAssisted={boot.isOperatorAssisted}
+                  narrative={statusNarrative(boot.state.boot.status)}
+                  lastEventLabel={lastEventLabel}
+                />
 
-              <OpeningFlagsBadge
-                summary={cinematicFlagSummary || "none"}
-                autostartReason={humanReason(boot.gates.tourAutostart.reason)}
-                warning={boot.gates.tourAutostart.reason === "autostart-disabled-by-boot-contract"}
-              />
+                <OpeningFlagsBadge
+                  summary={cinematicFlagSummary || "none"}
+                  autostartReason={humanReason(boot.gates.tourAutostart.reason)}
+                  warning={boot.gates.tourAutostart.reason === "autostart-disabled-by-boot-contract"}
+                />
 
-              <ViewControlsTogglePanel
-                showTopHudRow={viewVisibility.showTopHudRow}
-                showTopRibbon={viewVisibility.showTopRibbon}
-                showDiagnostics={viewVisibility.showDiagnostics}
-                onTopHudRowChange={viewVisibility.setShowTopHudRow}
-                onTopRibbonChange={viewVisibility.setShowTopRibbon}
-                onDiagnosticsChange={viewVisibility.setShowDiagnostics}
-              />
+                <ViewControlsTogglePanel
+                  showTopHudRow={viewVisibility.showTopHudRow}
+                  showTopRibbon={viewVisibility.showTopRibbon}
+                  showDiagnostics={viewVisibility.showDiagnostics}
+                  onTopHudRowChange={viewVisibility.setShowTopHudRow}
+                  onTopRibbonChange={viewVisibility.setShowTopRibbon}
+                  onDiagnosticsChange={viewVisibility.setShowDiagnostics}
+                />
 
-              <PersistenceIndicator
-                persisted={persistence.hasSnapshot}
-                keyCount={persistence.keys.length}
-                keys={persistence.keys}
-              />
+                <PersistenceIndicator
+                  persisted={persistence.hasSnapshot}
+                  keyCount={persistence.keys.length}
+                  keys={persistence.keys}
+                />
 
-              <ResetControls onSoftReset={softReset} onHardReset={hardReset} />
+                <ResetControls onSoftReset={softReset} onHardReset={hardReset} />
 
-              <GateMatrix rows={gateRows} humanReason={humanReason} />
-            </BootSideColumn>
-          }
-        />
+                <GateMatrix rows={gateRows} humanReason={humanReason} />
+              </BootSideColumn>
+            }
+          />
 
-        <EvidenceList title="evidence blockers" rows={blockerRows} formatTimestamp={formatTimestamp} />
+          <EvidenceList title="evidence blockers" rows={blockerRows} formatTimestamp={formatTimestamp} />
 
-        <BootFoot
-          left={`local time: ${formatDateTime(Date.now())}`}
-          right={`last anchor: ${boot.diagnostics.lastInteractedAnchor ?? "--"}`}
-        />
+          <BootFoot
+            left={`local time: ${formatDateTime(Date.now())}`}
+            right={`last anchor: ${boot.diagnostics.lastInteractedAnchor ?? "--"}`}
+          />
 
-        <BootNote warning={boot.isOperatorAssisted}>
-          override path can unlock progression for operator testing, but it never satisfies
-          <strong> evidence:system:armed</strong>.
-        </BootNote>
+          <BootNote warning={boot.isOperatorAssisted}>
+            override path can unlock progression for operator testing, but it never satisfies
+            <strong> evidence:system:armed</strong>.
+          </BootNote>
 
-        <BootNote danger={boot.gateLocked}>
-          when locked, WOW tour/demo-script/opening-cinema stay disabled regardless of flags.
-        </BootNote>
+          <BootNote danger={boot.gateLocked}>
+            when locked, WOW tour/demo-script/opening-cinema stay disabled regardless of flags.
+          </BootNote>
 
-        <Slide00HiddenState
-          bootStatus={boot.state.boot.status}
-          armedEvidence={
-            boot.state.evidence.entries["evidence:system:armed"].satisfied
-              ? "satisfied"
-              : "missing"
-          }
-        />
-      </Slide00Shell>
-    </SlideContainer>
+          <Slide00HiddenState
+            bootStatus={boot.state.boot.status}
+            armedEvidence={
+              boot.state.evidence.entries["evidence:system:armed"].satisfied
+                ? "satisfied"
+                : "missing"
+            }
+          />
+        </Slide00Shell>
+      </SlideContainer>
+    </div>
   );
 };

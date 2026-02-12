@@ -813,7 +813,8 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
   const selectedEvidence = hoverBadge ?? lockedBadge;
 
   return (
-    <SlideContainer>
+    <div data-testid="slide-04-root" className="w-full h-full">
+      <SlideContainer>
       <style>{`
         /* ===========================================================
            NASA SYSTEM — Motion + Glass + Scanlines + Noise
@@ -1396,9 +1397,10 @@ export const Slide04: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
       <ToastStack toasts={toasts} />
 
       {/* NavArea - WRAPPED in z-100 */}
-      <div className="relative z-[100] pointer-events-auto">
-        <NavArea prev={prevSlide} next={nextSlide} />
-      </div>
-    </SlideContainer>
+        <div className="relative z-[100] pointer-events-auto">
+          <NavArea prev={prevSlide} next={nextSlide} />
+        </div>
+      </SlideContainer>
+    </div>
   );
 };
