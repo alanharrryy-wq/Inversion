@@ -1,0 +1,6 @@
+Agent: CODEX C
+Branch: codex-C-slide11-19
+Worktree: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion__codex-C__slide11-19
+Generated: 2026-02-10 14:56:58
+
+Replace this stub with the current Codex prompt for this lane.
