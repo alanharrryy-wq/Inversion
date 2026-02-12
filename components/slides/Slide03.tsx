@@ -1,16 +1,18 @@
 import React from "react";
-import { SlideContainer, Header, NavArea } from "../SlideRenderer";
-import TractionVault from "../widgets/TractionVault";
+import { Header, NavArea, SlideContainer } from "../SlideRenderer";
+import { Slide03Experience } from "./slide03-ui";
 
 export const Slide03: React.FC<{ nextSlide: () => void; prevSlide: () => void }> = ({
   nextSlide,
   prevSlide,
-}) => (
-  <div data-testid="slide-03-root" className="w-full h-full">
+}) => {
+  return (
     <SlideContainer>
-      <Header title="TRACCIÓN" breadcrumb="EVIDENCIA" slideNum={4} />
-      <TractionVault />
-      <NavArea prev={prevSlide} next={nextSlide} />
+      <div data-testid="slide03-root" className="w-full h-full">
+        <Header title="EVIDENCE LADDER" breadcrumb="PROOF" slideNum={4} />
+        <Slide03Experience />
+        <NavArea prev={prevSlide} next={nextSlide} />
+      </div>
     </SlideContainer>
-  </div>
-);
+  );
+};
