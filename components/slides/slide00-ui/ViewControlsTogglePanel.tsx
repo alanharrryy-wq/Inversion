@@ -7,11 +7,16 @@ export function ViewControlsTogglePanel(props: {
   onTopHudRowChange: (value: boolean) => void;
   onTopRibbonChange: (value: boolean) => void;
   onDiagnosticsChange: (value: boolean) => void;
+  title: string;
+  copy: string;
+  topHudLabel: string;
+  topRibbonLabel: string;
+  diagnosticsLabel: string;
 }) {
   return (
     <section className="slide00-view-controls" data-testid="view-controls-toggle-panel">
-      <p className="slide00-view-controls-title">overlay visibility</p>
-      <p className="slide00-view-controls-copy">Explicit operator toggles. Default is OFF unless operator default flag is enabled.</p>
+      <p className="slide00-view-controls-title">{props.title}</p>
+      <p className="slide00-view-controls-copy">{props.copy}</p>
 
       <label className="slide00-view-controls-row">
         <input
@@ -20,7 +25,7 @@ export function ViewControlsTogglePanel(props: {
           onChange={(event) => props.onTopHudRowChange(event.target.checked)}
           data-testid="view-toggle-top-hud"
         />
-        <span>Show Top HUD Row</span>
+        <span>{props.topHudLabel}</span>
       </label>
 
       <label className="slide00-view-controls-row">
@@ -30,7 +35,7 @@ export function ViewControlsTogglePanel(props: {
           onChange={(event) => props.onTopRibbonChange(event.target.checked)}
           data-testid="view-toggle-top-ribbon"
         />
-        <span>Show Top Ribbon</span>
+        <span>{props.topRibbonLabel}</span>
       </label>
 
       <label className="slide00-view-controls-row">
@@ -40,7 +45,7 @@ export function ViewControlsTogglePanel(props: {
           onChange={(event) => props.onDiagnosticsChange(event.target.checked)}
           data-testid="view-toggle-diagnostics"
         />
-        <span>Show Diagnostics</span>
+        <span>{props.diagnosticsLabel}</span>
       </label>
     </section>
   );

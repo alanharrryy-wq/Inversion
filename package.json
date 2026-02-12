@@ -1,7 +1,7 @@
 {
   "name": "copy-of-hitech-rts-a---deck-v32",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "concurrently -k \"npm:dev:server\" \"npm:dev:client\"",
