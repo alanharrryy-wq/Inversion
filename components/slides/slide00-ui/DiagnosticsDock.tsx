@@ -15,6 +15,15 @@ export function DiagnosticsDock(props: {
   logRows: DiagnosticsLogRow[];
   footerCopy: string;
   footerTime: string;
+  title: string;
+  modeCompactLabel: string;
+  modeDockedLabel: string;
+  backLabel: string;
+  satisfiedTitle: string;
+  missingTitle: string;
+  logTitle: string;
+  noneLabel: string;
+  logEmptyLabel: string;
 }) {
   if (!props.open) return null;
 
@@ -26,7 +35,7 @@ export function DiagnosticsDock(props: {
     >
       <div className="slide00-boot-dock-frame" data-compact={props.compact ? "true" : "false"} data-testid="boot-operator-dock">
         <header className="slide00-boot-dock-header">
-          <h3 className="slide00-boot-dock-title">operator diagnostics</h3>
+          <h3 className="slide00-boot-dock-title">{props.title}</h3>
           <div className="slide00-boot-dock-header-actions">
             <button
               type="button"
@@ -34,9 +43,9 @@ export function DiagnosticsDock(props: {
               onClick={props.onToggleMode}
               data-testid="diagnostics-dock-mode-toggle"
             >
-              {props.compact ? "docked" : "compact"}
+              {props.compact ? props.modeDockedLabel : props.modeCompactLabel}
             </button>
-            <DiagnosticsBackButton onClick={props.onBack} testId="boot-operator-dock-close" />
+            <DiagnosticsBackButton onClick={props.onBack} testId="boot-operator-dock-close" label={props.backLabel} />
           </div>
         </header>
 
@@ -73,10 +82,10 @@ export function DiagnosticsDock(props: {
 
         <div className="slide00-boot-dock-scroll slide00-boot-scrollbar">
           <section className="slide00-boot-dock-block">
-            <h4 className="slide00-boot-dock-block-title">evidence satisfied</h4>
+            <h4 className="slide00-boot-dock-block-title">{props.satisfiedTitle}</h4>
             <ul className="slide00-boot-dock-list">
               {props.satisfiedRows.length === 0 ? (
-                <li className="slide00-boot-dock-list-item">none</li>
+                <li className="slide00-boot-dock-list-item">{props.noneLabel}</li>
               ) : (
                 props.satisfiedRows.map((item) => (
                   <li key={item} className="slide00-boot-dock-list-item">{item}</li>
@@ -86,10 +95,10 @@ export function DiagnosticsDock(props: {
           </section>
 
           <section className="slide00-boot-dock-block">
-            <h4 className="slide00-boot-dock-block-title">blockers missing</h4>
+            <h4 className="slide00-boot-dock-block-title">{props.missingTitle}</h4>
             <ul className="slide00-boot-dock-list">
               {props.missingRows.length === 0 ? (
-                <li className="slide00-boot-dock-list-item">none</li>
+                <li className="slide00-boot-dock-list-item">{props.noneLabel}</li>
               ) : (
                 props.missingRows.map((item) => (
                   <li key={item} className="slide00-boot-dock-list-item">{item}</li>
@@ -99,10 +108,10 @@ export function DiagnosticsDock(props: {
           </section>
 
           <section className="slide00-boot-dock-block">
-            <h4 className="slide00-boot-dock-block-title">operator log</h4>
+            <h4 className="slide00-boot-dock-block-title">{props.logTitle}</h4>
             <div className="slide00-boot-dock-log-list">
               {props.logRows.length === 0 ? (
-                <p className="slide00-boot-dock-list-item">no entries</p>
+                <p className="slide00-boot-dock-list-item">{props.logEmptyLabel}</p>
               ) : (
                 props.logRows.map((entry) => (
                   <article key={entry.id} className="slide00-boot-dock-log-row" data-testid="operator-log-row">

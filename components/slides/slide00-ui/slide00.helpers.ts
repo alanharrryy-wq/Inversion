@@ -1,4 +1,5 @@
-import { BootLifecycleState, BootRuntimeApi } from "../../../runtime/boot";
+import { BootRuntimeApi } from "../../../runtime/boot/BootRuntimeContext";
+import { BootLifecycleState } from "../../../runtime/boot/types";
 import { listEvidenceDefinitions } from "../../../runtime/evidence";
 import { ConfirmSlotState, EvidenceRow, EvidenceStatusCard, GateRow } from "./types";
 
@@ -58,39 +59,56 @@ export function buildEvidenceRows(boot: Pick<BootRuntimeApi, "state">): Evidence
   });
 }
 
-export function buildGateRows(boot: Pick<BootRuntimeApi, "gates">): GateRow[] {
+export function buildGateRows(
+  boot: Pick<BootRuntimeApi, "gates">,
+  labels?: Partial<{
+    tour: string;
+    tourAutostart: string;
+    demoScript: string;
+    openingCinema: string;
+    mirrorIntro: string;
+  }>
+): GateRow[] {
+  const resolvedLabels = {
+    tour: labels?.tour ?? "WOW TOUR",
+    tourAutostart: labels?.tourAutostart ?? "WOW TOUR AUTOSTART",
+    demoScript: labels?.demoScript ?? "WOW DEMO SCRIPT",
+    openingCinema: labels?.openingCinema ?? "WOW OPENING CINEMA",
+    mirrorIntro: labels?.mirrorIntro ?? "WOW MIRROR INTRO",
+  };
+
   return [
     {
       key: "tour",
-      label: "WOW TOUR",
+      label: resolvedLabels.tour,
       ready: boot.gates.tour.ready,
       lock: boot.gates.tour.locked,
       reason: boot.gates.tour.reason,
     },
     {
       key: "tour-autostart",
-      label: "WOW TOUR AUTOSTART",
+      label: resolvedLabels.tourAutostart,
       ready: boot.gates.tourAutostart.ready,
       lock: boot.gates.tourAutostart.locked,
       reason: boot.gates.tourAutostart.reason,
     },
     {
       key: "demo-script",
-      label: "WOW DEMO SCRIPT",
+      label: resolvedLabels.demoScript,
       ready: boot.gates.demoScript.ready,
       lock: boot.gates.demoScript.locked,
       reason: boot.gates.demoScript.reason,
     },
     {
       key: "opening-cinema",
-      label: "WOW OPENING CINEMA",
+      label: resolvedLabels.openingCinema,
       ready: boot.gates.openingCinema.ready,
       lock: boot.gates.openingCinema.locked,
       reason: boot.gates.openingCinema.reason,
     },
     {
       key: "mirror-intro",
-      label: "WOW MIRROR INTRO",
+      label: resolvedLabels.mirrorIntro,
       ready: boot.gates.mirrorIntro.ready,
       lock: boot.gates.mirrorIntro.locked,
       reason: boot.gates.mirrorIntro.reason,
@@ -104,6 +122,16 @@ export function buildEvidenceStatusCards(args: {
   operatorAssisted: boolean;
   missingBlockers: number;
   satisfiedBlockers: number;
+  labels?: Partial<{
+    gateKey: string;
+    blockersKey: string;
+    pathKey: string;
+    gateLockedValue: string;
+    gateOpenValue: string;
+    pathEvidenceValue: string;
+    pathAssistedValue: string;
+    pathStrictValue: string;
+  }>;
 }): EvidenceStatusCard[] {
   const {
     gateLocked,
@@ -111,24 +139,40 @@ export function buildEvidenceStatusCards(args: {
     operatorAssisted,
     missingBlockers,
     satisfiedBlockers,
+    labels,
   } = args;
+
+  const resolvedLabels = {
+    gateKey: labels?.gateKey ?? "gate",
+    blockersKey: labels?.blockersKey ?? "blockers",
+    pathKey: labels?.pathKey ?? "path",
+    gateLockedValue: labels?.gateLockedValue ?? "LOCKED",
+    gateOpenValue: labels?.gateOpenValue ?? "OPEN",
+    pathEvidenceValue: labels?.pathEvidenceValue ?? "EVIDENCE",
+    pathAssistedValue: labels?.pathAssistedValue ?? "OPERATOR_ASSISTED",
+    pathStrictValue: labels?.pathStrictValue ?? "STRICT",
+  };
 
   return [
     {
-      key: "gate",
-      value: gateLocked ? "LOCKED" : "OPEN",
+      key: resolvedLabels.gateKey,
+      value: gateLocked ? resolvedLabels.gateLockedValue : resolvedLabels.gateOpenValue,
       danger: gateLocked,
       good: !gateLocked,
     },
     {
-      key: "blockers",
+      key: resolvedLabels.blockersKey,
       value: `${satisfiedBlockers}/${satisfiedBlockers + missingBlockers}`,
       warn: missingBlockers > 0,
       good: missingBlockers === 0,
     },
     {
-      key: "path",
-      value: armed ? "EVIDENCE" : operatorAssisted ? "OPERATOR_ASSISTED" : "STRICT",
+      key: resolvedLabels.pathKey,
+      value: armed
+        ? resolvedLabels.pathEvidenceValue
+        : operatorAssisted
+          ? resolvedLabels.pathAssistedValue
+          : resolvedLabels.pathStrictValue,
       warn: operatorAssisted,
       good: armed,
     },

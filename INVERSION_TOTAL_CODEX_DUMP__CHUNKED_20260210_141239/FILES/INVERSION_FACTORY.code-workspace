@@ -1,0 +1,13 @@
+
+{
+  "folders": [
+    { "path": "." }
+  ],
+  "settings": {
+    "window.openFoldersInNewWindow": "on",
+    "window.restoreWindows": "none",
+    "workbench.startupEditor": "none",
+    "files.autoSave": "off"
+  }
+}
+

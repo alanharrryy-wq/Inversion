@@ -4,10 +4,14 @@ import { GateRow } from "./types";
 export function GateMatrix(props: {
   rows: GateRow[];
   humanReason: (reason: string) => string;
+  title: string;
+  availableLabel: string;
+  lockedLabel: string;
+  disabledLabel: string;
 }) {
   return (
     <section className="slide00-boot-matrix" data-testid="boot-gate-matrix">
-      <h3 className="slide00-boot-matrix-title">runtime gate matrix</h3>
+      <h3 className="slide00-boot-matrix-title">{props.title}</h3>
       <ul className="slide00-boot-matrix-list">
         {props.rows.map((row) => (
           <li
@@ -18,7 +22,7 @@ export function GateMatrix(props: {
           >
             <p className="slide00-boot-matrix-key">{row.label}</p>
             <p className="slide00-boot-matrix-reason">
-              {row.ready ? "available" : row.lock ? "locked" : "disabled"} · {props.humanReason(row.reason)}
+              {row.ready ? props.availableLabel : row.lock ? props.lockedLabel : props.disabledLabel} · {props.humanReason(row.reason)}
             </p>
           </li>
         ))}

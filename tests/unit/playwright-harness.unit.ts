@@ -7,6 +7,7 @@ const allowedE2eSpecs = [
   'tests/e2e/demo.e2e.spec.ts',
   'tests/e2e/gemini-boundary.e2e.spec.ts',
   'tests/e2e/slide00-boot-gate.e2e.spec.ts',
+  'tests/e2e/slide00-firstproof.e2e.spec.ts',
 ] as const;
 
 function normalize(relPath: string): string {

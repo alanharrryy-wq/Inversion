@@ -3,6 +3,7 @@ import React from "react";
 export function DiagnosticsBackButton(props: {
   onClick: () => void;
   testId?: string;
+  label: string;
 }) {
   return (
     <button
@@ -11,7 +12,7 @@ export function DiagnosticsBackButton(props: {
       onClick={props.onClick}
       data-testid={props.testId ?? "diagnostics-back-button"}
     >
-      back
+      {props.label}
     </button>
   );
 }

@@ -3,6 +3,8 @@ import React from "react";
 export function DiagnosticsDockToggle(props: {
   open: boolean;
   onClick: () => void;
+  openLabel: string;
+  closedLabel: string;
 }) {
   return (
     <button
@@ -11,7 +13,7 @@ export function DiagnosticsDockToggle(props: {
       onClick={props.onClick}
       data-testid="boot-operator-dock-toggle"
     >
-      {props.open ? "hide diagnostics" : "operator diagnostics"}
+      {props.open ? props.openLabel : props.closedLabel}
     </button>
   );
 }
