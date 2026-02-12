@@ -64,3 +64,11 @@ Safety notes:
   - `npm run gemini:audit` writes `GEMINI_EXPOSURE_AUDIT.md` and exits `0`
   - `npm run gemini:audit:strict` exits `2` only on true client P0 exposure
   - Full boundary policy: [`docs/AI_CLIENT_EXPOSURE_GUARDRAILS.md`](docs/AI_CLIENT_EXPOSURE_GUARDRAILS.md)
+
+
+<!-- INVERSION_KERNEL_LINK_START -->
+## INVERSION Kernel
+Referencia operativa:
+
+- docs/INVERSION_KERNEL_SPEC_v1.md
+<!-- INVERSION_KERNEL_LINK_END -->

@@ -21,22 +21,13 @@ import {
 import { emitGuideEvidence, TourOverlay, useTourEngine } from "./wow/tour";
 import { hasTourTarget } from "./wow/tour/events";
 import { TourAutostartStatus } from "./wow/tour/types";
-import {
-  Slide00ViewVisibilityProvider,
-  TopHudRow,
-  TopRibbon,
-  useSlide00ViewVisibility,
-} from "./components/slides/slide00-ui";
-import {
-  BootRuntimeProvider,
-  canShowDemoScript,
-  canShowMirrorIntro,
-  canStartTourManually,
-  createWowFlagSnapshot,
-  isTourAutostartBlocked,
-  useBootRuntime,
-  useSlideEntryEvidence,
-} from "./runtime/boot";
+import { Slide00ViewVisibilityProvider, useSlide00ViewVisibility } from "./components/slides/slide00-ui/Slide00ViewVisibilityContext";
+import { TopHudRow } from "./components/slides/slide00-ui/TopHudRow";
+import { TopRibbon } from "./components/slides/slide00-ui/TopRibbon";
+import { BootRuntimeProvider, useBootRuntime } from "./runtime/boot/BootRuntimeContext";
+import { canShowDemoScript, canShowMirrorIntro, canStartTourManually, isTourAutostartBlocked } from "./runtime/boot/wowGate";
+import { createWowFlagSnapshot } from "./runtime/boot/wowFlags";
+import { useSlideEntryEvidence } from "./runtime/boot/useSlideEntryEvidence";
 
 /* ==========================================
    B9 - ControlBar HUD Pro (v1.4.0)

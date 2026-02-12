@@ -1,13 +1,14 @@
 import React from "react";
-import { BootLifecycleState } from "../../../runtime/boot";
+import { BootLifecycleState } from "../../../runtime/boot/types";
 import { ArmSystemButton } from "./ArmSystemButton";
 import { BootStateIndicator } from "./BootStateIndicator";
 import { ConfirmSlot } from "./ConfirmSlot";
 import { EvidenceStatusStrip } from "./EvidenceStatusStrip";
-import { ConfirmSlotState, EvidenceStatusCard } from "./types";
+import { BootStatusChip, ConfirmSlotState, EvidenceStatusCard } from "./types";
 
 export function BootPanelBody(props: {
   status: BootLifecycleState;
+  armLabel: string;
   canArm: boolean;
   canConfirm: boolean;
   showConfirm: boolean;
@@ -18,14 +19,15 @@ export function BootPanelBody(props: {
   confirmText: string;
   confirmStrongText?: string;
   cards: EvidenceStatusCard[];
+  stateChips: BootStatusChip[];
 }) {
   return (
     <>
-      <BootStateIndicator status={props.status} />
+      <BootStateIndicator status={props.status} chips={props.stateChips} />
 
       <div className="slide00-boot-action-zone">
         <ArmSystemButton
-          label="arm system"
+          label={props.armLabel}
           onClick={props.onArm}
           disabled={!props.canArm}
           testId="boot-arm-button"

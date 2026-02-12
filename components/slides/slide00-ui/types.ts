@@ -1,4 +1,4 @@
-import { BootLifecycleState } from "../../../runtime/boot";
+import { BootLifecycleState } from "../../../runtime/boot/types";
 
 export type GateRow = {
   key: string;

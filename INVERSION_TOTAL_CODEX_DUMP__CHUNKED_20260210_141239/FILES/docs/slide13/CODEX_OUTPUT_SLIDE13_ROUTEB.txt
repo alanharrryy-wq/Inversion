@@ -1,0 +1,3813 @@
+
+CODEX OUTPUT · SLIDE13 ROUTEB
+Generated: 2026-02-10
+
+1) SUMMARY
+- Domain covered: Slide13 Route B KPI ritual operationalization (drag → hold → release seal).
+- Contracts created: slide13 types/helpers/replay/fixtures/use-hook/ui/glass kit/tests/docs.
+- Scope respected: Slide13 only. No Slide14+ work executed.
+
+2) FILE TREE
+components/slides/Slide13.tsx
+components/slides/slide13-ui/routeb/
+docs/slide13/README.md
+tests/e2e/demo.e2e.spec.ts (Slide13 smoke added in existing spec file)
+
+--- ROUTEB TREE (components/slides/slide13-ui/routeb) ---
+Listado de rutas de carpetas para el volumen El choncho
+El n�mero de serie del volumen es BAB3-F095
+F:\ONEDRIVE\HITECH\3.PROYECTOS\CHAT GPT AI ESTUDIO\REPOS\INVERSION\COMPONENTS\SLIDES\SLIDE13-UI\ROUTEB
+|   index.ts
+|   KpiRail.tsx
+|   KpiRitual.tsx
+|   KpiSurface.tsx
+|   RightSeal.tsx
+|   slide13.copy.ts
+|   slide13.debugOverlay.tsx
+|   slide13.fixtures.ts
+|   slide13.helpers.ts
+|   slide13.replay.ts
+|   slide13.types.ts
+|   useKpiRitual.ts
+|   
++---glass
+|       glass.helpers.ts
+|       glass.tokens.ts
+|       GlassSurface.tsx
+|       GlowEdge.tsx
+|       NoiseOverlay.tsx
+|       SpecularSheen.tsx
+|       
+\---__tests__
+        slide13.helpers.test.ts
+        slide13.replay.test.ts
+        
+
+--- DOC TREE (docs/slide13) ---
+Listado de rutas de carpetas para el volumen El choncho
+El n�mero de serie del volumen es BAB3-F095
+F:\ONEDRIVE\HITECH\3.PROYECTOS\CHAT GPT AI ESTUDIO\REPOS\INVERSION\DOCS\SLIDE13
+    CODEX_OUTPUT_SLIDE13_ROUTEB.txt
+    README.md
+    
+No existe ninguna subcarpeta 
+
+
+3) FULL NEW + MODIFIED CONTENTS
+
+===== BEGIN FILE: components/slides/Slide13.tsx =====
+import React from "react";
+import { SlideContainer, Header, NavArea } from "../SlideRenderer";
+import { KpiRitual } from "./slide13-ui/routeb";
+
+export const Slide13: React.FC<{ nextSlide: () => void; prevSlide: () => void }> = ({
+  nextSlide,
+  prevSlide,
+}) => (
+  <SlideContainer>
+    <Header title="KPIs DEL SISTEMA" breadcrumb="RESULTADOS" slideNum={13} />
+    <KpiRitual />
+    <NavArea prev={prevSlide} next={nextSlide} />
+  </SlideContainer>
+);
+
+===== END FILE: components/slides/Slide13.tsx =====
+
+===== BEGIN FILE: tests/e2e/demo.e2e.spec.ts =====
+import { expect, test } from '@playwright/test';
+
+function collectDomainFiles(rootDir: string): string[] {
+  const stack = [rootDir];
+  const files: string[] = [];
+
+  while (stack.length > 0) {
+    const current = stack.pop() as string;
+    for (const entry of readdirSync(current)) {
+      const fullPath = path.join(current, entry);
+      const stats = statSync(fullPath);
+      if (stats.isDirectory()) {
+        stack.push(fullPath);
+        continue;
+      }
+      if (!/\.(ts|tsx|css)$/.test(entry)) continue;
+      files.push(fullPath);
+    }
+  }
+
+  files.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
+  return files;
+}
+
+function assertSlide13NoTimers() {
+  const domainRoot = path.join(
+    process.cwd(),
+    'components',
+    'slides',
+    'slide13-ui',
+    'routeb'
+  );
+  const files = collectDomainFiles(domainRoot);
+  expect(files.length).toBeGreaterThan(0);
+  for (const filePath of files) {
+    const content = readFileSync(filePath, 'utf8');
+    expect(content).not.toMatch(/\bsetTimeout\s*\(/);
+    expect(content).not.toMatch(/\bsetInterval\s*\(/);
+  }
+}
+
+async function goToSlide13(page: import('@playwright/test').Page) {
+  await page.goto('/');
+  await expect(page.getByTestId('deck-root')).toBeVisible();
+  for (let index = 0; index < 12; index += 1) {
+    await page.keyboard.press('ArrowRight');
+  }
+  await expect(page.getByTestId('slide13-root')).toBeVisible();
+}
+import { readdirSync, readFileSync, statSync } from 'node:fs';
+import path from 'node:path';
+import { SLIDE07_REPLAY_FIXTURES, SLIDE07_SMOKE_FIXTURES } from '../../components/slides/slide07-ui/routeb/slide07.fixtures';
+import {
+  assertSlide07ReplayDeterminism,
+  runSlide07FixtureReplay,
+} from '../../components/slides/slide07-ui/routeb/slide07.replay';
+
+function collectSlide07DomainFiles(rootDir: string): string[] {
+  const stack = [rootDir];
+  const files: string[] = [];
+
+  while (stack.length > 0) {
+    const current = stack.pop() as string;
+    for (const entry of readdirSync(current)) {
+      const fullPath = path.join(current, entry);
+      const stats = statSync(fullPath);
+      if (stats.isDirectory()) {
+        stack.push(fullPath);
+        continue;
+      }
+      if (!/\.(ts|tsx)$/.test(entry)) {
+        continue;
+      }
+      files.push(fullPath);
+    }
+  }
+
+  files.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
+  return files;
+}
+
+function assertNoTimersInSlide07Domain() {
+  const domainRoot = path.join(process.cwd(), 'components', 'slides', 'slide07-ui', 'routeb');
+  const files = collectSlide07DomainFiles(domainRoot);
+
+  expect(files.length).toBeGreaterThan(0);
+
+  for (const filePath of files) {
+    const content = readFileSync(filePath, 'utf8');
+    expect(content).not.toMatch(/\bsetTimeout\s*\(/);
+    expect(content).not.toMatch(/\bsetInterval\s*\(/);
+  }
+}
+
+test('app loads and core layout exists without severe console errors', async ({ page }) => {
+  const severe = [];
+
+  page.on('console', (msg) => {
+    if (msg.type() === 'error') {
+      const text = msg.text();
+      if (!/favicon|Failed to load resource/i.test(text)) {
+        severe.push(text);
+      }
+    }
+  });
+
+  await page.goto('/');
+  await expect(page.locator('#root')).toBeVisible();
+  await expect(page.getByTestId('deck-root')).toBeVisible();
+  expect(severe).toEqual([]);
+});
+
+test('F1-F4 hotkeys update visible mode state', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByTestId('controlbar')).toHaveCount(0);
+  await page.getByTestId('view-toggle-top-hud').check();
+  await expect(page.getByTestId('controlbar')).toBeVisible();
+
+  const modeState = page.getByTestId('global-mode-state');
+  await expect(modeState).toHaveText(/stealth:off/);
+
+  await page.keyboard.press('F1');
+  await expect(modeState).toHaveText(/stealth:on/);
+
+  await page.keyboard.press('F2');
+  await expect(modeState).toHaveText(/track:off/);
+
+  await page.keyboard.press('F3');
+  await expect(modeState).toHaveText(/lock:on/);
+
+  await page.keyboard.press('F4');
+  await expect(modeState).toHaveText(/autoplay:on/);
+});
+
+test('AI chat roundtrip uses deterministic stub and voice defaults off', async ({ page }) => {
+  const apiPaths = [];
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    if (url.pathname.startsWith('/api/')) {
+      apiPaths.push(url.pathname);
+    }
+  });
+
+  await page.goto('/');
+  await page.getByTestId('chat-toggle').click();
+  await expect(page.getByTestId('chat-window')).toBeVisible();
+
+  await page.getByTestId('chat-input').fill('demo ping from playwright');
+  await page.getByTestId('chat-send').click();
+  await expect(page.getByTestId('chat-msg-model').last()).toContainText('[AI_BACKEND:demo_test_mode]');
+  await expect.poll(() => apiPaths.filter((path) => path === '/api/ai').length).toBeGreaterThan(0);
+  expect(apiPaths.includes('/api/gemini')).toBeFalsy();
+
+  await page.getByTestId('chat-mode').selectOption('voice');
+  await expect(page.getByTestId('chat-voice-btn')).toContainText('VOICE MODE UNAVAILABLE');
+});
+
+test('tour remains manual-only until operator starts it', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByTestId('slide00-boot-console')).toBeVisible();
+  await expect(page.getByTestId('tour-overlay')).toHaveCount(0);
+  await expect(page.getByTestId('boot-gate-state')).toContainText('gateLocked:true');
+
+  await page.getByTestId('boot-arm-button').click();
+  await expect(page.getByTestId('boot-state-label')).toHaveText('ARMED_PENDING_CONFIRM');
+  await page.getByTestId('boot-confirm-button').click();
+
+  await expect(page.getByTestId('boot-status-badge')).toContainText('SYSTEM: ARMED');
+  await expect(page.getByTestId('boot-toast')).toContainText('sistema listo');
+  await expect(page.getByTestId('tour-launch')).toBeVisible();
+  await expect(page.getByTestId('tour-overlay')).toHaveCount(0);
+
+  await page.getByTestId('tour-launch').getByRole('button', { name: 'Start Tour' }).click();
+  await expect(page.getByTestId('tour-overlay')).toBeVisible();
+  await expect(page.getByText('Step 1 - Frame the decision lens')).toBeVisible();
+});
+
+test('Slide13 Route B seals by drag hold release', async ({ page }) => {
+  await goToSlide13(page);
+
+  await expect(page.getByTestId('slide13-rail')).toBeVisible();
+  await expect(page.getByTestId('slide13-rail-step-drag')).toBeVisible();
+  await expect(page.getByTestId('slide13-rail-step-hold')).toBeVisible();
+  await expect(page.getByTestId('slide13-rail-step-release')).toBeVisible();
+  await expect(page.getByTestId('slide13-seal')).toHaveAttribute('data-sealed', 'false');
+
+  const dragSurface = page.getByTestId('slide13-gesture-drag');
+  await expect(dragSurface).toBeVisible();
+
+  const box = await dragSurface.boundingBox();
+  expect(box).not.toBeNull();
+  if (!box) return;
+
+  const startX = box.x + 64;
+  const startY = box.y + box.height * 0.64;
+
+  await page.mouse.move(startX, startY);
+  await page.mouse.down();
+  await page.mouse.move(startX + 240, startY, { steps: 18 });
+  await page.mouse.move(startX + 240, startY + 92, { steps: 10 });
+  await page.mouse.move(startX + 178, startY + 92, { steps: 8 });
+  await page.mouse.move(startX + 240, startY - 86, { steps: 10 });
+  await page.mouse.move(startX + 170, startY - 86, { steps: 8 });
+  await page.mouse.move(startX + 240, startY + 88, { steps: 10 });
+  await page.mouse.move(startX + 176, startY + 88, { steps: 8 });
+  await page.mouse.move(startX + 240, startY - 84, { steps: 10 });
+  await page.mouse.up();
+
+  await expect(page.getByTestId('slide13-seal')).toHaveAttribute('data-sealed', 'true');
+  await expect(page.getByTestId('slide13-seal-state')).toContainText('RightSeal colapsado');
+  await expect(page.getByTestId('slide13-gesture-hold')).toContainText('freeze on');
+  await expect(page.getByTestId('slide13-gesture-release')).toContainText('release 100%');
+
+  assertSlide13NoTimers();
+});
+
+test('Slide07 Route B fixtures stay deterministic and timer-free', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByTestId('deck-root')).toBeVisible();
+
+  expect(SLIDE07_REPLAY_FIXTURES.length).toBeGreaterThanOrEqual(200);
+
+  for (const fixture of SLIDE07_SMOKE_FIXTURES) {
+    const assertion = runSlide07FixtureReplay(fixture);
+    expect(assertion.passedStage, fixture.id + ' stage').toBeTruthy();
+    expect(assertion.passedEvidence, fixture.id + ' evidence').toBeTruthy();
+    expect(assertion.passedEvents, fixture.id + ' events').toBeTruthy();
+
+    const deterministic = assertSlide07ReplayDeterminism(fixture, 3);
+    expect(deterministic.deterministic, fixture.id + ' deterministic').toBeTruthy();
+  }
+
+  assertNoTimersInSlide07Domain();
+});
+
+test('Slide07 smoke interacts with Route B gesture contract when mounted', async ({ page }) => {
+  await page.goto('/');
+
+  for (let index = 0; index < 7; index += 1) {
+    await page.keyboard.press('ArrowRight');
+  }
+
+  const ritualRoot = page.getByTestId('slide07-root');
+  const mounted = (await ritualRoot.count()) > 0;
+
+  if (!mounted) {
+    return;
+  }
+
+  const dragSurface = page.getByTestId('slide07-gesture-drag');
+  await expect(dragSurface).toBeVisible();
+
+  const box = await dragSurface.boundingBox();
+  expect(box).not.toBeNull();
+  if (!box) {
+    return;
+  }
+
+  const startX = box.x + 44;
+  const startY = box.y + box.height * 0.46;
+
+  await page.mouse.move(startX, startY);
+  await page.mouse.down();
+  await page.mouse.move(startX + 210, startY - 2, { steps: 16 });
+  await page.mouse.move(startX + 216, startY + 6, { steps: 10 });
+  await page.mouse.up();
+
+  await expect(page.getByTestId('slide07-seal-state')).toContainText(/Graph sealed/i);
+});
+
+===== END FILE: tests/e2e/demo.e2e.spec.ts =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\__tests__\slide13.helpers.test.ts =====
+import { strict as assert } from "node:assert";
+import {
+  createInitialSlide13State,
+  resolveSlide13Thresholds,
+  transitionSlide13State,
+} from "../slide13.helpers";
+import { Slide13State } from "../slide13.types";
+
+const TEST_THRESHOLDS = resolveSlide13Thresholds({
+  dragThresholdPx: 100,
+  maxDragTravelPx: 300,
+  holdTravelThresholdPx: 180,
+  holdGain: 1,
+  releaseSnapPx: 150,
+  railStepCount: 8,
+});
+
+function down(state: Slide13State, pointerId: number, x: number, y: number) {
+  return transitionSlide13State(state, { type: "pointer_down", pointerId, x, y }, TEST_THRESHOLDS);
+}
+
+function move(state: Slide13State, pointerId: number, x: number, y: number) {
+  return transitionSlide13State(state, { type: "pointer_move", pointerId, x, y }, TEST_THRESHOLDS);
+}
+
+function up(state: Slide13State, pointerId: number, x: number, y: number) {
+  return transitionSlide13State(state, { type: "pointer_up", pointerId, x, y }, TEST_THRESHOLDS);
+}
+
+function test_threshold_resolution_boundaries() {
+  const resolved = resolveSlide13Thresholds({
+    dragThresholdPx: 4,
+    maxDragTravelPx: 9999,
+    holdTravelThresholdPx: 12,
+    dragResistance: -3,
+    holdGain: 42,
+    releaseSnapPx: 1,
+    freezeFloor: -1,
+    railStepCount: 200,
+  });
+
+  assert.equal(resolved.dragThresholdPx, 96);
+  assert.equal(resolved.maxDragTravelPx, 680);
+  assert.equal(resolved.holdTravelThresholdPx, 100);
+  assert.equal(resolved.dragResistance, 0.08);
+  assert.equal(resolved.holdGain, 3);
+  assert.equal(resolved.releaseSnapPx, 112);
+  assert.equal(resolved.freezeFloor, 0.2);
+  assert.equal(resolved.railStepCount, 32);
+}
+
+function test_drag_boundary_and_event_emission() {
+  let state = createInitialSlide13State(TEST_THRESHOLDS);
+  state = down(state, 11, 0, 0).state;
+
+  const beforeThreshold = move(state, 11, 99, 0);
+  assert.equal(beforeThreshold.state.stage, "Idle");
+  assert.equal(beforeThreshold.emitted.length, 0);
+
+  const atThreshold = move(beforeThreshold.state, 11, 100, 0);
+  assert.equal(atThreshold.state.stage, "Dragged");
+  assert.equal(atThreshold.emitted.length, 2);
+  assert.equal(atThreshold.emitted[0].name, "anchor:slide13-kpi-threshold:engaged");
+  assert.equal(atThreshold.emitted[1].name, "gesture:slide13-drag:completed");
+}
+
+function test_hold_boundary_and_event_emission() {
+  let state = createInitialSlide13State(TEST_THRESHOLDS);
+  state = down(state, 7, 0, 0).state;
+  state = move(state, 7, 120, 0).state;
+
+  const holdEarly = move(state, 7, 120, 30);
+  assert.equal(holdEarly.state.stage, "Dragged");
+  assert.equal(holdEarly.state.holdProgress < 1, true);
+
+  const holdComplete = move(holdEarly.state, 7, 80, -40);
+  assert.equal(holdComplete.state.stage, "Holding");
+  assert.equal(holdComplete.state.holdProgress, 1);
+  assert.equal(holdComplete.emitted.length, 2);
+  assert.equal(holdComplete.emitted[0].name, "anchor:slide13-kpi-freeze:engaged");
+  assert.equal(holdComplete.emitted[1].name, "gesture:slide13-hold:completed");
+}
+
+function test_release_seals_and_collapses_right_seal() {
+  let state = createInitialSlide13State(TEST_THRESHOLDS);
+  state = down(state, 2, 0, 0).state;
+  state = move(state, 2, 120, 0).state;
+  state = move(state, 2, 120, 50).state;
+  state = move(state, 2, 80, -50).state;
+
+  const released = up(state, 2, 132, -44);
+  assert.equal(released.state.stage, "Sealed");
+  assert.equal(released.state.sealed, true);
+  assert.equal(released.state.rightSealCollapsed, true);
+  assert.equal(released.state.sealState, "collapsed");
+  assert.equal(released.emitted.some((event) => event.name === "gesture:slide13-release:completed"), true);
+  assert.equal(released.emitted.some((event) => event.name === "state:slide13-sealed:set"), true);
+  assert.equal(released.emitted.some((event) => event.name === "evidence:slide13-primary:satisfied"), true);
+}
+
+function test_idempotence_same_input_same_output() {
+  let state = createInitialSlide13State(TEST_THRESHOLDS);
+  state = down(state, 4, 0, 0).state;
+  state = move(state, 4, 96, 0).state;
+
+  const first = move(state, 4, 96, 0);
+  const second = move(first.state, 4, 96, 0);
+  assert.deepEqual(first.state, second.state);
+  assert.equal(second.emitted.length, 0);
+}
+
+function test_foreign_pointer_ignored() {
+  let state = createInitialSlide13State(TEST_THRESHOLDS);
+  state = down(state, 1, 0, 0).state;
+  const moved = move(state, 9, 190, 0);
+  assert.deepEqual(moved.state, state);
+  assert.equal(moved.emitted.length, 0);
+}
+
+export function runSlide13HelperSpecs() {
+  test_threshold_resolution_boundaries();
+  test_drag_boundary_and_event_emission();
+  test_hold_boundary_and_event_emission();
+  test_release_seals_and_collapses_right_seal();
+  test_idempotence_same_input_same_output();
+  test_foreign_pointer_ignored();
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\__tests__\slide13.helpers.test.ts =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\__tests__\slide13.replay.test.ts =====
+import { strict as assert } from "node:assert";
+import { SLIDE13_REPLAY_FIXTURES } from "../slide13.fixtures";
+import {
+  assertSlide13Fixture,
+  replaySlide13Events,
+  runSlide13FixtureCatalog,
+} from "../slide13.replay";
+
+function test_single_fixture_assertion() {
+  const fixture = SLIDE13_REPLAY_FIXTURES.find((entry) => entry.id === "slide13-seal-001");
+  assert.ok(fixture);
+  if (!fixture) return;
+
+  const result = assertSlide13Fixture(fixture);
+  assert.equal(result.pass, true, result.reasons.join("; "));
+}
+
+function test_catalog_assertions_pass() {
+  const sealedFixtures = SLIDE13_REPLAY_FIXTURES.filter((entry) => entry.id.startsWith("slide13-seal-"));
+  const summary = runSlide13FixtureCatalog(sealedFixtures);
+  assert.equal(summary.failed, 0, JSON.stringify(summary.failures, null, 2));
+  assert.equal(summary.passed, summary.total);
+  assert.equal(summary.total > 0, true);
+}
+
+function test_replay_determinism_same_trace_same_result() {
+  const fixture = SLIDE13_REPLAY_FIXTURES.find((entry) => entry.id === "slide13-seal-012");
+  assert.ok(fixture);
+  if (!fixture) return;
+
+  const first = replaySlide13Events(fixture.events, { thresholds: fixture.thresholds });
+  const second = replaySlide13Events(fixture.events, { thresholds: fixture.thresholds });
+
+  assert.deepEqual(first.finalState, second.finalState);
+  assert.deepEqual(first.finalSnapshot, second.finalSnapshot);
+  assert.deepEqual(first.emitted, second.emitted);
+}
+
+function test_open_fixture_never_emits_seal_events() {
+  const fixture = SLIDE13_REPLAY_FIXTURES.find((entry) => entry.id === "slide13-open-005");
+  assert.ok(fixture);
+  if (!fixture) return;
+
+  const replay = replaySlide13Events(fixture.events, { thresholds: fixture.thresholds });
+  const eventNames = replay.emitted.map((entry) => entry.name);
+
+  assert.equal(eventNames.includes("anchor:slide13-rightseal:engaged"), false);
+  assert.equal(eventNames.includes("gesture:slide13-release:completed"), false);
+  assert.equal(eventNames.includes("state:slide13-sealed:set"), false);
+  assert.equal(eventNames.includes("evidence:slide13-primary:satisfied"), false);
+}
+
+function test_all_sealed_fixtures_emit_full_contract() {
+  const sealedFixtures = SLIDE13_REPLAY_FIXTURES.filter((entry) => entry.id.startsWith("slide13-seal-"));
+  assert.equal(sealedFixtures.length > 0, true);
+
+  for (const fixture of sealedFixtures) {
+    const replay = replaySlide13Events(fixture.events, { thresholds: fixture.thresholds });
+    const eventNames = replay.emitted.map((entry) => entry.name);
+    assert.equal(
+      eventNames.includes("anchor:slide13-kpi-threshold:engaged"),
+      true,
+      `${fixture.id} missing threshold anchor`
+    );
+    assert.equal(
+      eventNames.includes("anchor:slide13-kpi-freeze:engaged"),
+      true,
+      `${fixture.id} missing freeze anchor`
+    );
+    assert.equal(
+      eventNames.includes("anchor:slide13-rightseal:engaged"),
+      true,
+      `${fixture.id} missing right seal anchor`
+    );
+    assert.equal(
+      eventNames.includes("evidence:slide13-primary:satisfied"),
+      true,
+      `${fixture.id} missing primary evidence`
+    );
+  }
+}
+
+export function runSlide13ReplaySpecs() {
+  test_single_fixture_assertion();
+  test_catalog_assertions_pass();
+  test_replay_determinism_same_trace_same_result();
+  test_open_fixture_never_emits_seal_events();
+  test_all_sealed_fixtures_emit_full_contract();
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\__tests__\slide13.replay.test.ts =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\glass\glass.helpers.ts =====
+import { CSSProperties } from "react";
+import { Slide13Snapshot } from "../slide13.types";
+import { SLIDE13_GLASS_MODE, SLIDE13_GLASS_TOKENS } from "./glass.tokens";
+
+function clamp(value: number, min: number, max: number): number {
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
+}
+
+function resolveMode(snapshot: Slide13Snapshot): keyof typeof SLIDE13_GLASS_MODE {
+  if (snapshot.sealed) return "sealed";
+  if (snapshot.dragProgress > 0.04 || snapshot.holdProgress > 0.04) return "active";
+  return "idle";
+}
+
+export function createGlassSurfaceStyle(snapshot: Slide13Snapshot): CSSProperties {
+  const mode = resolveMode(snapshot);
+  const modeTokens = SLIDE13_GLASS_MODE[mode];
+  const borderOpacityBoost = clamp(snapshot.glow * 0.36, 0.08, 0.36);
+  const overlayIntensity = clamp(0.48 + snapshot.totalProgress * 0.24, 0.5, 0.82);
+  const baseScale = clamp(1 - snapshot.compression * 0.025, 0.976, 1);
+
+  return {
+    borderRadius: `${SLIDE13_GLASS_TOKENS.radiusLg}px`,
+    border: `1px solid ${modeTokens.border}`,
+    background: SLIDE13_GLASS_TOKENS.bgOverlay,
+    boxShadow: [
+      SLIDE13_GLASS_TOKENS.shadowDepth,
+      SLIDE13_GLASS_TOKENS.shadowInset,
+      `0 0 0 1px rgba(255, 255, 255, ${borderOpacityBoost})`,
+      `0 0 ${Math.round(24 + snapshot.glow * 28)}px ${modeTokens.glow}`,
+    ].join(", "),
+    transform: `scale(${baseScale})`,
+    opacity: overlayIntensity,
+    transition: "transform 200ms ease, opacity 160ms linear, box-shadow 160ms linear, border-color 160ms linear",
+  };
+}
+
+export function createGlassEdgeStyle(snapshot: Slide13Snapshot): CSSProperties {
+  const mode = resolveMode(snapshot);
+  const modeTokens = SLIDE13_GLASS_MODE[mode];
+  const glow = clamp(0.2 + snapshot.glow * 0.7, 0.2, 1);
+  return {
+    borderColor: modeTokens.border,
+    boxShadow: `0 0 ${Math.round(22 + glow * 22)}px ${modeTokens.glow}`,
+    opacity: clamp(0.28 + glow * 0.54, 0.32, 0.92),
+  };
+}
+
+export function createSpecularStyle(snapshot: Slide13Snapshot): CSSProperties {
+  const width = clamp(28 + snapshot.dragProgress * 46, 30, 84);
+  const opacity = clamp(0.14 + snapshot.totalProgress * 0.4, 0.16, 0.6);
+  const x = clamp(4 + snapshot.thresholdNormalized * 78, 4, 84);
+  return {
+    width: `${width}%`,
+    opacity,
+    transform: `translateX(${x}px)`,
+    transition: "transform 120ms linear, opacity 120ms linear, width 180ms ease",
+  };
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\glass\glass.helpers.ts =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\glass\glass.tokens.ts =====
+export type Slide13GlassTokens = {
+  radiusLg: number;
+  radiusMd: number;
+  borderStrong: string;
+  borderSoft: string;
+  bgBase: string;
+  bgOverlay: string;
+  glowColor: string;
+  glowColorWarm: string;
+  textStrong: string;
+  textSoft: string;
+  shadowDepth: string;
+  shadowInset: string;
+  noiseOpacity: number;
+};
+
+export const SLIDE13_GLASS_TOKENS: Slide13GlassTokens = {
+  radiusLg: 24,
+  radiusMd: 16,
+  borderStrong: "rgba(109, 226, 245, 0.42)",
+  borderSoft: "rgba(153, 192, 214, 0.18)",
+  bgBase: "rgba(3, 12, 18, 0.72)",
+  bgOverlay: "linear-gradient(140deg, rgba(117, 207, 238, 0.09) 0%, rgba(18, 32, 48, 0.24) 42%, rgba(2, 6, 10, 0.78) 100%)",
+  glowColor: "rgba(46, 207, 238, 0.38)",
+  glowColorWarm: "rgba(245, 189, 96, 0.34)",
+  textStrong: "rgba(241, 250, 255, 0.94)",
+  textSoft: "rgba(186, 214, 226, 0.84)",
+  shadowDepth: "0 18px 48px rgba(0, 0, 0, 0.42)",
+  shadowInset: "inset 0 1px 0 rgba(255, 255, 255, 0.12)",
+  noiseOpacity: 0.08,
+};
+
+export const SLIDE13_GLASS_MODE = {
+  idle: {
+    border: "rgba(143, 178, 196, 0.22)",
+    glow: "rgba(59, 154, 186, 0.22)",
+  },
+  active: {
+    border: "rgba(131, 227, 246, 0.42)",
+    glow: "rgba(42, 210, 248, 0.35)",
+  },
+  sealed: {
+    border: "rgba(245, 194, 110, 0.46)",
+    glow: "rgba(245, 177, 85, 0.4)",
+  },
+} as const;
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\glass\glass.tokens.ts =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\glass\GlassSurface.tsx =====
+import React from "react";
+import { Slide13Snapshot } from "../slide13.types";
+import { createGlassSurfaceStyle } from "./glass.helpers";
+import { GlowEdge } from "./GlowEdge";
+import { NoiseOverlay } from "./NoiseOverlay";
+import { SpecularSheen } from "./SpecularSheen";
+
+export function GlassSurface(props: {
+  snapshot: Slide13Snapshot;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={`relative overflow-hidden ${props.className ?? ""}`} style={createGlassSurfaceStyle(props.snapshot)}>
+      <SpecularSheen snapshot={props.snapshot} />
+      <NoiseOverlay snapshot={props.snapshot} />
+      <GlowEdge snapshot={props.snapshot} />
+      <div className="relative z-[2]">{props.children}</div>
+    </div>
+  );
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\glass\GlassSurface.tsx =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\glass\GlowEdge.tsx =====
+import React from "react";
+import { Slide13Snapshot } from "../slide13.types";
+import { createGlassEdgeStyle } from "./glass.helpers";
+
+export function GlowEdge(props: { snapshot: Slide13Snapshot }) {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 rounded-[24px] border"
+      style={createGlassEdgeStyle(props.snapshot)}
+    />
+  );
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\glass\GlowEdge.tsx =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\glass\NoiseOverlay.tsx =====
+import React from "react";
+import { Slide13Snapshot } from "../slide13.types";
+import { SLIDE13_GLASS_TOKENS } from "./glass.tokens";
+
+function createNoiseTile(): string {
+  return [
+    "linear-gradient(90deg, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.02) 40%, rgba(255,255,255,0.08) 100%)",
+    "linear-gradient(0deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.01) 45%, rgba(255,255,255,0.05) 100%)",
+  ].join(",");
+}
+
+export function NoiseOverlay(props: { snapshot: Slide13Snapshot }) {
+  const opacity = Math.min(
+    0.18,
+    SLIDE13_GLASS_TOKENS.noiseOpacity + props.snapshot.compression * 0.08
+  );
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 rounded-[24px]"
+      style={{
+        opacity,
+        backgroundImage: createNoiseTile(),
+        backgroundSize: "22px 22px, 26px 26px",
+        mixBlendMode: "screen",
+      }}
+    />
+  );
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\glass\NoiseOverlay.tsx =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\glass\SpecularSheen.tsx =====
+import React from "react";
+import { Slide13Snapshot } from "../slide13.types";
+import { createSpecularStyle } from "./glass.helpers";
+
+export function SpecularSheen(props: { snapshot: Slide13Snapshot }) {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute left-0 top-0 h-full rounded-[24px]"
+      style={createSpecularStyle(props.snapshot)}
+    >
+      <div
+        className="h-full w-full rounded-[24px]"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 14%, rgba(255,255,255,0.01) 54%, rgba(255,255,255,0) 100%)",
+        }}
+      />
+    </div>
+  );
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\glass\SpecularSheen.tsx =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\index.ts =====
+export { KpiRitual } from "./KpiRitual";
+export { KpiRail } from "./KpiRail";
+export { KpiSurface } from "./KpiSurface";
+export { RightSeal } from "./RightSeal";
+export { Slide13DebugOverlay } from "./slide13.debugOverlay";
+export {
+  SLIDE13_DEFAULT_THRESHOLDS,
+  createInitialSlide13State,
+  deriveSlide13Snapshot,
+  resolveSlide13Thresholds,
+  transitionSlide13State,
+} from "./slide13.helpers";
+export { SLIDE13_COPY, getSlide13ProgressNarrative, getSlide13SealLine, getSlide13StepSignal } from "./slide13.copy";
+export { replaySlide13Events, assertSlide13Fixture, runSlide13FixtureCatalog } from "./slide13.replay";
+export { SLIDE13_FIXTURE_CATALOG, SLIDE13_REPLAY_FIXTURES } from "./slide13.fixtures";
+export type {
+  Slide13CanonicalAnchorName,
+  Slide13CanonicalEventName,
+  Slide13CopyPack,
+  Slide13DebugModel,
+  Slide13EmittedEvent,
+  Slide13FixtureCatalog,
+  Slide13GestureHandlers,
+  Slide13MachineEvent,
+  Slide13ReplayAssertion,
+  Slide13ReplayFixture,
+  Slide13ReplayFrame,
+  Slide13ReplayInputEvent,
+  Slide13ReplayResult,
+  Slide13SealState,
+  Slide13Snapshot,
+  Slide13State,
+  Slide13StepKey,
+  Slide13StepModel,
+  Slide13StepStatus,
+  Slide13Thresholds,
+  Slide13TransitionResult,
+} from "./slide13.types";
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\index.ts =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\KpiRail.tsx =====
+import React from "react";
+import { SLIDE13_COPY } from "./slide13.copy";
+import { Slide13Snapshot } from "./slide13.types";
+
+function toneForStatus(status: "locked" | "active" | "complete"): string {
+  if (status === "complete") return "rgba(109, 226, 245, 0.9)";
+  if (status === "active") return "rgba(169, 222, 240, 0.68)";
+  return "rgba(126, 151, 164, 0.36)";
+}
+
+export function KpiRail(props: { snapshot: Slide13Snapshot }) {
+  return (
+    <section
+      className="rounded-2xl border border-white/15 bg-black/35 p-5"
+      data-testid="slide13-rail"
+      aria-label={SLIDE13_COPY.railTitle}
+    >
+      <header className="mb-4">
+        <p className="font-code text-[11px] uppercase tracking-[0.24em] text-cyan-100/70">
+          {SLIDE13_COPY.railTitle}
+        </p>
+        <p className="mt-1 text-sm text-white/70">{SLIDE13_COPY.railSubtitle}</p>
+      </header>
+
+      <ol className="space-y-3">
+        {props.snapshot.steps.map((step) => (
+          <li
+            key={step.key}
+            data-testid={`slide13-rail-step-${step.key}`}
+            className="rounded-xl border border-white/10 bg-black/30 px-3 py-3"
+            data-status={step.status}
+          >
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="font-code text-[11px] uppercase tracking-[0.24em] text-white/80">
+                  {SLIDE13_COPY.steps[step.key].label}
+                </p>
+                <p className="text-xs text-white/60">{SLIDE13_COPY.steps[step.key].detail}</p>
+              </div>
+              <span
+                className="font-code text-[10px] uppercase tracking-[0.22em]"
+                style={{ color: toneForStatus(step.status) }}
+              >
+                {step.status}
+              </span>
+            </div>
+            <div className="mt-2 h-[4px] overflow-hidden rounded-full bg-white/10">
+              <div
+                className="h-full origin-left rounded-full"
+                style={{
+                  transform: `scaleX(${step.progress})`,
+                  background: `linear-gradient(90deg, rgba(109,226,245,0.72), ${toneForStatus(step.status)})`,
+                }}
+              />
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div className="mt-4 grid grid-cols-3 gap-2 text-[10px] font-code uppercase tracking-[0.2em] text-white/65">
+        <div
+          data-testid="slide13-rail-gesture-drag"
+          className="rounded-lg border border-white/10 bg-white/5 px-2 py-1"
+        >
+          Drag {Math.round(props.snapshot.dragProgress * 100)}%
+        </div>
+        <div
+          data-testid="slide13-rail-gesture-hold"
+          className="rounded-lg border border-white/10 bg-white/5 px-2 py-1"
+        >
+          Hold {Math.round(props.snapshot.holdProgress * 100)}%
+        </div>
+        <div
+          data-testid="slide13-rail-gesture-release"
+          className="rounded-lg border border-white/10 bg-white/5 px-2 py-1"
+        >
+          Release {Math.round(props.snapshot.releaseProgress * 100)}%
+        </div>
+      </div>
+    </section>
+  );
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\KpiRail.tsx =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\KpiRitual.tsx =====
+import React from "react";
+import { SLIDE13_COPY, getSlide13ProgressNarrative } from "./slide13.copy";
+import { KpiRail } from "./KpiRail";
+import { KpiSurface } from "./KpiSurface";
+import { RightSeal } from "./RightSeal";
+import { Slide13DebugOverlay } from "./slide13.debugOverlay";
+import { Slide13EmittedEvent, Slide13Thresholds } from "./slide13.types";
+import { useKpiRitual } from "./useKpiRitual";
+
+export function KpiRitual(props: {
+  thresholds?: Partial<Slide13Thresholds>;
+  onEmitEvent?: (event: Slide13EmittedEvent) => void;
+}) {
+  const ritual = useKpiRitual({
+    thresholds: props.thresholds,
+    onEmitEvent: props.onEmitEvent,
+  });
+
+  return (
+    <section data-testid="slide13-root" className="relative flex h-full w-full flex-col gap-4 px-10 pb-20">
+      <header className="rounded-2xl border border-white/15 bg-black/35 px-5 py-4">
+        <p className="font-code text-[11px] uppercase tracking-[0.24em] text-white/70">
+          {SLIDE13_COPY.ritualTitle}
+        </p>
+        <p className="mt-1 text-sm text-white/75">{SLIDE13_COPY.ritualSubtitle}</p>
+        <p className="mt-2 text-xs text-white/60">
+          {getSlide13ProgressNarrative(ritual.snapshot.totalProgress)}
+        </p>
+      </header>
+
+      <div className="grid min-h-[560px] grid-cols-[1.65fr_0.9fr] gap-4">
+        <KpiSurface
+          snapshot={ritual.snapshot}
+          thresholds={ritual.thresholds}
+          gestureHandlers={ritual.gestureHandlers}
+        />
+
+        <div className="flex h-full flex-col gap-4">
+          <KpiRail snapshot={ritual.snapshot} />
+          <RightSeal snapshot={ritual.snapshot} />
+        </div>
+      </div>
+
+      <Slide13DebugOverlay
+        state={ritual.state}
+        snapshot={ritual.snapshot}
+        lastEvent={ritual.lastEmittedEvent}
+      />
+    </section>
+  );
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\KpiRitual.tsx =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\KpiSurface.tsx =====
+import React from "react";
+import { KpiDashboard } from "../../../widgets/kpi/KpiDashboard";
+import { SLIDE13_COPY } from "./slide13.copy";
+import { Slide13GestureHandlers, Slide13Snapshot, Slide13Thresholds } from "./slide13.types";
+import { GlassSurface } from "./glass/GlassSurface";
+
+function thresholdMarkerLeft(snapshot: Slide13Snapshot): string {
+  return `${Math.round(snapshot.thresholdNormalized * 100)}%`;
+}
+
+export function KpiSurface(props: {
+  snapshot: Slide13Snapshot;
+  thresholds: Slide13Thresholds;
+  gestureHandlers: Slide13GestureHandlers;
+}) {
+  return (
+    <GlassSurface snapshot={props.snapshot} className="h-[560px] min-h-[560px] w-full">
+      <div className="relative h-[560px] min-h-[560px] w-full">
+        <div className="absolute inset-0 z-[1]">
+          <KpiDashboard />
+        </div>
+
+        <div
+          className="absolute inset-0 z-[2] rounded-[24px]"
+          data-testid="slide13-gesture-drag"
+          onPointerDown={props.gestureHandlers.onPointerDown}
+          onPointerMove={props.gestureHandlers.onPointerMove}
+          onPointerUp={props.gestureHandlers.onPointerUp}
+          onPointerCancel={props.gestureHandlers.onPointerCancel}
+          style={{
+            cursor: props.snapshot.pointerActive ? "grabbing" : "grab",
+            background:
+              "radial-gradient(circle at 68% 14%, rgba(96, 203, 233, 0.08), rgba(0,0,0,0) 42%)",
+            touchAction: "none",
+          }}
+          aria-label={SLIDE13_COPY.thresholdHint}
+        />
+
+        <div className="pointer-events-none absolute left-6 right-6 top-6 z-[3]">
+          <div className="flex items-center justify-between gap-4 rounded-xl border border-white/15 bg-black/45 px-4 py-2">
+            <div>
+              <p className="font-code text-[10px] uppercase tracking-[0.24em] text-white/70">
+                {SLIDE13_COPY.thresholdLabel}
+              </p>
+              <p className="text-xs text-white/65">{SLIDE13_COPY.thresholdHint}</p>
+            </div>
+            <div className="text-right">
+              <p className="font-code text-[10px] uppercase tracking-[0.2em] text-cyan-100/75">
+                drag {Math.round(props.snapshot.dragProgress * 100)}%
+              </p>
+              <p className="font-code text-[10px] uppercase tracking-[0.2em] text-cyan-100/75">
+                hold {Math.round(props.snapshot.holdProgress * 100)}%
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="pointer-events-none absolute bottom-5 left-6 right-6 z-[3]">
+          <div className="rounded-2xl border border-white/15 bg-black/50 px-4 py-3">
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <p className="font-code text-[10px] uppercase tracking-[0.2em] text-white/70">
+                threshold rail
+              </p>
+              <p className="font-code text-[10px] uppercase tracking-[0.2em] text-white/70">
+                {Math.round(props.snapshot.thresholdNormalized * 100)}%
+              </p>
+            </div>
+            <div className="relative h-4 rounded-full border border-white/10 bg-black/60">
+              <div
+                className="absolute bottom-0 left-0 top-0 rounded-full"
+                style={{
+                  width: thresholdMarkerLeft(props.snapshot),
+                  background:
+                    "linear-gradient(90deg, rgba(109,226,245,0.65), rgba(109,226,245,0.18))",
+                }}
+              />
+              <div
+                className="absolute -top-[7px] h-7 w-[14px] -translate-x-1/2 rounded-md border border-cyan-100/60 bg-cyan-100/20 shadow-[0_0_18px_rgba(109,226,245,0.45)]"
+                style={{
+                  left: thresholdMarkerLeft(props.snapshot),
+                }}
+              />
+            </div>
+            <div className="mt-2 grid grid-cols-3 gap-2 text-[10px] font-code uppercase tracking-[0.2em] text-white/65">
+              <div data-testid="slide13-gesture-hold" className="rounded-md border border-white/10 bg-white/5 px-2 py-1">
+                freeze {props.snapshot.frozen ? "on" : "off"}
+              </div>
+              <div
+                data-testid="slide13-gesture-release"
+                className="rounded-md border border-white/10 bg-white/5 px-2 py-1"
+              >
+                release {Math.round(props.snapshot.releaseProgress * 100)}%
+              </div>
+              <div className="rounded-md border border-white/10 bg-white/5 px-2 py-1">
+                rail {props.snapshot.railIndex + 1}/{props.thresholds.railStepCount}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </GlassSurface>
+  );
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\KpiSurface.tsx =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\RightSeal.tsx =====
+import React from "react";
+import { getSlide13SealLine, SLIDE13_COPY } from "./slide13.copy";
+import { Slide13Snapshot } from "./slide13.types";
+
+function tone(snapshot: Slide13Snapshot): string {
+  if (snapshot.rightSealCollapsed) return "rgba(245, 193, 108, 0.92)";
+  if (snapshot.frozen) return "rgba(109, 226, 245, 0.88)";
+  return "rgba(196, 212, 220, 0.76)";
+}
+
+export function RightSeal(props: { snapshot: Slide13Snapshot }) {
+  const textTone = tone(props.snapshot);
+  return (
+    <section
+      data-testid="slide13-seal"
+      data-sealed={props.snapshot.sealed ? "true" : "false"}
+      className="rounded-2xl border border-white/15 bg-black/45 px-4 py-4"
+      style={{
+        opacity: props.snapshot.rightSealCollapsed ? 0.84 : 1,
+        transform: props.snapshot.rightSealCollapsed ? "scale(0.96)" : "scale(1)",
+        transition: "opacity 180ms linear, transform 180ms ease",
+      }}
+    >
+      <header className="mb-2 flex items-center justify-between gap-2">
+        <p className="font-code text-[11px] uppercase tracking-[0.24em] text-white/70">
+          {SLIDE13_COPY.sealTitle}
+        </p>
+        <span
+          className="rounded-md border border-white/20 px-2 py-1 text-[10px] font-code uppercase tracking-[0.2em]"
+          style={{ color: textTone }}
+        >
+          {props.snapshot.sealState}
+        </span>
+      </header>
+      <p data-testid="slide13-seal-state" className="text-sm" style={{ color: textTone }}>
+        {getSlide13SealLine(props.snapshot.sealState)}
+      </p>
+      <div className="mt-3 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/70">
+        Rail index {props.snapshot.railIndex} / progress {Math.round(props.snapshot.totalProgress * 100)}%
+      </div>
+    </section>
+  );
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\RightSeal.tsx =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\slide13.copy.ts =====
+import {
+  Slide13CopyPack,
+  Slide13SealState,
+  Slide13StepKey,
+} from "./slide13.types";
+
+export const SLIDE13_COPY: Slide13CopyPack = {
+  ritualTitle: "KPI Ritual // Route B",
+  ritualSubtitle: "El operador mueve umbral, congela reporte y sella evidencia.",
+  railTitle: "Ritual Steps",
+  railSubtitle: "Gesto explícito, sistema obediente, evidencia sellada.",
+  sealTitle: "RightSeal // Operacional",
+  sealOpen: "Reporte abierto. Umbral aún no congelado.",
+  sealFrozen: "Reporte congelado. Listo para sellado final.",
+  sealSealed: "Reporte sellado con evidencia primaria.",
+  sealCollapsed: "RightSeal colapsado. Estado final persistido.",
+  frozenBadge: "REPORT FREEZE",
+  releasedBadge: "RELEASE TO SEAL",
+  thresholdLabel: "KPI Threshold Marker",
+  thresholdHint: "Arrastra para cambiar capa de foco KPI.",
+  debugTitle: "Debug Overlay // Slide13",
+  debugHint: "Visible solo en desarrollo para ver snapshot/eventos.",
+  steps: {
+    drag: {
+      label: "Drag Threshold",
+      detail: "Mueve el marcador hasta superar el umbral determinístico.",
+    },
+    hold: {
+      label: "Hold Freeze",
+      detail: "Acumula movimiento sostenido para congelar reporte.",
+    },
+    release: {
+      label: "Release Seal",
+      detail: "Suelta al completar hold para sellar y colapsar RightSeal.",
+    },
+  },
+};
+
+const SEAL_COPY_BY_STATE: Record<Slide13SealState, string> = {
+  open: SLIDE13_COPY.sealOpen,
+  freezing: SLIDE13_COPY.sealFrozen,
+  sealed: SLIDE13_COPY.sealSealed,
+  collapsed: SLIDE13_COPY.sealCollapsed,
+};
+
+export function getSlide13SealLine(sealState: Slide13SealState): string {
+  return SEAL_COPY_BY_STATE[sealState] ?? SLIDE13_COPY.sealOpen;
+}
+
+const STEP_SIGNAL: Record<Slide13StepKey, string> = {
+  drag: "threshold",
+  hold: "freeze",
+  release: "seal",
+};
+
+export function getSlide13StepSignal(step: Slide13StepKey): string {
+  return STEP_SIGNAL[step];
+}
+
+export function getSlide13ProgressNarrative(progress: number): string {
+  if (progress >= 1) {
+    return "Ritual cerrado. Evidencia completa.";
+  }
+  if (progress >= 0.75) {
+    return "Cierre inminente. Preparando sellado.";
+  }
+  if (progress >= 0.5) {
+    return "Congelamiento en curso. KPI bajo control.";
+  }
+  if (progress >= 0.25) {
+    return "Umbral en ajuste. Falta presión sostenida.";
+  }
+  return "Esperando gesto inicial del operador.";
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\slide13.copy.ts =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\slide13.debugOverlay.tsx =====
+import React from "react";
+import { SLIDE13_COPY } from "./slide13.copy";
+import { Slide13EmittedEvent, Slide13Snapshot, Slide13State } from "./slide13.types";
+
+type Props = {
+  snapshot: Slide13Snapshot;
+  state: Slide13State;
+  lastEvent: Slide13EmittedEvent | null;
+};
+
+export function Slide13DebugOverlay(props: Props) {
+  if (!import.meta.env.DEV) return null;
+
+  return (
+    <aside className="absolute right-4 top-4 z-[20] max-w-[340px] rounded-xl border border-white/20 bg-black/70 px-3 py-3 text-[11px] text-white/85 backdrop-blur-sm">
+      <p className="font-code text-[10px] uppercase tracking-[0.24em] text-cyan-100/70">
+        {SLIDE13_COPY.debugTitle}
+      </p>
+      <p className="mt-1 text-[11px] text-white/70">{SLIDE13_COPY.debugHint}</p>
+
+      <div className="mt-2 space-y-1 font-code text-[10px] tracking-[0.18em] text-white/75">
+        <div>stage: {props.state.stage}</div>
+        <div>pointer: {props.state.pointerActive ? "active" : "idle"}</div>
+        <div>drag: {props.snapshot.dragProgress.toFixed(3)}</div>
+        <div>hold: {props.snapshot.holdProgress.toFixed(3)}</div>
+        <div>release: {props.snapshot.releaseProgress.toFixed(3)}</div>
+        <div>rail: {props.snapshot.railIndex}</div>
+        <div>seal: {props.snapshot.sealState}</div>
+      </div>
+
+      <div className="mt-2 rounded-md border border-white/15 bg-black/35 px-2 py-2">
+        <p className="font-code text-[9px] uppercase tracking-[0.2em] text-white/65">last event</p>
+        <p className="mt-1 break-all text-[10px] text-white/85">
+          {props.lastEvent ? props.lastEvent.name : "none"}
+        </p>
+      </div>
+    </aside>
+  );
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\slide13.debugOverlay.tsx =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\slide13.fixtures.ts =====
+import {
+  Slide13FixtureCatalog,
+  Slide13ReplayFixture,
+  Slide13ReplayInputEvent,
+  Slide13Thresholds,
+} from "./slide13.types";
+import { resolveSlide13Thresholds } from "./slide13.helpers";
+
+type Slide13FixtureSeed = {
+  id: string;
+  title: string;
+  description: string;
+  startX: number;
+  startY: number;
+  dragTargetX: number;
+  holdAmplitude: number;
+  holdLoops: number;
+  releaseDeltaX: number;
+  releaseDeltaY: number;
+  thresholdOverrides?: Partial<Slide13Thresholds>;
+};
+
+function down(id: string, pointerId: number, x: number, y: number): Slide13ReplayInputEvent {
+  return {
+    id,
+    machineEvent: { type: "pointer_down", pointerId, x, y },
+  };
+}
+
+function move(id: string, pointerId: number, x: number, y: number): Slide13ReplayInputEvent {
+  return {
+    id,
+    machineEvent: { type: "pointer_move", pointerId, x, y },
+  };
+}
+
+function up(id: string, pointerId: number, x: number, y: number): Slide13ReplayInputEvent {
+  return {
+    id,
+    machineEvent: { type: "pointer_up", pointerId, x, y },
+  };
+}
+
+function toRailIndex(dragTargetX: number, thresholds: Slide13Thresholds): number {
+  const normalized = Math.min(1, Math.max(0, dragTargetX / thresholds.maxDragTravelPx));
+  return Math.min(
+    thresholds.railStepCount - 1,
+    Math.max(0, Math.round(normalized * (thresholds.railStepCount - 1)))
+  );
+}
+
+function buildSealedEvents(seed: Slide13FixtureSeed): Slide13ReplayInputEvent[] {
+  const pointerId = 13;
+  const events: Slide13ReplayInputEvent[] = [];
+  const start = { x: seed.startX, y: seed.startY };
+  const dragHalf = Math.round(seed.dragTargetX * 0.56);
+
+  events.push(down(`${seed.id}-down`, pointerId, start.x, start.y));
+  events.push(move(`${seed.id}-drag-1`, pointerId, start.x + dragHalf, start.y));
+  events.push(move(`${seed.id}-drag-2`, pointerId, start.x + seed.dragTargetX, start.y));
+
+  let cursorX = start.x + seed.dragTargetX;
+  let cursorY = start.y;
+  for (let loop = 0; loop < seed.holdLoops; loop += 1) {
+    const wave = loop % 2 === 0 ? seed.holdAmplitude : -seed.holdAmplitude;
+    cursorY = start.y + wave;
+    events.push(move(`${seed.id}-hold-a-${loop}`, pointerId, cursorX, cursorY));
+    cursorX = cursorX - Math.round(seed.holdAmplitude * 0.3);
+    events.push(move(`${seed.id}-hold-b-${loop}`, pointerId, cursorX, cursorY));
+    cursorX = start.x + seed.dragTargetX;
+    cursorY = start.y - wave;
+    events.push(move(`${seed.id}-hold-c-${loop}`, pointerId, cursorX, cursorY));
+  }
+
+  events.push(
+    up(
+      `${seed.id}-release`,
+      pointerId,
+      start.x + seed.dragTargetX + seed.releaseDeltaX,
+      start.y + seed.releaseDeltaY
+    )
+  );
+
+  return events;
+}
+
+function buildUnsealedEvents(seed: Slide13FixtureSeed): Slide13ReplayInputEvent[] {
+  const pointerId = 130;
+  const events: Slide13ReplayInputEvent[] = [];
+  const start = { x: seed.startX, y: seed.startY };
+
+  events.push(down(`${seed.id}-down`, pointerId, start.x, start.y));
+  events.push(move(`${seed.id}-drag-1`, pointerId, start.x + Math.round(seed.dragTargetX * 0.4), start.y));
+  events.push(move(`${seed.id}-drag-2`, pointerId, start.x + seed.dragTargetX, start.y));
+
+  const shortLoops = Math.max(1, Math.min(2, seed.holdLoops));
+  for (let loop = 0; loop < shortLoops; loop += 1) {
+    const offset = loop % 2 === 0 ? seed.holdAmplitude : -seed.holdAmplitude;
+    events.push(move(`${seed.id}-hold-a-${loop}`, pointerId, start.x + seed.dragTargetX, start.y + offset));
+    events.push(
+      move(
+        `${seed.id}-hold-b-${loop}`,
+        pointerId,
+        start.x + seed.dragTargetX - Math.round(seed.holdAmplitude * 0.16),
+        start.y - offset
+      )
+    );
+  }
+
+  events.push(
+    up(
+      `${seed.id}-release`,
+      pointerId,
+      start.x + seed.dragTargetX + seed.releaseDeltaX,
+      start.y + seed.releaseDeltaY
+    )
+  );
+  return events;
+}
+
+function createSealedFixture(seed: Slide13FixtureSeed): Slide13ReplayFixture {
+  const thresholds = resolveSlide13Thresholds(seed.thresholdOverrides);
+  return {
+    id: seed.id,
+    title: seed.title,
+    description: seed.description,
+    thresholds: seed.thresholdOverrides,
+    events: buildSealedEvents(seed),
+    assertion: {
+      expectedStage: "Sealed",
+      expectedSealState: "collapsed",
+      expectedSealed: true,
+      expectedRailIndex: thresholds.railStepCount - 1,
+      dragProgressAtLeast: 1,
+      holdProgressAtLeast: 1,
+      releaseProgressAtLeast: 1,
+      requiredEventNames: [
+        "anchor:slide13-kpi-threshold:engaged",
+        "gesture:slide13-drag:completed",
+        "anchor:slide13-kpi-freeze:engaged",
+        "gesture:slide13-hold:completed",
+        "anchor:slide13-rightseal:engaged",
+        "gesture:slide13-release:completed",
+        "state:slide13-sealed:set",
+        "evidence:slide13-primary:satisfied",
+      ],
+    },
+  };
+}
+
+function createUnsealedFixture(seed: Slide13FixtureSeed): Slide13ReplayFixture {
+  const thresholds = resolveSlide13Thresholds(seed.thresholdOverrides);
+  return {
+    id: seed.id,
+    title: seed.title,
+    description: seed.description,
+    thresholds: seed.thresholdOverrides,
+    events: buildUnsealedEvents(seed),
+    assertion: {
+      expectedStage: "Dragged",
+      expectedSealState: "open",
+      expectedSealed: false,
+      expectedRailIndex: toRailIndex(seed.dragTargetX, thresholds),
+      dragProgressAtLeast: 0.9,
+      holdProgressAtLeast: 0,
+      releaseProgressAtLeast: 0,
+      requiredEventNames: [
+        "anchor:slide13-kpi-threshold:engaged",
+        "gesture:slide13-drag:completed",
+      ],
+    },
+  };
+}
+
+const SEALED_SEEDS: Slide13FixtureSeed[] = [
+  {
+    id: "slide13-seal-001",
+    title: "Seal // baseline axis",
+    description: "Drag horizontal + balanced hold loops + release.",
+    startX: 14,
+    startY: 136,
+    dragTargetX: 198,
+    holdAmplitude: 28,
+    holdLoops: 5,
+    releaseDeltaX: 18,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-002",
+    title: "Seal // wide hold",
+    description: "Drag plus deep hold arcs to force freeze certainty.",
+    startX: 18,
+    startY: 132,
+    dragTargetX: 204,
+    holdAmplitude: 36,
+    holdLoops: 5,
+    releaseDeltaX: 22,
+    releaseDeltaY: -2,
+  },
+  {
+    id: "slide13-seal-003",
+    title: "Seal // lower rail",
+    description: "Start lower, sustain hold pressure on same threshold zone.",
+    startX: 12,
+    startY: 148,
+    dragTargetX: 208,
+    holdAmplitude: 34,
+    holdLoops: 6,
+    releaseDeltaX: 16,
+    releaseDeltaY: 3,
+  },
+  {
+    id: "slide13-seal-004",
+    title: "Seal // high-amplitude hold",
+    description: "Large oscillation hold movement with moderate drag target.",
+    startX: 24,
+    startY: 126,
+    dragTargetX: 214,
+    holdAmplitude: 42,
+    holdLoops: 4,
+    releaseDeltaX: 20,
+    releaseDeltaY: 2,
+  },
+  {
+    id: "slide13-seal-005",
+    title: "Seal // threshold + margin",
+    description: "Just above drag threshold, then heavy hold loops.",
+    startX: 16,
+    startY: 140,
+    dragTargetX: 188,
+    holdAmplitude: 44,
+    holdLoops: 6,
+    releaseDeltaX: 26,
+    releaseDeltaY: -1,
+  },
+  {
+    id: "slide13-seal-006",
+    title: "Seal // long drag",
+    description: "Longer drag to higher rail tier and standard hold.",
+    startX: 10,
+    startY: 130,
+    dragTargetX: 226,
+    holdAmplitude: 30,
+    holdLoops: 5,
+    releaseDeltaX: 24,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-seal-007",
+    title: "Seal // compact hold",
+    description: "Compact hold amplitude with additional loop count.",
+    startX: 15,
+    startY: 142,
+    dragTargetX: 202,
+    holdAmplitude: 24,
+    holdLoops: 7,
+    releaseDeltaX: 20,
+    releaseDeltaY: 2,
+  },
+  {
+    id: "slide13-seal-008",
+    title: "Seal // lower start",
+    description: "Lower y start to validate hold travel independence.",
+    startX: 12,
+    startY: 160,
+    dragTargetX: 212,
+    holdAmplitude: 38,
+    holdLoops: 5,
+    releaseDeltaX: 18,
+    releaseDeltaY: -3,
+  },
+  {
+    id: "slide13-seal-009",
+    title: "Seal // high rail pressure",
+    description: "Aggressive drag and medium hold loops.",
+    startX: 8,
+    startY: 128,
+    dragTargetX: 238,
+    holdAmplitude: 32,
+    holdLoops: 5,
+    releaseDeltaX: 28,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-010",
+    title: "Seal // precision freeze",
+    description: "Controlled drag with high loop repetition.",
+    startX: 20,
+    startY: 132,
+    dragTargetX: 206,
+    holdAmplitude: 26,
+    holdLoops: 8,
+    releaseDeltaX: 18,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-seal-011",
+    title: "Seal // override threshold set A",
+    description: "Custom thresholds with shorter drag threshold.",
+    startX: 14,
+    startY: 138,
+    dragTargetX: 172,
+    holdAmplitude: 30,
+    holdLoops: 6,
+    releaseDeltaX: 24,
+    releaseDeltaY: 2,
+    thresholdOverrides: {
+      dragThresholdPx: 146,
+      holdTravelThresholdPx: 214,
+      releaseSnapPx: 190,
+      railStepCount: 9,
+    },
+  },
+  {
+    id: "slide13-seal-012",
+    title: "Seal // override threshold set B",
+    description: "Custom thresholds with larger drag span.",
+    startX: 12,
+    startY: 130,
+    dragTargetX: 234,
+    holdAmplitude: 34,
+    holdLoops: 5,
+    releaseDeltaX: 30,
+    releaseDeltaY: -1,
+    thresholdOverrides: {
+      dragThresholdPx: 172,
+      maxDragTravelPx: 382,
+      holdTravelThresholdPx: 246,
+      railStepCount: 10,
+    },
+  },
+  {
+    id: "slide13-seal-013",
+    title: "Seal // override threshold set C",
+    description: "Higher hold threshold solved by larger amplitudes.",
+    startX: 14,
+    startY: 150,
+    dragTargetX: 214,
+    holdAmplitude: 48,
+    holdLoops: 6,
+    releaseDeltaX: 18,
+    releaseDeltaY: 3,
+    thresholdOverrides: {
+      holdTravelThresholdPx: 280,
+      holdGain: 1.1,
+      railStepCount: 8,
+    },
+  },
+  {
+    id: "slide13-seal-014",
+    title: "Seal // short hold amplified",
+    description: "Short loops but high amplitude to complete freeze.",
+    startX: 12,
+    startY: 136,
+    dragTargetX: 216,
+    holdAmplitude: 56,
+    holdLoops: 4,
+    releaseDeltaX: 22,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-015",
+    title: "Seal // medium hold amplified",
+    description: "Balanced drag and hold loops with medium amplitude.",
+    startX: 16,
+    startY: 144,
+    dragTargetX: 210,
+    holdAmplitude: 40,
+    holdLoops: 5,
+    releaseDeltaX: 24,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-seal-016",
+    title: "Seal // long hold low amplitude",
+    description: "Lower amplitude compensated by extra loops.",
+    startX: 10,
+    startY: 138,
+    dragTargetX: 214,
+    holdAmplitude: 22,
+    holdLoops: 10,
+    releaseDeltaX: 16,
+    releaseDeltaY: -2,
+  },
+  {
+    id: "slide13-seal-017",
+    title: "Seal // hold near center",
+    description: "Hold path remains around centerline with repeated jitter.",
+    startX: 11,
+    startY: 134,
+    dragTargetX: 218,
+    holdAmplitude: 26,
+    holdLoops: 8,
+    releaseDeltaX: 14,
+    releaseDeltaY: 2,
+  },
+  {
+    id: "slide13-seal-018",
+    title: "Seal // release upward",
+    description: "Release with negative Y drift after freeze completion.",
+    startX: 13,
+    startY: 144,
+    dragTargetX: 220,
+    holdAmplitude: 34,
+    holdLoops: 6,
+    releaseDeltaX: 20,
+    releaseDeltaY: -6,
+  },
+  {
+    id: "slide13-seal-019",
+    title: "Seal // release downward",
+    description: "Release with positive Y drift after freeze completion.",
+    startX: 15,
+    startY: 126,
+    dragTargetX: 224,
+    holdAmplitude: 32,
+    holdLoops: 6,
+    releaseDeltaX: 18,
+    releaseDeltaY: 6,
+  },
+  {
+    id: "slide13-seal-020",
+    title: "Seal // high drag ceiling",
+    description: "Drag near max travel while preserving deterministic seal.",
+    startX: 9,
+    startY: 129,
+    dragTargetX: 252,
+    holdAmplitude: 28,
+    holdLoops: 7,
+    releaseDeltaX: 24,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-021",
+    title: "Seal // grid series 01",
+    description: "Matrix sample 01 for deterministic replay.",
+    startX: 12,
+    startY: 132,
+    dragTargetX: 200,
+    holdAmplitude: 24,
+    holdLoops: 6,
+    releaseDeltaX: 16,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-022",
+    title: "Seal // grid series 02",
+    description: "Matrix sample 02 for deterministic replay.",
+    startX: 12,
+    startY: 132,
+    dragTargetX: 208,
+    holdAmplitude: 24,
+    holdLoops: 6,
+    releaseDeltaX: 16,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-seal-023",
+    title: "Seal // grid series 03",
+    description: "Matrix sample 03 for deterministic replay.",
+    startX: 12,
+    startY: 132,
+    dragTargetX: 216,
+    holdAmplitude: 24,
+    holdLoops: 6,
+    releaseDeltaX: 16,
+    releaseDeltaY: 2,
+  },
+  {
+    id: "slide13-seal-024",
+    title: "Seal // grid series 04",
+    description: "Matrix sample 04 for deterministic replay.",
+    startX: 12,
+    startY: 132,
+    dragTargetX: 224,
+    holdAmplitude: 24,
+    holdLoops: 6,
+    releaseDeltaX: 16,
+    releaseDeltaY: 3,
+  },
+  {
+    id: "slide13-seal-025",
+    title: "Seal // grid series 05",
+    description: "Matrix sample 05 for deterministic replay.",
+    startX: 12,
+    startY: 132,
+    dragTargetX: 232,
+    holdAmplitude: 24,
+    holdLoops: 6,
+    releaseDeltaX: 16,
+    releaseDeltaY: 4,
+  },
+  {
+    id: "slide13-seal-026",
+    title: "Seal // grid series 06",
+    description: "Matrix sample 06 for deterministic replay.",
+    startX: 14,
+    startY: 136,
+    dragTargetX: 200,
+    holdAmplitude: 28,
+    holdLoops: 6,
+    releaseDeltaX: 18,
+    releaseDeltaY: -1,
+  },
+  {
+    id: "slide13-seal-027",
+    title: "Seal // grid series 07",
+    description: "Matrix sample 07 for deterministic replay.",
+    startX: 14,
+    startY: 136,
+    dragTargetX: 208,
+    holdAmplitude: 28,
+    holdLoops: 6,
+    releaseDeltaX: 18,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-028",
+    title: "Seal // grid series 08",
+    description: "Matrix sample 08 for deterministic replay.",
+    startX: 14,
+    startY: 136,
+    dragTargetX: 216,
+    holdAmplitude: 28,
+    holdLoops: 6,
+    releaseDeltaX: 18,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-seal-029",
+    title: "Seal // grid series 09",
+    description: "Matrix sample 09 for deterministic replay.",
+    startX: 14,
+    startY: 136,
+    dragTargetX: 224,
+    holdAmplitude: 28,
+    holdLoops: 6,
+    releaseDeltaX: 18,
+    releaseDeltaY: 2,
+  },
+  {
+    id: "slide13-seal-030",
+    title: "Seal // grid series 10",
+    description: "Matrix sample 10 for deterministic replay.",
+    startX: 14,
+    startY: 136,
+    dragTargetX: 232,
+    holdAmplitude: 28,
+    holdLoops: 6,
+    releaseDeltaX: 18,
+    releaseDeltaY: 3,
+  },
+  {
+    id: "slide13-seal-031",
+    title: "Seal // grid series 11",
+    description: "Matrix sample 11 for deterministic replay.",
+    startX: 18,
+    startY: 140,
+    dragTargetX: 202,
+    holdAmplitude: 32,
+    holdLoops: 6,
+    releaseDeltaX: 20,
+    releaseDeltaY: -2,
+  },
+  {
+    id: "slide13-seal-032",
+    title: "Seal // grid series 12",
+    description: "Matrix sample 12 for deterministic replay.",
+    startX: 18,
+    startY: 140,
+    dragTargetX: 210,
+    holdAmplitude: 32,
+    holdLoops: 6,
+    releaseDeltaX: 20,
+    releaseDeltaY: -1,
+  },
+  {
+    id: "slide13-seal-033",
+    title: "Seal // grid series 13",
+    description: "Matrix sample 13 for deterministic replay.",
+    startX: 18,
+    startY: 140,
+    dragTargetX: 218,
+    holdAmplitude: 32,
+    holdLoops: 6,
+    releaseDeltaX: 20,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-034",
+    title: "Seal // grid series 14",
+    description: "Matrix sample 14 for deterministic replay.",
+    startX: 18,
+    startY: 140,
+    dragTargetX: 226,
+    holdAmplitude: 32,
+    holdLoops: 6,
+    releaseDeltaX: 20,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-seal-035",
+    title: "Seal // grid series 15",
+    description: "Matrix sample 15 for deterministic replay.",
+    startX: 18,
+    startY: 140,
+    dragTargetX: 234,
+    holdAmplitude: 32,
+    holdLoops: 6,
+    releaseDeltaX: 20,
+    releaseDeltaY: 2,
+  },
+  {
+    id: "slide13-seal-036",
+    title: "Seal // grid series 16",
+    description: "Matrix sample 16 for deterministic replay.",
+    startX: 22,
+    startY: 128,
+    dragTargetX: 204,
+    holdAmplitude: 36,
+    holdLoops: 7,
+    releaseDeltaX: 22,
+    releaseDeltaY: -2,
+  },
+  {
+    id: "slide13-seal-037",
+    title: "Seal // grid series 17",
+    description: "Matrix sample 17 for deterministic replay.",
+    startX: 22,
+    startY: 128,
+    dragTargetX: 212,
+    holdAmplitude: 36,
+    holdLoops: 7,
+    releaseDeltaX: 22,
+    releaseDeltaY: -1,
+  },
+  {
+    id: "slide13-seal-038",
+    title: "Seal // grid series 18",
+    description: "Matrix sample 18 for deterministic replay.",
+    startX: 22,
+    startY: 128,
+    dragTargetX: 220,
+    holdAmplitude: 36,
+    holdLoops: 7,
+    releaseDeltaX: 22,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-039",
+    title: "Seal // grid series 19",
+    description: "Matrix sample 19 for deterministic replay.",
+    startX: 22,
+    startY: 128,
+    dragTargetX: 228,
+    holdAmplitude: 36,
+    holdLoops: 7,
+    releaseDeltaX: 22,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-seal-040",
+    title: "Seal // grid series 20",
+    description: "Matrix sample 20 for deterministic replay.",
+    startX: 22,
+    startY: 128,
+    dragTargetX: 236,
+    holdAmplitude: 36,
+    holdLoops: 7,
+    releaseDeltaX: 22,
+    releaseDeltaY: 2,
+  },
+  {
+    id: "slide13-seal-041",
+    title: "Seal // matrix row 1 col 1",
+    description: "Row 1 col 1 seed for pressure matrix.",
+    startX: 10,
+    startY: 134,
+    dragTargetX: 196,
+    holdAmplitude: 22,
+    holdLoops: 8,
+    releaseDeltaX: 16,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-042",
+    title: "Seal // matrix row 1 col 2",
+    description: "Row 1 col 2 seed for pressure matrix.",
+    startX: 10,
+    startY: 134,
+    dragTargetX: 206,
+    holdAmplitude: 22,
+    holdLoops: 8,
+    releaseDeltaX: 16,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-seal-043",
+    title: "Seal // matrix row 1 col 3",
+    description: "Row 1 col 3 seed for pressure matrix.",
+    startX: 10,
+    startY: 134,
+    dragTargetX: 216,
+    holdAmplitude: 22,
+    holdLoops: 8,
+    releaseDeltaX: 16,
+    releaseDeltaY: 2,
+  },
+  {
+    id: "slide13-seal-044",
+    title: "Seal // matrix row 1 col 4",
+    description: "Row 1 col 4 seed for pressure matrix.",
+    startX: 10,
+    startY: 134,
+    dragTargetX: 226,
+    holdAmplitude: 22,
+    holdLoops: 8,
+    releaseDeltaX: 16,
+    releaseDeltaY: 3,
+  },
+  {
+    id: "slide13-seal-045",
+    title: "Seal // matrix row 2 col 1",
+    description: "Row 2 col 1 seed for pressure matrix.",
+    startX: 14,
+    startY: 138,
+    dragTargetX: 198,
+    holdAmplitude: 26,
+    holdLoops: 8,
+    releaseDeltaX: 18,
+    releaseDeltaY: -1,
+  },
+  {
+    id: "slide13-seal-046",
+    title: "Seal // matrix row 2 col 2",
+    description: "Row 2 col 2 seed for pressure matrix.",
+    startX: 14,
+    startY: 138,
+    dragTargetX: 208,
+    holdAmplitude: 26,
+    holdLoops: 8,
+    releaseDeltaX: 18,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-047",
+    title: "Seal // matrix row 2 col 3",
+    description: "Row 2 col 3 seed for pressure matrix.",
+    startX: 14,
+    startY: 138,
+    dragTargetX: 218,
+    holdAmplitude: 26,
+    holdLoops: 8,
+    releaseDeltaX: 18,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-seal-048",
+    title: "Seal // matrix row 2 col 4",
+    description: "Row 2 col 4 seed for pressure matrix.",
+    startX: 14,
+    startY: 138,
+    dragTargetX: 228,
+    holdAmplitude: 26,
+    holdLoops: 8,
+    releaseDeltaX: 18,
+    releaseDeltaY: 2,
+  },
+  {
+    id: "slide13-seal-049",
+    title: "Seal // matrix row 3 col 1",
+    description: "Row 3 col 1 seed for pressure matrix.",
+    startX: 18,
+    startY: 142,
+    dragTargetX: 200,
+    holdAmplitude: 30,
+    holdLoops: 8,
+    releaseDeltaX: 20,
+    releaseDeltaY: -2,
+  },
+  {
+    id: "slide13-seal-050",
+    title: "Seal // matrix row 3 col 2",
+    description: "Row 3 col 2 seed for pressure matrix.",
+    startX: 18,
+    startY: 142,
+    dragTargetX: 210,
+    holdAmplitude: 30,
+    holdLoops: 8,
+    releaseDeltaX: 20,
+    releaseDeltaY: -1,
+  },
+  {
+    id: "slide13-seal-051",
+    title: "Seal // matrix row 3 col 3",
+    description: "Row 3 col 3 seed for pressure matrix.",
+    startX: 18,
+    startY: 142,
+    dragTargetX: 220,
+    holdAmplitude: 30,
+    holdLoops: 8,
+    releaseDeltaX: 20,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-052",
+    title: "Seal // matrix row 3 col 4",
+    description: "Row 3 col 4 seed for pressure matrix.",
+    startX: 18,
+    startY: 142,
+    dragTargetX: 230,
+    holdAmplitude: 30,
+    holdLoops: 8,
+    releaseDeltaX: 20,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-seal-053",
+    title: "Seal // matrix row 4 col 1",
+    description: "Row 4 col 1 seed for pressure matrix.",
+    startX: 22,
+    startY: 146,
+    dragTargetX: 202,
+    holdAmplitude: 34,
+    holdLoops: 8,
+    releaseDeltaX: 22,
+    releaseDeltaY: -2,
+  },
+  {
+    id: "slide13-seal-054",
+    title: "Seal // matrix row 4 col 2",
+    description: "Row 4 col 2 seed for pressure matrix.",
+    startX: 22,
+    startY: 146,
+    dragTargetX: 212,
+    holdAmplitude: 34,
+    holdLoops: 8,
+    releaseDeltaX: 22,
+    releaseDeltaY: -1,
+  },
+  {
+    id: "slide13-seal-055",
+    title: "Seal // matrix row 4 col 3",
+    description: "Row 4 col 3 seed for pressure matrix.",
+    startX: 22,
+    startY: 146,
+    dragTargetX: 222,
+    holdAmplitude: 34,
+    holdLoops: 8,
+    releaseDeltaX: 22,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-056",
+    title: "Seal // matrix row 4 col 4",
+    description: "Row 4 col 4 seed for pressure matrix.",
+    startX: 22,
+    startY: 146,
+    dragTargetX: 232,
+    holdAmplitude: 34,
+    holdLoops: 8,
+    releaseDeltaX: 22,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-seal-057",
+    title: "Seal // matrix row 5 col 1",
+    description: "Row 5 col 1 seed for pressure matrix.",
+    startX: 10,
+    startY: 124,
+    dragTargetX: 204,
+    holdAmplitude: 38,
+    holdLoops: 7,
+    releaseDeltaX: 24,
+    releaseDeltaY: -3,
+  },
+  {
+    id: "slide13-seal-058",
+    title: "Seal // matrix row 5 col 2",
+    description: "Row 5 col 2 seed for pressure matrix.",
+    startX: 10,
+    startY: 124,
+    dragTargetX: 214,
+    holdAmplitude: 38,
+    holdLoops: 7,
+    releaseDeltaX: 24,
+    releaseDeltaY: -2,
+  },
+  {
+    id: "slide13-seal-059",
+    title: "Seal // matrix row 5 col 3",
+    description: "Row 5 col 3 seed for pressure matrix.",
+    startX: 10,
+    startY: 124,
+    dragTargetX: 224,
+    holdAmplitude: 38,
+    holdLoops: 7,
+    releaseDeltaX: 24,
+    releaseDeltaY: -1,
+  },
+  {
+    id: "slide13-seal-060",
+    title: "Seal // matrix row 5 col 4",
+    description: "Row 5 col 4 seed for pressure matrix.",
+    startX: 10,
+    startY: 124,
+    dragTargetX: 234,
+    holdAmplitude: 38,
+    holdLoops: 7,
+    releaseDeltaX: 24,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-seal-061",
+    title: "Seal // matrix row 6 col 1",
+    description: "Row 6 col 1 seed for pressure matrix.",
+    startX: 12,
+    startY: 128,
+    dragTargetX: 206,
+    holdAmplitude: 42,
+    holdLoops: 7,
+    releaseDeltaX: 26,
+    releaseDeltaY: -3,
+  },
+  {
+    id: "slide13-seal-062",
+    title: "Seal // matrix row 6 col 2",
+    description: "Row 6 col 2 seed for pressure matrix.",
+    startX: 12,
+    startY: 128,
+    dragTargetX: 216,
+    holdAmplitude: 42,
+    holdLoops: 7,
+    releaseDeltaX: 26,
+    releaseDeltaY: -2,
+  },
+  {
+    id: "slide13-seal-063",
+    title: "Seal // matrix row 6 col 3",
+    description: "Row 6 col 3 seed for pressure matrix.",
+    startX: 12,
+    startY: 128,
+    dragTargetX: 226,
+    holdAmplitude: 42,
+    holdLoops: 7,
+    releaseDeltaX: 26,
+    releaseDeltaY: -1,
+  },
+  {
+    id: "slide13-seal-064",
+    title: "Seal // matrix row 6 col 4",
+    description: "Row 6 col 4 seed for pressure matrix.",
+    startX: 12,
+    startY: 128,
+    dragTargetX: 236,
+    holdAmplitude: 42,
+    holdLoops: 7,
+    releaseDeltaX: 26,
+    releaseDeltaY: 0,
+  },
+];
+
+const UNSEALED_SEEDS: Slide13FixtureSeed[] = [
+  {
+    id: "slide13-open-001",
+    title: "Open // below drag threshold 01",
+    description: "No threshold crossing, stays open.",
+    startX: 10,
+    startY: 136,
+    dragTargetX: 112,
+    holdAmplitude: 14,
+    holdLoops: 2,
+    releaseDeltaX: 10,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-open-002",
+    title: "Open // below drag threshold 02",
+    description: "No threshold crossing, stays open.",
+    startX: 14,
+    startY: 132,
+    dragTargetX: 126,
+    holdAmplitude: 16,
+    holdLoops: 2,
+    releaseDeltaX: 12,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-open-003",
+    title: "Open // below drag threshold 03",
+    description: "No threshold crossing, stays open.",
+    startX: 18,
+    startY: 128,
+    dragTargetX: 138,
+    holdAmplitude: 18,
+    holdLoops: 2,
+    releaseDeltaX: 14,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-open-004",
+    title: "Open // below drag threshold 04",
+    description: "No threshold crossing, stays open.",
+    startX: 20,
+    startY: 140,
+    dragTargetX: 144,
+    holdAmplitude: 18,
+    holdLoops: 2,
+    releaseDeltaX: 12,
+    releaseDeltaY: -1,
+  },
+  {
+    id: "slide13-open-005",
+    title: "Open // weak hold after drag",
+    description: "Crosses drag, hold remains insufficient.",
+    startX: 12,
+    startY: 138,
+    dragTargetX: 182,
+    holdAmplitude: 10,
+    holdLoops: 1,
+    releaseDeltaX: 16,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-open-006",
+    title: "Open // weak hold after drag",
+    description: "Crosses drag, hold remains insufficient.",
+    startX: 16,
+    startY: 136,
+    dragTargetX: 188,
+    holdAmplitude: 12,
+    holdLoops: 1,
+    releaseDeltaX: 14,
+    releaseDeltaY: 1,
+  },
+  {
+    id: "slide13-open-007",
+    title: "Open // weak hold after drag",
+    description: "Crosses drag, hold remains insufficient.",
+    startX: 10,
+    startY: 142,
+    dragTargetX: 194,
+    holdAmplitude: 12,
+    holdLoops: 1,
+    releaseDeltaX: 12,
+    releaseDeltaY: -1,
+  },
+  {
+    id: "slide13-open-008",
+    title: "Open // weak hold after drag",
+    description: "Crosses drag, hold remains insufficient.",
+    startX: 8,
+    startY: 130,
+    dragTargetX: 200,
+    holdAmplitude: 10,
+    holdLoops: 1,
+    releaseDeltaX: 10,
+    releaseDeltaY: 0,
+  },
+  {
+    id: "slide13-open-009",
+    title: "Open // weak hold after drag",
+    description: "Crosses drag, hold remains insufficient.",
+    startX: 12,
+    startY: 128,
+    dragTargetX: 206,
+    holdAmplitude: 10,
+    holdLoops: 1,
+    releaseDeltaX: 10,
+    releaseDeltaY: 2,
+  },
+  {
+    id: "slide13-open-010",
+    title: "Open // weak hold after drag",
+    description: "Crosses drag, hold remains insufficient.",
+    startX: 14,
+    startY: 146,
+    dragTargetX: 210,
+    holdAmplitude: 12,
+    holdLoops: 1,
+    releaseDeltaX: 12,
+    releaseDeltaY: -2,
+  },
+];
+
+const SEALED_FIXTURES = SEALED_SEEDS.map((seed) => createSealedFixture(seed));
+const UNSEALED_FIXTURES = UNSEALED_SEEDS.map((seed) => createUnsealedFixture(seed));
+
+export const SLIDE13_REPLAY_FIXTURES: Slide13ReplayFixture[] = [
+  ...SEALED_FIXTURES,
+  ...UNSEALED_FIXTURES,
+];
+
+export const SLIDE13_FIXTURE_CATALOG: Slide13FixtureCatalog = {
+  version: "routeb.v1",
+  generatedAt: "2026-02-10T00:00:00.000Z",
+  fixtures: SLIDE13_REPLAY_FIXTURES,
+};
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\slide13.fixtures.ts =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\slide13.helpers.ts =====
+import {
+  Slide13EmittedEvent,
+  Slide13MachineEvent,
+  Slide13Snapshot,
+  Slide13State,
+  Slide13Thresholds,
+  Slide13TransitionResult,
+} from "./slide13.types";
+
+export const SLIDE13_DEFAULT_THRESHOLDS: Slide13Thresholds = {
+  dragThresholdPx: 164,
+  maxDragTravelPx: 344,
+  holdTravelThresholdPx: 232,
+  dragResistance: 0.35,
+  holdGain: 1,
+  releaseSnapPx: 208,
+  freezeFloor: 0.62,
+  railStepCount: 8,
+};
+
+const STAGE_ORDER: Record<Slide13State["stage"], 0 | 1 | 2 | 3> = {
+  Idle: 0,
+  Dragged: 1,
+  Holding: 2,
+  Sealed: 3,
+};
+
+type Point = { x: number; y: number };
+
+function clamp(value: number, min: number, max: number): number {
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
+}
+
+function distance(a: Point, b: Point): number {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  return Math.hypot(dx, dy);
+}
+
+function toRailIndex(value: number, stepCount: number): number {
+  const safeSteps = Math.max(2, Math.floor(stepCount));
+  const clamped = clamp(value, 0, 1);
+  return clamp(Math.round(clamped * (safeSteps - 1)), 0, safeSteps - 1);
+}
+
+function applyDragResistance(rawTravelPx: number, thresholds: Slide13Thresholds): number {
+  const clampedRaw = clamp(rawTravelPx, 0, thresholds.maxDragTravelPx);
+  if (clampedRaw <= thresholds.dragThresholdPx) {
+    return clampedRaw;
+  }
+  const overshoot = clampedRaw - thresholds.dragThresholdPx;
+  return thresholds.dragThresholdPx + overshoot * thresholds.dragResistance;
+}
+
+function normalizeStage(
+  currentStage: Slide13State["stage"],
+  requestedStage: Slide13State["stage"]
+): Slide13State["stage"] {
+  return STAGE_ORDER[requestedStage] >= STAGE_ORDER[currentStage] ? requestedStage : currentStage;
+}
+
+function emitted(name: Slide13EmittedEvent["name"], detail: Record<string, unknown>): Slide13EmittedEvent {
+  return { name, detail };
+}
+
+function deriveSealState(state: Slide13State): Slide13State["sealState"] {
+  if (state.rightSealCollapsed) return "collapsed";
+  if (state.sealed) return "sealed";
+  if (state.stage === "Holding" || state.frozen) return "freezing";
+  return "open";
+}
+
+function withDerivedValues(state: Slide13State, thresholds: Slide13Thresholds): Slide13State {
+  const dragProgress = clamp(state.dragPeakPx / thresholds.dragThresholdPx, 0, 1);
+  const holdProgress = clamp(state.holdPeakPx / thresholds.holdTravelThresholdPx, 0, 1);
+  const releaseProgress = state.sealed
+    ? 1
+    : state.stage === "Holding"
+      ? 0.56
+      : state.stage === "Dragged"
+        ? clamp(dragProgress * 0.18, 0, 0.34)
+        : 0;
+  const thresholdNormalized = clamp(dragProgress * 0.72 + holdProgress * 0.28, 0, 1);
+
+  const next = {
+    ...state,
+    dragProgress,
+    holdProgress,
+    releaseProgress,
+    railIndex: toRailIndex(thresholdNormalized, thresholds.railStepCount),
+  };
+  return {
+    ...next,
+    sealState: deriveSealState(next),
+  };
+}
+
+export function resolveSlide13Thresholds(
+  overrides?: Partial<Slide13Thresholds>
+): Slide13Thresholds {
+  if (!overrides) return SLIDE13_DEFAULT_THRESHOLDS;
+
+  return {
+    dragThresholdPx: clamp(
+      overrides.dragThresholdPx ?? SLIDE13_DEFAULT_THRESHOLDS.dragThresholdPx,
+      96,
+      440
+    ),
+    maxDragTravelPx: clamp(
+      overrides.maxDragTravelPx ?? SLIDE13_DEFAULT_THRESHOLDS.maxDragTravelPx,
+      180,
+      680
+    ),
+    holdTravelThresholdPx: clamp(
+      overrides.holdTravelThresholdPx ?? SLIDE13_DEFAULT_THRESHOLDS.holdTravelThresholdPx,
+      100,
+      560
+    ),
+    dragResistance: clamp(
+      overrides.dragResistance ?? SLIDE13_DEFAULT_THRESHOLDS.dragResistance,
+      0.08,
+      0.9
+    ),
+    holdGain: clamp(overrides.holdGain ?? SLIDE13_DEFAULT_THRESHOLDS.holdGain, 0.12, 3),
+    releaseSnapPx: clamp(
+      overrides.releaseSnapPx ?? SLIDE13_DEFAULT_THRESHOLDS.releaseSnapPx,
+      112,
+      420
+    ),
+    freezeFloor: clamp(overrides.freezeFloor ?? SLIDE13_DEFAULT_THRESHOLDS.freezeFloor, 0.2, 0.96),
+    railStepCount: clamp(
+      Math.round(overrides.railStepCount ?? SLIDE13_DEFAULT_THRESHOLDS.railStepCount),
+      4,
+      32
+    ),
+  };
+}
+
+export function createInitialSlide13State(
+  thresholds: Slide13Thresholds = SLIDE13_DEFAULT_THRESHOLDS
+): Slide13State {
+  return withDerivedValues(
+    {
+      stage: "Idle",
+      pointerActive: false,
+      activePointerId: null,
+      originPoint: null,
+      pointerPoint: null,
+      dragRawPx: 0,
+      dragVisualPx: 0,
+      dragPeakPx: 0,
+      holdTravelPx: 0,
+      holdPeakPx: 0,
+      dragProgress: 0,
+      holdProgress: 0,
+      releaseProgress: 0,
+      railIndex: 0,
+      sealState: "open",
+      frozen: false,
+      sealed: false,
+      rightSealCollapsed: false,
+    },
+    thresholds
+  );
+}
+
+function shouldIgnorePointerEvent(state: Slide13State, machinePointerId: number): boolean {
+  return (
+    state.sealed ||
+    !state.pointerActive ||
+    state.activePointerId !== machinePointerId ||
+    !state.originPoint ||
+    !state.pointerPoint
+  );
+}
+
+function handlePointerDown(
+  state: Slide13State,
+  pointerId: number,
+  x: number,
+  y: number,
+  thresholds: Slide13Thresholds
+): Slide13TransitionResult {
+  if (state.sealed || state.pointerActive) {
+    return { state, emitted: [] };
+  }
+
+  const nextState = withDerivedValues(
+    {
+      ...state,
+      pointerActive: true,
+      activePointerId: pointerId,
+      originPoint: { x, y },
+      pointerPoint: { x, y },
+    },
+    thresholds
+  );
+
+  return {
+    state: nextState,
+    emitted: [],
+  };
+}
+
+function handlePointerMove(
+  state: Slide13State,
+  pointerId: number,
+  x: number,
+  y: number,
+  thresholds: Slide13Thresholds
+): Slide13TransitionResult {
+  if (shouldIgnorePointerEvent(state, pointerId)) {
+    return { state, emitted: [] };
+  }
+
+  const nextPoint = { x, y };
+  const rawDrag = clamp(nextPoint.x - (state.originPoint as Point).x, 0, thresholds.maxDragTravelPx);
+  const dragPeakPx = Math.max(state.dragPeakPx, rawDrag);
+  const dragVisualPx = applyDragResistance(rawDrag, thresholds);
+  const incrementalTravel = distance(state.pointerPoint as Point, nextPoint);
+
+  let holdTravelPx = state.holdTravelPx;
+  const crossedDragThreshold = state.stage === "Idle" && dragPeakPx >= thresholds.dragThresholdPx;
+  if (state.stage === "Dragged" || state.stage === "Holding" || crossedDragThreshold) {
+    holdTravelPx = clamp(
+      state.holdTravelPx + incrementalTravel * thresholds.holdGain,
+      0,
+      thresholds.holdTravelThresholdPx
+    );
+  }
+
+  const holdPeakPx = Math.max(state.holdPeakPx, holdTravelPx);
+  let nextStage = state.stage;
+  const nextEvents: Slide13TransitionResult["emitted"] = [];
+
+  if (crossedDragThreshold) {
+    nextStage = normalizeStage(nextStage, "Dragged");
+    nextEvents.push(
+      emitted("anchor:slide13-kpi-threshold:engaged", {
+        dragPeakPx,
+        thresholdPx: thresholds.dragThresholdPx,
+      }),
+      emitted("gesture:slide13-drag:completed", {
+        dragPeakPx,
+        dragProgress: clamp(dragPeakPx / thresholds.dragThresholdPx, 0, 1),
+      })
+    );
+  }
+
+  if (
+    (nextStage === "Dragged" || nextStage === "Holding") &&
+    holdPeakPx >= thresholds.holdTravelThresholdPx
+  ) {
+    if (nextStage !== "Holding") {
+      nextStage = normalizeStage(nextStage, "Holding");
+      nextEvents.push(
+        emitted("anchor:slide13-kpi-freeze:engaged", {
+          holdPeakPx,
+          holdThresholdPx: thresholds.holdTravelThresholdPx,
+        }),
+        emitted("gesture:slide13-hold:completed", {
+          holdPeakPx,
+          holdProgress: clamp(holdPeakPx / thresholds.holdTravelThresholdPx, 0, 1),
+        })
+      );
+    }
+  }
+
+  const nextState = withDerivedValues(
+    {
+      ...state,
+      stage: nextStage,
+      pointerPoint: nextPoint,
+      dragRawPx: rawDrag,
+      dragVisualPx,
+      dragPeakPx,
+      holdTravelPx,
+      holdPeakPx,
+      frozen:
+        state.frozen ||
+        nextStage === "Holding" ||
+        clamp(holdPeakPx / thresholds.holdTravelThresholdPx, 0, 1) >= thresholds.freezeFloor,
+    },
+    thresholds
+  );
+
+  return {
+    state: nextState,
+    emitted: nextEvents,
+  };
+}
+
+function handlePointerRelease(
+  state: Slide13State,
+  pointerId: number,
+  x: number,
+  y: number,
+  thresholds: Slide13Thresholds
+): Slide13TransitionResult {
+  if (!state.pointerActive || state.activePointerId !== pointerId) {
+    return { state, emitted: [] };
+  }
+
+  const nextEvents: Slide13TransitionResult["emitted"] = [];
+  let nextStage = state.stage;
+  let nextDragRawPx = 0;
+  let nextDragVisualPx = state.dragVisualPx;
+  let nextSealed = state.sealed;
+  let nextCollapsed = state.rightSealCollapsed;
+  let nextFrozen = state.frozen;
+
+  if (state.stage === "Holding" && state.holdProgress >= 1) {
+    nextStage = normalizeStage(state.stage, "Sealed");
+    nextDragRawPx = thresholds.dragThresholdPx;
+    nextDragVisualPx = thresholds.releaseSnapPx;
+    nextSealed = true;
+    nextCollapsed = true;
+    nextFrozen = true;
+    nextEvents.push(
+      emitted("anchor:slide13-rightseal:engaged", {
+        releaseAtX: x,
+        releaseAtY: y,
+        seal: true,
+      }),
+      emitted("gesture:slide13-release:completed", {
+        releaseProgress: 1,
+        releaseSnapPx: thresholds.releaseSnapPx,
+      }),
+      emitted("state:slide13-sealed:set", {
+        stage: "Sealed",
+        sealState: "collapsed",
+      }),
+      emitted("evidence:slide13-primary:satisfied", {
+        sealed: true,
+        completed: true,
+      })
+    );
+  } else if (state.stage === "Dragged") {
+    nextDragVisualPx = Math.max(thresholds.dragThresholdPx * 0.58, state.dragVisualPx * 0.64);
+    nextDragRawPx = clamp(state.dragRawPx * 0.56, 0, thresholds.dragThresholdPx);
+    nextFrozen = state.holdProgress >= thresholds.freezeFloor;
+  } else {
+    nextDragVisualPx = 0;
+    nextDragRawPx = 0;
+    nextFrozen = false;
+  }
+
+  const nextState = withDerivedValues(
+    {
+      ...state,
+      stage: nextStage,
+      pointerActive: false,
+      activePointerId: null,
+      originPoint: null,
+      pointerPoint: { x, y },
+      dragRawPx: nextDragRawPx,
+      dragVisualPx: nextDragVisualPx,
+      sealed: nextSealed,
+      rightSealCollapsed: nextCollapsed,
+      frozen: nextFrozen,
+    },
+    thresholds
+  );
+
+  return { state: nextState, emitted: nextEvents };
+}
+
+export function transitionSlide13State(
+  state: Slide13State,
+  machineEvent: Slide13MachineEvent,
+  thresholds: Slide13Thresholds = SLIDE13_DEFAULT_THRESHOLDS
+): Slide13TransitionResult {
+  if (machineEvent.type === "reset") {
+    return {
+      state: createInitialSlide13State(thresholds),
+      emitted: [],
+    };
+  }
+
+  if (machineEvent.type === "pointer_down") {
+    return handlePointerDown(
+      state,
+      machineEvent.pointerId,
+      machineEvent.x,
+      machineEvent.y,
+      thresholds
+    );
+  }
+
+  if (machineEvent.type === "pointer_move") {
+    return handlePointerMove(
+      state,
+      machineEvent.pointerId,
+      machineEvent.x,
+      machineEvent.y,
+      thresholds
+    );
+  }
+
+  if (machineEvent.type === "pointer_up" || machineEvent.type === "pointer_cancel") {
+    return handlePointerRelease(
+      state,
+      machineEvent.pointerId,
+      machineEvent.x,
+      machineEvent.y,
+      thresholds
+    );
+  }
+
+  return { state, emitted: [] };
+}
+
+function deriveActiveStep(state: Slide13State): Slide13Snapshot["activeStep"] {
+  if (state.sealed) return "sealed";
+  if (state.stage === "Holding") return "release";
+  if (state.stage === "Dragged") return "hold";
+  return "drag";
+}
+
+function deriveTotalProgress(state: Slide13State): number {
+  if (state.sealed) return 1;
+  return clamp(
+    state.dragProgress * 0.46 + state.holdProgress * 0.44 + state.releaseProgress * 0.1,
+    0,
+    0.96
+  );
+}
+
+function deriveCompression(state: Slide13State): number {
+  if (state.sealed) return 1;
+  if (state.stage === "Holding") return clamp(0.52 + state.holdProgress * 0.48, 0, 0.96);
+  if (state.stage === "Dragged") return clamp(0.18 + state.dragProgress * 0.36, 0, 0.6);
+  return 0.06;
+}
+
+function deriveGlow(state: Slide13State): number {
+  if (state.sealed) return 1;
+  return clamp(0.2 + state.dragProgress * 0.34 + state.holdProgress * 0.46, 0.2, 0.92);
+}
+
+export function deriveSlide13Snapshot(
+  state: Slide13State,
+  thresholds: Slide13Thresholds = SLIDE13_DEFAULT_THRESHOLDS
+): Slide13Snapshot {
+  const activeStep = deriveActiveStep(state);
+  const railRatio = thresholds.railStepCount > 1
+    ? state.railIndex / (thresholds.railStepCount - 1)
+    : 0;
+
+  return {
+    stage: state.stage,
+    activeStep,
+    completed: state.sealed,
+    pointerActive: state.pointerActive,
+    dragProgress: state.dragProgress,
+    holdProgress: state.holdProgress,
+    releaseProgress: state.releaseProgress,
+    totalProgress: deriveTotalProgress(state),
+    thresholdTravelPx: state.dragVisualPx,
+    thresholdNormalized: clamp(state.dragProgress * 0.72 + state.holdProgress * 0.28, 0, 1),
+    railIndex: state.railIndex,
+    railRatio,
+    sealState: state.sealState,
+    frozen: state.frozen,
+    sealed: state.sealed,
+    rightSealCollapsed: state.rightSealCollapsed,
+    glow: deriveGlow(state),
+    compression: deriveCompression(state),
+    steps: [
+      {
+        key: "drag",
+        status: state.dragProgress >= 1 ? "complete" : "active",
+        progress: state.dragProgress,
+        label: "Drag KPI Threshold",
+        note: "Mueve el marcador hasta el umbral operativo.",
+      },
+      {
+        key: "hold",
+        status: state.dragProgress < 1 ? "locked" : state.holdProgress >= 1 ? "complete" : "active",
+        progress: state.holdProgress,
+        label: "Hold Freeze",
+        note: "Sostén presión para congelar el reporte.",
+      },
+      {
+        key: "release",
+        status: state.holdProgress < 1 ? "locked" : state.sealed ? "complete" : "active",
+        progress: state.releaseProgress,
+        label: "Release Seal",
+        note: "Suelta para sellar y colapsar el RightSeal.",
+      },
+    ],
+  };
+}
+
+export function collectSlide13EventNames(events: Slide13EmittedEvent[]): string[] {
+  return events.map((event) => event.name);
+}
+
+export function isSlide13Sealed(
+  state: Slide13State,
+  snapshot: Slide13Snapshot
+): boolean {
+  return state.sealed && snapshot.completed && snapshot.rightSealCollapsed;
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\slide13.helpers.ts =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\slide13.replay.ts =====
+import {
+  Slide13EmittedEvent,
+  Slide13ReplayFixture,
+  Slide13ReplayFrame,
+  Slide13ReplayInputEvent,
+  Slide13ReplayResult,
+  Slide13State,
+  Slide13Thresholds,
+} from "./slide13.types";
+import {
+  SLIDE13_DEFAULT_THRESHOLDS,
+  createInitialSlide13State,
+  deriveSlide13Snapshot,
+  resolveSlide13Thresholds,
+  transitionSlide13State,
+} from "./slide13.helpers";
+
+export type Slide13ReplayOptions = {
+  initialState?: Slide13State;
+  thresholds?: Partial<Slide13Thresholds>;
+};
+
+function cloneEvent(event: Slide13ReplayInputEvent): Slide13ReplayInputEvent {
+  return {
+    id: event.id,
+    machineEvent: { ...event.machineEvent },
+  };
+}
+
+export function replaySlide13Events(
+  events: Slide13ReplayInputEvent[],
+  options: Slide13ReplayOptions = {}
+): Slide13ReplayResult {
+  const thresholds = options.thresholds
+    ? resolveSlide13Thresholds(options.thresholds)
+    : SLIDE13_DEFAULT_THRESHOLDS;
+  let state = options.initialState
+    ? { ...options.initialState }
+    : createInitialSlide13State(thresholds);
+
+  const frames: Slide13ReplayFrame[] = [];
+  const emitted: Slide13EmittedEvent[] = [];
+
+  for (const originalEvent of events) {
+    const event = cloneEvent(originalEvent);
+    const transition = transitionSlide13State(state, event.machineEvent, thresholds);
+    state = transition.state;
+    emitted.push(...transition.emitted);
+    frames.push({
+      id: event.id,
+      machineEvent: event.machineEvent,
+      state,
+      snapshot: deriveSlide13Snapshot(state, thresholds),
+      emitted: transition.emitted,
+    });
+  }
+
+  const finalSnapshot = deriveSlide13Snapshot(state, thresholds);
+  return {
+    frames,
+    finalState: state,
+    finalSnapshot,
+    emitted,
+  };
+}
+
+export function assertSlide13Fixture(fixture: Slide13ReplayFixture): {
+  fixtureId: string;
+  pass: boolean;
+  reasons: string[];
+} {
+  const replay = replaySlide13Events(fixture.events, { thresholds: fixture.thresholds });
+  const { assertion } = fixture;
+  const reasons: string[] = [];
+  const finalState = replay.finalState;
+  const finalSnapshot = replay.finalSnapshot;
+  const finalEvents = replay.emitted.map((entry) => entry.name);
+
+  if (finalState.stage !== assertion.expectedStage) {
+    reasons.push(`expected stage ${assertion.expectedStage}, got ${finalState.stage}`);
+  }
+  if (finalState.sealState !== assertion.expectedSealState) {
+    reasons.push(`expected seal state ${assertion.expectedSealState}, got ${finalState.sealState}`);
+  }
+  if (finalState.sealed !== assertion.expectedSealed) {
+    reasons.push(`expected sealed ${String(assertion.expectedSealed)}, got ${String(finalState.sealed)}`);
+  }
+  if (finalSnapshot.railIndex !== assertion.expectedRailIndex) {
+    reasons.push(`expected rail index ${assertion.expectedRailIndex}, got ${finalSnapshot.railIndex}`);
+  }
+  if (finalSnapshot.dragProgress < assertion.dragProgressAtLeast) {
+    reasons.push(
+      `expected drag progress >= ${assertion.dragProgressAtLeast}, got ${finalSnapshot.dragProgress}`
+    );
+  }
+  if (finalSnapshot.holdProgress < assertion.holdProgressAtLeast) {
+    reasons.push(
+      `expected hold progress >= ${assertion.holdProgressAtLeast}, got ${finalSnapshot.holdProgress}`
+    );
+  }
+  if (finalSnapshot.releaseProgress < assertion.releaseProgressAtLeast) {
+    reasons.push(
+      `expected release progress >= ${assertion.releaseProgressAtLeast}, got ${finalSnapshot.releaseProgress}`
+    );
+  }
+
+  for (const requiredEventName of assertion.requiredEventNames) {
+    if (!finalEvents.includes(requiredEventName)) {
+      reasons.push(`required event missing: ${requiredEventName}`);
+    }
+  }
+
+  return {
+    fixtureId: fixture.id,
+    pass: reasons.length === 0,
+    reasons,
+  };
+}
+
+export function runSlide13FixtureCatalog(fixtures: Slide13ReplayFixture[]): {
+  total: number;
+  passed: number;
+  failed: number;
+  failures: Array<{ fixtureId: string; reasons: string[] }>;
+} {
+  let passed = 0;
+  const failures: Array<{ fixtureId: string; reasons: string[] }> = [];
+
+  for (const fixture of fixtures) {
+    const assertion = assertSlide13Fixture(fixture);
+    if (assertion.pass) {
+      passed += 1;
+      continue;
+    }
+    failures.push({ fixtureId: assertion.fixtureId, reasons: assertion.reasons });
+  }
+
+  return {
+    total: fixtures.length,
+    passed,
+    failed: fixtures.length - passed,
+    failures,
+  };
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\slide13.replay.ts =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\slide13.types.ts =====
+export type Slide13RitualStage = "Idle" | "Dragged" | "Holding" | "Sealed";
+
+export type Slide13StepKey = "drag" | "hold" | "release";
+export type Slide13StepStatus = "locked" | "active" | "complete";
+
+export type Slide13SealState = "open" | "freezing" | "sealed" | "collapsed";
+
+export type Slide13Point = {
+  x: number;
+  y: number;
+};
+
+export type Slide13Thresholds = {
+  dragThresholdPx: number;
+  maxDragTravelPx: number;
+  holdTravelThresholdPx: number;
+  dragResistance: number;
+  holdGain: number;
+  releaseSnapPx: number;
+  freezeFloor: number;
+  railStepCount: number;
+};
+
+export type Slide13State = {
+  stage: Slide13RitualStage;
+  pointerActive: boolean;
+  activePointerId: number | null;
+  originPoint: Slide13Point | null;
+  pointerPoint: Slide13Point | null;
+  dragRawPx: number;
+  dragVisualPx: number;
+  dragPeakPx: number;
+  holdTravelPx: number;
+  holdPeakPx: number;
+  dragProgress: number;
+  holdProgress: number;
+  releaseProgress: number;
+  railIndex: number;
+  sealState: Slide13SealState;
+  frozen: boolean;
+  sealed: boolean;
+  rightSealCollapsed: boolean;
+};
+
+export type Slide13MachineEvent =
+  | { type: "pointer_down"; pointerId: number; x: number; y: number }
+  | { type: "pointer_move"; pointerId: number; x: number; y: number }
+  | { type: "pointer_up"; pointerId: number; x: number; y: number }
+  | { type: "pointer_cancel"; pointerId: number; x: number; y: number }
+  | { type: "reset" };
+
+export type Slide13CanonicalEventName =
+  | "slide:13:entered"
+  | "gesture:slide13-drag:completed"
+  | "gesture:slide13-hold:completed"
+  | "gesture:slide13-release:completed"
+  | "state:slide13-sealed:set"
+  | "evidence:slide13-primary:satisfied";
+
+export type Slide13CanonicalAnchorName =
+  | "anchor:slide13-kpi-threshold:engaged"
+  | "anchor:slide13-kpi-freeze:engaged"
+  | "anchor:slide13-rightseal:engaged";
+
+export type Slide13EmittedEvent = {
+  name: Slide13CanonicalEventName | Slide13CanonicalAnchorName;
+  detail: Record<string, unknown>;
+};
+
+export type Slide13TransitionResult = {
+  state: Slide13State;
+  emitted: Slide13EmittedEvent[];
+};
+
+export type Slide13StepModel = {
+  key: Slide13StepKey;
+  status: Slide13StepStatus;
+  progress: number;
+  label: string;
+  note: string;
+};
+
+export type Slide13Snapshot = {
+  stage: Slide13RitualStage;
+  activeStep: Slide13StepKey | "sealed";
+  completed: boolean;
+  pointerActive: boolean;
+  dragProgress: number;
+  holdProgress: number;
+  releaseProgress: number;
+  totalProgress: number;
+  thresholdTravelPx: number;
+  thresholdNormalized: number;
+  railIndex: number;
+  railRatio: number;
+  sealState: Slide13SealState;
+  frozen: boolean;
+  sealed: boolean;
+  rightSealCollapsed: boolean;
+  glow: number;
+  compression: number;
+  steps: Slide13StepModel[];
+};
+
+export type Slide13GestureHandlers = {
+  onPointerDown: React.PointerEventHandler<HTMLDivElement>;
+  onPointerMove: React.PointerEventHandler<HTMLDivElement>;
+  onPointerUp: React.PointerEventHandler<HTMLDivElement>;
+  onPointerCancel: React.PointerEventHandler<HTMLDivElement>;
+};
+
+export type Slide13ReplayInputEvent = {
+  id: string;
+  machineEvent: Slide13MachineEvent;
+};
+
+export type Slide13ReplayFrame = {
+  id: string;
+  machineEvent: Slide13MachineEvent;
+  state: Slide13State;
+  snapshot: Slide13Snapshot;
+  emitted: Slide13EmittedEvent[];
+};
+
+export type Slide13ReplayResult = {
+  frames: Slide13ReplayFrame[];
+  finalState: Slide13State;
+  finalSnapshot: Slide13Snapshot;
+  emitted: Slide13EmittedEvent[];
+};
+
+export type Slide13ReplayAssertion = {
+  expectedStage: Slide13RitualStage;
+  expectedSealState: Slide13SealState;
+  expectedSealed: boolean;
+  expectedRailIndex: number;
+  dragProgressAtLeast: number;
+  holdProgressAtLeast: number;
+  releaseProgressAtLeast: number;
+  requiredEventNames: Array<Slide13EmittedEvent["name"]>;
+};
+
+export type Slide13ReplayFixture = {
+  id: string;
+  title: string;
+  description: string;
+  thresholds?: Partial<Slide13Thresholds>;
+  events: Slide13ReplayInputEvent[];
+  assertion: Slide13ReplayAssertion;
+};
+
+export type Slide13CopyStep = {
+  label: string;
+  detail: string;
+};
+
+export type Slide13CopyPack = {
+  ritualTitle: string;
+  ritualSubtitle: string;
+  railTitle: string;
+  railSubtitle: string;
+  sealTitle: string;
+  sealOpen: string;
+  sealFrozen: string;
+  sealSealed: string;
+  sealCollapsed: string;
+  frozenBadge: string;
+  releasedBadge: string;
+  thresholdLabel: string;
+  thresholdHint: string;
+  debugTitle: string;
+  debugHint: string;
+  steps: Record<Slide13StepKey, Slide13CopyStep>;
+};
+
+export type Slide13DebugModel = {
+  enabled: boolean;
+  lastEvent: Slide13EmittedEvent | null;
+  replayFrame: number;
+};
+
+export type Slide13FixtureCatalog = {
+  version: string;
+  generatedAt: string;
+  fixtures: Slide13ReplayFixture[];
+};
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\slide13.types.ts =====
+
+===== BEGIN FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\useKpiRitual.ts =====
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Slide13EmittedEvent,
+  Slide13GestureHandlers,
+  Slide13MachineEvent,
+  Slide13Snapshot,
+  Slide13State,
+  Slide13Thresholds,
+} from "./slide13.types";
+import {
+  createInitialSlide13State,
+  deriveSlide13Snapshot,
+  resolveSlide13Thresholds,
+  transitionSlide13State,
+} from "./slide13.helpers";
+
+export type UseKpiRitualOptions = {
+  thresholds?: Partial<Slide13Thresholds>;
+  onEmitEvent?: (event: Slide13EmittedEvent) => void;
+};
+
+export type UseKpiRitualResult = {
+  state: Slide13State;
+  snapshot: Slide13Snapshot;
+  thresholds: Slide13Thresholds;
+  gestureHandlers: Slide13GestureHandlers;
+  lastEmittedEvent: Slide13EmittedEvent | null;
+  reset: () => void;
+};
+
+function asMachineEvent(
+  type: Slide13MachineEvent["type"],
+  event:
+    | React.PointerEvent<HTMLDivElement>
+    | {
+        pointerId: number;
+        x: number;
+        y: number;
+      }
+): Slide13MachineEvent {
+  if ("clientX" in event) {
+    if (type === "reset") return { type: "reset" };
+    return {
+      type,
+      pointerId: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+    } as Slide13MachineEvent;
+  }
+
+  if (type === "reset") return { type: "reset" };
+  return {
+    type,
+    pointerId: event.pointerId,
+    x: event.x,
+    y: event.y,
+  } as Slide13MachineEvent;
+}
+
+function dispatchBrowserEvent(event: Slide13EmittedEvent): void {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(
+    new CustomEvent(event.name, {
+      detail: {
+        ...event.detail,
+        event: event.name,
+      },
+    })
+  );
+}
+
+export function useKpiRitual(options: UseKpiRitualOptions = {}): UseKpiRitualResult {
+  const thresholds = useMemo(
+    () => resolveSlide13Thresholds(options.thresholds),
+    [options.thresholds]
+  );
+
+  const [state, setState] = useState<Slide13State>(() => createInitialSlide13State(thresholds));
+  const [lastEmittedEvent, setLastEmittedEvent] = useState<Slide13EmittedEvent | null>(null);
+  const stateRef = useRef<Slide13State>(state);
+
+  const emit = useCallback(
+    (event: Slide13EmittedEvent) => {
+      setLastEmittedEvent(event);
+      dispatchBrowserEvent(event);
+      options.onEmitEvent?.(event);
+    },
+    [options.onEmitEvent]
+  );
+
+  const commitTransition = useCallback(
+    (machineEvent: Slide13MachineEvent) => {
+      const transition = transitionSlide13State(stateRef.current, machineEvent, thresholds);
+      stateRef.current = transition.state;
+      setState(transition.state);
+      for (const emittedEvent of transition.emitted) {
+        emit(emittedEvent);
+      }
+    },
+    [emit, thresholds]
+  );
+
+  useEffect(() => {
+    const entered: Slide13EmittedEvent = {
+      name: "slide:13:entered",
+      detail: { slide: 13, enteredAt: Date.now() },
+    };
+    emit(entered);
+  }, [emit]);
+
+  const onPointerDown = useCallback<React.PointerEventHandler<HTMLDivElement>>(
+    (event) => {
+      event.preventDefault();
+      if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.setPointerCapture(event.pointerId);
+      }
+      commitTransition(asMachineEvent("pointer_down", event));
+    },
+    [commitTransition]
+  );
+
+  const onPointerMove = useCallback<React.PointerEventHandler<HTMLDivElement>>(
+    (event) => {
+      commitTransition(asMachineEvent("pointer_move", event));
+    },
+    [commitTransition]
+  );
+
+  const onPointerUp = useCallback<React.PointerEventHandler<HTMLDivElement>>(
+    (event) => {
+      if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      }
+      commitTransition(asMachineEvent("pointer_up", event));
+    },
+    [commitTransition]
+  );
+
+  const onPointerCancel = useCallback<React.PointerEventHandler<HTMLDivElement>>(
+    (event) => {
+      if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      }
+      commitTransition(asMachineEvent("pointer_cancel", event));
+    },
+    [commitTransition]
+  );
+
+  const reset = useCallback(() => {
+    commitTransition({ type: "reset" });
+  }, [commitTransition]);
+
+  const snapshot = useMemo(
+    () => deriveSlide13Snapshot(state, thresholds),
+    [state, thresholds]
+  );
+
+  return {
+    state,
+    snapshot,
+    thresholds,
+    gestureHandlers: {
+      onPointerDown,
+      onPointerMove,
+      onPointerUp,
+      onPointerCancel,
+    },
+    lastEmittedEvent,
+    reset,
+  };
+}
+
+===== END FILE: F:\OneDrive\Hitech\3.Proyectos\CHAT GPT AI Estudio\repos\Inversion\components\slides\slide13-ui\routeb\useKpiRitual.ts =====
+
+===== BEGIN FILE: docs/slide13/README.md =====
+# Slide13 Route B Operationalization
+
+## Domain
+Slide13 implements an operator ritual for KPI outcome control:
+1. Drag KPI threshold marker.
+2. Hold movement pressure to freeze report.
+3. Release to seal and collapse RightSeal.
+
+This folder documents contracts for `components/slides/slide13-ui/routeb/**`.
+
+## Scope Boundary
+- In scope:
+  - `components/slides/slide13-ui/routeb/**`
+  - `components/slides/Slide13.tsx`
+  - `tests/e2e/slide13-routeb.e2e.spec.ts`
+  - `docs/slide13/**`
+- Out of scope:
+  - Existing KPI widget internals in `components/widgets/kpi/**`
+  - Runtime boot/tour subsystems
+  - Other slides
+
+## Event Contracts
+Slide13 emits browser `CustomEvent` with canonical names and details:
+
+### Entry
+- `slide:13:entered`
+  - emitted once when ritual hook mounts
+  - detail: `{ slide: 13, enteredAt: number }`
+
+### Anchor Engagement
+- `anchor:slide13-kpi-threshold:engaged`
+  - emitted when drag threshold is first crossed
+- `anchor:slide13-kpi-freeze:engaged`
+  - emitted when hold threshold is first crossed
+- `anchor:slide13-rightseal:engaged`
+  - emitted when release seals ritual
+
+### Gesture Completion
+- `gesture:slide13-drag:completed`
+- `gesture:slide13-hold:completed`
+- `gesture:slide13-release:completed`
+
+### State / Evidence
+- `state:slide13-sealed:set`
+- `evidence:slide13-primary:satisfied`
+
+## Test IDs
+Primary test IDs introduced by Route B:
+- `slide13-root`
+- `slide13-rail`
+- `slide13-rail-step-drag`
+- `slide13-rail-step-hold`
+- `slide13-rail-step-release`
+- `slide13-gesture-drag`
+- `slide13-gesture-hold`
+- `slide13-gesture-release`
+- `slide13-seal`
+- `slide13-seal-state`
+
+Support diagnostics test IDs:
+- `slide13-rail-gesture-drag`
+- `slide13-rail-gesture-hold`
+- `slide13-rail-gesture-release`
+
+## Type Contracts
+Core contracts:
+- `slide13.types.ts`
+  - `Slide13State`
+  - `Slide13Snapshot`
+  - `Slide13MachineEvent`
+  - `Slide13ReplayFixture`
+- `slide13.helpers.ts`
+  - `createInitialSlide13State`
+  - `transitionSlide13State`
+  - `deriveSlide13Snapshot`
+  - `resolveSlide13Thresholds`
+- `slide13.replay.ts`
+  - `replaySlide13Events`
+  - `assertSlide13Fixture`
+  - `runSlide13FixtureCatalog`
+- `slide13.fixtures.ts`
+  - `SLIDE13_REPLAY_FIXTURES`
+  - `SLIDE13_FIXTURE_CATALOG`
+
+## UI Modules
+Route B modules:
+- `KpiRitual.tsx`: ritual composition root (orchestrator of local domain only)
+- `KpiSurface.tsx`: wraps existing `KpiDashboard`, adds gesture overlay and threshold marker
+- `KpiRail.tsx`: ritual steps and progress rail
+- `RightSeal.tsx`: seal state display and collapse behavior
+- `slide13.debugOverlay.tsx`: dev-only introspection
+- `glass/*`: slide-local premium surface kit
+
+## Replay Strategy
+Replay is deterministic:
+- Same event trace and thresholds must produce identical final state/snapshot/events.
+- Fixtures include sealed and non-sealed traces.
+- Fixture assertion enforces required event contract names.
+
+## No Timers Policy
+For new Route B files:
+- `setTimeout` forbidden
+- `setInterval` forbidden
+
+Playwright smoke includes explicit regex checks against `components/slides/slide13-ui/routeb/**`.
+
+## Smoke Run
+Suggested smoke command:
+
+```bash
+npm run test:e2e -- --grep "Slide13"
+```
+
+Expected behavior:
+1. Navigate from deck root to Slide13.
+2. Drag over threshold.
+3. Hold movement until freeze completes.
+4. Release.
+5. `slide13-seal` becomes `data-sealed="true"`.
+6. `slide13-seal-state` indicates collapsed seal state.
+
+## Unit Specs
+Local helper/replay specs:
+- `components/slides/slide13-ui/routeb/__tests__/slide13.helpers.test.ts`
+- `components/slides/slide13-ui/routeb/__tests__/slide13.replay.test.ts`
+
+Specs cover:
+- Threshold boundary clamping.
+- Drag threshold boundary.
+- Hold threshold boundary.
+- Seal release transition.
+- Idempotence and foreign pointer rejection.
+- Replay determinism and fixture catalog validity.
+
+## What Not To Touch
+- Do not refactor `components/widgets/kpi/KpiDashboard.tsx`.
+- Do not add timer-driven progression to Slide13 Route B.
+- Do not move Route B state logic into `Slide13.tsx`.
+- Do not spread Slide13 event names into other slide domains.
+- Do not delete non-Route-B files as cleanup.
+
+## Future Extension Slots
+Reserved extensions with no current implementation requirement:
+- KPI operator profile presets per audience.
+- Evidence bridge to boot runtime ingestion.
+- Server-side ritual trace persistence.
+- Multi-operator conflict resolution.
+
+===== END FILE: docs/slide13/README.md =====
+
+4) DIFF
+
+--- git diff --stat (repo-wide working tree view) ---
+ App.tsx                                            |   23 +-
+ README.md                                          |    8 +
+ components/slides/Slide00.boot.css                 |  526 +++++++++
+ components/slides/Slide00.tsx                      | 1177 ++++++++++++++------
+ components/slides/Slide13.tsx                      |    4 +-
+ components/slides/slide00-ui/BootPanelBody.tsx     |   10 +-
+ .../slides/slide00-ui/BootStateIndicator.tsx       |   12 +-
+ components/slides/slide00-ui/BootStatusBadge.tsx   |   17 +-
+ components/slides/slide00-ui/BootToast.tsx         |    8 +-
+ .../slides/slide00-ui/DiagnosticsBackButton.tsx    |    5 +-
+ components/slides/slide00-ui/DiagnosticsDock.tsx   |   27 +-
+ .../slides/slide00-ui/DiagnosticsDockToggle.tsx    |    6 +-
+ components/slides/slide00-ui/EvidenceList.tsx      |   14 +-
+ components/slides/slide00-ui/GateMatrix.tsx        |    8 +-
+ components/slides/slide00-ui/OpeningFlagsBadge.tsx |    8 +-
+ .../slides/slide00-ui/PersistenceIndicator.tsx     |   10 +-
+ components/slides/slide00-ui/ResetControls.tsx     |   14 +-
+ .../slides/slide00-ui/ViewControlsTogglePanel.tsx  |   17 +-
+ components/slides/slide00-ui/index.ts              |    8 +-
+ components/slides/slide00-ui/slide00.helpers.ts    |   68 +-
+ components/slides/slide00-ui/types.ts              |    2 +-
+ tests/e2e/demo.e2e.spec.ts                         |  185 +++
+ tests/unit/playwright-harness.unit.ts              |    1 +
+ tests/unit/run-all.ts                              |    4 +
+ 24 files changed, 1719 insertions(+), 443 deletions(-)
+
+--- git diff (targeted modified tracked files) ---
+diff --git a/components/slides/Slide13.tsx b/components/slides/Slide13.tsx
+index 857c714..e364d7a 100644
+--- a/components/slides/Slide13.tsx
++++ b/components/slides/Slide13.tsx
+@@ -1,6 +1,6 @@
+ import React from "react";
+ import { SlideContainer, Header, NavArea } from "../SlideRenderer";
+-import { KpiDashboard } from "../widgets/kpi/KpiDashboard";
++import { KpiRitual } from "./slide13-ui/routeb";
+ 
+ export const Slide13: React.FC<{ nextSlide: () => void; prevSlide: () => void }> = ({
+   nextSlide,
+@@ -8,7 +8,7 @@ export const Slide13: React.FC<{ nextSlide: () => void; prevSlide: () => void }>
+ }) => (
+   <SlideContainer>
+     <Header title="KPIs DEL SISTEMA" breadcrumb="RESULTADOS" slideNum={13} />
+-    <KpiDashboard />
++    <KpiRitual />
+     <NavArea prev={prevSlide} next={nextSlide} />
+   </SlideContainer>
+ );
+diff --git a/tests/e2e/demo.e2e.spec.ts b/tests/e2e/demo.e2e.spec.ts
+index a00ad48..49592bc 100644
+--- a/tests/e2e/demo.e2e.spec.ts
++++ b/tests/e2e/demo.e2e.spec.ts
+@@ -1,5 +1,97 @@
+ import { expect, test } from '@playwright/test';
+ 
++function collectDomainFiles(rootDir: string): string[] {
++  const stack = [rootDir];
++  const files: string[] = [];
++
++  while (stack.length > 0) {
++    const current = stack.pop() as string;
++    for (const entry of readdirSync(current)) {
++      const fullPath = path.join(current, entry);
++      const stats = statSync(fullPath);
++      if (stats.isDirectory()) {
++        stack.push(fullPath);
++        continue;
++      }
++      if (!/\.(ts|tsx|css)$/.test(entry)) continue;
++      files.push(fullPath);
++    }
++  }
++
++  files.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
++  return files;
++}
++
++function assertSlide13NoTimers() {
++  const domainRoot = path.join(
++    process.cwd(),
++    'components',
++    'slides',
++    'slide13-ui',
++    'routeb'
++  );
++  const files = collectDomainFiles(domainRoot);
++  expect(files.length).toBeGreaterThan(0);
++  for (const filePath of files) {
++    const content = readFileSync(filePath, 'utf8');
++    expect(content).not.toMatch(/\bsetTimeout\s*\(/);
++    expect(content).not.toMatch(/\bsetInterval\s*\(/);
++  }
++}
++
++async function goToSlide13(page: import('@playwright/test').Page) {
++  await page.goto('/');
++  await expect(page.getByTestId('deck-root')).toBeVisible();
++  for (let index = 0; index < 12; index += 1) {
++    await page.keyboard.press('ArrowRight');
++  }
++  await expect(page.getByTestId('slide13-root')).toBeVisible();
++}
++import { readdirSync, readFileSync, statSync } from 'node:fs';
++import path from 'node:path';
++import { SLIDE07_REPLAY_FIXTURES, SLIDE07_SMOKE_FIXTURES } from '../../components/slides/slide07-ui/routeb/slide07.fixtures';
++import {
++  assertSlide07ReplayDeterminism,
++  runSlide07FixtureReplay,
++} from '../../components/slides/slide07-ui/routeb/slide07.replay';
++
++function collectSlide07DomainFiles(rootDir: string): string[] {
++  const stack = [rootDir];
++  const files: string[] = [];
++
++  while (stack.length > 0) {
++    const current = stack.pop() as string;
++    for (const entry of readdirSync(current)) {
++      const fullPath = path.join(current, entry);
++      const stats = statSync(fullPath);
++      if (stats.isDirectory()) {
++        stack.push(fullPath);
++        continue;
++      }
++      if (!/\.(ts|tsx)$/.test(entry)) {
++        continue;
++      }
++      files.push(fullPath);
++    }
++  }
++
++  files.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
++  return files;
++}
++
++function assertNoTimersInSlide07Domain() {
++  const domainRoot = path.join(process.cwd(), 'components', 'slides', 'slide07-ui', 'routeb');
++  const files = collectSlide07DomainFiles(domainRoot);
++
++  expect(files.length).toBeGreaterThan(0);
++
++  for (const filePath of files) {
++    const content = readFileSync(filePath, 'utf8');
++    expect(content).not.toMatch(/\bsetTimeout\s*\(/);
++    expect(content).not.toMatch(/\bsetInterval\s*\(/);
++  }
++}
++
+ test('app loads and core layout exists without severe console errors', async ({ page }) => {
+   const severe = [];
+ 
+@@ -82,3 +174,96 @@ test('tour remains manual-only until operator starts it', async ({ page }) => {
+   await expect(page.getByTestId('tour-overlay')).toBeVisible();
+   await expect(page.getByText('Step 1 - Frame the decision lens')).toBeVisible();
+ });
++
++test('Slide13 Route B seals by drag hold release', async ({ page }) => {
++  await goToSlide13(page);
++
++  await expect(page.getByTestId('slide13-rail')).toBeVisible();
++  await expect(page.getByTestId('slide13-rail-step-drag')).toBeVisible();
++  await expect(page.getByTestId('slide13-rail-step-hold')).toBeVisible();
++  await expect(page.getByTestId('slide13-rail-step-release')).toBeVisible();
++  await expect(page.getByTestId('slide13-seal')).toHaveAttribute('data-sealed', 'false');
++
++  const dragSurface = page.getByTestId('slide13-gesture-drag');
++  await expect(dragSurface).toBeVisible();
++
++  const box = await dragSurface.boundingBox();
++  expect(box).not.toBeNull();
++  if (!box) return;
++
++  const startX = box.x + 64;
++  const startY = box.y + box.height * 0.64;
++
++  await page.mouse.move(startX, startY);
++  await page.mouse.down();
++  await page.mouse.move(startX + 240, startY, { steps: 18 });
++  await page.mouse.move(startX + 240, startY + 92, { steps: 10 });
++  await page.mouse.move(startX + 178, startY + 92, { steps: 8 });
++  await page.mouse.move(startX + 240, startY - 86, { steps: 10 });
++  await page.mouse.move(startX + 170, startY - 86, { steps: 8 });
++  await page.mouse.move(startX + 240, startY + 88, { steps: 10 });
++  await page.mouse.move(startX + 176, startY + 88, { steps: 8 });
++  await page.mouse.move(startX + 240, startY - 84, { steps: 10 });
++  await page.mouse.up();
++
++  await expect(page.getByTestId('slide13-seal')).toHaveAttribute('data-sealed', 'true');
++  await expect(page.getByTestId('slide13-seal-state')).toContainText('RightSeal colapsado');
++  await expect(page.getByTestId('slide13-gesture-hold')).toContainText('freeze on');
++  await expect(page.getByTestId('slide13-gesture-release')).toContainText('release 100%');
++
++  assertSlide13NoTimers();
++});
++
++test('Slide07 Route B fixtures stay deterministic and timer-free', async ({ page }) => {
++  await page.goto('/');
++  await expect(page.getByTestId('deck-root')).toBeVisible();
++
++  expect(SLIDE07_REPLAY_FIXTURES.length).toBeGreaterThanOrEqual(200);
++
++  for (const fixture of SLIDE07_SMOKE_FIXTURES) {
++    const assertion = runSlide07FixtureReplay(fixture);
++    expect(assertion.passedStage, fixture.id + ' stage').toBeTruthy();
++    expect(assertion.passedEvidence, fixture.id + ' evidence').toBeTruthy();
++    expect(assertion.passedEvents, fixture.id + ' events').toBeTruthy();
++
++    const deterministic = assertSlide07ReplayDeterminism(fixture, 3);
++    expect(deterministic.deterministic, fixture.id + ' deterministic').toBeTruthy();
++  }
++
++  assertNoTimersInSlide07Domain();
++});
++
++test('Slide07 smoke interacts with Route B gesture contract when mounted', async ({ page }) => {
++  await page.goto('/');
++
++  for (let index = 0; index < 7; index += 1) {
++    await page.keyboard.press('ArrowRight');
++  }
++
++  const ritualRoot = page.getByTestId('slide07-root');
++  const mounted = (await ritualRoot.count()) > 0;
++
++  if (!mounted) {
++    return;
++  }
++
++  const dragSurface = page.getByTestId('slide07-gesture-drag');
++  await expect(dragSurface).toBeVisible();
++
++  const box = await dragSurface.boundingBox();
++  expect(box).not.toBeNull();
++  if (!box) {
++    return;
++  }
++
++  const startX = box.x + 44;
++  const startY = box.y + box.height * 0.46;
++
++  await page.mouse.move(startX, startY);
++  await page.mouse.down();
++  await page.mouse.move(startX + 210, startY - 2, { steps: 16 });
++  await page.mouse.move(startX + 216, startY + 6, { steps: 10 });
++  await page.mouse.up();
++
++  await expect(page.getByTestId('slide07-seal-state')).toContainText(/Graph sealed/i);
++});
+
+5) COMMAND OUTPUTS
+[npm run typecheck]
+> copy-of-hitech-rts-a---deck-v32@0.0.0 typecheck
+> tsc -p tsconfig.verify.json --noEmit
+PASS
+
+[npm run build]
+> copy-of-hitech-rts-a---deck-v32@0.0.0 build
+> node scripts/client-boundary-guard.mjs --strict && node scripts/no-rework-guard.mjs && vite build
+[client-boundary] PASS
+[no-rework] PASS
+vite build PASS (chunk-size warning present, non-blocking).
+
+[npm run test:unit]
+> copy-of-hitech-rts-a---deck-v32@0.0.0 test:unit
+> tsx tests/unit/run-all.ts
+[unit] PASS
+
+[npm run test:e2e -- --grep "Slide13"]
+> playwright test --grep Slide13
+1 passed (demo.e2e.spec.ts Slide13 Route B seals by drag hold release)
+
+[npx tsx Slide13 local specs]
+[slide13-unit] PASS
+
+6) DELETIONS LIST
+- tests/e2e/slide13-routeb.e2e.spec.ts (created then removed in same iteration to satisfy fixed e2e manifest enforced by unit harness).
+- No deletions of pre-existing runtime/reducers/providers/contracts outside same-iteration file ownership.
+
+7) DIFF-STAT (SLIDE13 SCOPE)
+- Modified tracked files added lines: 187
+- New files line count (including this output artifact): 6888
+- Total added lines for Slide13 iteration scope: 7075
+
+8) NO TIMERS CONFIRMATION
+- Route B domain assertion in e2e checks all `components/slides/slide13-ui/routeb/**` files.
+- Asserted absent: `setTimeout(` and `setInterval(`.
+- Result: PASS.
+
+END OF CODEX OUTPUT
+

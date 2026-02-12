@@ -1,0 +1,525 @@
+INVERSION · CODEX AGENT #1 · Slide00 · PROMPT V3 (2026-02-10)
+================================================================================
+ROLE
+- You are Codex inside repo alanharrryy-wq/Inversion (React + Vite + TypeScript).
+- You are operating in a dedicated git worktree/branch: wt/slide00-firstproof
+- You MUST read AGENTS.md first and obey it as the highest project law.
+- NON-INTERACTIVE EXECUTION: Do NOT ask questions. Do NOT request confirmation. Proceed autonomously until DONE.
+- If a decision is ambiguous, choose the lowest-risk option that preserves existing behavior and keeps scope.
+- If you hit an error, fix it yourself and continue. Only stop when you have a hard blocker you cannot resolve after 3 independent attempts.
+
+HARD SAFETY / STABILITY (ANTI-FREEZE)
+- Keep system load stable: avoid repeated full builds/installs; do not run heavy commands in loops.
+- Max 2 e2e runs total (smoke only) unless you touch a critical route. Prefer 1 run at the end.
+- Never spawn long-running watchers beyond what is required by the task.
+- No infinite loops. No background polling. No timers.
+- setTimeout/setInterval are FORBIDDEN. requestAnimationFrame allowed ONLY while pointer is down, and MUST cancel on pointerup/blur/unmount.
+- Deterministic interactions only. Replayable from captured events.
+
+GLOBAL RULES (MANDATORY)
+- Parallel agent mindset: assume other Codex agents are working in other worktrees.
+- STRICT SCOPE: only touch files in Allowed Paths list below.
+- ADDITIVE ONLY: do not refactor or “clean up” unrelated code. Do not rename existing public APIs.
+- Do NOT delete existing code unless you introduced it in this iteration.
+- Preserve gates semantics and provider wiring. Do NOT touch runtime/boot, runtime/evidence, or gate logic.
+- The slide entry file (Slide00.tsx) MUST remain a thin orchestrator; all UI logic lives in slide-specific modules.
+- Modular architecture requirement: every UI element must be easy to locate by name and encapsulated in its own module/component.
+  Assume any component may need to scale from 150 LOC → 1500 LOC later without touching other modules.
+- Respect INVERSION · KERNEL SPEC v1 for structure/interaction/info/DNA/copy.
+
+LOC / OUTPUT REQUIREMENT
+- You MUST add at least 7000 meaningful new lines across code + docs + tests (not generated noise).
+- Provide: (1) implementation, (2) docs, (3) at least 1-2 smoke e2e tests, (4) replay/debug harness for deterministic input.
+
+ALLOWED PATHS (ONLY)
+- components/slides/slide00-ui/**
+- components/slides/Slide00.tsx
+- tests/e2e/** (Slide00 only)
+- docs/slide00/**
+
+SCOPE / GOAL
+Slide 00 FINAL EXPERIENCE LOCK: 'First Proof Ritual' + 'RightSeal collapse' + 'Layered Demo Interaction'. Build a gesture-driven ritual (drag/hold/release) that manipulates visible layers and produces a deterministic, cinematic reaction that instantly communicates power.
+
+EXTRA SCOPE NOTES
+- Emphasize tactile layer manipulation (stack, peel, seal, collapse).
+- Include a 'RightSeal' element that collapses/locks only on deliberate user action.
+- Ensure the ritual is learnable in <10s and satisfying on first try.
+
+DELIVERABLES (MUST)
+1) Production-ready slide modules under components/slides/slide00-ui/** (or matching convention already used).
+2) Slide00.tsx remains thin (composition only).
+3) Deterministic interaction model (pointer events + state machine). No timers.
+4) Replay system:
+   - capture input events (pointer down/move/up, key modifiers if used) into a JSON trace
+   - ability to replay trace deterministically for debugging
+5) Docs in docs/slide00/ describing:
+   - architecture map (modules)
+   - interaction spec (states, transitions)
+   - replay format
+   - troubleshooting
+6) E2E smoke tests that validate:
+   - key interaction happy path
+   - determinism (same trace yields same end state)
+7) A final REPORT.md under docs/slide00/ with:
+   - file list created/modified
+   - how to run tests
+   - what changed and why
+   - known limitations + next steps
+
+EXECUTION PLAN (10 TASK BLOCKS — DO NOT ASK TO PROCEED)
+Block 1 — Recon + Contract
+- Read AGENTS.md and the current slide entry.
+- Map existing slide patterns (naming, imports, motion policy).
+- Create docs/slide00/00-contract.md with your interpretation of the goal + constraints.
+
+Block 2 — Module Skeleton (Massively Modular)
+- Create module tree (UI atoms, interaction core, effects, debug, replay).
+- Each module must have a single responsibility and clear exported API.
+- Add index barrel files only if project conventions already use them.
+
+Block 3 — Interaction Core (Deterministic FSM)
+- Implement a finite state machine for the ritual interaction.
+- Pure reducer-style updates; no hidden globals; deterministic outputs.
+- Include invariants/guards and a small “assertions” helper.
+
+Block 4 — Rendering Layer (Physical/Cinematic Feel, No Autoplay)
+- Implement visuals with framer-motion ONLY as a direct response to input.
+- Ensure pointer-driven rAF loops cancel correctly and never run idle.
+- Respect brand + kernel copy.
+
+Block 5 — “Power Moment” Outcome
+- Implement the core demonstration moment for Slide00.
+- Must be obvious, tactile, and deterministic.
+
+Block 6 — Replay Capture
+- Add event capture to a trace buffer.
+- Trace can be exported to JSON string and saved (in-memory UI button is fine).
+
+Block 7 — Replay Playback
+- Add ability to paste/load a trace and replay it.
+- Replay must drive the same reducer/state transitions as live input.
+
+Block 8 — Debug HUD (Developer-Only UI)
+- Minimal toggleable HUD that shows current FSM state, key values, and trace length.
+- Must be off by default; enable via explicit UI action.
+
+Block 9 — E2E Smoke Tests
+- Add 1–2 Playwright tests that:
+  - perform the ritual interaction
+  - validate final state / key DOM evidence
+  - optionally run a replay trace and confirm same final evidence
+
+Block 10 — Docs + Report + Final Verification
+- Write docs + REPORT.md.
+- Run exactly: lint/typecheck (if part of project standard) + 1 smoke e2e run.
+- Fix issues. Commit is NOT required unless AGENTS.md demands it.
+
+STOP CONDITIONS
+- All deliverables are present.
+- Tests pass (smoke).
+- LOC requirement met.
+- Slide runs without console errors and respects “no timers/no autoplay”.
+
+OUTPUT FORMAT (FINAL RESPONSE)
+- Provide a concise summary.
+- Provide a bullet list of created/modified files.
+- Provide commands executed and their outcomes.
+- No questions.
+
+BEGIN NOW.
+
+
+
+INVERSION · CODEX AGENT #2 · Slide01 · PROMPT V3 (2026-02-10)
+================================================================================
+ROLE
+- You are Codex inside repo alanharrryy-wq/Inversion (React + Vite + TypeScript).
+- You are operating in a dedicated git worktree/branch: wt/slide01-routeb
+- You MUST read AGENTS.md first and obey it as the highest project law.
+- NON-INTERACTIVE EXECUTION: Do NOT ask questions. Do NOT request confirmation. Proceed autonomously until DONE.
+- If a decision is ambiguous, choose the lowest-risk option that preserves existing behavior and keeps scope.
+- If you hit an error, fix it yourself and continue. Only stop when you have a hard blocker you cannot resolve after 3 independent attempts.
+
+HARD SAFETY / STABILITY (ANTI-FREEZE)
+- Keep system load stable: avoid repeated full builds/installs; do not run heavy commands in loops.
+- Max 2 e2e runs total (smoke only) unless you touch a critical route. Prefer 1 run at the end.
+- Never spawn long-running watchers beyond what is required by the task.
+- No infinite loops. No background polling. No timers.
+- setTimeout/setInterval are FORBIDDEN. requestAnimationFrame allowed ONLY while pointer is down, and MUST cancel on pointerup/blur/unmount.
+- Deterministic interactions only. Replayable from captured events.
+
+GLOBAL RULES (MANDATORY)
+- Parallel agent mindset: assume other Codex agents are working in other worktrees.
+- STRICT SCOPE: only touch files in Allowed Paths list below.
+- ADDITIVE ONLY: do not refactor or “clean up” unrelated code. Do not rename existing public APIs.
+- Do NOT delete existing code unless you introduced it in this iteration.
+- Preserve gates semantics and provider wiring. Do NOT touch runtime/boot, runtime/evidence, or gate logic.
+- The slide entry file (Slide01.tsx) MUST remain a thin orchestrator; all UI logic lives in slide-specific modules.
+- Modular architecture requirement: every UI element must be easy to locate by name and encapsulated in its own module/component.
+  Assume any component may need to scale from 150 LOC → 1500 LOC later without touching other modules.
+- Respect INVERSION · KERNEL SPEC v1 for structure/interaction/info/DNA/copy.
+
+LOC / OUTPUT REQUIREMENT
+- You MUST add at least 6000 meaningful new lines across code + docs + tests (not generated noise).
+- Provide: (1) implementation, (2) docs, (3) at least 1-2 smoke e2e tests, (4) replay/debug harness for deterministic input.
+
+ALLOWED PATHS (ONLY)
+- components/slides/slide01-ui/**
+- components/slides/Slide01.tsx
+- tests/e2e/** (Slide01 only)
+- docs/slide01/**
+
+SCOPE / GOAL
+Slide 01 ROUTE B: Build the next interaction beat after Slide00. Present a controlled 'route selection' / 'system reveals the path' interaction that is user-driven, deterministic, and feels like the product is 'choosing' the best route based on the user's input — without any autoplay.
+
+EXTRA SCOPE NOTES
+- Must integrate cleanly with the narrative coming from Slide00.
+- Provide an interaction that compares at least two routes and shows why one wins.
+- No randomization; all scoring is deterministic and explainable via HUD.
+
+DELIVERABLES (MUST)
+1) Production-ready slide modules under components/slides/slide01-ui/** (or matching convention already used).
+2) Slide01.tsx remains thin (composition only).
+3) Deterministic interaction model (pointer events + state machine). No timers.
+4) Replay system:
+   - capture input events (pointer down/move/up, key modifiers if used) into a JSON trace
+   - ability to replay trace deterministically for debugging
+5) Docs in docs/slide01/ describing:
+   - architecture map (modules)
+   - interaction spec (states, transitions)
+   - replay format
+   - troubleshooting
+6) E2E smoke tests that validate:
+   - key interaction happy path
+   - determinism (same trace yields same end state)
+7) A final REPORT.md under docs/slide01/ with:
+   - file list created/modified
+   - how to run tests
+   - what changed and why
+   - known limitations + next steps
+
+EXECUTION PLAN (10 TASK BLOCKS — DO NOT ASK TO PROCEED)
+Block 1 — Recon + Contract
+- Read AGENTS.md and the current slide entry.
+- Map existing slide patterns (naming, imports, motion policy).
+- Create docs/slide01/00-contract.md with your interpretation of the goal + constraints.
+
+Block 2 — Module Skeleton (Massively Modular)
+- Create module tree (UI atoms, interaction core, effects, debug, replay).
+- Each module must have a single responsibility and clear exported API.
+- Add index barrel files only if project conventions already use them.
+
+Block 3 — Interaction Core (Deterministic FSM)
+- Implement a finite state machine for the ritual interaction.
+- Pure reducer-style updates; no hidden globals; deterministic outputs.
+- Include invariants/guards and a small “assertions” helper.
+
+Block 4 — Rendering Layer (Physical/Cinematic Feel, No Autoplay)
+- Implement visuals with framer-motion ONLY as a direct response to input.
+- Ensure pointer-driven rAF loops cancel correctly and never run idle.
+- Respect brand + kernel copy.
+
+Block 5 — “Power Moment” Outcome
+- Implement the core demonstration moment for Slide01.
+- Must be obvious, tactile, and deterministic.
+
+Block 6 — Replay Capture
+- Add event capture to a trace buffer.
+- Trace can be exported to JSON string and saved (in-memory UI button is fine).
+
+Block 7 — Replay Playback
+- Add ability to paste/load a trace and replay it.
+- Replay must drive the same reducer/state transitions as live input.
+
+Block 8 — Debug HUD (Developer-Only UI)
+- Minimal toggleable HUD that shows current FSM state, key values, and trace length.
+- Must be off by default; enable via explicit UI action.
+
+Block 9 — E2E Smoke Tests
+- Add 1–2 Playwright tests that:
+  - perform the ritual interaction
+  - validate final state / key DOM evidence
+  - optionally run a replay trace and confirm same final evidence
+
+Block 10 — Docs + Report + Final Verification
+- Write docs + REPORT.md.
+- Run exactly: lint/typecheck (if part of project standard) + 1 smoke e2e run.
+- Fix issues. Commit is NOT required unless AGENTS.md demands it.
+
+STOP CONDITIONS
+- All deliverables are present.
+- Tests pass (smoke).
+- LOC requirement met.
+- Slide runs without console errors and respects “no timers/no autoplay”.
+
+OUTPUT FORMAT (FINAL RESPONSE)
+- Provide a concise summary.
+- Provide a bullet list of created/modified files.
+- Provide commands executed and their outcomes.
+- No questions.
+
+BEGIN NOW.
+
+
+
+INVERSION · CODEX AGENT #3 · Slide07 · PROMPT V3 (2026-02-10)
+================================================================================
+ROLE
+- You are Codex inside repo alanharrryy-wq/Inversion (React + Vite + TypeScript).
+- You are operating in a dedicated git worktree/branch: wt/slide07-routeb
+- You MUST read AGENTS.md first and obey it as the highest project law.
+- NON-INTERACTIVE EXECUTION: Do NOT ask questions. Do NOT request confirmation. Proceed autonomously until DONE.
+- If a decision is ambiguous, choose the lowest-risk option that preserves existing behavior and keeps scope.
+- If you hit an error, fix it yourself and continue. Only stop when you have a hard blocker you cannot resolve after 3 independent attempts.
+
+HARD SAFETY / STABILITY (ANTI-FREEZE)
+- Keep system load stable: avoid repeated full builds/installs; do not run heavy commands in loops.
+- Max 2 e2e runs total (smoke only) unless you touch a critical route. Prefer 1 run at the end.
+- Never spawn long-running watchers beyond what is required by the task.
+- No infinite loops. No background polling. No timers.
+- setTimeout/setInterval are FORBIDDEN. requestAnimationFrame allowed ONLY while pointer is down, and MUST cancel on pointerup/blur/unmount.
+- Deterministic interactions only. Replayable from captured events.
+
+GLOBAL RULES (MANDATORY)
+- Parallel agent mindset: assume other Codex agents are working in other worktrees.
+- STRICT SCOPE: only touch files in Allowed Paths list below.
+- ADDITIVE ONLY: do not refactor or “clean up” unrelated code. Do not rename existing public APIs.
+- Do NOT delete existing code unless you introduced it in this iteration.
+- Preserve gates semantics and provider wiring. Do NOT touch runtime/boot, runtime/evidence, or gate logic.
+- The slide entry file (Slide07.tsx) MUST remain a thin orchestrator; all UI logic lives in slide-specific modules.
+- Modular architecture requirement: every UI element must be easy to locate by name and encapsulated in its own module/component.
+  Assume any component may need to scale from 150 LOC → 1500 LOC later without touching other modules.
+- Respect INVERSION · KERNEL SPEC v1 for structure/interaction/info/DNA/copy.
+
+LOC / OUTPUT REQUIREMENT
+- You MUST add at least 6000 meaningful new lines across code + docs + tests (not generated noise).
+- Provide: (1) implementation, (2) docs, (3) at least 1-2 smoke e2e tests, (4) replay/debug harness for deterministic input.
+
+ALLOWED PATHS (ONLY)
+- components/slides/slide07-ui/**
+- components/slides/Slide07.tsx
+- tests/e2e/** (Slide07 only)
+- docs/slide07/**
+
+SCOPE / GOAL
+Slide 07 ROUTE B: Build a deep 'system proof' interaction — a hands-on demonstration of inversion-style reasoning. User manipulates constraints; the system updates evidence live, showing how inference tightens and uncertainties collapse deterministically.
+
+EXTRA SCOPE NOTES
+- Provide a constraint editor UI (simple but robust) that is fully deterministic.
+- Show evidence panels that update from reducer outputs.
+- Include replay traces that cover 2–3 constraint edits and confirm identical results.
+
+DELIVERABLES (MUST)
+1) Production-ready slide modules under components/slides/slide07-ui/** (or matching convention already used).
+2) Slide07.tsx remains thin (composition only).
+3) Deterministic interaction model (pointer events + state machine). No timers.
+4) Replay system:
+   - capture input events (pointer down/move/up, key modifiers if used) into a JSON trace
+   - ability to replay trace deterministically for debugging
+5) Docs in docs/slide07/ describing:
+   - architecture map (modules)
+   - interaction spec (states, transitions)
+   - replay format
+   - troubleshooting
+6) E2E smoke tests that validate:
+   - key interaction happy path
+   - determinism (same trace yields same end state)
+7) A final REPORT.md under docs/slide07/ with:
+   - file list created/modified
+   - how to run tests
+   - what changed and why
+   - known limitations + next steps
+
+EXECUTION PLAN (10 TASK BLOCKS — DO NOT ASK TO PROCEED)
+Block 1 — Recon + Contract
+- Read AGENTS.md and the current slide entry.
+- Map existing slide patterns (naming, imports, motion policy).
+- Create docs/slide07/00-contract.md with your interpretation of the goal + constraints.
+
+Block 2 — Module Skeleton (Massively Modular)
+- Create module tree (UI atoms, interaction core, effects, debug, replay).
+- Each module must have a single responsibility and clear exported API.
+- Add index barrel files only if project conventions already use them.
+
+Block 3 — Interaction Core (Deterministic FSM)
+- Implement a finite state machine for the ritual interaction.
+- Pure reducer-style updates; no hidden globals; deterministic outputs.
+- Include invariants/guards and a small “assertions” helper.
+
+Block 4 — Rendering Layer (Physical/Cinematic Feel, No Autoplay)
+- Implement visuals with framer-motion ONLY as a direct response to input.
+- Ensure pointer-driven rAF loops cancel correctly and never run idle.
+- Respect brand + kernel copy.
+
+Block 5 — “Power Moment” Outcome
+- Implement the core demonstration moment for Slide07.
+- Must be obvious, tactile, and deterministic.
+
+Block 6 — Replay Capture
+- Add event capture to a trace buffer.
+- Trace can be exported to JSON string and saved (in-memory UI button is fine).
+
+Block 7 — Replay Playback
+- Add ability to paste/load a trace and replay it.
+- Replay must drive the same reducer/state transitions as live input.
+
+Block 8 — Debug HUD (Developer-Only UI)
+- Minimal toggleable HUD that shows current FSM state, key values, and trace length.
+- Must be off by default; enable via explicit UI action.
+
+Block 9 — E2E Smoke Tests
+- Add 1–2 Playwright tests that:
+  - perform the ritual interaction
+  - validate final state / key DOM evidence
+  - optionally run a replay trace and confirm same final evidence
+
+Block 10 — Docs + Report + Final Verification
+- Write docs + REPORT.md.
+- Run exactly: lint/typecheck (if part of project standard) + 1 smoke e2e run.
+- Fix issues. Commit is NOT required unless AGENTS.md demands it.
+
+STOP CONDITIONS
+- All deliverables are present.
+- Tests pass (smoke).
+- LOC requirement met.
+- Slide runs without console errors and respects “no timers/no autoplay”.
+
+OUTPUT FORMAT (FINAL RESPONSE)
+- Provide a concise summary.
+- Provide a bullet list of created/modified files.
+- Provide commands executed and their outcomes.
+- No questions.
+
+BEGIN NOW.
+
+
+
+INVERSION · CODEX AGENT #4 · Slide13 · PROMPT V3 (2026-02-10)
+================================================================================
+ROLE
+- You are Codex inside repo alanharrryy-wq/Inversion (React + Vite + TypeScript).
+- You are operating in a dedicated git worktree/branch: wt/slide13-routeb
+- You MUST read AGENTS.md first and obey it as the highest project law.
+- NON-INTERACTIVE EXECUTION: Do NOT ask questions. Do NOT request confirmation. Proceed autonomously until DONE.
+- If a decision is ambiguous, choose the lowest-risk option that preserves existing behavior and keeps scope.
+- If you hit an error, fix it yourself and continue. Only stop when you have a hard blocker you cannot resolve after 3 independent attempts.
+
+HARD SAFETY / STABILITY (ANTI-FREEZE)
+- Keep system load stable: avoid repeated full builds/installs; do not run heavy commands in loops.
+- Max 2 e2e runs total (smoke only) unless you touch a critical route. Prefer 1 run at the end.
+- Never spawn long-running watchers beyond what is required by the task.
+- No infinite loops. No background polling. No timers.
+- setTimeout/setInterval are FORBIDDEN. requestAnimationFrame allowed ONLY while pointer is down, and MUST cancel on pointerup/blur/unmount.
+- Deterministic interactions only. Replayable from captured events.
+
+GLOBAL RULES (MANDATORY)
+- Parallel agent mindset: assume other Codex agents are working in other worktrees.
+- STRICT SCOPE: only touch files in Allowed Paths list below.
+- ADDITIVE ONLY: do not refactor or “clean up” unrelated code. Do not rename existing public APIs.
+- Do NOT delete existing code unless you introduced it in this iteration.
+- Preserve gates semantics and provider wiring. Do NOT touch runtime/boot, runtime/evidence, or gate logic.
+- The slide entry file (Slide13.tsx) MUST remain a thin orchestrator; all UI logic lives in slide-specific modules.
+- Modular architecture requirement: every UI element must be easy to locate by name and encapsulated in its own module/component.
+  Assume any component may need to scale from 150 LOC → 1500 LOC later without touching other modules.
+- Respect INVERSION · KERNEL SPEC v1 for structure/interaction/info/DNA/copy.
+
+LOC / OUTPUT REQUIREMENT
+- You MUST add at least 6000 meaningful new lines across code + docs + tests (not generated noise).
+- Provide: (1) implementation, (2) docs, (3) at least 1-2 smoke e2e tests, (4) replay/debug harness for deterministic input.
+
+ALLOWED PATHS (ONLY)
+- components/slides/slide13-ui/**
+- components/slides/Slide13.tsx
+- tests/e2e/** (Slide13 only)
+- docs/slide13/**
+
+SCOPE / GOAL
+Slide 13 ROUTE B: Build the closing 'lock-in' interaction — user consolidates learnings into a single decisive action. The system produces a final deterministic seal/certification moment that feels earned and ties back to the 'First Proof' ritual.
+
+EXTRA SCOPE NOTES
+- Must feel like a finale: consolidate, seal, and present outcome.
+- No autoplay; the user initiates the final seal.
+- Provide a shareable replay trace that reproduces the finale moment.
+
+DELIVERABLES (MUST)
+1) Production-ready slide modules under components/slides/slide13-ui/** (or matching convention already used).
+2) Slide13.tsx remains thin (composition only).
+3) Deterministic interaction model (pointer events + state machine). No timers.
+4) Replay system:
+   - capture input events (pointer down/move/up, key modifiers if used) into a JSON trace
+   - ability to replay trace deterministically for debugging
+5) Docs in docs/slide13/ describing:
+   - architecture map (modules)
+   - interaction spec (states, transitions)
+   - replay format
+   - troubleshooting
+6) E2E smoke tests that validate:
+   - key interaction happy path
+   - determinism (same trace yields same end state)
+7) A final REPORT.md under docs/slide13/ with:
+   - file list created/modified
+   - how to run tests
+   - what changed and why
+   - known limitations + next steps
+
+EXECUTION PLAN (10 TASK BLOCKS — DO NOT ASK TO PROCEED)
+Block 1 — Recon + Contract
+- Read AGENTS.md and the current slide entry.
+- Map existing slide patterns (naming, imports, motion policy).
+- Create docs/slide13/00-contract.md with your interpretation of the goal + constraints.
+
+Block 2 — Module Skeleton (Massively Modular)
+- Create module tree (UI atoms, interaction core, effects, debug, replay).
+- Each module must have a single responsibility and clear exported API.
+- Add index barrel files only if project conventions already use them.
+
+Block 3 — Interaction Core (Deterministic FSM)
+- Implement a finite state machine for the ritual interaction.
+- Pure reducer-style updates; no hidden globals; deterministic outputs.
+- Include invariants/guards and a small “assertions” helper.
+
+Block 4 — Rendering Layer (Physical/Cinematic Feel, No Autoplay)
+- Implement visuals with framer-motion ONLY as a direct response to input.
+- Ensure pointer-driven rAF loops cancel correctly and never run idle.
+- Respect brand + kernel copy.
+
+Block 5 — “Power Moment” Outcome
+- Implement the core demonstration moment for Slide13.
+- Must be obvious, tactile, and deterministic.
+
+Block 6 — Replay Capture
+- Add event capture to a trace buffer.
+- Trace can be exported to JSON string and saved (in-memory UI button is fine).
+
+Block 7 — Replay Playback
+- Add ability to paste/load a trace and replay it.
+- Replay must drive the same reducer/state transitions as live input.
+
+Block 8 — Debug HUD (Developer-Only UI)
+- Minimal toggleable HUD that shows current FSM state, key values, and trace length.
+- Must be off by default; enable via explicit UI action.
+
+Block 9 — E2E Smoke Tests
+- Add 1–2 Playwright tests that:
+  - perform the ritual interaction
+  - validate final state / key DOM evidence
+  - optionally run a replay trace and confirm same final evidence
+
+Block 10 — Docs + Report + Final Verification
+- Write docs + REPORT.md.
+- Run exactly: lint/typecheck (if part of project standard) + 1 smoke e2e run.
+- Fix issues. Commit is NOT required unless AGENTS.md demands it.
+
+STOP CONDITIONS
+- All deliverables are present.
+- Tests pass (smoke).
+- LOC requirement met.
+- Slide runs without console errors and respects “no timers/no autoplay”.
+
+OUTPUT FORMAT (FINAL RESPONSE)
+- Provide a concise summary.
+- Provide a bullet list of created/modified files.
+- Provide commands executed and their outcomes.
+- No questions.
+
+BEGIN NOW.
