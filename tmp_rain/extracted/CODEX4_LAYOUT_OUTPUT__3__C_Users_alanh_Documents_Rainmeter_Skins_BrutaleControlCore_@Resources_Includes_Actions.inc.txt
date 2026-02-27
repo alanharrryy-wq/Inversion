@@ -1,0 +1,176 @@
+; =================================================================================================
+;  Actions.inc - control actions and collapse handling
+; =================================================================================================
+
+[MeasureNextDragEnabled]
+Measure=Calc
+Formula=(1-#DragEnabled#)
+DynamicVariables=1
+
+[MeasureNextClickThroughEnabled]
+Measure=Calc
+Formula=(1-#ClickThroughEnabled#)
+DynamicVariables=1
+
+[MeasureNextDebug]
+Measure=Calc
+Formula=(1-#Debug#)
+DynamicVariables=1
+
+[MeasureNextPerfMode]
+Measure=Calc
+Formula=(1-#PerfMode#)
+DynamicVariables=1
+
+[MeasureNextCollapseCPU]
+Measure=Calc
+Formula=(1-#CollapseCPU#)
+DynamicVariables=1
+
+[MeasureNextCollapseRAM]
+Measure=Calc
+Formula=(1-#CollapseRAM#)
+DynamicVariables=1
+
+[MeasureNextCollapseDISK]
+Measure=Calc
+Formula=(1-#CollapseDISK#)
+DynamicVariables=1
+
+[MeasureNextCollapseNET]
+Measure=Calc
+Formula=(1-#CollapseNET#)
+DynamicVariables=1
+
+[MeasureNextCollapsePROC]
+Measure=Calc
+Formula=(1-#CollapsePROC#)
+DynamicVariables=1
+
+[MeasureActionApplyCore]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!Draggable #DragEnabled#][!ClickThrough #ClickThroughEnabled#]
+
+[MeasureActionApplyCPU]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetOption MeterCPU_Block Shape "Rectangle 0,0,540,#CPUBlockH#,18 | Fill Color 0,0,0,1 | StrokeWidth 1 | Stroke Color #Border2#"][!SetOption MeterCPU_DonutBase Hidden #CollapseCPU#][!SetOption MeterCPU_DonutGlow Hidden #CollapseCPU#][!SetOption MeterCPU_Donut Hidden #CollapseCPU#][!SetOption MeterCPU_Spinner Hidden #CollapseCPU#][!SetOption MeterCPU_Pct Hidden #CollapseCPU#][!SetOption MeterCPU_PctLabel Hidden #CollapseCPU#][!SetOption MeterCPU_UptimeL Hidden #CollapseCPU#][!SetOption MeterCPU_UptimeV Hidden #CollapseCPU#][!SetOption MeterCPU_HostL Hidden #CollapseCPU#][!SetOption MeterCPU_HostV Hidden #CollapseCPU#][!SetOption MeterCPU_MinMaxL Hidden #CollapseCPU#][!SetOption MeterCPU_MinMaxV Hidden #CollapseCPU#][!SetOption MeterCPU_CoreLabel Hidden #CollapseCPU#][!SetOption MeterCPU_Core1 Hidden #CollapseCPU#][!SetOption MeterCPU_Core2 Hidden #CollapseCPU#][!SetOption MeterCPU_Core3 Hidden #CollapseCPU#][!SetOption MeterCPU_Core4 Hidden #CollapseCPU#][!SetOption MeterCPU_Core5 Hidden #CollapseCPU#][!SetOption MeterCPU_Core6 Hidden #CollapseCPU#][!SetOption MeterCPU_SparkFrame Hidden #CollapseCPU#][!SetOption MeterCPU_Spark Hidden #CollapseCPU#]
+
+[MeasureActionApplyRAM]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetOption MeterRAM_Block Shape "Rectangle 0,0,540,#RAMBlockH#,18 | Fill Color 0,0,0,1 | StrokeWidth 1 | Stroke Color #Border2#"][!SetOption MeterRAM_DonutBase Hidden #CollapseRAM#][!SetOption MeterRAM_DonutGlow Hidden #CollapseRAM#][!SetOption MeterRAM_Donut Hidden #CollapseRAM#][!SetOption MeterRAM_Spinner Hidden #CollapseRAM#][!SetOption MeterRAM_Pct Hidden #CollapseRAM#][!SetOption MeterRAM_PctLabel Hidden #CollapseRAM#][!SetOption MeterRAM_UsedL Hidden #CollapseRAM#][!SetOption MeterRAM_UsedV Hidden #CollapseRAM#][!SetOption MeterRAM_FreeL Hidden #CollapseRAM#][!SetOption MeterRAM_FreeV Hidden #CollapseRAM#][!SetOption MeterRAM_MinMaxL Hidden #CollapseRAM#][!SetOption MeterRAM_MinMaxV Hidden #CollapseRAM#][!SetOption MeterRAM_SparkFrame Hidden #CollapseRAM#][!SetOption MeterRAM_Spark Hidden #CollapseRAM#]
+
+[MeasureActionApplyDISK]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetOption MeterDISK_Block Shape "Rectangle 0,0,540,#DISKBlockH#,18 | Fill Color 0,0,0,1 | StrokeWidth 1 | Stroke Color #Border2#"][!SetOption MeterDisk1Label Hidden #CollapseDISK#][!SetOption MeterDisk1Bar Hidden #CollapseDISK#][!SetOption MeterDisk1Val Hidden #CollapseDISK#][!SetOption MeterDisk1Free Hidden #CollapseDISK#][!SetOption MeterDisk2Label Hidden #CollapseDISK#][!SetOption MeterDisk2Bar Hidden #CollapseDISK#][!SetOption MeterDisk2Val Hidden #CollapseDISK#][!SetOption MeterDisk2Free Hidden #CollapseDISK#][!SetOption MeterDiskRead Hidden #CollapseDISK#][!SetOption MeterDiskWrite Hidden #CollapseDISK#][!SetOption MeterDiskGraphFrame Hidden #CollapseDISK#][!SetOption MeterDiskGraphRead Hidden #CollapseDISK#][!SetOption MeterDiskGraphWrite Hidden #CollapseDISK#]
+
+[MeasureActionApplyNET]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetOption MeterNET_Block Shape "Rectangle 0,0,540,#NETBlockH#,18 | Fill Color 0,0,0,1 | StrokeWidth 1 | Stroke Color #Border2#"][!SetOption MeterNetInVal Hidden #CollapseNET#][!SetOption MeterNetOutVal Hidden #CollapseNET#][!SetOption MeterNetInBar Hidden #CollapseNET#][!SetOption MeterNetOutBar Hidden #CollapseNET#][!SetOption MeterNetGraphFrame Hidden #CollapseNET#][!SetOption MeterNetGraphIn Hidden #CollapseNET#][!SetOption MeterNetGraphOut Hidden #CollapseNET#][!SetOption MeterPingLabel Hidden #CollapseNET#][!SetOption MeterPingVal Hidden #CollapseNET#][!SetOption MeterPingLoss Hidden #CollapseNET#][!SetOption MeterPingDot Hidden #CollapseNET#]
+
+[MeasureActionApplyPROC]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetOption MeterPROC_Block Shape "Rectangle 0,0,(#PanelW#-#Pad#*2),#PROCBlockH#,18 | Fill Color 0,0,0,1 | StrokeWidth 1 | Stroke Color #Border2#"][!SetOption MeterPROC_Scale Hidden #CollapsePROC#][!SetOption MeterPROC_Spin Hidden #CollapsePROC#][!SetOption MeterPHead1 Hidden #CollapsePROC#][!SetOption MeterPHead2 Hidden #CollapsePROC#][!SetOption MeterPHead3 Hidden #CollapsePROC#][!SetOption MeterPHead4 Hidden #CollapsePROC#][!SetOption MeterP1Name Hidden #CollapsePROC#][!SetOption MeterP1CPU Hidden #CollapsePROC#][!SetOption MeterP1RAM Hidden #CollapsePROC#][!SetOption MeterP1Bar Hidden #CollapsePROC#][!SetOption MeterP2Name Hidden #CollapsePROC#][!SetOption MeterP2CPU Hidden #CollapsePROC#][!SetOption MeterP2RAM Hidden #CollapsePROC#][!SetOption MeterP2Bar Hidden #CollapsePROC#][!SetOption MeterP3Name Hidden #CollapsePROC#][!SetOption MeterP3CPU Hidden #CollapsePROC#][!SetOption MeterP3RAM Hidden #CollapsePROC#][!SetOption MeterP3Bar Hidden #CollapsePROC#][!SetOption MeterP4Name Hidden #CollapsePROC#][!SetOption MeterP4CPU Hidden #CollapsePROC#][!SetOption MeterP4RAM Hidden #CollapsePROC#][!SetOption MeterP4Bar Hidden #CollapsePROC#][!SetOption MeterP5Name Hidden #CollapsePROC#][!SetOption MeterP5CPU Hidden #CollapsePROC#][!SetOption MeterP5RAM Hidden #CollapsePROC#][!SetOption MeterP5Bar Hidden #CollapsePROC#][!SetOption MeterP6Name Hidden #CollapsePROC#][!SetOption MeterP6CPU Hidden #CollapsePROC#][!SetOption MeterP6RAM Hidden #CollapsePROC#][!SetOption MeterP6Bar Hidden #CollapsePROC#][!SetOption MeterP7Name Hidden #CollapsePROC#][!SetOption MeterP7CPU Hidden #CollapsePROC#][!SetOption MeterP7RAM Hidden #CollapsePROC#][!SetOption MeterP7Bar Hidden #CollapsePROC#][!SetOption MeterP8Name Hidden #CollapsePROC#][!SetOption MeterP8CPU Hidden #CollapsePROC#][!SetOption MeterP8RAM Hidden #CollapsePROC#][!SetOption MeterP8Bar Hidden #CollapsePROC#]
+
+[MeasureActionApplyAll]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!UpdateMeasure MeasureActionApplyCore][!UpdateMeasure MeasureActionApplyCPU][!UpdateMeasure MeasureActionApplyRAM][!UpdateMeasure MeasureActionApplyDISK][!UpdateMeasure MeasureActionApplyNET][!UpdateMeasure MeasureActionApplyPROC][!UpdateMeter *][!Redraw]
+
+[MeasureActionToggleDrag]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetVariable DragEnabled [MeasureNextDragEnabled]][!UpdateMeasure MeasureActionApplyAll]
+
+[MeasureActionToggleClickThrough]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetVariable ClickThroughEnabled [MeasureNextClickThroughEnabled]][!UpdateMeasure MeasureActionApplyAll]
+
+[MeasureActionToggleDebug]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetVariable Debug [MeasureNextDebug]][!UpdateMeter MeterDebugBox][!UpdateMeter MeterDebugText][!Redraw]
+
+[MeasureActionTogglePerf]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetVariable PerfMode [MeasureNextPerfMode]][!UpdateMeasure MeasureActionApplyAll]
+
+[MeasureActionToggleCPU]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetVariable CollapseCPU [MeasureNextCollapseCPU]][!UpdateMeasure MeasureActionApplyAll]
+
+[MeasureActionToggleRAM]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetVariable CollapseRAM [MeasureNextCollapseRAM]][!UpdateMeasure MeasureActionApplyAll]
+
+[MeasureActionToggleDISK]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetVariable CollapseDISK [MeasureNextCollapseDISK]][!UpdateMeasure MeasureActionApplyAll]
+
+[MeasureActionToggleNET]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetVariable CollapseNET [MeasureNextCollapseNET]][!UpdateMeasure MeasureActionApplyAll]
+
+[MeasureActionTogglePROC]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+DynamicVariables=1
+IfCondition=1
+IfTrueAction=[!SetVariable CollapsePROC [MeasureNextCollapsePROC]][!UpdateMeasure MeasureActionApplyAll]

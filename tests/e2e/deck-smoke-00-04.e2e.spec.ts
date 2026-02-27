@@ -29,6 +29,12 @@ test("deck nav smoke: Slide00 to Slide04 and back to Slide03", async ({ page }) 
     try {
       await expect(page.getByTestId(rootTestId)).toBeVisible({ timeout: 20000 });
     } catch (error) {
+      await page
+        .screenshot({
+          path: `test-results/deck-smoke-root-failure-${rootTestId}.png`,
+          fullPage: true,
+        })
+        .catch(() => undefined);
       await printDiagnosticsOnFailure(rootTestId);
       throw error;
     }

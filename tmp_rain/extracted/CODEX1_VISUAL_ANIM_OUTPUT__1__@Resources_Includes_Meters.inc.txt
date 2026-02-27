@@ -1,0 +1,1217 @@
+; =================================================================================================
+;  Meters.inc
+; =================================================================================================
+
+[MeterPanelGlass]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#)
+Y=(#PanelY#)
+Shape=Rectangle 0,0,#PanelW#,#PanelH#,#PanelRadius# | Fill Color #PanelFill0# | StrokeWidth 1 | Stroke Color #EdgeWhite#
+Shape2=Rectangle 1,1,(#PanelW#-2),(#PanelH#-2),(#PanelRadius#-1) | Fill Color #PanelFill1# | StrokeWidth 1 | Stroke Color #EdgeDim#
+Shape3=Line 16,14,(#PanelW#-16),14 | StrokeWidth 1 | Stroke Color 255,255,255,46
+Shape4=Line 16,(#PanelH#-14),(#PanelW#-16),(#PanelH#-14) | StrokeWidth 2 | Stroke Color 0,0,0,96
+Shape5=Line 0,#Chamfer#,#Chamfer#,0 | StrokeWidth 2 | Stroke Color #Cyan#,84
+Shape6=Line (#PanelW#-#Chamfer#),0,#PanelW#,#Chamfer# | StrokeWidth 2 | Stroke Color #Orange#,84
+Shape7=Line 0,(#PanelH#-#Chamfer#),#Chamfer#,#PanelH# | StrokeWidth 2 | Stroke Color #Green#,72
+Shape8=Line (#PanelW#-#Chamfer#),#PanelH#,#PanelW#,(#PanelH#-#Chamfer#) | StrokeWidth 2 | Stroke Color #Cyan#,72
+Shape9=Rectangle 6,6,(#PanelW#-12),(#PanelH#-12),(#PanelRadius#-3) | Fill Color 0,0,0,1 | StrokeWidth 1 | Stroke Color 255,255,255,9
+DynamicVariables=1
+
+[MeterParallaxGlow]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#+(#PanelW#*0.10)+#ParallaxX#)
+Y=(#PanelY#+(#PanelH#*0.07)+#ParallaxY#)
+Shape=Ellipse 0,0,(#PanelW#*0.78),(#PanelH#*0.42) | Fill Color #Cyan#,11 | StrokeWidth 0
+Shape2=Ellipse (#PanelW#*0.16),(#PanelH#*0.06),(#PanelW#*0.52),(#PanelH#*0.26) | Fill Color #Green#,7 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterPanelGrid]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#)
+Y=(#PanelY#)
+Shape=Line (#PanelW#*0.2),0,(#PanelW#*0.2),#PanelH# | StrokeWidth 1 | Stroke Color #GridColor#
+Shape2=Line (#PanelW#*0.4),0,(#PanelW#*0.4),#PanelH# | StrokeWidth 1 | Stroke Color #GridColor#
+Shape3=Line (#PanelW#*0.6),0,(#PanelW#*0.6),#PanelH# | StrokeWidth 1 | Stroke Color #GridColor#
+Shape4=Line (#PanelW#*0.8),0,(#PanelW#*0.8),#PanelH# | StrokeWidth 1 | Stroke Color #GridColor#
+Shape5=Line 0,(#PanelH#*0.2),#PanelW#,(#PanelH#*0.2) | StrokeWidth 1 | Stroke Color #GridColor#
+Shape6=Line 0,(#PanelH#*0.4),#PanelW#,(#PanelH#*0.4) | StrokeWidth 1 | Stroke Color #GridColor#
+Shape7=Line 0,(#PanelH#*0.6),#PanelW#,(#PanelH#*0.6) | StrokeWidth 1 | Stroke Color #GridColor#
+Shape8=Line 0,(#PanelH#*0.8),#PanelW#,(#PanelH#*0.8) | StrokeWidth 1 | Stroke Color #GridColor#
+DynamicVariables=1
+
+[MeterPanelVignette]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#)
+Y=(#PanelY#)
+Shape=Rectangle 0,0,#PanelW#,(#PanelH#*0.08),0 | Fill Color 0,0,0,48 | StrokeWidth 0
+Shape2=Rectangle 0,(#PanelH#*0.92),#PanelW#,(#PanelH#*0.08),0 | Fill Color 0,0,0,62 | StrokeWidth 0
+Shape3=Rectangle 0,0,(#PanelW#*0.06),#PanelH#,0 | Fill Color 0,0,0,34 | StrokeWidth 0
+Shape4=Rectangle (#PanelW#*0.94),0,(#PanelW#*0.06),#PanelH#,0 | Fill Color 0,0,0,40 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterScanline]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#)
+Y=(#PanelY#+(#ScanT#*(#PanelH#-#ScanH#)))
+Shape=Rectangle 0,0,#PanelW#,#ScanH#,0 | Fill Color 255,255,255,6 | StrokeWidth 0
+Shape2=Line 0,(#ScanH#*0.45),#PanelW#,(#ScanH#*0.45) | StrokeWidth 1 | Stroke Color #Cyan#,30
+DynamicVariables=1
+
+[MeterAmbientNoise]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#)
+Y=(#PanelY#)
+Shape=Rectangle ((#PanelW#*0.06)+#NoiseShiftX#),((#PanelH#*0.07)+#NoiseShiftY#),2,2,0 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle ((#PanelW#*0.24)+#NoiseShiftY#),((#PanelH#*0.16)+#NoiseShiftX#),2,2,0 | Fill Color 255,255,255,8 | StrokeWidth 0
+Shape3=Rectangle ((#PanelW#*0.42)+#NoiseShiftX#),((#PanelH#*0.34)+#NoiseShiftY#),2,2,0 | Fill Color 255,255,255,10 | StrokeWidth 0
+Shape4=Rectangle ((#PanelW#*0.58)+#NoiseShiftY#),((#PanelH#*0.52)+#NoiseShiftX#),2,2,0 | Fill Color 255,255,255,7 | StrokeWidth 0
+Shape5=Rectangle ((#PanelW#*0.74)+#NoiseShiftX#),((#PanelH#*0.68)+#NoiseShiftY#),1,2,0 | Fill Color 255,255,255,11 | StrokeWidth 0
+Shape6=Rectangle ((#PanelW#*0.86)+#NoiseShiftY#),((#PanelH#*0.82)+#NoiseShiftX#),1,2,0 | Fill Color 255,255,255,8 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterWarningOverlay]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#)
+Y=(#PanelY#)
+Shape=Rectangle 0,0,#PanelW#,#PanelH#,#PanelRadius# | Fill Color #Orange#,#WarnFlashA# | StrokeWidth 0
+DynamicVariables=1
+
+[MeterCornerTL]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#+12+#JitterX#)
+Y=(#PanelY#+12+#JitterY#)
+Shape=Line 0,14,0,0 | StrokeWidth 2 | Stroke Color #Cyan#,(22+#CornerPulse#)
+Shape2=Line 0,0,14,0 | StrokeWidth 2 | Stroke Color #Cyan#,(22+#CornerPulse#)
+DynamicVariables=1
+
+[MeterCornerTR]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#+#PanelW#-26-#JitterX#)
+Y=(#PanelY#+12+#JitterY#)
+Shape=Line 14,14,14,0 | StrokeWidth 2 | Stroke Color #Orange#,(18+#CornerPulse#)
+Shape2=Line 0,0,14,0 | StrokeWidth 2 | Stroke Color #Orange#,(18+#CornerPulse#)
+DynamicVariables=1
+
+[MeterCornerBL]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#+12+#JitterX#)
+Y=(#PanelY#+#PanelH#-26-#JitterY#)
+Shape=Line 0,0,0,14 | StrokeWidth 2 | Stroke Color #Green#,(18+#CornerPulse#)
+Shape2=Line 0,14,14,14 | StrokeWidth 2 | Stroke Color #Green#,(18+#CornerPulse#)
+DynamicVariables=1
+
+[MeterCornerBR]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#+#PanelW#-26-#JitterX#)
+Y=(#PanelY#+#PanelH#-26-#JitterY#)
+Shape=Line 14,0,14,14 | StrokeWidth 2 | Stroke Color #Cyan#,(18+#CornerPulse#)
+Shape2=Line 0,14,14,14 | StrokeWidth 2 | Stroke Color #Cyan#,(18+#CornerPulse#)
+DynamicVariables=1
+
+[MeterHeader]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#+#Pad12#)
+Y=(#PanelY#+#Pad8#)
+Shape=Rectangle 0,0,(#PanelW#-#Pad24#),(#HeaderH#-#Pad8#),(#CardRadius#) | Fill Color #CardFill0# | StrokeWidth 1 | Stroke Color #EdgeWhite#
+Shape2=Rectangle 1,1,(#PanelW#-#Pad24#-2),(#HeaderH#-#Pad8#-2),(#CardRadius#-1) | Fill Color #CardFill1# | StrokeWidth 1 | Stroke Color #EdgeDim#
+Shape3=Line 10,10,(#PanelW#-#Pad24#-10),10 | StrokeWidth 1 | Stroke Color #Cyan#,56
+Shape4=Line (#PanelW#-#Pad24#-52),18,(#PanelW#-#Pad24#-20),18 | StrokeWidth 1 | Stroke Color #Orange#,130
+Shape5=Line (#PanelW#-#Pad24#-34),10,(#PanelW#-#Pad24#-18),26 | StrokeWidth 2 | Stroke Color #Orange#,160
+DynamicVariables=1
+
+[MeterHeaderTitle]
+Meter=String
+MeterStyle=StyleHeaderTitle
+X=(#PanelX#+#Pad12#+#Pad16#)
+Y=(#PanelY#+#Pad8#+#Pad12#)
+Text=BRUTALE CONTROL CORE
+DynamicVariables=1
+
+[MeterHeaderSub]
+Meter=String
+MeterStyle=StyleHeaderSub
+X=(#PanelX#+#Pad12#+#Pad16#)
+Y=(#PanelY#+#Pad8#+#Pad12#+#Pad24#)
+Text=dark glass hud  |  neon edge discipline  |  motion engine active
+DynamicVariables=1
+
+[MeterHeaderSlash]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#+#PanelW#-#Pad24#-54)
+Y=(#PanelY#+#Pad8#+20)
+Shape=Line 0,0,24,24 | StrokeWidth 2 | Stroke Color #Orange#,170
+Shape2=Line 8,0,32,24 | StrokeWidth 1 | Stroke Color #Orange#,90
+DynamicVariables=1
+
+[MeterSep1]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#+#Pad12#)
+Y=(#Row1Y#-#Pad8#)
+Shape=Line 0,0,(#PanelW#-#Pad24#),0 | StrokeWidth 1 | Stroke Color 255,255,255,5
+Shape2=Line (#PanelW#*0.14),0,(#PanelW#*0.50),0 | StrokeWidth 1 | Stroke Color 255,255,255,18
+DynamicVariables=1
+
+[MeterSep2]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#+#Pad12#)
+Y=(#Row2Y#-#Pad8#)
+Shape=Line 0,0,(#PanelW#-#Pad24#),0 | StrokeWidth 1 | Stroke Color 255,255,255,5
+Shape2=Line (#PanelW#*0.10),0,(#PanelW#*0.48),0 | StrokeWidth 1 | Stroke Color 255,255,255,16
+DynamicVariables=1
+
+[MeterSep3]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#+#Pad12#)
+Y=(#Row3Y#-#Pad8#)
+Shape=Line 0,0,(#PanelW#-#Pad24#),0 | StrokeWidth 1 | Stroke Color 255,255,255,5
+Shape2=Line (#PanelW#*0.12),0,(#PanelW#*0.44),0 | StrokeWidth 1 | Stroke Color 255,255,255,16
+DynamicVariables=1
+
+; =================================================================================================
+;  CPU CARD
+; =================================================================================================
+
+[MeterCPU_Block]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#)
+Y=(#Row1Y#)
+Shape=Rectangle 0,0,#CardW#,#Row1H#,#CardRadius# | Fill Color #CardFill0# | StrokeWidth 1 | Stroke Color #Cyan#,(#StrokeA#+(#HoverCPU#*#HoverBoost#))
+Shape2=Rectangle 1,1,(#CardW#-2),(#Row1H#-2),(#CardRadius#-1) | Fill Color #CardFill1# | StrokeWidth 1 | Stroke Color 255,255,255,(#BevelA#+(#HoverCPU#*16))
+Shape3=Line 12,12,(#CardW#-12),12 | StrokeWidth 1 | Stroke Color #Cyan#,(36+#HoverCPU#*30)
+Shape4=Line 0,#Chamfer#,#Chamfer#,0 | StrokeWidth 1 | Stroke Color 255,255,255,20
+Shape5=Line (#CardW#-#Chamfer#),0,#CardW#,#Chamfer# | StrokeWidth 1 | Stroke Color #Cyan#,74
+Shape6=Line (#CardW#-48),18,(#CardW#-18),18 | StrokeWidth 1 | Stroke Color #Cyan#,120
+Shape7=Line (#CardW#-32),10,(#CardW#-18),24 | StrokeWidth 1 | Stroke Color #Cyan#,98
+MouseOverAction=[!SetVariable HoverCPU_Target 1]
+MouseLeaveAction=[!SetVariable HoverCPU_Target 0]
+DynamicVariables=1
+
+[MeterCPU_Title]
+Meter=String
+MeterStyle=StyleCardTitle
+X=(#CardX1#+#InnerPad#)
+Y=(#Row1Y#+#Pad12#)
+Text=CPU CORE
+FontColor=#Cyan#,236
+DynamicVariables=1
+
+[MeterCPU_Sub]
+Meter=String
+MeterStyle=StyleCardSub
+X=(#CardX1#+#InnerPad#)
+Y=(#Row1Y#+#Pad12#+#Pad16#)
+Text=load / scheduling / thermal behavior
+DynamicVariables=1
+
+[MeterCPU_DonutBase]
+Meter=Roundline
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#InnerPad#+4)
+Y=(#Row1Y#+(70*#Scale#))
+W=#DonutSize#
+H=#DonutSize#
+StartAngle=(Rad(270))
+RotationAngle=(Rad(360))
+LineStart=(#DonutSize#*0.31)
+LineLength=(#DonutSize#*0.13)
+LineWidth=(#DonutLine#+2)
+LineColor=255,255,255,20
+MeasureName=MeasureConst100
+DynamicVariables=1
+
+[MeterCPU_DonutGlow]
+Meter=Roundline
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#InnerPad#+4)
+Y=(#Row1Y#+(70*#Scale#))
+W=#DonutSize#
+H=#DonutSize#
+StartAngle=(Rad(270))
+RotationAngle=(Rad(360))
+LineStart=(#DonutSize#*0.31)
+LineLength=(#DonutSize#*0.13)
+LineWidth=#DonutGlow#
+LineColor=#Cyan#,(#GlowPulseBase#+#CornerPulse#)
+MeasureName=MeasureCPUAnim
+DynamicVariables=1
+
+[MeterCPU_Donut]
+Meter=Roundline
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#InnerPad#+4)
+Y=(#Row1Y#+(70*#Scale#))
+W=#DonutSize#
+H=#DonutSize#
+StartAngle=(Rad(270))
+RotationAngle=(Rad(360))
+LineStart=(#DonutSize#*0.31)
+LineLength=(#DonutSize#*0.13)
+LineWidth=#DonutLine#
+LineColor=#Cyan#,230
+MeasureName=MeasureCPUAnim
+DynamicVariables=1
+
+[MeterCPU_Spinner]
+Meter=Roundline
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#InnerPad#+4)
+Y=(#Row1Y#+(70*#Scale#))
+W=#DonutSize#
+H=#DonutSize#
+StartAngle=(Rad(270)+#RingAngle#)
+RotationAngle=1.12
+LineStart=(#DonutSize#*0.23)
+LineLength=(#DonutSize#*0.08)
+LineWidth=(3*#Scale#)
+LineColor=#Green#,220
+MeasureName=MeasureConst100
+DynamicVariables=1
+
+[MeterCPU_Pct]
+Meter=String
+MeterStyle=StyleValueStrong
+X=(#CardX1#+#InnerPad#+#DonutSize#*0.5+4)
+Y=(#Row1Y#+(70*#Scale#)+#DonutSize#*0.42)
+StringAlign=CenterCenter
+Text=#CPU_S#%
+DynamicVariables=1
+
+[MeterCPU_PctLabel]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX1#+#InnerPad#+#DonutSize#*0.5+4)
+Y=(#Row1Y#+(70*#Scale#)+#DonutSize#*0.64)
+StringAlign=CenterTop
+Text=LOAD
+FontColor=#Cyan#,144
+DynamicVariables=1
+
+[MeterCPU_Stat1L]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(60*#Scale#))
+Text=UPTIME
+DynamicVariables=1
+
+[MeterCPU_Stat1V]
+Meter=String
+MeterStyle=StyleValue
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(74*#Scale#))
+Text=[MeasureUptime]
+FontColor=#Text#,210
+DynamicVariables=1
+[MeterCPU_Stat2L]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(94*#Scale#))
+Text=PING
+DynamicVariables=1
+
+[MeterCPU_Stat2V]
+Meter=String
+MeterStyle=StyleValue
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(108*#Scale#))
+Text=#Ping_S# ms
+FontColor=#Green#,220
+DynamicVariables=1
+
+[MeterCPU_Stat3L]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(128*#Scale#))
+Text=HOST
+DynamicVariables=1
+
+[MeterCPU_Stat3V]
+Meter=String
+MeterStyle=StyleValue
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(142*#Scale#))
+Text=#COMPUTERNAME#
+FontColor=#Orange#,220
+DynamicVariables=1
+
+[MeterCoreLabel]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(164*#Scale#))
+Text=CORES
+DynamicVariables=1
+
+[MeterCore1]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(178*#Scale#))
+Shape=Rectangle 0,0,#CoreBarW#,(3*#Scale#),1 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#CoreBarW#*[MeasureCore1]/100),(3*#Scale#),1 | Fill Color #Cyan#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterCore2]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(190*#Scale#))
+Shape=Rectangle 0,0,#CoreBarW#,(3*#Scale#),1 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#CoreBarW#*[MeasureCore2]/100),(3*#Scale#),1 | Fill Color #Cyan#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterCore3]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(202*#Scale#))
+Shape=Rectangle 0,0,#CoreBarW#,(3*#Scale#),1 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#CoreBarW#*[MeasureCore3]/100),(3*#Scale#),1 | Fill Color #Green#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterCore4]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(214*#Scale#))
+Shape=Rectangle 0,0,#CoreBarW#,(3*#Scale#),1 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#CoreBarW#*[MeasureCore4]/100),(3*#Scale#),1 | Fill Color #Green#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterCore5]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(226*#Scale#))
+Shape=Rectangle 0,0,#CoreBarW#,(3*#Scale#),1 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#CoreBarW#*[MeasureCore5]/100),(3*#Scale#),1 | Fill Color #Orange#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterCore6]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#CardW#*0.54)
+Y=(#Row1Y#+(238*#Scale#))
+Shape=Rectangle 0,0,#CoreBarW#,(3*#Scale#),1 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#CoreBarW#*[MeasureCore6]/100),(3*#Scale#),1 | Fill Color #Orange#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterCPU_Shimmer]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#CardW#*0.54-18+(#ShimmerT1#*(#CoreBarW#+20)))
+Y=(#Row1Y#+(174*#Scale#))
+Shape=Rectangle 0,0,(18*#Scale#),(72*#Scale#),3 | Fill Color #ShimmerRGB1#,#ShimmerA# | StrokeWidth 0
+DynamicVariables=1
+
+; =================================================================================================
+;  RAM CARD
+; =================================================================================================
+
+[MeterRAM_Block]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX2#)
+Y=(#Row1Y#)
+Shape=Rectangle 0,0,#CardW#,#Row1H#,#CardRadius# | Fill Color #CardFill0# | StrokeWidth 1 | Stroke Color #Green#,(#StrokeA#+(#HoverRAM#*#HoverBoost#))
+Shape2=Rectangle 1,1,(#CardW#-2),(#Row1H#-2),(#CardRadius#-1) | Fill Color #CardFill1# | StrokeWidth 1 | Stroke Color 255,255,255,(#BevelA#+(#HoverRAM#*16))
+Shape3=Line 12,12,(#CardW#-12),12 | StrokeWidth 1 | Stroke Color #Green#,(36+#HoverRAM#*30)
+Shape4=Line 0,#Chamfer#,#Chamfer#,0 | StrokeWidth 1 | Stroke Color 255,255,255,20
+Shape5=Line (#CardW#-#Chamfer#),0,#CardW#,#Chamfer# | StrokeWidth 1 | Stroke Color #Green#,74
+Shape6=Line (#CardW#-48),18,(#CardW#-18),18 | StrokeWidth 1 | Stroke Color #Green#,120
+Shape7=Line (#CardW#-32),10,(#CardW#-18),24 | StrokeWidth 1 | Stroke Color #Green#,98
+MouseOverAction=[!SetVariable HoverRAM_Target 1]
+MouseLeaveAction=[!SetVariable HoverRAM_Target 0]
+DynamicVariables=1
+
+[MeterRAM_Title]
+Meter=String
+MeterStyle=StyleCardTitle
+X=(#CardX2#+#InnerPad#)
+Y=(#Row1Y#+#Pad12#)
+Text=MEMORY
+FontColor=#Green#,236
+DynamicVariables=1
+
+[MeterRAM_Sub]
+Meter=String
+MeterStyle=StyleCardSub
+X=(#CardX2#+#InnerPad#)
+Y=(#Row1Y#+#Pad12#+#Pad16#)
+Text=ram / commit / headroom
+DynamicVariables=1
+
+[MeterRAM_DonutBase]
+Meter=Roundline
+MeterStyle=StyleShapeBase
+X=(#CardX2#+#InnerPad#+4)
+Y=(#Row1Y#+(70*#Scale#))
+W=#DonutSize#
+H=#DonutSize#
+StartAngle=(Rad(270))
+RotationAngle=(Rad(360))
+LineStart=(#DonutSize#*0.31)
+LineLength=(#DonutSize#*0.13)
+LineWidth=(#DonutLine#+2)
+LineColor=255,255,255,20
+MeasureName=MeasureConst100
+DynamicVariables=1
+
+[MeterRAM_DonutGlow]
+Meter=Roundline
+MeterStyle=StyleShapeBase
+X=(#CardX2#+#InnerPad#+4)
+Y=(#Row1Y#+(70*#Scale#))
+W=#DonutSize#
+H=#DonutSize#
+StartAngle=(Rad(270))
+RotationAngle=(Rad(360))
+LineStart=(#DonutSize#*0.31)
+LineLength=(#DonutSize#*0.13)
+LineWidth=#DonutGlow#
+LineColor=#Green#,(#GlowPulseBase#+#CornerPulse#)
+MeasureName=MeasureRAMAnim
+DynamicVariables=1
+[MeterRAM_Donut]
+Meter=Roundline
+MeterStyle=StyleShapeBase
+X=(#CardX2#+#InnerPad#+4)
+Y=(#Row1Y#+(70*#Scale#))
+W=#DonutSize#
+H=#DonutSize#
+StartAngle=(Rad(270))
+RotationAngle=(Rad(360))
+LineStart=(#DonutSize#*0.31)
+LineLength=(#DonutSize#*0.13)
+LineWidth=#DonutLine#
+LineColor=#Green#,230
+MeasureName=MeasureRAMAnim
+DynamicVariables=1
+
+[MeterRAM_Spinner]
+Meter=Roundline
+MeterStyle=StyleShapeBase
+X=(#CardX2#+#InnerPad#+4)
+Y=(#Row1Y#+(70*#Scale#))
+W=#DonutSize#
+H=#DonutSize#
+StartAngle=(Rad(270)-#RingAngleSlow#)
+RotationAngle=0.95
+LineStart=(#DonutSize#*0.23)
+LineLength=(#DonutSize#*0.08)
+LineWidth=(3*#Scale#)
+LineColor=#Cyan#,200
+MeasureName=MeasureConst100
+DynamicVariables=1
+
+[MeterRAM_Pct]
+Meter=String
+MeterStyle=StyleValueStrong
+X=(#CardX2#+#InnerPad#+#DonutSize#*0.5+4)
+Y=(#Row1Y#+(70*#Scale#)+#DonutSize#*0.42)
+StringAlign=CenterCenter
+Text=#RAM_S#%
+DynamicVariables=1
+
+[MeterCommitLabel]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX2#+#InnerPad#)
+Y=(#Row1Y#+(186*#Scale#))
+Text=COMMIT
+DynamicVariables=1
+
+[MeterCommitBar]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX2#+#InnerPad#)
+Y=(#Row1Y#+(202*#Scale#))
+Shape=Rectangle 0,0,#BarW#,(8*#Scale#),3 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#BarW#*[MeasureCommitAnim]/100),(8*#Scale#),3 | Fill Color #Orange#,196 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterCommitVal]
+Meter=String
+MeterStyle=StyleMonoSmall
+X=(#CardX2#+#InnerPad#+#BarW#)
+Y=(#Row1Y#+(186*#Scale#))
+StringAlign=Right
+Text=#Commit_S#%
+FontColor=#Orange#,220
+DynamicVariables=1
+
+[MeterRAM_Shimmer]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX2#+#InnerPad#-12+(#ShimmerT2#*(#BarW#+20)))
+Y=(#Row1Y#+(198*#Scale#))
+Shape=Rectangle 0,0,(16*#Scale#),(14*#Scale#),2 | Fill Color #ShimmerRGB2#,#ShimmerA# | StrokeWidth 0
+DynamicVariables=1
+
+; =================================================================================================
+;  DISK CARD
+; =================================================================================================
+
+[MeterDISK_Block]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#)
+Y=(#Row2Y#)
+Shape=Rectangle 0,0,#CardW#,#Row2H#,#CardRadius# | Fill Color #CardFill0# | StrokeWidth 1 | Stroke Color #Orange#,(#StrokeA#+(#HoverDISK#*#HoverBoost#))
+Shape2=Rectangle 1,1,(#CardW#-2),(#Row2H#-2),(#CardRadius#-1) | Fill Color #CardFill1# | StrokeWidth 1 | Stroke Color 255,255,255,(#BevelA#+(#HoverDISK#*16))
+Shape3=Line 12,12,(#CardW#-12),12 | StrokeWidth 1 | Stroke Color #Orange#,(36+#HoverDISK#*30)
+Shape4=Line (#CardW#-48),18,(#CardW#-18),18 | StrokeWidth 1 | Stroke Color #Orange#,120
+Shape5=Line (#CardW#-32),10,(#CardW#-18),24 | StrokeWidth 1 | Stroke Color #Orange#,98
+MouseOverAction=[!SetVariable HoverDISK_Target 1]
+MouseLeaveAction=[!SetVariable HoverDISK_Target 0]
+DynamicVariables=1
+
+[MeterDISK_Title]
+Meter=String
+MeterStyle=StyleCardTitle
+X=(#CardX1#+#InnerPad#)
+Y=(#Row2Y#+#Pad12#)
+Text=DISK I/O
+FontColor=#Orange#,236
+DynamicVariables=1
+
+[MeterDISK_Sub]
+Meter=String
+MeterStyle=StyleCardSub
+X=(#CardX1#+#InnerPad#)
+Y=(#Row2Y#+#Pad12#+#Pad16#)
+Text=capacity / throughput / write pressure
+DynamicVariables=1
+
+[MeterDiskSysLabel]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX1#+#InnerPad#)
+Y=(#Row2Y#+(64*#Scale#))
+Text=#DiskSys# USED
+DynamicVariables=1
+
+[MeterDiskSysBar]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#InnerPad#)
+Y=(#Row2Y#+(80*#Scale#))
+Shape=Rectangle 0,0,#BarW#,(8*#Scale#),3 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#BarW#*[MeasureDiskSysAnim]/100),(8*#Scale#),3 | Fill Color #Orange#,196 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterDiskDataLabel]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX1#+#InnerPad#)
+Y=(#Row2Y#+(104*#Scale#))
+Text=#DiskData# USED
+DynamicVariables=1
+
+[MeterDiskDataBar]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#InnerPad#)
+Y=(#Row2Y#+(120*#Scale#))
+Shape=Rectangle 0,0,#BarW#,(8*#Scale#),3 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#BarW#*[MeasureDiskDataAnim]/100),(8*#Scale#),3 | Fill Color #Cyan#,188 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterDiskIOLabel]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX1#+#InnerPad#)
+Y=(#Row2Y#+(146*#Scale#))
+Text=I/O MB/S
+DynamicVariables=1
+
+[MeterDiskRead]
+Meter=String
+MeterStyle=StyleValue
+X=(#CardX1#+#InnerPad#)
+Y=(#Row2Y#+(162*#Scale#))
+Text=R  #DiskReadMB_S#
+FontColor=#Green#,220
+DynamicVariables=1
+
+[MeterDiskWrite]
+Meter=String
+MeterStyle=StyleValue
+X=(#CardX1#+#InnerPad#+(#CardW#*0.38))
+Y=(#Row2Y#+(162*#Scale#))
+Text=W  #DiskWriteMB_S#
+FontColor=#Orange#,220
+DynamicVariables=1
+
+[MeterDiskBlips]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#CardW#*0.62)
+Y=(#Row2Y#+(150*#Scale#))
+Shape=Line (#Blip1X#*120),(#Blip1Y#*38),((#Blip1X#*120)+8),((#Blip1Y#*38)-4) | StrokeWidth 1 | Stroke Color #Orange#,160
+Shape2=Line (#Blip2X#*120),(#Blip2Y#*38),((#Blip2X#*120)+8),((#Blip2Y#*38)-4) | StrokeWidth 1 | Stroke Color #Cyan#,150
+Shape3=Line (#Blip3X#*120),(#Blip3Y#*38),((#Blip3X#*120)+8),((#Blip3Y#*38)-4) | StrokeWidth 1 | Stroke Color #Green#,140
+Shape4=Line (#Blip4X#*120),(#Blip4Y#*38),((#Blip4X#*120)+8),((#Blip4Y#*38)-4) | StrokeWidth 1 | Stroke Color #Orange#,132
+DynamicVariables=1
+
+[MeterDISK_Shimmer]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#InnerPad#-10+(#ShimmerT3#*(#BarW#+20)))
+Y=(#Row2Y#+(76*#Scale#))
+Shape=Rectangle 0,0,(14*#Scale#),(56*#Scale#),2 | Fill Color #ShimmerRGB3#,#ShimmerA# | StrokeWidth 0
+DynamicVariables=1
+; =================================================================================================
+;  NET CARD
+; =================================================================================================
+
+[MeterNET_Block]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX2#)
+Y=(#Row2Y#)
+Shape=Rectangle 0,0,#CardW#,#Row2H#,#CardRadius# | Fill Color #CardFill0# | StrokeWidth 1 | Stroke Color #Cyan#,(#StrokeA#+(#HoverNET#*#HoverBoost#))
+Shape2=Rectangle 1,1,(#CardW#-2),(#Row2H#-2),(#CardRadius#-1) | Fill Color #CardFill1# | StrokeWidth 1 | Stroke Color 255,255,255,(#BevelA#+(#HoverNET#*16))
+Shape3=Line 12,12,(#CardW#-12),12 | StrokeWidth 1 | Stroke Color #Cyan#,(36+#HoverNET#*30)
+Shape4=Line (#CardW#-48),18,(#CardW#-18),18 | StrokeWidth 1 | Stroke Color #Cyan#,120
+Shape5=Line (#CardW#-32),10,(#CardW#-18),24 | StrokeWidth 1 | Stroke Color #Cyan#,98
+MouseOverAction=[!SetVariable HoverNET_Target 1]
+MouseLeaveAction=[!SetVariable HoverNET_Target 0]
+DynamicVariables=1
+
+[MeterNET_Title]
+Meter=String
+MeterStyle=StyleCardTitle
+X=(#CardX2#+#InnerPad#)
+Y=(#Row2Y#+#Pad12#)
+Text=NETWORK
+FontColor=#Cyan#,236
+DynamicVariables=1
+
+[MeterNET_Sub]
+Meter=String
+MeterStyle=StyleCardSub
+X=(#CardX2#+#InnerPad#)
+Y=(#Row2Y#+#Pad12#+#Pad16#)
+Text=traffic / latency / stream density
+DynamicVariables=1
+
+[MeterNetInVal]
+Meter=String
+MeterStyle=StyleValue
+X=(#CardX2#+#InnerPad#)
+Y=(#Row2Y#+(58*#Scale#))
+Text=IN   #NetInKB_S# KB/S
+FontColor=#Green#,220
+DynamicVariables=1
+
+[MeterNetOutVal]
+Meter=String
+MeterStyle=StyleValue
+X=(#CardX2#+#InnerPad#+(#CardW#*0.5))
+Y=(#Row2Y#+(58*#Scale#))
+Text=OUT  #NetOutKB_S# KB/S
+FontColor=#Orange#,220
+DynamicVariables=1
+
+[MeterNetInBar]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX2#+#InnerPad#)
+Y=(#Row2Y#+(78*#Scale#))
+Shape=Rectangle 0,0,#BarW#,(6*#Scale#),2 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#BarW#*#NetInPct_S#/100),(6*#Scale#),2 | Fill Color #Green#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterNetOutBar]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX2#+#InnerPad#)
+Y=(#Row2Y#+(92*#Scale#))
+Shape=Rectangle 0,0,#BarW#,(6*#Scale#),2 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#BarW#*#NetOutPct_S#/100),(6*#Scale#),2 | Fill Color #Orange#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterNetGraphFrame]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX2#+#InnerPad#)
+Y=(#Row2Y#+(108*#Scale#))
+Shape=Rectangle 0,0,#NetGraphW#,#NetGraphH#,8 | Fill Color 0,0,0,1 | StrokeWidth 1 | Stroke Color 255,255,255,22
+Shape2=Line 0,(#NetGraphH#*0.5),#NetGraphW#,(#NetGraphH#*0.5) | StrokeWidth 1 | Stroke Color 255,255,255,8
+DynamicVariables=1
+
+[MeterNetGraphIn]
+Meter=Line
+X=(#CardX2#+#InnerPad#)
+Y=(#Row2Y#+(108*#Scale#))
+W=#NetGraphW#
+H=#NetGraphH#
+LineColor=#Green#,170
+AutoScale=0
+DynamicVariables=1
+MeasureName=MeasureNetInPct
+
+[MeterNetGraphOut]
+Meter=Line
+X=(#CardX2#+#InnerPad#)
+Y=(#Row2Y#+(108*#Scale#))
+W=#NetGraphW#
+H=#NetGraphH#
+LineColor=#Orange#,170
+AutoScale=0
+DynamicVariables=1
+MeasureName=MeasureNetOutPct
+
+[MeterNetTracer]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX2#+#InnerPad#+(#TracerT#*#NetGraphW#)-3)
+Y=(#Row2Y#+(108*#Scale#)+(#TracerYN#*#NetGraphH#)-3)
+Shape=Ellipse 0,0,6,6 | Fill Color #Cyan#,220 | StrokeWidth 0
+Shape2=Ellipse -3,-3,12,12 | Fill Color #Cyan#,46 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterPingLabel2]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX2#+#InnerPad#)
+Y=(#Row2Y#+(188*#Scale#))
+Text=PING  #PingHost#
+DynamicVariables=1
+
+[MeterPingVal2]
+Meter=String
+MeterStyle=StyleMonoSmall
+X=(#CardX2#+#InnerPad#+#BarW#)
+Y=(#Row2Y#+(188*#Scale#))
+StringAlign=Right
+Text=#Ping_S# ms
+FontColor=#Cyan#,220
+DynamicVariables=1
+
+; =================================================================================================
+;  GPU / THERM CARDS
+; =================================================================================================
+
+[MeterGPU_Block]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#)
+Y=(#Row3Y#)
+Shape=Rectangle 0,0,#CardW#,#Row3H#,#CardRadius# | Fill Color #CardFill0# | StrokeWidth 1 | Stroke Color #Cyan#,(#StrokeA#+(#HoverGPU#*#HoverBoost#))
+Shape2=Rectangle 1,1,(#CardW#-2),(#Row3H#-2),(#CardRadius#-1) | Fill Color #CardFill1# | StrokeWidth 1 | Stroke Color 255,255,255,(#BevelA#+(#HoverGPU#*16))
+Shape3=Line 12,12,(#CardW#-12),12 | StrokeWidth 1 | Stroke Color #Cyan#,(34+#HoverGPU#*26)
+MouseOverAction=[!SetVariable HoverGPU_Target 1]
+MouseLeaveAction=[!SetVariable HoverGPU_Target 0]
+DynamicVariables=1
+
+[MeterGPU_Title]
+Meter=String
+MeterStyle=StyleCardTitle
+X=(#CardX1#+#InnerPad#)
+Y=(#Row3Y#+#Pad12#)
+Text=SENSORS
+FontColor=#Cyan#,236
+DynamicVariables=1
+
+[MeterGPU_Sub]
+Meter=String
+MeterStyle=StyleCardSub
+X=(#CardX1#+#InnerPad#)
+Y=(#Row3Y#+#Pad12#+#Pad16#)
+Text=hwinfo-ready placeholders / live warning channel
+DynamicVariables=1
+
+[MeterSensorPulseBar]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#InnerPad#)
+Y=(#Row3Y#+(72*#Scale#))
+Shape=Rectangle 0,0,#BarW#,(10*#Scale#),3 | Fill Color 255,255,255,12 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#BarW#*#GPU_S#/100),(10*#Scale#),3 | Fill Color #Cyan#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterSensorPulseRow1]
+Meter=String
+MeterStyle=StyleValue
+X=(#CardX1#+#InnerPad#)
+Y=(#Row3Y#+(92*#Scale#))
+Text=GPU #GPU_S#% | CPU #CPU_S#% | RAM #RAM_S#%
+DynamicVariables=1
+
+[MeterGPUWarn]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#InnerPad#)
+Y=(#Row3Y#+(142*#Scale#))
+Shape=Rectangle 0,0,#BarW#,(7*#Scale#),3 | Fill Color 255,255,255,8 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#BarW#*#WarnBlend#),(7*#Scale#),3 | Fill Color #Orange#,(60+#WarnFlashA#) | StrokeWidth 0
+DynamicVariables=1
+
+[MeterTHERM_Block]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX2#)
+Y=(#Row3Y#)
+Shape=Rectangle 0,0,#CardW#,#Row3H#,#CardRadius# | Fill Color #CardFill0# | StrokeWidth 1 | Stroke Color #Orange#,(#StrokeA#+(#HoverTHERM#*#HoverBoost#))
+Shape2=Rectangle 1,1,(#CardW#-2),(#Row3H#-2),(#CardRadius#-1) | Fill Color #CardFill1# | StrokeWidth 1 | Stroke Color 255,255,255,(#BevelA#+(#HoverTHERM#*16))
+Shape3=Line 12,12,(#CardW#-12),12 | StrokeWidth 1 | Stroke Color #Orange#,(34+#HoverTHERM#*26)
+MouseOverAction=[!SetVariable HoverTHERM_Target 1]
+MouseLeaveAction=[!SetVariable HoverTHERM_Target 0]
+DynamicVariables=1
+
+[MeterTHERM_Title]
+Meter=String
+MeterStyle=StyleCardTitle
+X=(#CardX2#+#InnerPad#)
+Y=(#Row3Y#+#Pad12#)
+Text=THERMALS
+FontColor=#Orange#,236
+DynamicVariables=1
+
+[MeterThermRing1]
+Meter=Roundline
+MeterStyle=StyleShapeBase
+X=(#CardX2#+#InnerPad#)
+Y=(#Row3Y#+(68*#Scale#))
+W=(88*#Scale#)
+H=(88*#Scale#)
+StartAngle=(Rad(270)+#RingAngleSlow#)
+RotationAngle=1.45
+LineStart=(24*#Scale#)
+LineLength=(9*#Scale#)
+LineWidth=(4*#Scale#)
+LineColor=#Orange#,220
+MeasureName=MeasureConst100
+DynamicVariables=1
+
+[MeterThermRing2]
+Meter=Roundline
+MeterStyle=StyleShapeBase
+X=(#CardX2#+#InnerPad#+36)
+Y=(#Row3Y#+(68*#Scale#))
+W=(88*#Scale#)
+H=(88*#Scale#)
+StartAngle=(Rad(270)-#RingAngle#)
+RotationAngle=1.12
+LineStart=(24*#Scale#)
+LineLength=(9*#Scale#)
+LineWidth=(3*#Scale#)
+LineColor=#Cyan#,205
+MeasureName=MeasureConst100
+DynamicVariables=1
+; =================================================================================================
+;  PROCESS CARD
+; =================================================================================================
+
+[MeterPROC_Block]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#)
+Y=(#ProcY#)
+Shape=Rectangle 0,0,#ProcW#,#ProcH#,#CardRadius# | Fill Color #CardFill0# | StrokeWidth 1 | Stroke Color #Orange#,(#StrokeA#+(#HoverPROC#*#HoverBoost#))
+Shape2=Rectangle 1,1,(#ProcW#-2),(#ProcH#-2),(#CardRadius#-1) | Fill Color #CardFill1# | StrokeWidth 1 | Stroke Color 255,255,255,(#BevelA#+(#HoverPROC#*16))
+Shape3=Line 12,12,(#ProcW#-12),12 | StrokeWidth 1 | Stroke Color #Orange#,(36+#HoverPROC#*30)
+MouseOverAction=[!SetVariable HoverPROC_Target 1]
+MouseLeaveAction=[!SetVariable HoverPROC_Target 0]
+DynamicVariables=1
+
+[MeterPROC_Title]
+Meter=String
+MeterStyle=StyleCardTitle
+X=(#CardX1#+#InnerPad#)
+Y=(#ProcY#+#Pad12#)
+Text=PROCESSES
+FontColor=#Orange#,236
+DynamicVariables=1
+
+[MeterPROC_Sub]
+Meter=String
+MeterStyle=StyleCardSub
+X=(#CardX1#+#InnerPad#)
+Y=(#ProcY#+#Pad12#+#Pad16#)
+Text=perfmon snapshot / cpu & private working set
+DynamicVariables=1
+
+[MeterPHead1]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX1#+#InnerPad#)
+Y=(#ProcY#+(56*#Scale#))
+Text=NAME
+DynamicVariables=1
+
+[MeterPHead2]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX1#+(#ProcW#*0.44))
+Y=(#ProcY#+(56*#Scale#))
+Text=CPU%
+DynamicVariables=1
+
+[MeterPHead3]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX1#+(#ProcW#*0.56))
+Y=(#ProcY#+(56*#Scale#))
+Text=RAM MB
+DynamicVariables=1
+
+[MeterPHead4]
+Meter=String
+MeterStyle=StyleLabel
+X=(#CardX1#+(#ProcW#*0.68))
+Y=(#ProcY#+(56*#Scale#))
+Text=LOAD
+DynamicVariables=1
+[MeterP1Name]
+Meter=String
+MeterStyle=StyleProcessName
+X=(#CardX1#+#InnerPad#)
+Y=(#ProcY#+(78*#Scale#))
+Text=#Proc1#
+DynamicVariables=1
+
+[MeterP1CPU]
+Meter=String
+MeterStyle=StyleProcessVal
+X=(#CardX1#+(#ProcW#*0.44))
+Y=(#ProcY#+(78*#Scale#))
+Text=[MeasureP1CPUc:0]
+DynamicVariables=1
+
+[MeterP1RAM]
+Meter=String
+MeterStyle=StyleProcessVal
+X=(#CardX1#+(#ProcW#*0.56))
+Y=(#ProcY#+(78*#Scale#))
+Text=[MeasureP1RAMmb:0]
+DynamicVariables=1
+
+[MeterP1Bar]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+(#ProcW#*0.68))
+Y=(#ProcY#+(82*#Scale#))
+Shape=Rectangle 0,0,#ProcBarW#,(6*#Scale#),2 | Fill Color 255,255,255,10 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#ProcBarW#*[MeasureP1CPUc]/100),(6*#Scale#),2 | Fill Color #Cyan#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterP2Name]
+Meter=String
+MeterStyle=StyleProcessName
+X=(#CardX1#+#InnerPad#)
+Y=(#ProcY#+(102*#Scale#))
+Text=#Proc2#
+DynamicVariables=1
+
+[MeterP2CPU]
+Meter=String
+MeterStyle=StyleProcessVal
+X=(#CardX1#+(#ProcW#*0.44))
+Y=(#ProcY#+(102*#Scale#))
+Text=[MeasureP2CPUc:0]
+DynamicVariables=1
+
+[MeterP2RAM]
+Meter=String
+MeterStyle=StyleProcessVal
+X=(#CardX1#+(#ProcW#*0.56))
+Y=(#ProcY#+(102*#Scale#))
+Text=[MeasureP2RAMmb:0]
+DynamicVariables=1
+
+[MeterP2Bar]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+(#ProcW#*0.68))
+Y=(#ProcY#+(106*#Scale#))
+Shape=Rectangle 0,0,#ProcBarW#,(6*#Scale#),2 | Fill Color 255,255,255,10 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#ProcBarW#*[MeasureP2CPUc]/100),(6*#Scale#),2 | Fill Color #Green#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterP3Name]
+Meter=String
+MeterStyle=StyleProcessName
+X=(#CardX1#+#InnerPad#)
+Y=(#ProcY#+(126*#Scale#))
+Text=#Proc3#
+DynamicVariables=1
+
+[MeterP3CPU]
+Meter=String
+MeterStyle=StyleProcessVal
+X=(#CardX1#+(#ProcW#*0.44))
+Y=(#ProcY#+(126*#Scale#))
+Text=[MeasureP3CPUc:0]
+DynamicVariables=1
+
+[MeterP3RAM]
+Meter=String
+MeterStyle=StyleProcessVal
+X=(#CardX1#+(#ProcW#*0.56))
+Y=(#ProcY#+(126*#Scale#))
+Text=[MeasureP3RAMmb:0]
+DynamicVariables=1
+
+[MeterP3Bar]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+(#ProcW#*0.68))
+Y=(#ProcY#+(130*#Scale#))
+Shape=Rectangle 0,0,#ProcBarW#,(6*#Scale#),2 | Fill Color 255,255,255,10 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#ProcBarW#*[MeasureP3CPUc]/100),(6*#Scale#),2 | Fill Color #Orange#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterP4Name]
+Meter=String
+MeterStyle=StyleProcessName
+X=(#CardX1#+#InnerPad#)
+Y=(#ProcY#+(150*#Scale#))
+Text=#Proc4#
+DynamicVariables=1
+
+[MeterP4CPU]
+Meter=String
+MeterStyle=StyleProcessVal
+X=(#CardX1#+(#ProcW#*0.44))
+Y=(#ProcY#+(150*#Scale#))
+Text=[MeasureP4CPUc:0]
+DynamicVariables=1
+
+[MeterP4RAM]
+Meter=String
+MeterStyle=StyleProcessVal
+X=(#CardX1#+(#ProcW#*0.56))
+Y=(#ProcY#+(150*#Scale#))
+Text=[MeasureP4RAMmb:0]
+DynamicVariables=1
+
+[MeterP4Bar]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+(#ProcW#*0.68))
+Y=(#ProcY#+(154*#Scale#))
+Shape=Rectangle 0,0,#ProcBarW#,(6*#Scale#),2 | Fill Color 255,255,255,10 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#ProcBarW#*[MeasureP4CPUc]/100),(6*#Scale#),2 | Fill Color #Cyan#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterP5Name]
+Meter=String
+MeterStyle=StyleProcessName
+X=(#CardX1#+#InnerPad#)
+Y=(#ProcY#+(174*#Scale#))
+Text=#Proc5#
+DynamicVariables=1
+
+[MeterP5CPU]
+Meter=String
+MeterStyle=StyleProcessVal
+X=(#CardX1#+(#ProcW#*0.44))
+Y=(#ProcY#+(174*#Scale#))
+Text=[MeasureP5CPUc:0]
+DynamicVariables=1
+
+[MeterP5RAM]
+Meter=String
+MeterStyle=StyleProcessVal
+X=(#CardX1#+(#ProcW#*0.56))
+Y=(#ProcY#+(174*#Scale#))
+Text=[MeasureP5RAMmb:0]
+DynamicVariables=1
+
+[MeterP5Bar]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+(#ProcW#*0.68))
+Y=(#ProcY#+(178*#Scale#))
+Shape=Rectangle 0,0,#ProcBarW#,(6*#Scale#),2 | Fill Color 255,255,255,10 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#ProcBarW#*[MeasureP5CPUc]/100),(6*#Scale#),2 | Fill Color #Green#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterP6Name]
+Meter=String
+MeterStyle=StyleProcessName
+X=(#CardX1#+#InnerPad#)
+Y=(#ProcY#+(198*#Scale#))
+Text=#Proc6#
+DynamicVariables=1
+
+[MeterP6CPU]
+Meter=String
+MeterStyle=StyleProcessVal
+X=(#CardX1#+(#ProcW#*0.44))
+Y=(#ProcY#+(198*#Scale#))
+Text=[MeasureP6CPUc:0]
+DynamicVariables=1
+
+[MeterP6RAM]
+Meter=String
+MeterStyle=StyleProcessVal
+X=(#CardX1#+(#ProcW#*0.56))
+Y=(#ProcY#+(198*#Scale#))
+Text=[MeasureP6RAMmb:0]
+DynamicVariables=1
+
+[MeterP6Bar]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#CardX1#+(#ProcW#*0.68))
+Y=(#ProcY#+(202*#Scale#))
+Shape=Rectangle 0,0,#ProcBarW#,(6*#Scale#),2 | Fill Color 255,255,255,10 | StrokeWidth 0
+Shape2=Rectangle 0,0,(#ProcBarW#*[MeasureP6CPUc]/100),(6*#Scale#),2 | Fill Color #Orange#,190 | StrokeWidth 0
+DynamicVariables=1
+
+[MeterPROC_Spin]
+Meter=Roundline
+MeterStyle=StyleShapeBase
+X=(#CardX1#+#ProcW#-(126*#Scale#))
+Y=(#ProcY#+(64*#Scale#))
+W=(98*#Scale#)
+H=(98*#Scale#)
+StartAngle=(Rad(270)+#RingAngle#)
+RotationAngle=1.05
+LineStart=(30*#Scale#)
+LineLength=(10*#Scale#)
+LineWidth=(3*#Scale#)
+LineColor=#Orange#,200
+MeasureName=MeasureConst100
+DynamicVariables=1
+
+[MeterFooterLine]
+Meter=Shape
+MeterStyle=StyleShapeBase
+X=(#PanelX#+#Pad12#)
+Y=(#FooterY#)
+Shape=Line 0,0,(#PanelW#-#Pad24#),0 | StrokeWidth 1 | Stroke Color 255,255,255,16
+DynamicVariables=1
+
+[MeterFooterText]
+Meter=String
+MeterStyle=StyleFooter
+X=(#PanelX#+#Pad12#)
+Y=(#FooterY#+#Pad8#)
+Text=BRUTALE HUD  |  hover cards  |  right-click menu  |  subtle motion loop
+DynamicVariables=1
+
+

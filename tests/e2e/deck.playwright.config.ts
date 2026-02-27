@@ -11,6 +11,8 @@ export default defineConfig({
   use: {
     baseURL: "http://127.0.0.1:3290",
     headless: true,
+    screenshot: "only-on-failure",
+    trace: "retain-on-failure",
   },
   webServer: {
     command: "node ./node_modules/vite/bin/vite.js --host 127.0.0.1 --port 3290 --strictPort",

@@ -1,0 +1,260 @@
+; =================================================================================================
+; =================================================================================================
+;  BrutaleControlCore.ini - Hitech HUD
+; =================================================================================================
+
+[Rainmeter]
+Update=16
+AccurateText=1
+DynamicWindowSize=1
+BackgroundMode=2
+SolidColor=0,0,0,1
+SkinWidth=(#PanelW#)
+SkinHeight=(#PanelH#)
+WindowX=(#DockX#)
+WindowY=(#DockY#)
+KeepOnScreen=1
+OnRefreshAction=[!SetVariable SpinFast 0][!SetVariable SpinSlow 0][!CommandMeasure MeasureDataBridge "Run"][!UpdateMeasure MeasureActionApplyAll]
+RightMouseUpAction=[!SkinCustomMenu]
+ContextTitle="Hitech HUD"
+ContextTitle2="Refresh (middle click)"
+ContextTitle3="Toggle Drag"
+ContextTitle4="Toggle ClickThrough"
+ContextTitle5="Toggle Debug Grid"
+ContextTitle6="Toggle Perf Mode"
+ContextTitle7="Collapse CPU"
+ContextTitle8="Collapse RAM"
+ContextTitle9="Collapse DISK"
+ContextTitle10="Collapse NET"
+ContextTitle11="Collapse PROC"
+ContextAction=[!Refresh]
+ContextAction2=[!Refresh]
+ContextAction3=[!UpdateMeasure MeasureActionToggleDrag]
+ContextAction4=[!UpdateMeasure MeasureActionToggleClickThrough]
+ContextAction5=[!UpdateMeasure MeasureActionToggleDebug]
+ContextAction6=[!UpdateMeasure MeasureActionTogglePerf]
+ContextAction7=[!UpdateMeasure MeasureActionToggleCPU]
+ContextAction8=[!UpdateMeasure MeasureActionToggleRAM]
+ContextAction9=[!UpdateMeasure MeasureActionToggleDISK]
+ContextAction10=[!UpdateMeasure MeasureActionToggleNET]
+ContextAction11=[!UpdateMeasure MeasureActionTogglePROC]
+MiddleMouseUpAction=[!Refresh]
+
+[Metadata]
+Name=BrutaleControlCore
+Author=Hitech / Alan
+Information=Glass HUD with corrected system metrics and process intelligence
+Version=2.0
+
+[Variables]
+@IncludeVars=#@#Includes\Vars.inc
+
+; Colors
+Cyan=2,215,255,235
+CyanDim=2,215,255,90
+Green=0,255,150,235
+GreenDim=0,255,150,90
+Orange=255,165,60,235
+OrangeDim=255,165,60,90
+Text=255,255,255,220
+TextDim=255,255,255,150
+TextFaint=255,255,255,90
+Border=255,255,255,24
+Border2=255,255,255,34
+GlassFill=0,0,0,2
+GlassFill2=0,0,0,1
+
+; Fonts
+FontUI=Segoe UI
+FontMono=Consolas
+
+; Motion
+EaseFast=0.18
+EaseSlow=0.08
+SpinFastStep=0.11
+SpinSlowStep=0.05
+PulseRate=0.85
+PulseAmp=160
+
+; Process ranking
+TopProcessCount=8
+ProcessCPUWeight=0.70
+ProcessRAMWeight=0.30
+
+; CPU and network
+CoreCount=6
+PingHost=1.1.1.1
+PingWarnMs=250
+NetAdapter=Best
+NetMaxMbps=1000
+
+; Disk
+DiskSys=C:
+DiskData=F:
+DiskDrive1=#DiskSys#
+DiskDrive2=#DiskData#
+DiskIOMaxMB=512
+
+; Devices
+CPUName=i7-7800X
+GPUName=GTX1080Ti
+
+; Thresholds
+ActivePct=55
+WarnPct=80
+
+; Dynamic display variables
+CPUColor=#Green#
+RAMColor=#Green#
+DiskColor=#Green#
+NetInColor=#Green#
+NetOutColor=#Cyan#
+CommitColor=#Cyan#
+PageColor=#Orange#
+PingColor=#Green#
+PingDotColor=#Green#
+CPUStatsText=0 / 0 %
+RAMStatsText=0 / 0 %
+PingLossText=Loss 0.0%
+NetInRateText=0.0 Kb/s
+NetOutRateText=0.0 Kb/s
+DiskReadRateText=0.00 MB/s
+DiskWriteRateText=0.00 MB/s
+Disk1UsageText=N/A
+Disk1FreeText=N/A
+Disk2UsageText=N/A
+Disk2FreeText=N/A
+CommitDetailText=N/A
+PageDetailText=N/A
+DebugText=Debug disabled
+ProcessScaleText=scale 0.0
+
+ProcName1=-
+ProcName2=-
+ProcName3=-
+ProcName4=-
+ProcName5=-
+ProcName6=-
+ProcName7=-
+ProcName8=-
+
+ProcCPU1=0.0 %
+ProcCPU2=0.0 %
+ProcCPU3=0.0 %
+ProcCPU4=0.0 %
+ProcCPU5=0.0 %
+ProcCPU6=0.0 %
+ProcCPU7=0.0 %
+ProcCPU8=0.0 %
+
+ProcRAM1=0.0 MB
+ProcRAM2=0.0 MB
+ProcRAM3=0.0 MB
+ProcRAM4=0.0 MB
+ProcRAM5=0.0 MB
+ProcRAM6=0.0 MB
+ProcRAM7=0.0 MB
+ProcRAM8=0.0 MB
+
+ProcBar1=0
+ProcBar2=0
+ProcBar3=0
+ProcBar4=0
+ProcBar5=0
+ProcBar6=0
+ProcBar7=0
+ProcBar8=0
+
+ProcColor1=#Cyan#
+ProcColor2=#Cyan#
+ProcColor3=#Cyan#
+ProcColor4=#Cyan#
+ProcColor5=#Cyan#
+ProcColor6=#Cyan#
+ProcColor7=#Cyan#
+ProcColor8=#Cyan#
+
+[StyleTextTiny]
+FontFace=#FontUI#
+FontSize=(10*#Scale#)
+FontColor=#Text#
+AntiAlias=1
+StringStyle=Normal
+ClipString=1
+DynamicVariables=1
+
+[StyleTextSmall]
+FontFace=#FontUI#
+FontSize=(13*#Scale#)
+FontColor=#Text#
+AntiAlias=1
+StringStyle=Normal
+ClipString=1
+DynamicVariables=1
+
+[StyleTextMed]
+FontFace=#FontUI#
+FontSize=(18*#Scale#)
+FontColor=#Text#
+AntiAlias=1
+StringStyle=Bold
+ClipString=1
+DynamicVariables=1
+
+[StyleMono]
+FontFace=#FontMono#
+FontSize=(11*#Scale#)
+FontColor=#TextDim#
+AntiAlias=1
+StringStyle=Normal
+ClipString=1
+DynamicVariables=1
+
+[StyleNum]
+MeterStyle=StyleMono
+StringAlign=RightCenter
+DynamicVariables=1
+
+[StyleLabelCyan]
+MeterStyle=StyleTextTiny
+FontColor=#CyanDim#
+
+[StyleValueCyan]
+MeterStyle=StyleMono
+FontColor=#Cyan#
+
+[StyleLabelGreen]
+MeterStyle=StyleTextTiny
+FontColor=#GreenDim#
+
+[StyleValueGreen]
+MeterStyle=StyleMono
+FontColor=#Green#
+
+[StyleLabelOrange]
+MeterStyle=StyleTextTiny
+FontColor=#OrangeDim#
+
+[StyleValueOrange]
+MeterStyle=StyleMono
+FontColor=#Orange#
+
+[StyleRoundBase]
+AntiAlias=1
+DynamicVariables=1
+
+[StyleBarBase]
+BarOrientation=Horizontal
+SolidColor=0,0,0,1
+DynamicVariables=1
+
+[StyleGraphBase]
+AntiAlias=1
+DynamicVariables=1
+
+@IncludeActions=#@#Includes\Actions.inc
+@IncludeData=#@#Includes\Data.inc
+@IncludeMetersData=#@#Includes\Meters_Data.inc
+
+; =================================================================================================
+
