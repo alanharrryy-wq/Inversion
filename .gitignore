@@ -50,3 +50,11 @@ test-results/
 playwright-report/
 .run/*.json
 # --- generated runtime artifacts ---
+# --- generated / local outputs ---
+tmp_rain/
+nf_scan_out/
+docs/_generated/
+**/__pycache__/
+*.pyc
+CODEX_OUTPUT_*.txt
+CODEX*_OUTPUT*.txt

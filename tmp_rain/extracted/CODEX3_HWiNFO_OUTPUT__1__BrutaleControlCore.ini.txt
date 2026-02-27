@@ -1,3 +1,0 @@
-@IncludeSensors=#@#Includes\Sensors.inc
-@IncludeMetersSensors=#@#Includes\Meters_Sensors.inc
-
