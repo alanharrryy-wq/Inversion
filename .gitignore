@@ -54,7 +54,17 @@ playwright-report/
 tmp_rain/
 nf_scan_out/
 docs/_generated/
+tools/analysis/out/
 **/__pycache__/
 *.pyc
 CODEX_OUTPUT_*.txt
 CODEX*_OUTPUT*.txt
+
+# --- HITECH / Inversion: ignore runtime + mirror artifacts ---
+/factory/
+/tools/analysis/
+/tools/codex/_debug/
+/tools/codex/_migrations/
+/tools/codex/runs/
+/tools/codex/worktrees/
+/_trash/

@@ -534,7 +534,7 @@ const AppInner: React.FC<{
   }, [mode.investorLock, mode.autoplay, mode.autoplayMs, setCurrentSlide]);
 
   return (
-    <div data-testid="deck-root" className="deck-stage-root relative w-screen h-screen overflow-hidden bg-black text-white font-main">
+    <div data-testid="deck-root" className="deck-stage-root relative w-full min-h-screen overflow-visible bg-black text-white font-main">
       <Background />
       <MirrorIntro active={mirrorActive} />
       <TopRibbon visible={viewVisibility.showTopRibbon}>
