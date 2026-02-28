@@ -19,6 +19,7 @@
     "test:e2e": "playwright test",
     "verify:demo": "node scripts/verify-demo.mjs",
     "verify:ai": "node scripts/verify-ai.mjs",
+    "verify:slides": "node scripts/verify-slides.mjs",
     "verify:smoke": "npm run typecheck && npm run build && npm run verify:demo",
     "no:rework:check": "node scripts/no-rework-guard.mjs",
     "client:guard": "node scripts/client-boundary-guard.mjs",

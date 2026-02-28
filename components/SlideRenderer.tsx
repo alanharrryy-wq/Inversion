@@ -1,4 +1,9 @@
 import React from "react";
+import {
+  assertSlideRegistryInvariant,
+  getSlideLabels,
+  resolveSlideComponentForSlot,
+} from "../runtime/slides/contracts";
 
 // ✅ UI base vive aquí (una sola fuente de verdad)
 export {
@@ -55,55 +60,52 @@ const Fallback: React.FC<{ index: number }> = ({ index }) => (
   </div>
 );
 
-// ✅ Mapa declarativo (orden = índice)
-const SLIDES: SlideFC[] = [
-  Slide00,           // 0
-  Slide01,           // 1
-  Slide02,           // 2
-  Slide03,           // 3
-  Slide04,           // 4
-  Slide05,           // 5
-  Slide06,           // 6 (requiere props extra)
-  Slide7,            // 7
-  Slide08,           // 8
-  Slide09,           // 9
-  Slide10,           // 10
-  Slide12,           // 11 (ojo: nombre “Slide12” aquí es índice 11 en tu deck)
-  Slide13,           // 12
-  Slide14,           // 13
-  Slide15,           // 14
-  Slide16,           // 15
-  Slide16_Investor,  // 16
-  Slide17,           // 17 (requiere openModal)
-  Slide18,           // 18
-  Slide19,           // 19 (requiere goToSlide)
-];
+const SLIDE_COMPONENTS: Record<string, SlideFC> = {
+  Slide00,
+  Slide01,
+  Slide02,
+  Slide03,
+  Slide04,
+  Slide05,
+  Slide06,
+  Slide7,
+  Slide08,
+  Slide09,
+  Slide10,
+  Slide12,
+  Slide13,
+  Slide14,
+  Slide15,
+  Slide16,
+  Slide16_Investor,
+  Slide17,
+  Slide18,
+  Slide19,
+};
 
-export const SLIDE_LABELS = [
-  "Slide00",
-  "Slide01",
-  "Slide02",
-  "Slide03",
-  "Slide04",
-  "Slide05",
-  "Slide06",
-  "Slide07",
-  "Slide08",
-  "Slide09",
-  "Slide10",
-  "Slide11",
-  "Slide12",
-  "Slide13",
-  "Slide14",
-  "Slide15",
-  "Slide16",
-  "Slide17",
-  "Slide18",
-  "Slide19",
-] as const;
+assertSlideRegistryInvariant({
+  expectedSlotCount: 20,
+  availableComponentExports: Object.keys(SLIDE_COMPONENTS),
+});
+
+export const SLIDE_LABELS = getSlideLabels();
+
+const SLIDES: SlideFC[] = SLIDE_LABELS.map((_, slot) => {
+  const resolved = resolveSlideComponentForSlot(slot, SLIDE_COMPONENTS);
+  if (resolved) {
+    return resolved;
+  }
+
+  return () => <Fallback index={slot} />;
+});
 
 const SlideRenderer: React.FC<SlideProps> = (props) => {
   const { index } = props;
+  if (import.meta.env.DEV && props.totalSlides !== SLIDES.length) {
+    console.error(
+      `[SlideRenderer] slot contract mismatch: totalSlides=${props.totalSlides} registrySlots=${SLIDES.length}`
+    );
+  }
 
   const Comp = SLIDES[index] ?? (() => <Fallback index={index} />);
 
