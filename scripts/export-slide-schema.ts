@@ -2,6 +2,9 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import {
+  SLIDES_CATALOG,
+  getCatalogLegacy,
+  getCatalogMainRoute,
   SLIDE_SCHEMA,
   buildLookup,
   validateSchema,
@@ -32,18 +35,30 @@ function main(): number {
   const lookup = buildLookup(validated);
 
   const report = {
-    schemaVersion: "slide-registry.v1",
+    schemaVersion: "slide-registry.v2",
+    sourceCatalogVersion: SLIDES_CATALOG.schemaVersion,
     slotCount: validated.length,
     slides: validated.map((entry) => ({
       slot: entry.slot,
       routeId: entry.routeId,
+      slideId: entry.slideId,
       componentExport: entry.componentExport,
       label: entry.label,
       canonicalName: entry.canonicalName,
+      classification: entry.classification,
+      interactionModel: entry.interactionModel,
+      replay: entry.replay,
+      determinism: entry.determinism,
+      stableIds: [...entry.stableIds].sort((left, right) => left.localeCompare(right)),
+      visualOnlyAllow: [...entry.visualOnlyAllow].sort((left, right) => left.localeCompare(right)),
       aliases: [...entry.aliases].sort((left, right) => left.localeCompare(right)),
       fileCandidates: [...entry.fileCandidates].sort((left, right) => left.localeCompare(right)),
       notes: entry.notes,
     })),
+    catalog: {
+      mainRoute: getCatalogMainRoute(),
+      legacy: getCatalogLegacy(),
+    },
     lookup: {
       routeIds: [...lookup.byRouteId.keys()].sort((left, right) => left.localeCompare(right)),
       slots: [...lookup.bySlot.keys()].sort((left, right) => left - right),

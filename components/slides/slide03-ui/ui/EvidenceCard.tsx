@@ -87,6 +87,15 @@ export const EvidenceCard: React.FC<EvidenceCardProps> = ({
     stopFrame();
   };
 
+  const releaseCapturedPointer = (
+    target: EventTarget & HTMLDivElement,
+    pointerId: number
+  ) => {
+    if (typeof target.hasPointerCapture === "function" && target.hasPointerCapture(pointerId)) {
+      target.releasePointerCapture(pointerId);
+    }
+  };
+
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     if (!canInteract) {
       return;
@@ -126,7 +135,7 @@ export const EvidenceCard: React.FC<EvidenceCardProps> = ({
       }
     }
 
-    event.currentTarget.releasePointerCapture(event.pointerId);
+    releaseCapturedPointer(event.currentTarget, event.pointerId);
     onPointerEnd(card.stepId, event.pointerId);
     clearPointer();
   };
@@ -137,6 +146,15 @@ export const EvidenceCard: React.FC<EvidenceCardProps> = ({
     if (active.pointerId !== event.pointerId) return;
 
     onPointerCancel(card.stepId, event.pointerId, "pointer-cancel");
+    clearPointer();
+  };
+
+  const handleLostPointerCapture = (event: React.PointerEvent<HTMLDivElement>) => {
+    const active = pointerRef.current;
+    if (!active || !active.active) return;
+    if (active.pointerId !== event.pointerId) return;
+
+    onPointerCancel(card.stepId, event.pointerId, "lost-pointer-capture");
     clearPointer();
   };
 
@@ -218,6 +236,7 @@ export const EvidenceCard: React.FC<EvidenceCardProps> = ({
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerEnd}
           onPointerCancel={handlePointerCancel}
+          onLostPointerCapture={handleLostPointerCapture}
           onClick={handleGestureClick}
           role="button"
           tabIndex={0}

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   buildReplayPayload,
   parseReplayPayload,
@@ -45,10 +45,15 @@ export const useSlide03Engine = (): Slide03Engine => {
   const [state, setState] = useState<Slide03State>(() =>
     createInitialSlide03State(createDefaultEvidenceModelInput())
   );
+  const stateRef = useRef<Slide03State>(state);
   const [hudVisible, setHudVisible] = useState(false);
   const [replayJson, setReplayJson] = useState("");
   const [replayLoadError, setReplayLoadError] = useState("");
   const [replayLastMessage, setReplayLastMessage] = useState("Replay idle.");
+
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
 
   const cards = useMemo(() => selectAllCardViews(state), [state]);
   const progress = useMemo(() => selectProgressView(state), [state]);
@@ -56,7 +61,11 @@ export const useSlide03Engine = (): Slide03Engine => {
   const canCommitSeal = useMemo(() => isSealCommitReady(state), [state]);
 
   const applyAction = (action: Parameters<typeof reduceSlide03State>[1]) => {
-    setState((prev) => reduceSlide03State(prev, action));
+    setState((prev) => {
+      const next = reduceSlide03State(prev, action);
+      stateRef.current = next;
+      return next;
+    });
   };
 
   const pointerStart = (stepId: EvidenceStepId, pointerId: number) => {
@@ -130,20 +139,25 @@ export const useSlide03Engine = (): Slide03Engine => {
   };
 
   const buildReplayJson = () => {
-    const payload = buildReplayPayload(state, { onlyAccepted: true });
+    const snapshot = stateRef.current;
+    const payload = buildReplayPayload(snapshot, { onlyAccepted: true });
     const json = replayPayloadToJson(payload);
     setReplayJson(json);
     setReplayLoadError("");
     setReplayLastMessage(`Replay prepared with ${payload.actions.length} accepted actions.`);
 
-    setState((prev) => ({
-      ...prev,
-      replaySummary: {
-        ...prev.replaySummary,
-        lastReplayStatus: "ready",
-        lastReplayMessage: `Replay prepared (${payload.actions.length} actions).`,
-      },
-    }));
+    setState((prev) => {
+      const next = {
+        ...prev,
+        replaySummary: {
+          ...prev.replaySummary,
+          lastReplayStatus: "ready",
+          lastReplayMessage: `Replay prepared (${payload.actions.length} actions).`,
+        },
+      };
+      stateRef.current = next;
+      return next;
+    });
   };
 
   const playReplayFromJson = () => {
@@ -154,17 +168,21 @@ export const useSlide03Engine = (): Slide03Engine => {
       return;
     }
 
-    const result = runReplayFromJson(state, trimmed);
+    const snapshot = stateRef.current;
+    const result = runReplayFromJson(snapshot, trimmed);
     setState(result.finalState);
+    stateRef.current = result.finalState;
     setReplayLoadError(result.success ? "" : result.message);
     setReplayLastMessage(result.message);
   };
 
   const playReplayFromState = () => {
-    const payload = buildReplayPayload(state, { onlyAccepted: true });
-    const result = playReplayPayload(state, payload);
+    const snapshot = stateRef.current;
+    const payload = buildReplayPayload(snapshot, { onlyAccepted: true });
+    const result = playReplayPayload(snapshot, payload);
     setReplayJson(replayPayloadToJson(payload));
     setState(result.finalState);
+    stateRef.current = result.finalState;
     setReplayLoadError(result.success ? "" : result.message);
     setReplayLastMessage(result.message);
   };

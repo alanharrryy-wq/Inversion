@@ -9,11 +9,13 @@ type Slide04Props = {
 
 export const Slide04: React.FC<Slide04Props> = ({ nextSlide, prevSlide }) => {
   return (
-    <SlideContainer>
-      <Header title="FINAL LOCK + HANDOFF" breadcrumb="LOCK-IN" slideNum={5} />
-      <Slide04Root />
-      <NavArea prev={prevSlide} next={nextSlide} />
-    </SlideContainer>
+    <div data-stable-id="slide04-root" className="w-full h-full">
+      <SlideContainer>
+        <Header title="FINAL LOCK + HANDOFF" breadcrumb="LOCK-IN" slideNum={5} />
+        <Slide04Root />
+        <NavArea prev={prevSlide} next={nextSlide} />
+      </SlideContainer>
+    </div>
   );
 };
 

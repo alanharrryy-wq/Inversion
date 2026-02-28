@@ -28,6 +28,13 @@ import { BootRuntimeProvider, useBootRuntime } from "./runtime/boot/BootRuntimeC
 import { canShowDemoScript, canShowMirrorIntro, canStartTourManually, isTourAutostartBlocked } from "./runtime/boot/wowGate";
 import { createWowFlagSnapshot } from "./runtime/boot/wowFlags";
 import { useSlideEntryEvidence } from "./runtime/boot/useSlideEntryEvidence";
+import {
+  formatSlideRouteId,
+  getSlideCount,
+  normalizeSlideIndex,
+  parseSlideIndexFromLocation,
+  slidePathFromIndex,
+} from "./runtime/slides/contracts";
 
 /* ==========================================
    B9 - ControlBar HUD Pro (v1.4.0)
@@ -110,16 +117,13 @@ const ControlBar = () => {
   );
 };
 
-const TOTAL_SLIDES = 20;
+const TOTAL_SLIDES = getSlideCount();
 const DECK_NAV_START = 0;
-const DECK_NAV_END = 4;
-const DECK_NAV_INDICES = [0, 1, 2, 3, 4] as const;
-
-const normalizeSlideIndex = (idx: number) => {
-  const n = TOTAL_SLIDES;
-  if (!Number.isFinite(idx)) return 0;
-  return ((Math.trunc(idx) % n) + n) % n;
-};
+const DECK_NAV_END = Math.min(4, Math.max(0, TOTAL_SLIDES - 1));
+const DECK_NAV_INDICES = Array.from(
+  { length: DECK_NAV_END - DECK_NAV_START + 1 },
+  (_, index) => DECK_NAV_START + index
+);
 
 const clampDeckNavIndex = (idx: number) => {
   const normalized = normalizeSlideIndex(idx);
@@ -128,35 +132,7 @@ const clampDeckNavIndex = (idx: number) => {
   return normalized;
 };
 
-const formatSlideId = (idx: number) => String(normalizeSlideIndex(idx)).padStart(2, "0");
-
-const parseSlideIndexFromLocation = (locationLike: Pick<Location, "pathname" | "hash" | "search">): number => {
-  const pathMatch = locationLike.pathname.match(/^\/slides\/(\d{1,2})\/?$/i);
-  if (pathMatch) {
-    return normalizeSlideIndex(Number(pathMatch[1]));
-  }
-
-  const hashRaw = locationLike.hash.startsWith("#")
-    ? locationLike.hash.slice(1)
-    : locationLike.hash;
-  const hashMatch = hashRaw.match(/^(?:slides\/|slide\/|slide-)?(\d{1,2})$/i);
-  if (hashMatch) {
-    return normalizeSlideIndex(Number(hashMatch[1]));
-  }
-
-  const query = new URLSearchParams(locationLike.search);
-  const querySlide = query.get("slide");
-  if (querySlide != null && querySlide.trim() !== "") {
-    const parsed = Number(querySlide);
-    if (Number.isFinite(parsed)) {
-      return normalizeSlideIndex(parsed);
-    }
-  }
-
-  return 0;
-};
-
-const slidePathFromIndex = (idx: number) => `/slides/${formatSlideId(idx)}`;
+const formatSlideId = (idx: number) => formatSlideRouteId(idx);
 
 const ModePill: React.FC = () => {
   const { mode } = useDeckMode();
@@ -297,7 +273,7 @@ const DeckSlideNav: React.FC<{
         {formatSlideId(currentSlide)}
       </div>
       <div data-testid="nav-current-id" className="text-[10px] font-code tracking-[0.18em] text-white/55">
-        slide-{currentSlideId}
+        slide{currentSlideId}
       </div>
     </aside>
   );
@@ -648,7 +624,7 @@ export default function App() {
   };
   const closeModal = () => setModalOpen(false);
 
-  const whitelist = useMemo(() => [4, 13], []);
+  const whitelist = useMemo(() => [4, 8], []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;

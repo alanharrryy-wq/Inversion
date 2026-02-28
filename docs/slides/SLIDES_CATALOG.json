@@ -1,0 +1,279 @@
+{
+  "schemaVersion": "slides-catalog.v2",
+  "catalogPolicy": {
+    "singleAuthority": "docs/slides/SLIDES_CATALOG.json",
+    "routePattern": "00..NN sequential",
+    "routePathTemplate": "/slides/{routeId}"
+  },
+  "mainRoute": [
+    {
+      "index": 0,
+      "routeId": "00",
+      "slideId": "slide00",
+      "title": "Boot / Authority",
+      "componentName": "Slide00",
+      "componentFile": "components/slides/Slide00.tsx",
+      "classification": "CORE",
+      "interactionModel": "FSM",
+      "replay": "JSON",
+      "determinism": "CONDITIONAL",
+      "stableIds": ["slide-00-root"],
+      "aliases": ["00", "slide00", "Slide00", "slides/00"],
+      "visualOnlyAllow": ["Date.now"]
+    },
+    {
+      "index": 1,
+      "routeId": "01",
+      "slideId": "slide01",
+      "title": "Route Engine",
+      "componentName": "Slide01",
+      "componentFile": "components/slides/Slide01.tsx",
+      "classification": "CORE",
+      "interactionModel": "FSM",
+      "replay": "JSON",
+      "determinism": "STRICT",
+      "stableIds": ["slide-01-root"],
+      "aliases": ["01", "slide01", "Slide01", "slides/01"]
+    },
+    {
+      "index": 2,
+      "routeId": "02",
+      "slideId": "slide02",
+      "title": "Hitech OS",
+      "componentName": "Slide02",
+      "componentFile": "components/slides/Slide02.tsx",
+      "classification": "CORE",
+      "interactionModel": "REDUCER",
+      "replay": "JSON",
+      "determinism": "STRICT",
+      "stableIds": ["slide02-root"],
+      "aliases": ["02", "slide02", "Slide02", "slides/02"]
+    },
+    {
+      "index": 3,
+      "routeId": "03",
+      "slideId": "slide03",
+      "title": "Evidence Ladder",
+      "componentName": "Slide03",
+      "componentFile": "components/slides/Slide03.tsx",
+      "classification": "CORE",
+      "interactionModel": "FSM",
+      "replay": "JSON",
+      "determinism": "STRICT",
+      "stableIds": ["slide03-root"],
+      "aliases": ["03", "slide03", "Slide03", "slides/03"]
+    },
+    {
+      "index": 4,
+      "routeId": "04",
+      "slideId": "slide04",
+      "title": "Lock Engine",
+      "componentName": "Slide04",
+      "componentFile": "components/slides/Slide04.tsx",
+      "classification": "CORE",
+      "interactionModel": "FSM",
+      "replay": "JSON",
+      "determinism": "STRICT",
+      "stableIds": ["slide04-root"],
+      "aliases": ["04", "slide04", "Slide04", "slides/04"]
+    },
+    {
+      "index": 5,
+      "routeId": "05",
+      "slideId": "slide05",
+      "title": "Experience & Stack",
+      "componentName": "Slide05ExperienceAndStack",
+      "componentFile": "components/slides/slide05-experience-stack/Slide05ExperienceAndStack.tsx",
+      "classification": "UI",
+      "interactionModel": "LOCAL_STATE",
+      "replay": "NONE",
+      "determinism": "STRICT",
+      "stableIds": ["slide05-fused-root"],
+      "aliases": ["05", "slide05", "Slide05", "slides/05"],
+      "componentMappingNote": "Catalog-declared alternative component for fused domain."
+    },
+    {
+      "index": 6,
+      "routeId": "06",
+      "slideId": "slide06",
+      "title": "Blueprint / Architecture",
+      "componentName": "Slide06",
+      "componentFile": "components/slides/Slide06.tsx",
+      "classification": "CORE",
+      "interactionModel": "LOCAL_STATE",
+      "replay": "NONE",
+      "determinism": "CONDITIONAL",
+      "stableIds": ["slide06-root"],
+      "aliases": ["06", "slide06", "Slide06", "slides/06"],
+      "visualOnlyAllow": ["Date.now", "performance.now"]
+    },
+    {
+      "index": 7,
+      "routeId": "07",
+      "slideId": "slide07",
+      "title": "Operational Model",
+      "componentName": "Slide07",
+      "componentFile": "components/slides/Slide07.tsx",
+      "classification": "BRIDGE",
+      "interactionModel": "LOCAL_STATE",
+      "replay": "PROGRAMMATIC",
+      "determinism": "STRICT",
+      "stableIds": ["slide07-root", "slide07-system-ritual"],
+      "aliases": ["07", "slide07", "Slide07", "slides/07"]
+    },
+    {
+      "index": 8,
+      "routeId": "08",
+      "slideId": "slide08",
+      "title": "Projection",
+      "componentName": "Slide12",
+      "componentFile": "components/slides/Slide12.tsx",
+      "classification": "UI",
+      "interactionModel": "LOCAL_STATE",
+      "replay": "NONE",
+      "determinism": "STRICT",
+      "stableIds": ["slide12-projection-root"],
+      "aliases": ["08", "slide08", "Slide08", "slides/08", "projection"],
+      "componentMappingNote": "Catalog-declared alternative component (Projection currently mounted from Slide12)."
+    },
+    {
+      "index": 9,
+      "routeId": "09",
+      "slideId": "slide09",
+      "title": "Investment Model",
+      "componentName": "Slide09InvestmentModel",
+      "componentFile": "components/slides/slide09-investment-model/Slide09InvestmentModel.tsx",
+      "classification": "CORE",
+      "interactionModel": "LOCAL_STATE",
+      "replay": "NONE",
+      "determinism": "STRICT",
+      "stableIds": ["slide09-investment-root"],
+      "aliases": ["09", "slide09", "Slide09", "slides/09"],
+      "componentMappingNote": "Catalog-declared alternative component for fused investment domain."
+    },
+    {
+      "index": 10,
+      "routeId": "10",
+      "slideId": "slide10",
+      "title": "Vertical",
+      "componentName": "Slide17",
+      "componentFile": "components/slides/Slide17.tsx",
+      "classification": "UI",
+      "interactionModel": "LOCAL_STATE",
+      "replay": "NONE",
+      "determinism": "STRICT",
+      "stableIds": ["s17-open-evidence"],
+      "aliases": ["10", "slide10", "Slide10", "slides/10"],
+      "componentMappingNote": "Catalog-declared alternative component (Vertical evidence currently mounted from Slide17)."
+    },
+    {
+      "index": 11,
+      "routeId": "11",
+      "slideId": "slide11",
+      "title": "Close / Risk / Proof",
+      "componentName": "Slide11CloseAndRisk",
+      "componentFile": "components/slides/slide11-close-risk/Slide11CloseAndRisk.tsx",
+      "classification": "UI",
+      "interactionModel": "LOCAL_STATE",
+      "replay": "NONE",
+      "determinism": "STRICT",
+      "stableIds": ["slide11-close-root", "slide11-proof-close"],
+      "aliases": ["11", "slide11", "Slide11", "slides/11"],
+      "componentMappingNote": "Catalog-declared alternative component for fused close/risk/proof domain."
+    },
+    {
+      "index": 12,
+      "routeId": "12",
+      "slideId": "slide12",
+      "title": "KPI Ritual",
+      "componentName": "Slide13",
+      "componentFile": "components/slides/Slide13.tsx",
+      "classification": "CORE",
+      "interactionModel": "FSM",
+      "replay": "PROGRAMMATIC",
+      "determinism": "STRICT",
+      "stableIds": ["slide12-kpi-root"],
+      "aliases": ["12", "slide12", "Slide12", "slides/12", "kpi-ritual"],
+      "componentMappingNote": "Catalog-declared alternative component (KPI ritual currently mounted from Slide13)."
+    }
+  ],
+  "legacy": [
+    {
+      "routeId": "legacy-05",
+      "slideId": "legacy-slide05",
+      "componentName": "Slide05",
+      "componentFile": "components/slides/Slide05.tsx",
+      "reason": "Superseded by fused Slide05 Experience & Stack"
+    },
+    {
+      "routeId": "legacy-07",
+      "slideId": "legacy-slide7",
+      "componentName": "Slide7",
+      "componentFile": "components/slides/Slide7.tsx",
+      "reason": "Superseded by fused Slide05 and canonical Slide07 route"
+    },
+    {
+      "routeId": "legacy-08",
+      "slideId": "legacy-slide08",
+      "componentName": "Slide08",
+      "componentFile": "components/slides/Slide08.tsx",
+      "reason": "Merged into fused Slide05 Experience & Stack"
+    },
+    {
+      "routeId": "legacy-09",
+      "slideId": "legacy-slide09",
+      "componentName": "Slide09",
+      "componentFile": "components/slides/Slide09.tsx",
+      "reason": "Moved out of mainRoute during strict enumeration"
+    },
+    {
+      "routeId": "legacy-10",
+      "slideId": "legacy-slide10",
+      "componentName": "Slide10",
+      "componentFile": "components/slides/Slide10.tsx",
+      "reason": "Merged into fused Slide11 Close / Risk / Proof"
+    },
+    {
+      "routeId": "legacy-14",
+      "slideId": "legacy-slide14",
+      "componentName": "Slide14",
+      "componentFile": "components/slides/Slide14.tsx",
+      "reason": "Merged into fused Slide09 Investment Model"
+    },
+    {
+      "routeId": "legacy-15",
+      "slideId": "legacy-slide15",
+      "componentName": "Slide15",
+      "componentFile": "components/slides/Slide15.tsx",
+      "reason": "Merged into fused Slide09 Investment Model"
+    },
+    {
+      "routeId": "legacy-16",
+      "slideId": "legacy-slide16-investor",
+      "componentName": "Slide16_Investor",
+      "componentFile": "components/slides/Slide16_Investor.tsx",
+      "reason": "Merged into fused Slide09 Investment Model"
+    },
+    {
+      "routeId": "legacy-18",
+      "slideId": "legacy-slide18",
+      "componentName": "Slide18",
+      "componentFile": "components/slides/Slide18.tsx",
+      "reason": "Merged into fused Slide11 Close / Risk / Proof"
+    },
+    {
+      "routeId": "legacy-19",
+      "slideId": "legacy-slide19",
+      "componentName": "Slide19",
+      "componentFile": "components/slides/Slide19.tsx",
+      "reason": "Merged into fused Slide11 Close / Risk / Proof"
+    },
+    {
+      "routeId": "legacy-16-heavy",
+      "slideId": "legacy-slide16-heavy",
+      "componentName": "Slide16",
+      "componentFile": "components/slides/Slide16.tsx",
+      "reason": "Removed from canonical route; retained for forensic parity"
+    }
+  ]
+}

@@ -132,6 +132,47 @@ const test_build_payload_contract = () => {
   assertGreaterOrEqual(payload.actions.length, 12, "payload should include multiple actions");
 };
 
+const test_minimal_interaction_captures_trace = () => {
+  section("replay.minimal-trace");
+
+  let state = createInitialSlide03State(createDefaultEvidenceModelInput());
+  state = reduceSlide03State(state, {
+    type: "POINTER_START",
+    stepId: "E1",
+    pointerId: 701,
+    source: "user",
+    capture: true,
+  });
+  state = reduceSlide03State(state, {
+    type: "POINTER_FRAME",
+    stepId: "E1",
+    pointerId: 701,
+    ratio: 1,
+    source: "user",
+    capture: true,
+  });
+  state = reduceSlide03State(state, {
+    type: "POINTER_END",
+    stepId: "E1",
+    pointerId: 701,
+    source: "user",
+    capture: true,
+  });
+  state = reduceSlide03State(state, {
+    type: "CONFIRM_STEP",
+    stepId: "E1",
+    source: "user",
+    capture: true,
+  });
+
+  const payload = buildReplayPayload(state, { onlyAccepted: true });
+
+  assertTruthy(state.replayLog.length > 0, "state replay log should capture accepted minimal interaction");
+  assertTruthy(payload.actions.length > 0, "replay payload should contain captured actions");
+  assertEqual(payload.routeId, state.modelInput.route.id, "payload routeId should match model route");
+  assertTruthy(payload.constraintDigest.length > 0, "payload constraint digest should be non-empty");
+};
+
 const test_payload_json_roundtrip = () => {
   section("replay.roundtrip");
 
@@ -300,6 +341,7 @@ const test_replay_only_accepted_actions = () => {
 
 export const runReplaySpecs = () => {
   test_build_payload_contract();
+  test_minimal_interaction_captures_trace();
   test_payload_json_roundtrip();
   test_invalid_parse_cases();
   test_playback_success();

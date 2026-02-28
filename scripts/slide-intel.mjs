@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const ROOT = process.cwd();
-const SLIDE_RENDERER = path.join(ROOT, "components", "SlideRenderer.tsx");
+const CATALOG_FILE = path.join(ROOT, "docs", "slides", "SLIDES_CATALOG.json");
 const RUN_DIR = path.join(ROOT, ".run");
 const OUTPUT = path.join(RUN_DIR, "slide-intel.json");
 
@@ -34,31 +34,20 @@ function buildRisks(m) {
 }
 
 async function parseRegistry() {
-  const src = await fs.readFile(SLIDE_RENDERER, "utf8");
-  const imports = [...src.matchAll(/import\s+\{\s*(\w+)\s*\}\s+from\s+"\.\/slides\/([^"]+)";/g)]
-    .map((m) => ({ component: m[1], rel: m[2] }));
-  const map = new Map(imports.map((x) => [x.component, x.rel]));
-
-  const slidesBlock = src.match(/const SLIDES:[\s\S]*?=\s*\[([\s\S]*?)\];/);
-  if (!slidesBlock) throw new Error("Could not parse SLIDES array from SlideRenderer.tsx");
-  const ordered = slidesBlock[1]
-    .split("\n")
-    .map((line) => line.replace(/\/\/.*$/g, "").trim())
-    .filter(Boolean)
-    .map((line) => line.replace(/,$/, "").trim())
-    .filter(Boolean);
-
-  return ordered.map((component, index) => {
-    const rel = map.get(component);
-    if (!rel) {
-      throw new Error(`Component ${component} not found in imports map.`);
-    }
-    return {
-      index,
-      component,
-      file: path.join("components", "slides", `${rel}.tsx`).replace(/\\/g, "/"),
-    };
-  });
+  const src = await fs.readFile(CATALOG_FILE, "utf8");
+  const catalog = JSON.parse(src);
+  if (!Array.isArray(catalog.mainRoute)) {
+    throw new Error("mainRoute[] is required in docs/slides/SLIDES_CATALOG.json");
+  }
+  return catalog.mainRoute.map((entry) => ({
+    index: entry.index,
+    routeId: entry.routeId,
+    slideId: entry.slideId,
+    component: entry.componentName,
+    file: entry.componentFile,
+    classification: entry.classification,
+    determinism: entry.determinism,
+  }));
 }
 
 async function analyzeSlide(entry) {
@@ -126,9 +115,9 @@ async function main() {
     }));
 
   const payload = {
-    generatedAt: new Date().toISOString(),
+    schemaVersion: "slide-intel.v2",
     slideCount: slides.length,
-    registrySource: "components/SlideRenderer.tsx",
+    registrySource: "docs/slides/SLIDES_CATALOG.json",
     slides,
     topComplex,
   };

@@ -1086,13 +1086,15 @@ export const Slide12: React.FC<Slide12Props> = ({ nextSlide, prevSlide }) => {
   const reducedMotion = usePrefersReducedMotion();
 
   return (
-    <SlideContainer>
-      <Header title="HITECH CORE" breadcrumb="CEREBRO" slideNum={12} />
+    <div data-stable-id="slide12-projection-root" className="w-full h-full">
+      <SlideContainer>
+        <Header title="HITECH CORE" breadcrumb="CEREBRO" slideNum={12} />
 
-      <div className="h-full w-full">
-        <Slide12_MamutDarkPremium brand={brand} reducedMotion={reducedMotion} nextSlide={nextSlide} prevSlide={prevSlide} />
-      </div>
-    </SlideContainer>
+        <div className="h-full w-full">
+          <Slide12_MamutDarkPremium brand={brand} reducedMotion={reducedMotion} nextSlide={nextSlide} prevSlide={prevSlide} />
+        </div>
+      </SlideContainer>
+    </div>
   );
 };
 

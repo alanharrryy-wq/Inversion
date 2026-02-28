@@ -1,17 +1,29 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { createDeterministicRng } from "../src/utils/deterministicRng";
 
 const AmbientParticles = () => {
+  const particles = useMemo(() => {
+    const rng = createDeterministicRng("industrial-stack-ambient-particles");
+    return Array.from({ length: 18 }, (_, index) => ({
+      id: index,
+      left: `${(rng.next() * 100).toFixed(2)}%`,
+      top: `${(rng.next() * 100).toFixed(2)}%`,
+      duration: `${(6 + rng.next() * 6).toFixed(2)}s`,
+      opacity: Number((0.4 + rng.next() * 0.6).toFixed(2)),
+    }));
+  }, []);
+
   return (
    <div className="pointer-events-none absolute inset-0 overflow-hidden z-0">
-      {[...Array(18)].map((_, i) => (
+      {particles.map((particle) => (
         <span
-          key={i}
+          key={particle.id}
           className="absolute w-[2px] h-[2px] bg-cyan/40 rounded-full"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animation: `particleFloat ${6 + Math.random() * 6}s ease-in-out infinite`,
-            opacity: 0.4 + Math.random() * 0.6,
+            left: particle.left,
+            top: particle.top,
+            animation: `particleFloat ${particle.duration} ease-in-out infinite`,
+            opacity: particle.opacity,
           }}
         />
       ))}

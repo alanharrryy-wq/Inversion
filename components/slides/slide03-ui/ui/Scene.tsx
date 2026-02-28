@@ -15,6 +15,11 @@ export const Scene: React.FC = () => {
   const engine = useSlide03Engine();
   const parseMessage = parseReplayJsonDraft(engine.replayJson);
   const sealTone = toneForSeal(engine.progress.sealLevel);
+  const devEnabledCardId = engine.cards.find((card) => card.enabled)?.stepId ?? "none";
+  const devCanInteract = engine.cards
+    .map((card) => `${card.stepId}:${card.enabled && !card.revealed && !card.locked ? "1" : "0"}`)
+    .join(",");
+  const devLastEvent = `${engine.state.lastActionType}:${engine.state.lastActionReason}:${engine.state.lastAccepted ? "accepted" : "rejected"}`;
 
   return (
     <section className="slide03-scene" data-testid="slide03-scene">
@@ -50,6 +55,12 @@ export const Scene: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {import.meta.env.DEV && (
+        <p className="slide03-dev-diagnostics" data-testid="slide03-dev-diagnostics">
+          enabled {devEnabledCardId} | canInteract {devCanInteract} | last {devLastEvent}
+        </p>
+      )}
 
       <div className="slide03-grid">
         <div className="slide03-cards">

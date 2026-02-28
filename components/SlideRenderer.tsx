@@ -1,6 +1,7 @@
 import React from "react";
 import {
   assertSlideRegistryInvariant,
+  getSlideCount,
   getSlideLabels,
   resolveSlideComponentForSlot,
 } from "../runtime/slides/contracts";
@@ -20,21 +21,14 @@ import { Slide01 } from "./slides/Slide01";
 import { Slide02 } from "./slides/Slide02";
 import { Slide03 } from "./slides/Slide03";
 import { Slide04 } from "./slides/Slide04";
-import { Slide05 } from "./slides/Slide05";
+import { Slide05ExperienceAndStack } from "./slides/slide05-experience-stack";
 import { Slide06 } from "./slides/Slide06";
-import { Slide7 } from "./slides/Slide7";
-import { Slide08 } from "./slides/Slide08";
-import { Slide09 } from "./slides/Slide09";
-import { Slide10 } from "./slides/Slide10";
+import { Slide07 } from "./slides/Slide07";
 import { Slide12 } from "./slides/Slide12";
+import { Slide09InvestmentModel } from "./slides/slide09-investment-model";
 import { Slide13 } from "./slides/Slide13";
-import { Slide14 } from "./slides/Slide14";
-import { Slide15 } from "./slides/Slide15";
-import { Slide16 } from "./slides/Slide16";
-import { Slide16_Investor } from "./slides/Slide16_Investor";
 import { Slide17 } from "./slides/Slide17";
-import { Slide18 } from "./slides/Slide18";
-import { Slide19 } from "./slides/Slide19";
+import { Slide11CloseAndRisk } from "./slides/slide11-close-risk";
 
 interface SlideProps {
   index: number;
@@ -66,25 +60,18 @@ const SLIDE_COMPONENTS: Record<string, SlideFC> = {
   Slide02,
   Slide03,
   Slide04,
-  Slide05,
+  Slide05ExperienceAndStack,
   Slide06,
-  Slide7,
-  Slide08,
-  Slide09,
-  Slide10,
+  Slide07,
   Slide12,
+  Slide09InvestmentModel,
   Slide13,
-  Slide14,
-  Slide15,
-  Slide16,
-  Slide16_Investor,
   Slide17,
-  Slide18,
-  Slide19,
+  Slide11CloseAndRisk,
 };
 
 assertSlideRegistryInvariant({
-  expectedSlotCount: 20,
+  expectedSlotCount: getSlideCount(),
   availableComponentExports: Object.keys(SLIDE_COMPONENTS),
 });
 
@@ -108,37 +95,17 @@ const SlideRenderer: React.FC<SlideProps> = (props) => {
   }
 
   const Comp = SLIDES[index] ?? (() => <Fallback index={index} />);
-
-  // ✅ Props “especiales” por slide (quirúrgico y claro)
-  // - La mayoría solo ocupa next/prev
-  // - Algunos ocupan goToSlide u openModal
-  const common = { nextSlide: props.nextSlide, prevSlide: props.prevSlide };
-
-  if (index === 6) {
-    return (
-      <div key={index} className={props.wowDemo ? "wow-slide-transition" : undefined}>
-        <Comp {...common} goToSlide={props.goToSlide} openModal={props.openModal} />
-      </div>
-    );
-  }
-  if (index === 17) {
-    return (
-      <div key={index} className={props.wowDemo ? "wow-slide-transition" : undefined}>
-        <Comp {...common} openModal={props.openModal} />
-      </div>
-    );
-  }
-  if (index === 19) {
-    return (
-      <div key={index} className={props.wowDemo ? "wow-slide-transition" : undefined}>
-        <Comp prevSlide={props.prevSlide} goToSlide={props.goToSlide} />
-      </div>
-    );
-  }
+  const slideProps = {
+    nextSlide: props.nextSlide,
+    prevSlide: props.prevSlide,
+    goToSlide: props.goToSlide,
+    openModal: props.openModal,
+    wowDemo: props.wowDemo,
+  };
 
   return (
     <div key={index} className={props.wowDemo ? "wow-slide-transition" : undefined}>
-      <Comp {...common} />
+      <Comp {...slideProps} />
     </div>
   );
 };

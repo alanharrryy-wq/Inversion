@@ -3,6 +3,7 @@ import {
   createInitialSlide03State,
   reduceSlide03State,
   reduceSlide03StateWithEnvelope,
+  selectAllCardViews,
   Slide03Action,
   Slide03State,
   summarizeActionDigest,
@@ -85,6 +86,36 @@ const test_initial_state_contract = () => {
   assertEqual(state.cards.E1.visualState, "pending", "E1 should be pending initially");
   assertEqual(state.cards.E2.visualState, "disabled", "E2 should be disabled initially");
   assertEqual(state.cards.E3.visualState, "disabled", "E3 should be disabled initially");
+};
+
+const test_initial_enabled_card_wiring = () => {
+  section("fsm.initial-enabled-card");
+
+  const state = createInitialSlide03State(createDefaultEvidenceModelInput());
+  const cards = selectAllCardViews(state);
+  const enabledCards = cards.filter((card) => card.enabled);
+
+  assertEqual(enabledCards.length, 1, "exactly one card must be enabled at init");
+  assertEqual(enabledCards[0]?.stepId, "E1", "E1 must be the enabled card at init");
+};
+
+const test_idle_to_step1_after_confirm_e1 = () => {
+  section("fsm.idle-to-step1");
+
+  const initial = createInitialSlide03State(createDefaultEvidenceModelInput());
+  const armed = pointerArmSequence(initial, "E1", 404);
+
+  const result = reduceSlide03StateWithEnvelope(armed, {
+    type: "CONFIRM_STEP",
+    stepId: "E1",
+    source: "user",
+    capture: true,
+  });
+
+  assertEqual(result.envelope.accepted, true, "confirm E1 should be accepted after arming");
+  assertEqual(result.state.stage, "step1", "state should advance to step1 after confirming E1");
+  assertDeepEqual(result.state.revealedSteps, ["E1"], "E1 should be revealed after confirming E1");
+  assertEqual(result.state.nextExpectedStep, "E2", "E2 must be next expected after E1");
 };
 
 const test_pointer_start_guard = () => {
@@ -482,6 +513,8 @@ const test_reducer_determinism_for_script = () => {
 
 export const runFsmReducerSpecs = () => {
   test_initial_state_contract();
+  test_initial_enabled_card_wiring();
+  test_idle_to_step1_after_confirm_e1();
   test_pointer_start_guard();
   test_pointer_frame_guard();
   test_pointer_end_behavior();

@@ -1,84 +1,68 @@
-export type SlideSlot =
-  | 0
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12
-  | 13
-  | 14
-  | 15
-  | 16
-  | 17
-  | 18
-  | 19;
+import rawCatalog from "../../../docs/slides/SLIDES_CATALOG.json";
 
-export type SlideRouteId =
-  | "00"
-  | "01"
-  | "02"
-  | "03"
-  | "04"
-  | "05"
-  | "06"
-  | "07"
-  | "08"
-  | "09"
-  | "10"
-  | "11"
-  | "12"
-  | "13"
-  | "14"
-  | "15"
-  | "16"
-  | "17"
-  | "18"
-  | "19";
+export type SlideClassification = "CORE" | "BRIDGE" | "UI";
+export type SlideInteractionModel = "FSM" | "REDUCER" | "LOCAL_STATE" | "NONE";
+export type SlideReplayMode = "JSON" | "PROGRAMMATIC" | "NONE";
+export type SlideDeterminism = "STRICT" | "CONDITIONAL" | "NONE";
 
-export type SlideId = `slide-${SlideRouteId}`;
-
+export type SlideSlot = number;
+export type SlideRouteId = string;
+export type SlideId = string;
 export type SlideLabel = string;
+export type SlideComponentName = string;
 
-export type SlideComponentName =
-  | "Slide00"
-  | "Slide01"
-  | "Slide02"
-  | "Slide03"
-  | "Slide04"
-  | "Slide05"
-  | "Slide06"
-  | "Slide07"
-  | "Slide7"
-  | "Slide08"
-  | "Slide09"
-  | "Slide10"
-  | "Slide11"
-  | "Slide12"
-  | "Slide13"
-  | "Slide14"
-  | "Slide15"
-  | "Slide16"
-  | "Slide16_Investor"
-  | "Slide17"
-  | "Slide18"
-  | "Slide19";
+export type SlideCatalogMainEntry = {
+  index: number;
+  routeId: string;
+  slideId: string;
+  title: string;
+  componentName: string;
+  componentFile: string;
+  classification: SlideClassification;
+  interactionModel: SlideInteractionModel;
+  replay: SlideReplayMode;
+  determinism: SlideDeterminism;
+  stableIds: string[];
+  aliases?: string[];
+  visualOnlyAllow?: string[];
+  componentMappingNote?: string;
+};
+
+export type SlideCatalogLegacyEntry = {
+  routeId: string;
+  slideId: string;
+  componentName: string;
+  componentFile: string;
+  reason: string;
+};
+
+export type SlidesCatalog = {
+  schemaVersion: string;
+  catalogPolicy: {
+    singleAuthority: string;
+    routePattern: string;
+    routePathTemplate: string;
+  };
+  mainRoute: SlideCatalogMainEntry[];
+  legacy: SlideCatalogLegacyEntry[];
+};
 
 export type SlideSchemaEntry = {
   slot: SlideSlot;
   routeId: SlideRouteId;
+  slideId: SlideId;
   componentExport: SlideComponentName;
   label: SlideLabel;
   canonicalName: string;
   aliases: string[];
   fileCandidates: string[];
   notes: string;
+  classification: SlideClassification;
+  interactionModel: SlideInteractionModel;
+  replay: SlideReplayMode;
+  determinism: SlideDeterminism;
+  stableIds: string[];
+  visualOnlyAllow: string[];
 };
 
 export type SlideSchemaLookup = {
@@ -88,306 +72,144 @@ export type SlideSchemaLookup = {
   byAlias: Map<string, SlideSchemaEntry>;
 };
 
-const REQUIRED_SLOTS: SlideSlot[] = [
-  0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-  10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-];
+const CLASSIFICATIONS = new Set<SlideClassification>(["CORE", "BRIDGE", "UI"]);
+const INTERACTION_MODELS = new Set<SlideInteractionModel>(["FSM", "REDUCER", "LOCAL_STATE", "NONE"]);
+const REPLAY_MODES = new Set<SlideReplayMode>(["JSON", "PROGRAMMATIC", "NONE"]);
+const DETERMINISM_MODES = new Set<SlideDeterminism>(["STRICT", "CONDITIONAL", "NONE"]);
 
-const REQUIRED_ROUTE_IDS: SlideRouteId[] = [
-  "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
-  "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
-];
-
-export const SLIDE_SLOT_COUNT = REQUIRED_SLOTS.length;
-
-function asRouteId(slot: number): SlideRouteId {
-  return String(slot).padStart(2, "0") as SlideRouteId;
+function padRouteId(index: number): string {
+  return String(index).padStart(2, "0");
 }
 
 function normalizeAliasToken(input: string): string {
-  return input.trim().toLowerCase().replace(/[\s\-_]+/g, "");
+  return input.trim().toLowerCase().replace(/[\s\-_/]+/g, "");
 }
 
 function cloneEntry(entry: SlideSchemaEntry): SlideSchemaEntry {
   return {
     slot: entry.slot,
     routeId: entry.routeId,
+    slideId: entry.slideId,
     componentExport: entry.componentExport,
     label: entry.label,
     canonicalName: entry.canonicalName,
     aliases: [...entry.aliases],
     fileCandidates: [...entry.fileCandidates],
     notes: entry.notes,
+    classification: entry.classification,
+    interactionModel: entry.interactionModel,
+    replay: entry.replay,
+    determinism: entry.determinism,
+    stableIds: [...entry.stableIds],
+    visualOnlyAllow: [...entry.visualOnlyAllow],
   };
 }
 
-function createBaseAliases(slot: SlideSlot, canonicalName: string): string[] {
-  const routeId = asRouteId(slot);
-  const routeDigit = String(slot);
-  return [routeId, routeDigit, canonicalName, canonicalName.toLowerCase()];
+function asCatalog(payload: unknown): SlidesCatalog {
+  if (!payload || typeof payload !== "object") {
+    throw new Error("Slides catalog must be an object.");
+  }
+  const catalog = payload as SlidesCatalog;
+  if (!Array.isArray(catalog.mainRoute)) {
+    throw new Error("Slides catalog is missing mainRoute[].");
+  }
+  if (!Array.isArray(catalog.legacy)) {
+    throw new Error("Slides catalog is missing legacy[].");
+  }
+  return catalog;
 }
 
-export const SLIDE_SCHEMA: SlideSchemaEntry[] = [
-  {
-    slot: 0,
-    routeId: "00",
-    componentExport: "Slide00",
-    label: "Slide00",
-    canonicalName: "Slide00",
-    aliases: createBaseAliases(0, "Slide00"),
-    fileCandidates: ["components/slides/Slide00.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-  {
-    slot: 1,
-    routeId: "01",
-    componentExport: "Slide01",
-    label: "Slide01",
-    canonicalName: "Slide01",
-    aliases: createBaseAliases(1, "Slide01"),
-    fileCandidates: ["components/slides/Slide01.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-  {
-    slot: 2,
-    routeId: "02",
-    componentExport: "Slide02",
-    label: "Slide02",
-    canonicalName: "Slide02",
-    aliases: createBaseAliases(2, "Slide02"),
-    fileCandidates: ["components/slides/Slide02.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-  {
-    slot: 3,
-    routeId: "03",
-    componentExport: "Slide03",
-    label: "Slide03",
-    canonicalName: "Slide03",
-    aliases: createBaseAliases(3, "Slide03"),
-    fileCandidates: ["components/slides/Slide03.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-  {
-    slot: 4,
-    routeId: "04",
-    componentExport: "Slide04",
-    label: "Slide04",
-    canonicalName: "Slide04",
-    aliases: createBaseAliases(4, "Slide04"),
-    fileCandidates: ["components/slides/Slide04.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-  {
-    slot: 5,
-    routeId: "05",
-    componentExport: "Slide05",
-    label: "Slide05",
-    canonicalName: "Slide05",
-    aliases: createBaseAliases(5, "Slide05"),
-    fileCandidates: ["components/slides/Slide05.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-  {
-    slot: 6,
-    routeId: "06",
-    componentExport: "Slide06",
-    label: "Slide06",
-    canonicalName: "Slide06",
-    aliases: createBaseAliases(6, "Slide06"),
-    fileCandidates: ["components/slides/Slide06.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-  {
-    slot: 7,
-    routeId: "07",
-    componentExport: "Slide7",
-    label: "Slide07",
-    canonicalName: "Slide07",
-    aliases: [
-      ...createBaseAliases(7, "Slide07"),
-      "Slide7",
-      "slide7",
-      "slides/07",
-      "slides/7",
-    ],
-    fileCandidates: [
-      "components/slides/Slide7.tsx",
-      "components/slides/Slide07.tsx",
-    ],
-    notes:
-      "Transitional compatibility: runtime keeps mounting Slide7 while canonical naming policy is Slide07.",
-  },
-  {
-    slot: 8,
-    routeId: "08",
-    componentExport: "Slide08",
-    label: "Slide08",
-    canonicalName: "Slide08",
-    aliases: createBaseAliases(8, "Slide08"),
-    fileCandidates: ["components/slides/Slide08.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-  {
-    slot: 9,
-    routeId: "09",
-    componentExport: "Slide09",
-    label: "Slide09",
-    canonicalName: "Slide09",
-    aliases: createBaseAliases(9, "Slide09"),
-    fileCandidates: ["components/slides/Slide09.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-  {
-    slot: 10,
-    routeId: "10",
-    componentExport: "Slide10",
-    label: "Slide10",
-    canonicalName: "Slide10",
-    aliases: createBaseAliases(10, "Slide10"),
-    fileCandidates: ["components/slides/Slide10.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-  {
-    slot: 11,
-    routeId: "11",
-    componentExport: "Slide12",
-    label: "Slide11",
-    canonicalName: "Slide11",
-    aliases: [
-      ...createBaseAliases(11, "Slide11"),
-      "Slide12",
-      "slide12",
-      "slides/11",
-    ],
-    fileCandidates: [
-      "components/slides/Slide12.tsx",
-      "components/slides/Slide11.tsx",
-    ],
-    notes:
-      "Transitional compatibility: slot 11 mounts Slide12 to preserve behavior while canonical policy and labels remain Slide11.",
-  },
-  {
-    slot: 12,
-    routeId: "12",
-    componentExport: "Slide13",
-    label: "Slide12",
-    canonicalName: "Slide12",
-    aliases: ["12", "slides/12", "route12", "slot12"],
-    fileCandidates: [
-      "components/slides/Slide13.tsx",
-      "components/slides/Slide12.tsx",
-    ],
-    notes:
-      "Shifted mapping retained intentionally: slot 12 currently mounts Slide13 while label/canonical policy remains Slide12.",
-  },
-  {
-    slot: 13,
-    routeId: "13",
-    componentExport: "Slide14",
-    label: "Slide13",
-    canonicalName: "Slide13",
-    aliases: [...createBaseAliases(13, "Slide13"), "slides/13"],
-    fileCandidates: [
-      "components/slides/Slide14.tsx",
-      "components/slides/Slide13.tsx",
-    ],
-    notes:
-      "Shifted mapping retained intentionally: slot 13 currently mounts Slide14 while label/canonical policy remains Slide13.",
-  },
-  {
-    slot: 14,
-    routeId: "14",
-    componentExport: "Slide15",
-    label: "Slide14",
-    canonicalName: "Slide14",
-    aliases: [...createBaseAliases(14, "Slide14"), "slides/14"],
-    fileCandidates: [
-      "components/slides/Slide15.tsx",
-      "components/slides/Slide14.tsx",
-    ],
-    notes:
-      "Shifted mapping retained intentionally: slot 14 currently mounts Slide15 while label/canonical policy remains Slide14.",
-  },
-  {
-    slot: 15,
-    routeId: "15",
-    componentExport: "Slide16",
-    label: "Slide15",
-    canonicalName: "Slide15",
-    aliases: [...createBaseAliases(15, "Slide15"), "slides/15"],
-    fileCandidates: [
-      "components/slides/Slide16.tsx",
-      "components/slides/Slide15.tsx",
-    ],
-    notes:
-      "Shifted mapping retained intentionally: slot 15 currently mounts Slide16 while label/canonical policy remains Slide15.",
-  },
-  {
-    slot: 16,
-    routeId: "16",
-    componentExport: "Slide16_Investor",
-    label: "Slide16",
-    canonicalName: "Slide16",
-    aliases: [
-      ...createBaseAliases(16, "Slide16"),
-      "Slide16_Investor",
-      "slide16investor",
-      "slides/16",
-    ],
-    fileCandidates: [
-      "components/slides/Slide16_Investor.tsx",
-      "components/slides/Slide16.tsx",
-    ],
-    notes:
-      "Investor variant is intentionally mounted at slot 16 while canonical policy remains Slide16.",
-  },
-  {
-    slot: 17,
-    routeId: "17",
-    componentExport: "Slide17",
-    label: "Slide17",
-    canonicalName: "Slide17",
-    aliases: createBaseAliases(17, "Slide17"),
-    fileCandidates: ["components/slides/Slide17.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-  {
-    slot: 18,
-    routeId: "18",
-    componentExport: "Slide18",
-    label: "Slide18",
-    canonicalName: "Slide18",
-    aliases: createBaseAliases(18, "Slide18"),
-    fileCandidates: ["components/slides/Slide18.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-  {
-    slot: 19,
-    routeId: "19",
-    componentExport: "Slide19",
-    label: "Slide19",
-    canonicalName: "Slide19",
-    aliases: createBaseAliases(19, "Slide19"),
-    fileCandidates: ["components/slides/Slide19.tsx"],
-    notes: "Canonical slot and mounted component are aligned.",
-  },
-];
+function uniqueSorted(values: string[]): string[] {
+  return Array.from(new Set(values.filter((value) => value.trim().length > 0))).sort((left, right) =>
+    left.localeCompare(right)
+  );
+}
+
+function canonicalNameForRoute(routeId: string): string {
+  return `Slide${routeId}`;
+}
+
+function mapMainRouteEntry(entry: SlideCatalogMainEntry): SlideSchemaEntry {
+  const canonicalName = canonicalNameForRoute(entry.routeId);
+  const aliases = uniqueSorted([
+    entry.routeId,
+    String(entry.index),
+    entry.slideId,
+    entry.slideId.toLowerCase(),
+    canonicalName,
+    canonicalName.toLowerCase(),
+    entry.componentName,
+    entry.componentName.toLowerCase(),
+    `slides/${entry.routeId}`,
+    ...(entry.aliases ?? []),
+  ]);
+
+  const mismatch = canonicalName !== entry.componentName;
+  const notes = mismatch
+    ? entry.componentMappingNote ?? "Catalog-declared alternative component mapping."
+    : "Canonical slot and mounted component are aligned.";
+
+  return {
+    slot: entry.index,
+    routeId: entry.routeId,
+    slideId: entry.slideId,
+    componentExport: entry.componentName,
+    label: canonicalName,
+    canonicalName,
+    aliases,
+    fileCandidates: [entry.componentFile],
+    notes,
+    classification: entry.classification,
+    interactionModel: entry.interactionModel,
+    replay: entry.replay,
+    determinism: entry.determinism,
+    stableIds: [...entry.stableIds],
+    visualOnlyAllow: [...(entry.visualOnlyAllow ?? [])],
+  };
+}
+
+export const SLIDES_CATALOG: SlidesCatalog = asCatalog(rawCatalog);
+
+export const SLIDE_SCHEMA: SlideSchemaEntry[] = SLIDES_CATALOG.mainRoute.map(mapMainRouteEntry);
+
+export const SLIDE_SLOT_COUNT = SLIDE_SCHEMA.length;
+
+export function getCatalogMainRoute(): SlideCatalogMainEntry[] {
+  return SLIDES_CATALOG.mainRoute.map((entry) => ({
+    ...entry,
+    aliases: entry.aliases ? [...entry.aliases] : [],
+    stableIds: [...entry.stableIds],
+    visualOnlyAllow: entry.visualOnlyAllow ? [...entry.visualOnlyAllow] : [],
+  }));
+}
+
+export function getCatalogLegacy(): SlideCatalogLegacyEntry[] {
+  return SLIDES_CATALOG.legacy.map((entry) => ({ ...entry }));
+}
 
 export function validateSchema(schema: SlideSchemaEntry[]): SlideSchemaEntry[] {
+  if (!Array.isArray(schema) || schema.length === 0) {
+    throw new Error("Slide schema validation failed:\n- Schema must include at least one slide.");
+  }
+
   const errors: string[] = [];
   const seenSlots = new Set<number>();
   const seenRouteIds = new Set<string>();
+  const seenSlideIds = new Set<string>();
   const seenAliases = new Map<string, SlideSchemaEntry>();
 
-  for (const entry of schema) {
+  const orderedBySlot = schema
+    .map(cloneEntry)
+    .sort((left, right) => left.slot - right.slot);
+
+  for (const [orderedIndex, entry] of orderedBySlot.entries()) {
     if (!Number.isInteger(entry.slot)) {
       errors.push(`Invalid slot (non-integer): ${String(entry.slot)}`);
       continue;
     }
 
-    if (entry.slot < 0 || entry.slot >= SLIDE_SLOT_COUNT) {
-      errors.push(`Invalid slot (out of range 0..19): ${entry.slot}`);
+    if (entry.slot < 0) {
+      errors.push(`Invalid slot (negative): ${entry.slot}`);
     }
 
     if (seenSlots.has(entry.slot)) {
@@ -395,21 +217,35 @@ export function validateSchema(schema: SlideSchemaEntry[]): SlideSchemaEntry[] {
     }
     seenSlots.add(entry.slot);
 
+    if (entry.slot !== orderedIndex) {
+      errors.push(
+        `Slot sequence mismatch at position ${orderedIndex}: expected ${orderedIndex}, got ${entry.slot}`
+      );
+    }
+
     if (!/^\d{2}$/.test(entry.routeId)) {
       errors.push(`Invalid routeId format for slot ${entry.slot}: ${entry.routeId}`);
     }
 
-    const expectedRouteId = asRouteId(entry.slot);
+    const expectedRouteId = padRouteId(entry.slot);
     if (entry.routeId !== expectedRouteId) {
-      errors.push(
-        `Route mismatch at slot ${entry.slot}: expected ${expectedRouteId}, got ${entry.routeId}`
-      );
+      errors.push(`Route mismatch at slot ${entry.slot}: expected ${expectedRouteId}, got ${entry.routeId}`);
     }
 
     if (seenRouteIds.has(entry.routeId)) {
       errors.push(`Duplicate routeId: ${entry.routeId}`);
     }
     seenRouteIds.add(entry.routeId);
+
+    const expectedSlideId = `slide${entry.routeId}`;
+    if (entry.slideId !== expectedSlideId) {
+      errors.push(`slideId mismatch at slot ${entry.slot}: expected ${expectedSlideId}, got ${entry.slideId}`);
+    }
+
+    if (seenSlideIds.has(entry.slideId)) {
+      errors.push(`Duplicate slideId: ${entry.slideId}`);
+    }
+    seenSlideIds.add(entry.slideId);
 
     if (!entry.componentExport?.trim()) {
       errors.push(`Missing componentExport at slot ${entry.slot}`);
@@ -420,17 +256,30 @@ export function validateSchema(schema: SlideSchemaEntry[]): SlideSchemaEntry[] {
     if (!entry.canonicalName?.trim()) {
       errors.push(`Missing canonicalName at slot ${entry.slot}`);
     }
-
     if (!Array.isArray(entry.aliases) || entry.aliases.length === 0) {
       errors.push(`Missing aliases at slot ${entry.slot}`);
     }
     if (!Array.isArray(entry.fileCandidates) || entry.fileCandidates.length === 0) {
       errors.push(`Missing fileCandidates at slot ${entry.slot}`);
     }
-    if (
-      entry.canonicalName.trim() !== entry.componentExport.trim() &&
-      !entry.notes.trim()
-    ) {
+    if (!Array.isArray(entry.stableIds) || entry.stableIds.length === 0) {
+      errors.push(`Missing stableIds at slot ${entry.slot}`);
+    }
+
+    if (!CLASSIFICATIONS.has(entry.classification)) {
+      errors.push(`Invalid classification at slot ${entry.slot}: ${entry.classification}`);
+    }
+    if (!INTERACTION_MODELS.has(entry.interactionModel)) {
+      errors.push(`Invalid interactionModel at slot ${entry.slot}: ${entry.interactionModel}`);
+    }
+    if (!REPLAY_MODES.has(entry.replay)) {
+      errors.push(`Invalid replay mode at slot ${entry.slot}: ${entry.replay}`);
+    }
+    if (!DETERMINISM_MODES.has(entry.determinism)) {
+      errors.push(`Invalid determinism mode at slot ${entry.slot}: ${entry.determinism}`);
+    }
+
+    if (entry.canonicalName.trim() !== entry.componentExport.trim() && !entry.notes.trim()) {
       errors.push(`Missing notes for mismatch at slot ${entry.slot}`);
     }
 
@@ -440,6 +289,7 @@ export function validateSchema(schema: SlideSchemaEntry[]): SlideSchemaEntry[] {
         errors.push(`Empty alias at slot ${entry.slot}`);
         continue;
       }
+
       const previous = seenAliases.get(normalizedAlias);
       if (previous && previous.slot !== entry.slot) {
         errors.push(
@@ -451,26 +301,12 @@ export function validateSchema(schema: SlideSchemaEntry[]): SlideSchemaEntry[] {
     }
   }
 
-  const missingSlots = REQUIRED_SLOTS.filter((slot) => !seenSlots.has(slot));
-  if (missingSlots.length > 0) {
-    errors.push(
-      `Missing slots: ${missingSlots.map((slot) => String(slot).padStart(2, "0")).join(", ")}`
-    );
-  }
-
-  const missingRouteIds = REQUIRED_ROUTE_IDS.filter((routeId) => !seenRouteIds.has(routeId));
-  if (missingRouteIds.length > 0) {
-    errors.push(`Missing routeIds: ${missingRouteIds.join(", ")}`);
-  }
-
   if (errors.length > 0) {
     const orderedErrors = [...errors].sort((left, right) => left.localeCompare(right));
     throw new Error(`Slide schema validation failed:\n- ${orderedErrors.join("\n- ")}`);
   }
 
-  return schema
-    .map(cloneEntry)
-    .sort((left, right) => left.slot - right.slot);
+  return orderedBySlot;
 }
 
 export function buildLookup(schema: SlideSchemaEntry[]): SlideSchemaLookup {

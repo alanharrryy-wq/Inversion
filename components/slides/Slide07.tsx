@@ -13,7 +13,7 @@ function emitSlide07Entered(): void {
     return;
   }
 
-  const domainEvent = buildSlide07EnteredEvent(Date.now());
+  const domainEvent = buildSlide07EnteredEvent(0);
   window.dispatchEvent(
     new CustomEvent(domainEvent.name, {
       detail: domainEvent,
@@ -27,22 +27,25 @@ export const Slide07: React.FC<Slide07Props> = ({ nextSlide, prevSlide }) => {
   }, []);
 
   return (
-    <SlideContainer>
-      <Header title="SMARTSERVICE™" breadcrumb="SISTEMA" slideNum={8} />
+    <div data-stable-id="slide07-root" className="w-full h-full">
+      <SlideContainer>
+        <Header title="SMARTSERVICE™" breadcrumb="SISTEMA" slideNum={8} />
 
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          padding: "12px 16px 6px",
-          display: "grid",
-          gridTemplateRows: "1fr",
-        }}
-      >
-        <SystemRitual profile="legacy" />
-      </div>
+        <div
+          data-stable-id="slide07-system-ritual"
+          style={{
+            height: "100%",
+            width: "100%",
+            padding: "12px 16px 6px",
+            display: "grid",
+            gridTemplateRows: "1fr",
+          }}
+        >
+          <SystemRitual profile="legacy" />
+        </div>
 
-      <NavArea prev={prevSlide} next={nextSlide} />
-    </SlideContainer>
+        <NavArea prev={prevSlide} next={nextSlide} />
+      </SlideContainer>
+    </div>
   );
 };

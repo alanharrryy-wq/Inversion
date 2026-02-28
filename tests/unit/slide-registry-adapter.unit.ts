@@ -1,6 +1,7 @@
 import { strict as assert } from 'node:assert';
 import {
   SLIDE_SCHEMA,
+  SLIDE_SLOT_COUNT,
   assertSlideRegistryInvariant,
   getSlideComponentForSlot,
   resolveSlideComponentForSlot,
@@ -21,25 +22,27 @@ function buildStubComponentMap(): Record<string, string> {
 }
 
 function test_slot_component_exports_match_locked_behavior(): void {
-  assert.equal(getSlideComponentForSlot(7), 'Slide7');
-  assert.equal(getSlideComponentForSlot(11), 'Slide12');
-  assert.equal(getSlideComponentForSlot(16), 'Slide16_Investor');
+  assert.equal(getSlideComponentForSlot(7), 'Slide07');
+  assert.equal(getSlideComponentForSlot(8), 'Slide12');
+  assert.equal(getSlideComponentForSlot(9), 'Slide09InvestmentModel');
+  assert.equal(getSlideComponentForSlot(12), 'Slide13');
 }
 
-function test_adapter_resolves_all_twenty_slots(): void {
+function test_adapter_resolves_all_catalog_slots(): void {
   const componentMap = buildStubComponentMap();
-  const resolved = Array.from({ length: 20 }, (_, slot) => resolveSlideComponentForSlot(slot, componentMap));
-  assert.equal(resolved.length, 20);
+  const resolved = Array.from({ length: SLIDE_SLOT_COUNT }, (_, slot) => resolveSlideComponentForSlot(slot, componentMap));
+  assert.equal(resolved.length, SLIDE_SLOT_COUNT);
   assert.equal(resolved.every((item) => typeof item === 'string' && item.length > 0), true);
-  assert.equal(resolved[7], 'component:Slide7');
-  assert.equal(resolved[11], 'component:Slide12');
-  assert.equal(resolved[16], 'component:Slide16_Investor');
+  assert.equal(resolved[7], 'component:Slide07');
+  assert.equal(resolved[8], 'component:Slide12');
+  assert.equal(resolved[9], 'component:Slide09InvestmentModel');
+  assert.equal(resolved[12], 'component:Slide13');
 }
 
 function test_invariant_accepts_current_registry_shape(): void {
   assert.doesNotThrow(() =>
     assertSlideRegistryInvariant({
-      expectedSlotCount: 20,
+      expectedSlotCount: SLIDE_SLOT_COUNT,
       availableComponentExports: uniqueMountedExports(),
     })
   );
@@ -47,7 +50,6 @@ function test_invariant_accepts_current_registry_shape(): void {
 
 export function runSlideRegistryAdapterSpecs(): void {
   test_slot_component_exports_match_locked_behavior();
-  test_adapter_resolves_all_twenty_slots();
+  test_adapter_resolves_all_catalog_slots();
   test_invariant_accepts_current_registry_shape();
 }
-

@@ -1269,7 +1269,8 @@ export const Slide06: React.FC<Slide06Props> = ({ nextSlide, prevSlide }) => {
   );
 
   return (
-    <SlideContainer>
+    <div data-stable-id="slide06-root" className="w-full h-full">
+      <SlideContainer>
       <Header title="CAD + INGENIERÍA" breadcrumb="FUTURO" slideNum={7} />
 
       {/* Ambient layers — pointer-events-none to never block NavArea */}
@@ -1433,7 +1434,8 @@ export const Slide06: React.FC<Slide06Props> = ({ nextSlide, prevSlide }) => {
   }
 `}</style>
 
-    </SlideContainer>
+      </SlideContainer>
+    </div>
   );
 };
 

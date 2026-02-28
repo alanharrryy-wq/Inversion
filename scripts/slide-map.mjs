@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const ROOT = process.cwd();
-const SLIDE_RENDERER = path.join(ROOT, "components", "SlideRenderer.tsx");
+const CATALOG_FILE = path.join(ROOT, "docs", "slides", "SLIDES_CATALOG.json");
 const OUT = path.join(ROOT, ".run", "slide-map.json");
 
 const LOW = "LOW";
@@ -38,20 +38,19 @@ function narrativeFromHeader(src) {
 }
 
 async function parseRegistry() {
-  const src = await fs.readFile(SLIDE_RENDERER, "utf8");
-  const imports = [...src.matchAll(/import\s+\{\s*(\w+)\s*\}\s+from\s+"\.\/slides\/([^"]+)";/g)]
-    .map((m) => ({ name: m[1], rel: m[2] }));
-  const map = new Map(imports.map((i) => [i.name, i.rel]));
-  const block = src.match(/const SLIDES:[\s\S]*?=\s*\[([\s\S]*?)\];/);
-  if (!block) throw new Error("SLIDES array not found");
-  const comps = block[1]
-    .split("\n")
-    .map((l) => l.replace(/\/\/.*$/g, "").trim().replace(/,$/, ""))
-    .filter(Boolean);
-  return comps.map((comp, index) => ({
-    index,
-    component: comp,
-    file: `components/slides/${map.get(comp)}.tsx`,
+  const src = await fs.readFile(CATALOG_FILE, "utf8");
+  const catalog = JSON.parse(src);
+  if (!Array.isArray(catalog.mainRoute)) {
+    throw new Error("mainRoute[] is required in docs/slides/SLIDES_CATALOG.json");
+  }
+  return catalog.mainRoute.map((entry) => ({
+    index: entry.index,
+    routeId: entry.routeId,
+    slideId: entry.slideId,
+    component: entry.componentName,
+    file: entry.componentFile,
+    classification: entry.classification,
+    determinism: entry.determinism,
   }));
 }
 
@@ -111,7 +110,10 @@ async function main() {
   const out = [];
   for (const s of slides) out.push(await analyzeSlide(s));
   await fs.mkdir(path.join(ROOT, ".run"), { recursive: true });
-  await fs.writeFile(OUT, JSON.stringify({ generatedAt: new Date().toISOString(), slides: out }, null, 2));
+  await fs.writeFile(
+    OUT,
+    `${JSON.stringify({ schemaVersion: "slide-map.v2", source: "docs/slides/SLIDES_CATALOG.json", slides: out }, null, 2)}\n`
+  );
   console.log(`Wrote ${OUT}`);
 }
 

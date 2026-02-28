@@ -109,11 +109,75 @@ export function getSlideLabels(): string[] {
   return createSlideRegistry().schema.map((entry) => entry.label);
 }
 
+export function getSlideCount(): number {
+  return createSlideRegistry().slotCount;
+}
+
+export function formatSlideRouteId(idx: number): SlideRouteId {
+  const normalized = normalizeSlideIndex(idx);
+  const entry = createSlideRegistry().lookup.bySlot.get(normalized as SlideSlot);
+  return (entry ? entry.routeId : "00") as SlideRouteId;
+}
+
+export function slidePathFromIndex(idx: number): string {
+  return `/slides/${formatSlideRouteId(idx)}`;
+}
+
+export function getSlideIndexByRouteId(routeId: string): number | null {
+  const normalized = normalizeSlideRef(routeId);
+  if (!normalized) return null;
+  const entry = createSlideRegistry().lookup.byRouteId.get(normalized);
+  return entry ? entry.slot : null;
+}
+
+export function normalizeSlideIndex(idx: number): number {
+  const slotCount = getSlideCount();
+  if (slotCount === 0) return 0;
+  if (!Number.isFinite(idx)) return 0;
+  return ((Math.trunc(idx) % slotCount) + slotCount) % slotCount;
+}
+
+export function parseSlideIndexFromLocation(
+  locationLike: Pick<Location, "pathname" | "hash" | "search">
+): number {
+  const routeMatch = locationLike.pathname.match(/^\/slides\/([^/?#]+)\/?$/i);
+  if (routeMatch) {
+    const parsed = getSlideIndexByRouteId(routeMatch[1]);
+    if (typeof parsed === "number") {
+      return parsed;
+    }
+  }
+
+  const hashRaw = locationLike.hash.startsWith("#")
+    ? locationLike.hash.slice(1)
+    : locationLike.hash;
+  const hashMatch = hashRaw.match(/^(?:slides\/|slide\/|slide-)?([^/?#]+)$/i);
+  if (hashMatch) {
+    const parsed = getSlideIndexByRouteId(hashMatch[1]);
+    if (typeof parsed === "number") {
+      return parsed;
+    }
+  }
+
+  const query = new URLSearchParams(locationLike.search);
+  const querySlide = query.get("slide");
+  if (querySlide != null && querySlide.trim() !== "") {
+    const parsed = getSlideIndexByRouteId(querySlide);
+    if (typeof parsed === "number") {
+      return parsed;
+    }
+  }
+
+  return 0;
+}
+
 export function getSlideSchema(): SlideSchemaEntry[] {
   return createSlideRegistry().schema.map((entry) => ({
     ...entry,
     aliases: [...entry.aliases],
     fileCandidates: [...entry.fileCandidates],
+    stableIds: [...entry.stableIds],
+    visualOnlyAllow: [...entry.visualOnlyAllow],
   }));
 }
 

@@ -1,5 +1,6 @@
 import { strict as assert } from 'node:assert';
 import {
+  SLIDE_SLOT_COUNT,
   SLIDE_SCHEMA,
   SlideSchemaEntry,
   buildLookup,
@@ -28,13 +29,13 @@ function expectValidationFailure(schema: SlideSchemaEntry[], messageIncludes: st
 
 function test_valid_schema_passes(): void {
   const validated = validateSchema(cloneSchema(SLIDE_SCHEMA));
-  assert.equal(validated.length, 20);
+  assert.equal(validated.length, SLIDE_SLOT_COUNT);
   assert.equal(validated[0].slot, 0);
-  assert.equal(validated[19].slot, 19);
+  assert.equal(validated[validated.length - 1].slot, SLIDE_SLOT_COUNT - 1);
 
   const lookup = buildLookup(validated);
-  assert.equal(lookup.bySlot.size, 20);
-  assert.equal(lookup.byRouteId.size, 20);
+  assert.equal(lookup.bySlot.size, SLIDE_SLOT_COUNT);
+  assert.equal(lookup.byRouteId.size, SLIDE_SLOT_COUNT);
 }
 
 function test_duplicate_slot_fails(): void {
@@ -50,7 +51,7 @@ function test_duplicate_slot_fails(): void {
 
 function test_missing_slot_fails_with_explicit_list(): void {
   const schema = cloneSchema(SLIDE_SCHEMA).filter((entry) => entry.slot !== 3);
-  expectValidationFailure(schema, 'Missing slots: 03');
+  expectValidationFailure(schema, 'Slot sequence mismatch');
 }
 
 function test_duplicate_route_id_fails(): void {
@@ -65,8 +66,8 @@ function test_duplicate_route_id_fails(): void {
 
 function test_alias_collision_fails(): void {
   const schema = cloneSchema(SLIDE_SCHEMA);
-  schema[2].aliases.push('Slide7');
-  expectValidationFailure(schema, 'Duplicate alias "Slide7"');
+  schema[2].aliases.push(schema[1].aliases[0]);
+  expectValidationFailure(schema, 'Duplicate alias');
 }
 
 export function runSlideRegistrySchemaSpecs(): void {
@@ -76,4 +77,3 @@ export function runSlideRegistrySchemaSpecs(): void {
   test_duplicate_route_id_fails();
   test_alias_collision_fails();
 }
-
